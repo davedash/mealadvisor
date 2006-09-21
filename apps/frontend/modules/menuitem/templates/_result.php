@@ -1,0 +1,2 @@
+<?php use_helper('Global');?>
+<?php echo link_to($item->getName(),'@menu_item?restaurant=' . $item->getRestaurant()->getStrippedTitle() . '&stripped_title=' . $item->getUrl())?> <em> - <?php echo link_to_restaurant($item->getRestaurant()) ?></em>

@@ -1,0 +1,5 @@
+showImageForItemSuccess:
+  has_layout: off
+  template: image
+  http_metas: 
+    content-type: image/jpeg

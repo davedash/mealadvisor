@@ -1,0 +1,19 @@
+autocompleteSuccess: 
+  has_layout: off 
+  slots:      []
+addSuccess: 
+  has_layout: off 
+  slots:      []
+addRestaurantSuccess:
+  has_layout: off
+  slots: []
+removeSuccess:
+  template: add
+  has_layout: off
+  slots: []
+removeRestaurantSuccess:
+  template: addRestaurant
+  has_layout: off
+  slots: []
+showSuccess:
+  javascripts: [%SF_PROTOTYPE_WEB_DIR%/js/prototype, map, tagMap]

@@ -1,0 +1,10 @@
+dev:
+  propel:
+    class:          sfPropelDatabase
+    param:
+      dsn:          mysql://root:@localhost/eatw_us
+all:
+  propel:
+    class:          sfPropelDatabase
+    param:
+      dsn:          mysql://mym:mznipul8@mysql.mymen.us/mymenus

@@ -1,0 +1,21 @@
+
+What follows is a list of changes in this release that may break code
+that uses PHP OpenID 0.9.1 or earlier:
+
+ * Files were moved from Auth/OpenID/Store/ to Auth/OpenID/.
+
+ * Files were moved from Auth/OpenID/Consumer/ to Auth/OpenID/.
+
+ * The MySQL, PostgreSQL, and SQLite stores were moved into their own
+   files.  Requring SQLStore.php will not be enough to use these
+   stores; require the appropriate store source to use it
+   (MySQLStore.php, PostgreSQLStore.php, SQLiteStore.php).
+
+ * Functions in FileStore.php were moved into the
+   Auth_OpenID_FileStore class.
+
+ * Functions in Util.php, although not necessarily used by your code,
+   were moved into Auth/OpenID.php (to the Auth_OpenID class).
+
+ * Functions in Auth/OpenID/CryptUtil.php were moved into the
+   Auth_OpenID_CryptUtil class.

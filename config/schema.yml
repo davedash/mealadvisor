@@ -1,0 +1,405 @@
+propel: 
+  user: 
+    _attributes: 
+      phpName: User
+    id: 
+    userid: 
+      type: varchar
+      size: 255
+    email: 
+      type: varchar
+      size: 128
+    password_md5: 
+      type: varchar
+      size: 32
+    open_id: 
+      type: boolean
+    updated_at: 
+    created_at: 
+  restaurant: 
+    _attributes: 
+      phpName: Restaurant
+    id: 
+      type: integer
+      primaryKey: true
+      autoIncrement: true
+    name: 
+      type: varchar
+      size: 255
+    stripped_title: 
+      type: varchar
+      size: 128
+    approved: 
+      type: boolean
+    average_rating: 
+      type: float
+      size: 2
+      scale: 1
+    num_ratings: 
+      type: integer
+    updated_at: 
+      type: TIMESTAMP
+    created_at: 
+      type: TIMESTAMP
+    version_id: 
+      type: integer
+      foreignTable: 0
+      foreignReference: id
+  restaurant_search_index: 
+    _attributes: 
+      phpName: RestaurantSearchIndex
+    restaurant_id: 
+      type: integer
+      foreignTable: 0
+      foreignReference: id
+    word: 
+      type: varchar
+      size: 255
+      index: true
+    weight: 
+      type: integer
+  restaurant_version: 
+    _attributes: 
+      phpName: RestaurantVersion
+    id: 
+      type: integer
+      required: true
+      primaryKey: true
+      autoincrement: true
+    chain: 
+      type: boolean
+    description: 
+      type: longvarchar
+    html_description: 
+      type: longvarchar
+    url: 
+      type: varchar
+      size: 255
+    created_at: 
+      type: TIMESTAMP
+    restaurant_id: 
+      type: integer
+      foreignTable: 0
+      foreignReference: id
+    user_id: 
+      type: integer
+      onDelete: cascade
+      foreignTable: 1
+      foreignReference: id
+  location: 
+    _attributes: 
+      phpName: Location
+    id: 
+      type: integer
+      primaryKey: true
+      autoIncrement: true
+    restaurant_id: 
+      type: integer
+      foreignTable: 0
+      foreignReference: id
+    stripped_title: 
+      type: varchar
+      size: 255
+    name: 
+      type: varchar
+      size: 255
+    address: 
+      type: varchar
+      size: 255
+    city: 
+      type: varchar
+      size: 128
+    state: 
+      type: varchar
+      size: 16
+    zip: 
+      type: varchar
+      size: 9
+    country_id: 
+      type: char
+      size: 2
+      foreignTable: 1
+      foreignReference: iso
+    latitude: 
+      type: float
+      size: 10
+      scale: 7
+    longitude: 
+      type: float
+      size: 10
+      scale: 7
+    phone: 
+      type: varchar
+      size: 16
+    approved: 
+      type: boolean
+    updated_at: 
+      type: TIMESTAMP
+    created_at: 
+      type: TIMESTAMP
+  menu_image: 
+    _attributes: 
+      phpName: MenuImage
+    id: 
+      type: integer
+      primaryKey: true
+      autoIncrement: true
+    restaurant_id: 
+      type: integer
+      foreignTable: 0
+      foreignReference: id
+    location_id: 
+      type: integer
+      foreignTable: 1
+      foreignReference: id
+    filename: 
+      type: varchar
+      size: 255
+    approved: 
+      type: boolean
+    updated_at: 
+      type: TIMESTAMP
+    created_at: 
+      type: TIMESTAMP
+  menu_item: 
+    _attributes: 
+      phpName: MenuItem
+    id: 
+      type: integer
+      primaryKey: true
+      autoIncrement: true
+    name: 
+      type: varchar
+      size: 255
+    url: 
+      type: varchar
+      size: 255
+    version_id: 
+      type: integer
+      foreignTable: 0
+      foreignReference: id
+    restaurant_id: 
+      type: integer
+      foreignTable: 1
+      foreignReference: id
+    approved: 
+      type: boolean
+    average_rating: 
+      type: float
+      size: 2
+      scale: 1
+    num_ratings: 
+      type: integer
+    updated_at: 
+      type: TIMESTAMP
+    created_at: 
+      type: TIMESTAMP
+  menuitem_version: 
+    id: 
+      type: integer
+      required: true
+      primaryKey: true
+      autoincrement: true
+    description: 
+      type: longvarchar
+    html_description: 
+      type: longvarchar
+    location_id: 
+      type: integer
+      foreignTable: 0
+      foreignReference: id
+    menuitem_id: 
+      type: integer
+      foreignTable: 1
+      foreignReference: id
+    user_id: 
+      type: integer
+      foreignTable: 2
+      foreignReference: id
+    price: 
+      type: varchar
+      size: 16
+    created_at: 
+      type: TIMESTAMP
+  menuitem_search_index: 
+    _attributes: 
+      phpName: MenuitemSearchIndex
+    menuitem_id: 
+      type: integer
+      foreignTable: 0
+      foreignReference: id
+    word: 
+      type: varchar
+      size: 255
+      index: true
+    weight: 
+      type: integer
+  restaurant_note: 
+    _attributes: 
+      phpName: RestaurantNote
+    id: 
+      type: integer
+      primaryKey: true
+      autoIncrement: true
+    user_id: 
+      type: integer
+      foreignTable: 0
+      foreignReference: id
+    note: 
+      type: longvarchar
+    html_note: 
+      type: longvarchar
+    restaurant_id: 
+      type: integer
+      foreignTable: 1
+      foreignReference: id
+    location_id: 
+      type: integer
+      foreignTable: 2
+      foreignReference: id
+    created_at: 
+      type: TIMESTAMP
+  menuitem_note: 
+    _attributes: 
+      phpName: MenuItemNote
+    id: 
+      type: integer
+      primaryKey: true
+      autoIncrement: true
+    menu_item_id: 
+      type: integer
+      foreignTable: 0
+      foreignReference: id
+    user_id: 
+      type: integer
+      foreignTable: 1
+      foreignReference: id
+    note: 
+      type: longvarchar
+    html_note: 
+      type: longvarchar
+    updated_at: 
+      type: TIMESTAMP
+    created_at: 
+      type: TIMESTAMP
+  restaurant_rating: 
+    _attributes: 
+      phpName: RestaurantRating
+    id: 
+      type: integer
+      primaryKey: true
+      autoIncrement: true
+    restaurant_id: 
+      type: integer
+      foreignTable: 0
+      foreignReference: id
+    value: 
+      type: integer
+    location_id: 
+      type: integer
+      foreignTable: 1
+      foreignReference: id
+    user_id: 
+      type: integer
+      foreignTable: 2
+      foreignReference: id
+    created_at: 
+      type: TIMESTAMP
+  menuitem_rating: 
+    _attributes: 
+      phpName: MenuItemRating
+    id: 
+      type: integer
+      primaryKey: true
+      autoIncrement: true
+    menu_item_id: 
+      type: integer
+      foreignTable: 0
+      foreignReference: id
+    user_id: 
+      type: integer
+      foreignTable: 1
+      foreignReference: id
+    value: 
+      type: integer
+    created_at: 
+      type: TIMESTAMP
+  menuitem_tag: 
+    menu_item_id: 
+      type: integer
+      foreignTable: 0
+      foreignReference: id
+    user_id: 
+      type: integer
+      foreignTable: 1
+      foreignReference: id
+    tag: 
+      type: varchar
+      size: 100
+    normalized_tag: 
+      type: varchar
+      size: 100
+      index: true
+    created_at: 
+      type: timestamp
+  country: 
+    _attributes: 
+      phpName: Country
+    iso: 
+      type: char
+      size: 2
+      required: true
+      primaryKey: true
+    name: 
+      type: varchar
+      size: 80
+    printable_name: 
+      type: varchar
+      size: 80
+    iso3: 
+      type: char
+      size: 3
+    numcode: 
+      type: smallint
+  menu_item_image: 
+    _attributes: 
+      phpName: MenuItemImage
+    id: 
+      type: integer
+      required: true
+      primaryKey: true
+      autoincrement: true
+    user_id: 
+      type: integer
+      foreignTable: 0
+      foreignReference: id
+    menu_item_id: 
+      type: integer
+      foreignTable: 1
+      foreignReference: id
+    data: 
+      type: blob
+    md5sum: 
+      type: varchar
+      size: 32
+  restaurant_tag: 
+    restaurant_id: 
+      type: integer
+      primaryKey: true
+      foreignTable: 0
+      foreignReference: id
+    user_id: 
+      type: integer
+      primaryKey: true
+      foreignTable: 1
+      foreignReference: id
+    created_at: 
+      type: timestamp
+    tag: 
+      type: varchar
+      size: 100
+    normalized_tag: 
+      type: varchar
+      size: 100
+      primaryKey: true
+      index: true

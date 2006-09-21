@@ -1,0 +1,8 @@
+stats
+.svn
+web/uploads
+cache
+log
+web/.htaccess
+web/cgi-bin
+web/sf

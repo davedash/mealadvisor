@@ -1,0 +1,1 @@
+<?php echo include_partial('rater', array('rating'=>$rating, 'restaurant' => $restaurant ));?>

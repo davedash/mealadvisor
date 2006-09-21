@@ -1,0 +1,5 @@
+showSuccess:
+  has_layout: off
+  
+saveSuccess:
+  has_layout: off

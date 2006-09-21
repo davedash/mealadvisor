@@ -1,0 +1,13 @@
+# default values
+all:
+  title: reviewsby.us
+  feed:
+    max_restaurants: 20
+  search:
+    body_weight:         1
+    title_weight:        2
+    tag_weight:          3
+    results_max:         10
+  yahoo:
+    app_id: reviewsby.us
+    geocode: http://api.local.yahoo.com/MapsService/V1/geocode

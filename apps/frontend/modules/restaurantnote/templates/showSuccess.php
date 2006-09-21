@@ -1,0 +1,1 @@
+<?php echo $restaurant_note->getNote() ?>

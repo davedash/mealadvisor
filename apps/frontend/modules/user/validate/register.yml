@@ -1,0 +1,29 @@
+methods:
+  post: [username, password, password_repeat]
+  
+names:
+  username:
+    required: Yes
+    required_msg: Your username is required.
+    validators: usernameValidator, usernameLengthValidator
+  password:
+    required: Yes
+    required_msg: Your password is required.
+  password_repeat: 
+    required: Yes
+    required_msg: Please re-enter your password
+    validators: passwordValidator
+usernameLengthValidator:
+   class:        sfStringValidator
+   param:
+     min:        6
+     min_error:  username must be 6 or more characters
+usernameValidator:
+  class: myUsernameValidator
+  password:    password
+  
+passwordValidator:
+  class:            sfCompareValidator
+  param:
+    check:          password
+    compare_error:  The passwords you entered do not match.

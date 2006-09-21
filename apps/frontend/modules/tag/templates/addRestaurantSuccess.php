@@ -1,0 +1,1 @@
+<?php echo include_partial('restaurant/tags', array('restaurant' => $restaurant, 'add'=>true)) ?>

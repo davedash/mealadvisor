@@ -1,0 +1,14 @@
+methods:
+  post: [name]
+  
+names:
+  name:
+    required: Yes
+    required_msg: Please enter the name of the restaurant
+    validators: nameValidator
+    
+nameValidator:
+  class: restaurantNameValidator
+  param:
+    name_error: This restaurant with this name already exists.  Choose a more specific name.
+    
