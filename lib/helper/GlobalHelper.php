@@ -25,7 +25,7 @@
 	}
 	function url_for_menuitem(MenuItem $i)
 	{
-		return '@menu_item?stripped_title='.$i->getUrl().'&restaurant='.$i->getRestaurant()->getStrippedTitle();
+		return UrlHelper::url_for_menuitem($i);
 	}
 	
 	function link_to_menuitem_edit(MenuItem $i, $text)

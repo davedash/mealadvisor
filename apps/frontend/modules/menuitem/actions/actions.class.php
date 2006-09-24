@@ -130,7 +130,7 @@ class menuitemActions extends myActions
 		$this->menu_item->setDescription($this->getRequestParameter('description'));
 		$this->menu_item->setPrice($this->getRequestParameter('price'));
 		$this->menu_item->save();
-		return $this->redirect(url_for_menuitem($this->menu_item));
+		return $this->redirect(UrlHelper::url_for_menuitem($this->menu_item));
 	}
 
 	private function getMenuItemOrCreate ()
