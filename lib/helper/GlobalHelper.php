@@ -32,19 +32,20 @@
 	{
 		return link_to($text, url_for_menuitem_edit($i));
 	}
+
+
 	function url_for_menuitem_edit(MenuItem $i)
 	{
 		return '@menu_item_edit?stripped_title='.$i->getUrl().'&restaurant='.$i->getRestaurant()->getStrippedTitle();
 	}
 	
-	
-
 	function format_phone($phone)
 	{
 		 
 		return preg_replace("/([0-9]{3})([0-9]{3})([0-9]{4})/", "$1.$2.$3", $phone); 
 		
 	}
+
 	function is_associative($array)
 	{
 	  if (!is_array($array) || empty($array))
@@ -67,4 +68,3 @@
 		
 		return link_to($user->__toString(), '@profile?user='. $user->getUserId());
 	}
-?>

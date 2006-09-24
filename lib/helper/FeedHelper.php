@@ -1,6 +1,7 @@
 <?php
 
 use_helper('Global');
+
 function include_feeds()
 {
 	$type = 'rss';
