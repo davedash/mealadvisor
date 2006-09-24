@@ -1,0 +1,14 @@
+<?xml version="1.0" ?>
+<Links>
+	<Link>
+		<URL>http://reviewsby.us</URL>
+		<Text>Test Link Ad</Text>
+		<BeforeText></BeforeText>
+		<AfterText></AfterText>
+		<RssText></RssText>
+		<RssBeforeText></RssBeforeText>
+		<RssAfterText></RssAfterText>
+		<RssPrefix></RssPrefix>
+		<RssMaxAds></RssMaxAds>
+	</Link>
+</Links>

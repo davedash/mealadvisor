@@ -18,22 +18,7 @@
 </head>
 <body>
 	<div class="ad" id="link_unit_1">
-		<script type="text/javascript"><!--
-		google_ad_client = "pub-2985200403633756";
-		google_alternate_color = "222222";
-		google_ad_width = 728;
-		google_ad_height = 15;
-		google_ad_format = "728x15_0ads_al";
-		google_ad_channel ="5880657334";
-		google_color_border = "222222";
-		google_color_bg = "222222";
-		google_color_link = "307ABF";
-		google_color_text = "EEEEEE";
-		google_color_url = "307ABF";
-		//--></script>
-		<script type="text/javascript"
-		  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
-		</script>
+		<?php tla_ads() ?>
 	</div>
 	<div id="search_bar" style="">
 		<?php echo include_partial('restaurant/search') ?>
