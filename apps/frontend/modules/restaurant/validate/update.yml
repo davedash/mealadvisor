@@ -11,4 +11,9 @@ nameValidator:
   class: restaurantNameValidator
   param:
     name_error: This restaurant with this name already exists.  Choose a more specific name.
-    
+
+
+fillin:
+  activate: on   # activate the form repopulation
+  param:
+    name: add   # name of the form
