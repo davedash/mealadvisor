@@ -532,8 +532,6 @@ label u {
 
 input, select, textarea {
   font-family: Tahoma, Arial, sans-serif;
-  font-size: 70%;
-  color: #000000;
 }
 
 textarea {
@@ -671,7 +669,6 @@ form div.error p.error {
 }
 
 form div input, form div select, form div textarea {
-  width: 200px;
   padding: 1px 3px;
   margin: 0px 0px 0px 0px;
 }
