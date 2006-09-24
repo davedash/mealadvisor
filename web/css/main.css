@@ -804,3 +804,8 @@ form div.wide small {
   margin: 0px 0px 5px 0px;
 }
 /* /Forms */
+    
+.item_info 
+{
+  margin-right: 100px;
+}

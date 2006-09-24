@@ -76,11 +76,12 @@
 		<?php foreach ($restaurant->getMenuItems() as $m): ?>
 		<li class="menuitem">
 			<div class="rater" id="<?php echo $m->getStrippedTitle() ?>_rating"><?php echo include_partial('menuitem/jointRater', array('menuitem' => $m ));?></div>
+			<div class="item_info">
+				<h3><?php echo link_to_menuitem($m); ?></h3>
 			
-			<h3><?php echo link_to_menuitem($m); ?></h3>
-			
-			<?php echo $m->getHtmlDescription() ?>
-			<?php echo include_partial('menuitem/tags', array('menu_item' => $m,'add' => false  ));?>
+				<?php echo $m->getHtmlDescription() ?>
+				<?php echo include_partial('menuitem/tags', array('menu_item' => $m,'add' => false  ));?>
+			</div>
 		</li>
 		<?php if (!$ad_placed && !mt_rand(0,2)): 
 			$ad_placed = true;
