@@ -1,5 +1,5 @@
 <?php use_helper('Validation');?>
-<?php echo form_tag(sfRouting::getInstance()->getCurrentInternalUri(true), 'id=feedback_error name=feedback') ?>
+<?php echo form_tag(sfRouting::getInstance()->getCurrentInternalUri(true), 'id=feedback_error name=feedback class=stylized') ?>
 <fieldset>
 	<div class="required">
 		  <?php echo form_error('from') ?>

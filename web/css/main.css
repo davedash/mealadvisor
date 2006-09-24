@@ -668,7 +668,8 @@ form div.error p.error {
   color: #ff0000;
 }
 
-form div input, form div select, form div textarea {
+form.stylized div input, form.stylized div select, form.stylized div textarea {
+  width: 200px;
   padding: 1px 3px;
   margin: 0px 0px 0px 0px;
 }
