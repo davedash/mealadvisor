@@ -42,6 +42,7 @@ class menuitem_imageActions extends myActions
 	{
 		$this->restaurant = RestaurantPeer::retrieveByStrippedTitle($this->getRequestParameter('restaurant'));
 		$this->menu_item = MenuItemPeer::retrieveByStrippedTitle($this->restaurant, $this->getRequestParameter('stripped_title'));
+		$this->forward404Unless($this->menu_item instanceof MenuItem);
 		
 		if ($this->isPost()) 
 		{
@@ -69,5 +70,12 @@ class menuitem_imageActions extends myActions
 		}
 		
 	}
-	
+
+	public function handleErrorAdd()
+	{
+			$this->restaurant = RestaurantPeer::retrieveByStrippedTitle($this->getRequestParameter('restaurant'));
+			$this->menu_item = MenuItemPeer::retrieveByStrippedTitle($this->restaurant, $this->getRequestParameter('stripped_title'));
+			$this->forward404Unless($this->menu_item instanceof MenuItem);
+		return sfView::SUCCESS; 
+	}
 }
