@@ -11,3 +11,6 @@ all:
   yahoo:
     app_id: reviewsby.us
     geocode: http://api.local.yahoo.com/MapsService/V1/geocode
+  sf_guard_plugin:
+    profile_class: Profile
+    profile_field_name: userid

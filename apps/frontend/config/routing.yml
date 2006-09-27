@@ -74,9 +74,6 @@ restaurant_add:
 restaurant_add_comment:
   url: /restaurant/:stripped_title/review
   param: { module: restaurant, action: addComment }
-login:
-  url: /login
-  param: { module: user, action: login}
 # default rules
 user:
   url:   /user/:action/*
@@ -114,6 +111,25 @@ location_add:
 restaurant_index:
   url: /restaurant
   param: {module: restaurant, action: index}
+
+openid_signin:
+  url:  /openid
+  param: { module: openid, action: signin }
+
+openid_finishauth:
+  url: /openid/finish
+  param: { module: openid, action: finishAuth}
+sf_guard_signin:
+  url:   /login
+  param: { module: sfGuardAuth, action: signin }
+
+sf_guard_signout:
+  url:   /logout
+  param: { module: sfGuardAuth, action: signout }
+
+sf_guard_password:
+  url:   /request_password
+  param: { module: sfGuardAuth, action: password }
 homepage:
   url:   /
   param: { module: default, action: index }

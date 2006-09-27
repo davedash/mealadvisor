@@ -23,26 +23,30 @@ test:
     etag:                   off
 
 all:
-#  .actions:
+
+  .actions:
+    login_module:           sfGuardAuth
+    login_action:           signin
+
+    secure_module:          sfGuardAuth
+    secure_action:          signin
+
 #    default_module:         default
 #    default_action:         index
 #
 #    error_404_module:       default
 #    error_404_action:       error404
 #
-#    login_module:           default
-#    login_action:           login
 #
 #    module_disabled_module: default
 #    module_disabled_action: disabled
 #
-#    secure_module:          default
-#    secure_action:          secure
 #
 #    unavailable_module:     default
 #    unavailable_action:     unavailable
 #
-#  .settings:
+  .settings:
+    activated_modules:      [default, sfGuardAuth]
 #    available:              on
 #
 #    module_accessor:        module
@@ -89,7 +93,6 @@ all:
 #
 #    use_flash:              on
 #
-#    activated_modules:      [default]
 #
 #    strip_comments:         off
 #
