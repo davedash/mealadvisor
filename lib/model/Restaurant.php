@@ -21,7 +21,7 @@ class Restaurant extends BaseRestaurant {
 	{
 		return $this->getHtmlDescription();
 	}
-	public function getUserRating(User $u)
+	public function getUserRating(Profile $u)
 	{
 		$c = new Criteria();
 		$c->add(RestaurantRatingPeer::RESTAURANT_ID, $this->getId());
@@ -234,7 +234,7 @@ class Restaurant extends BaseRestaurant {
 		} 
 		return $tags; 
 	} 
-	public function getTagsFromUser(User $u)
+	public function getTagsFromUser(Profile $u)
 	{
 		$c = new Criteria();
 		$c->add(RestaurantTagPeer::RESTAURANT_ID, $this->getId()); 

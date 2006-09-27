@@ -9,7 +9,7 @@ function tags_for_menuitem($menu_item, $max = 5)
 	return implode(' + ', $tags); 
 } 
 
-function tags_for_menuitem_from_user($menu_item, User $u) 
+function tags_for_menuitem_from_user($menu_item, Profile $u) 
 { 
 	use_helper('Javascript');
 	$tags = array(); 

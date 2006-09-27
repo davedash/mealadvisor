@@ -1,28 +1,15 @@
 propel: 
-  user: 
-    _attributes: 
-      phpName: User
+  profile: 
+    _attributes: {phpName: Profile}
     id: 
-    userid: 
-      type: varchar
-      size: 255
-    email: 
-      type: varchar
-      size: 128
-    password_md5: 
-      type: varchar
-      size: 32
-    open_id: 
-      type: boolean
+    userid: { type: integer, index: unique }
+    email: varchar(128)
+    openid: varchar(255)
     updated_at: 
     created_at: 
   restaurant: 
-    _attributes: 
-      phpName: Restaurant
+    _attributes: { phpName: Restaurant }
     id: 
-      type: integer
-      primaryKey: true
-      autoIncrement: true
     name: 
       type: varchar
       size: 255
@@ -37,21 +24,16 @@ propel:
       scale: 1
     num_ratings: 
       type: integer
-    updated_at: 
-      type: TIMESTAMP
-    created_at: 
-      type: TIMESTAMP
     version_id: 
       type: integer
-      foreignTable: 0
+      foreignTable: restaurant_version
       foreignReference: id
+    updated_at: 
+    created_at: 
   restaurant_search_index: 
     _attributes: 
       phpName: RestaurantSearchIndex
     restaurant_id: 
-      type: integer
-      foreignTable: 0
-      foreignReference: id
     word: 
       type: varchar
       size: 255
@@ -78,13 +60,10 @@ propel:
     created_at: 
       type: TIMESTAMP
     restaurant_id: 
-      type: integer
-      foreignTable: 0
-      foreignReference: id
     user_id: 
       type: integer
-      onDelete: cascade
-      foreignTable: 1
+      onDelete: setnull
+      foreignTable: profile
       foreignReference: id
   location: 
     _attributes: 
@@ -93,10 +72,7 @@ propel:
       type: integer
       primaryKey: true
       autoIncrement: true
-    restaurant_id: 
-      type: integer
-      foreignTable: 0
-      foreignReference: id
+    restaurant_id:
     stripped_title: 
       type: varchar
       size: 255
@@ -118,7 +94,7 @@ propel:
     country_id: 
       type: char
       size: 2
-      foreignTable: 1
+      foreignTable: country
       foreignReference: iso
     latitude: 
       type: float
@@ -145,13 +121,7 @@ propel:
       primaryKey: true
       autoIncrement: true
     restaurant_id: 
-      type: integer
-      foreignTable: 0
-      foreignReference: id
     location_id: 
-      type: integer
-      foreignTable: 1
-      foreignReference: id
     filename: 
       type: varchar
       size: 255
@@ -176,12 +146,9 @@ propel:
       size: 255
     version_id: 
       type: integer
-      foreignTable: 0
+      foreignTable: menuitem_version
       foreignReference: id
     restaurant_id: 
-      type: integer
-      foreignTable: 1
-      foreignReference: id
     approved: 
       type: boolean
     average_rating: 
@@ -196,37 +163,19 @@ propel:
       type: TIMESTAMP
   menuitem_version: 
     id: 
-      type: integer
-      required: true
-      primaryKey: true
-      autoincrement: true
-    description: 
-      type: longvarchar
-    html_description: 
-      type: longvarchar
+    description: longvarchar
+    html_description: longvarchar
     location_id: 
-      type: integer
-      foreignTable: 0
-      foreignReference: id
-    menuitem_id: 
-      type: integer
-      foreignTable: 1
-      foreignReference: id
-    user_id: 
-      type: integer
-      foreignTable: 2
-      foreignReference: id
-    price: 
-      type: varchar
-      size: 16
+    menuitem_id: {type: integer, foreignTable: menu_item, foreignReference: id} 
+    user_id: { type: integer, foreignTable: profile, foreignReference: id }
+    price: varchar(16)
     created_at: 
-      type: TIMESTAMP
   menuitem_search_index: 
     _attributes: 
       phpName: MenuitemSearchIndex
     menuitem_id: 
       type: integer
-      foreignTable: 0
+      foreignTable: menu_item
       foreignReference: id
     word: 
       type: varchar
@@ -235,30 +184,15 @@ propel:
     weight: 
       type: integer
   restaurant_note: 
-    _attributes: 
-      phpName: RestaurantNote
+    _attributes: { phpName: RestaurantNote }
     id: 
-      type: integer
-      primaryKey: true
-      autoIncrement: true
-    user_id: 
-      type: integer
-      foreignTable: 0
-      foreignReference: id
-    note: 
-      type: longvarchar
-    html_note: 
-      type: longvarchar
     restaurant_id: 
-      type: integer
-      foreignTable: 1
-      foreignReference: id
+    user_id: { type: integer, foreignTable: profile, foreignReference: id }
+    note: longvarchar
+    html_note: longvarchar
     location_id: 
-      type: integer
-      foreignTable: 2
-      foreignReference: id
+    updated_at:
     created_at: 
-      type: TIMESTAMP
   menuitem_note: 
     _attributes: 
       phpName: MenuItemNote
@@ -267,21 +201,13 @@ propel:
       primaryKey: true
       autoIncrement: true
     menu_item_id: 
-      type: integer
-      foreignTable: 0
-      foreignReference: id
-    user_id: 
-      type: integer
-      foreignTable: 1
-      foreignReference: id
+    user_id: { type: integer, foreignTable: profile, foreignReference: id }
     note: 
       type: longvarchar
     html_note: 
       type: longvarchar
     updated_at: 
-      type: TIMESTAMP
     created_at: 
-      type: TIMESTAMP
   restaurant_rating: 
     _attributes: 
       phpName: RestaurantRating
@@ -290,18 +216,12 @@ propel:
       primaryKey: true
       autoIncrement: true
     restaurant_id: 
-      type: integer
-      foreignTable: 0
-      foreignReference: id
     value: 
       type: integer
     location_id: 
-      type: integer
-      foreignTable: 1
-      foreignReference: id
     user_id: 
       type: integer
-      foreignTable: 2
+      foreignTable: profile
       foreignReference: id
     created_at: 
       type: TIMESTAMP
@@ -313,12 +233,9 @@ propel:
       primaryKey: true
       autoIncrement: true
     menu_item_id: 
-      type: integer
-      foreignTable: 0
-      foreignReference: id
     user_id: 
       type: integer
-      foreignTable: 1
+      foreignTable: profile
       foreignReference: id
     value: 
       type: integer
@@ -326,12 +243,9 @@ propel:
       type: TIMESTAMP
   menuitem_tag: 
     menu_item_id: 
-      type: integer
-      foreignTable: 0
-      foreignReference: id
     user_id: 
       type: integer
-      foreignTable: 1
+      foreignTable: profile
       foreignReference: id
     tag: 
       type: varchar
@@ -365,18 +279,11 @@ propel:
     _attributes: 
       phpName: MenuItemImage
     id: 
-      type: integer
-      required: true
-      primaryKey: true
-      autoincrement: true
     user_id: 
       type: integer
-      foreignTable: 0
+      foreignTable: profile
       foreignReference: id
     menu_item_id: 
-      type: integer
-      foreignTable: 1
-      foreignReference: id
     data: 
       type: blob
     md5sum: 
@@ -386,12 +293,12 @@ propel:
     restaurant_id: 
       type: integer
       primaryKey: true
-      foreignTable: 0
+      foreignTable: restaurant
       foreignReference: id
     user_id: 
       type: integer
       primaryKey: true
-      foreignTable: 1
+      foreignTable: profile
       foreignReference: id
     created_at: 
       type: timestamp

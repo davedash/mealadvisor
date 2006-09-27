@@ -26,7 +26,7 @@ class MenuItem extends BaseMenuItem {
 		return $st;
 	}
 	
-	public function getUserRating(User $u)
+	public function getUserRating(Profile $u)
 	{
 		$c = new Criteria();
 		$c->add(MenuItemRatingPeer::MENU_ITEM_ID, $this->getId());
@@ -161,7 +161,7 @@ class MenuItem extends BaseMenuItem {
 		return $tags; 
 	}
 	
-	public function getTagsFromUser(User $u)
+	public function getTagsFromUser(Profile $u)
 	{
 		$c = new Criteria();
 		$c->add(MenuitemTagPeer::MENU_ITEM_ID, $this->getId()); 

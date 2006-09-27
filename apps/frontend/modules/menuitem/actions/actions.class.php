@@ -38,7 +38,7 @@ class menuitemActions extends myActions
 			if ($itemRating instanceof MenuItemRating) $itemRating->delete();
 			$itemRating = new MenuItemRating();
 			$itemRating->setMenuItem($menu_item);
-			$itemRating->setUser($this->getUser()->getUser());
+			$itemRating->setProfile($this->getUser()->getProfile());
 			$itemRating->setValue($rating);
 			$itemRating->save();
 			$this->rating = $rating;

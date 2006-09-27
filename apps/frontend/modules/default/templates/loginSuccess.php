@@ -18,7 +18,7 @@
 	</div>
 	<div id="login_openid">
 		<h2>... or sign in with openID</h2>
-		<?php echo form_tag('@login', 'id=loginform') ?>
+		<?php echo form_tag('@sf_guard_signin', 'id=loginform') ?>
 		OpenID: <?php echo input_tag('openid_url',null,'class=openid')?>
 		<?php echo input_hidden_tag('referer', $sf_params->get('referer'), 'id=referer_openid') ?>
 		<?php echo submit_tag('login') ?>

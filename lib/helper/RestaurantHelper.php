@@ -9,7 +9,7 @@ function tags_for_restaurant($restaurant, $max = 5)
 	return implode(' + ', $tags); 
 } 
 
-function tags_for_restaurant_from_user($restaurant, User $u) 
+function tags_for_restaurant_from_user($restaurant, Profile $u) 
 { 
 	use_helper('Javascript');
 	$tags = array(); 

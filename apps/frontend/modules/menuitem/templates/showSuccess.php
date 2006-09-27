@@ -84,7 +84,7 @@
 	
 </div>
 <?php else: ?>
-<div><?php echo link_to('Login', '@login') ?> and tell us what <em>you</em> think!</div>
+<div><?php echo link_to('Login', '@sf_guard_signin') ?> and tell us what <em>you</em> think!</div>
 <?php endif ?>
 <!--/review form-->
 

@@ -18,7 +18,7 @@
 </head>
 <body>
 	<div class="ad" id="link_unit_1">
-		<?php tla_ads() ?>
+		<?php tla_ads() ?> 
 	</div>
 	<div id="search_bar" style="">
 		<?php echo include_partial('restaurant/search') ?>
@@ -39,7 +39,7 @@
 	<?php endif ?>
 	
 	<?php if ($sf_user->isLoggedIn()): ?>
-	<p id="welcome">Welcome <?php echo $sf_user->getUsername() ?> (<?php echo link_to('logout', 'user/logout') ?>)</p>
+	<p id="welcome">Welcome <?php echo $sf_user->getUsername() ?> (<?php echo link_to('logout', '@sf_guard_signout') ?>)</p>
 	  
 	<?php endif ?>
 	<?php if (empty($hideLogin)): ?>
@@ -60,7 +60,7 @@
 	</div>
 	<div id="login_openid" style="display: none">
 	  <h2>sign in with openID</h2>
-	  <?php echo form_tag('@login', 'id=loginform') ?>
+	  <?php echo form_tag('@sf_guard_signin', 'id=loginform') ?>
 		OpenID: <?php echo input_tag('openid_url',null,'class=openid')?>
 	    <?php echo input_hidden_tag('referer', $sf_params->get('referer') ? $sf_params->get('referer') : $sf_request->getUri(), 'id=referer_openid') ?>
 	    <?php echo submit_tag('login') ?>
@@ -114,7 +114,7 @@
 		<?php if ($sf_user->isLoggedIn()): ?>
 		<?php echo link_to('logout', 'user/logout') ?>
 		  <?php else: ?>
-		<?php echo link_to('login', '@login')  ?> 
+		<?php echo link_to('login', '@sf_guard_signin')  ?> 
 		<?php endif ?>
 		|
 		<?php echo link_to('google co-op', 'http://google.com/coop/profile?user=015173080624703800226') ?>

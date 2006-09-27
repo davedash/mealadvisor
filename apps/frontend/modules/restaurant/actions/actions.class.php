@@ -43,7 +43,7 @@ class restaurantActions extends myActions
 			if ($restaurantRating instanceof RestaurantRating) $restaurantRating->delete();
 			$restaurantRating = new RestaurantRating();
 			$restaurantRating->setRestaurant($restaurant);
-			$restaurantRating->setUser($this->getUser()->getUser());
+			$restaurantRating->setProfile($this->getUser()->getUser());
 			$restaurantRating->setValue($rating);
 			$restaurantRating->save();
 			$this->rating = $rating;

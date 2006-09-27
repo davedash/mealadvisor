@@ -23,10 +23,10 @@ class myUsernameValidator extends sfValidator
 	public function execute (&$value, &$error)
 	{
 		$c = new Criteria();
-		$c->add(UserPeer::USERID, $value);
-		$user = UserPeer::doSelectOne($c);
+		$c->add(ProfilePeer::USERID, $value);
+		$user = ProfilePeer::doSelectOne($c);
 		
-		if ($user instanceof User)
+		if ($user instanceof Profile)
 		{
 			$error = $this->getParameterHolder()->get('username_error');
 			return false;

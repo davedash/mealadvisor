@@ -1,57 +1,40 @@
 <?php
 
-class myUser extends sfBasicSecurityUser
-{
+class myUser extends sfGuardSecurityUser {
+	
 	public function loginAs($user, $openid = false)
 	{
 		// find a matching user
 		// if none exists... create one
 		$username = null;
-		if (!($user instanceof User)) {
+		if (!($user instanceof sfGuardUser)) {
 			$username = $user;
-			$c = new Criteria();
-			$c->add(UserPeer::USERID, $user);
-			$user = UserPeer::doSelectOne($c);
+			$user = sfGuardUserPeer::retrieveByUsername($username);
 		}
-		if (!($user instanceof User)) {
-			$user = new User();
-			$user->setUserid($username);
-			$user->setOpenId($openid);
-			$user->save();
+		if (!($user instanceof sfGuardUser)) {
+			$p = new Profile();
+			$p->setUsername($username);
+			$p->setOpenId($openid);
+			$p->save();
+			$user = $p->getUser();
 		} 
-		$this->setAuthenticated(true);
-		$this->addCredential('subscriber');
-
-		$this->setAttribute('subscriber_id', $user->getId(), 'subscriber');
-		$this->setAttribute('nickname', $user->getUserid(), 'subscriber');
-		/*
-	                $userGroupRels = $user->getUserGroupRelsJoinUserGroup();
-	                foreach ($userGroupRels AS $ugr) {
-
-	                        $this->addCredential($ugr->getUserGroup()->getName());
-	                }
-	 	*/
 		
+		$this->signIn($user);
 	}
 
-	public function getUsername()
-	{
-		return $this->getAttribute('nickname', null, 'subscriber');
-	}
-	
-	public function getUser()
-	{
-		return UserPeer::retrieveByPK($this->getAttribute('subscriber_id', '', 'subscriber'));                                                                      
-	}
 	public function getId()
 	{
-		return $this->getAttribute('subscriber_id', null, 'subscriber');
-		
+		return $this->getProfile()->getId();
 	}
+	
+	public function getUser ()
+	{
+		return $this->getProfile();
+	}
+	
     public function isLoggedIn() 
     {
-		return $this->hasAttribute('nickname', 'subscriber') &&
-			$this->hasCredential('subscriber');
+		return !$this->isAnonymous();
 	}	
 }
 

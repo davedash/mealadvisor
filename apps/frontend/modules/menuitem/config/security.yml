@@ -1,6 +1,4 @@
 edit:
   is_secure: on
-  credentials: [subscriber]
 addComment:
   is_secure: on
-  credentials: [subscriber]

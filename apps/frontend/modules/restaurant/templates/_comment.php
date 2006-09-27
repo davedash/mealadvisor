@@ -1,10 +1,10 @@
 <?php use_helper('Global');?>
 
 <div class="review_block" id="comment_<?php echo $comment->getId() ?>">  
-	<p class="author"><?php echo link_to_user($comment->getUser()) ?> - <?php echo $comment->getCreatedAt('%d %B %Y') ?></p>
+	<p class="author"><?php echo link_to_user($comment->getProfile()) ?> - <?php echo $comment->getCreatedAt('%d %B %Y') ?></p>
 	<div class="review_text" id="review_text_<?php echo $comment->getId()?>"><?php echo $comment->getHtmlNote() ?></div>
 </div>
-<?php if ($comment->getUser() && $comment->getUserId() == $sf_user->getId() && time() < 181 + $comment->getCreatedAt(null) ): ?>
+<?php if ($comment->getProfile() && $comment->getUserId() == $sf_user->getProfile()->getId() && time() < 181 + $comment->getCreatedAt(null) ): ?>
 
 <?php
 if (empty($module)) {
