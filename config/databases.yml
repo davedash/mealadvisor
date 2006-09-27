@@ -2,7 +2,7 @@ dev:
   propel:
     class:          sfPropelDatabase
     param:
-      dsn:          mysql://root:@localhost/eatw_us
+      dsn:          mysql://root:@localhost/rbu
 all:
   propel:
     class:          sfPropelDatabase
