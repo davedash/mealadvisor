@@ -57,7 +57,7 @@
 	
 	function link_to_user($mixed) 
 	{
-		if ($mixed instanceof User) {
+		if ($mixed instanceof Profile) {
 			$user = $mixed;
 		} else if ($mixed instanceof myUser) {
 			$user = $mixed->getUser();
@@ -97,10 +97,13 @@
 		$arr_xml = tla_decodeXML($xml);
 
 		if ( is_array($arr_xml) ) {
-			echo "\n<ul style=\"list-style: none; margin: 0; overflow: hidden; padding: 0; border: 1px solid #000000; border-spacing: 0px; background-color: #000000; width: 100%;\">\n";
+			echo "\n<ul style=\"list-style: none; margin: 0; overflow: hidden; background-color: #222; \">\n";
+			echo "<li style=\"float: left;width: 10%\">&lt;advertisement&gt;</li>";
 			for ($i = 0; $i < count($arr_xml['URL']); $i++) {
-				echo "<li style=\"width: 25%; margin: 0; clear: none; display: inline; float: left; padding: 0;\"><span style=\"font-size: 12px; display: block; width: 100%; color: #000000; margin: 0; padding: 3px;\">".$arr_xml['BeforeText'][$i]." <a style=\"color: #0066CC; font-size: 12px;\" href=\"".$arr_xml['URL'][$i]."\">".$arr_xml['Text'][$i]."</a> ".$arr_xml['AfterText'][$i]."</span></li>\n";
+				echo "<li style=\"width: 20%; margin: 0; clear: none; display: inline; float: left; padding: 0;\"><span style=\"font-size: 12px; display: block; width: 100%; color: #000000; margin: 0; padding: 3px;\">".$arr_xml['BeforeText'][$i]." <a style=\"color: #0066CC; font-size: 12px;\" href=\"".$arr_xml['URL'][$i]."\">".$arr_xml['Text'][$i]."</a> ".$arr_xml['AfterText'][$i]."</span></li>\n";
 			}
+			echo "<li style=\"float: right;width: 10%\">&lt;/advertisement&gt;</li>";
+			
 			echo "</ul>";
 		}
 
