@@ -5,6 +5,7 @@ propel:
     userid: { type: integer, index: unique }
     email: varchar(128)
     openid: varchar(255)
+    preferences: longvarchar
     updated_at: 
     created_at: 
   restaurant: 
