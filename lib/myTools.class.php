@@ -73,11 +73,7 @@ class myTools
 		$url = sfConfig::get('app_yahoo_geocode');
 		
 		$query['appid'] = sfConfig::get('app_yahoo_app_id');
-		/*$query['street'] = $address;
-		$query['city'] = $city;
-		$query['state'] = $state;
-		$query['zip'] = $zip;
-		*/
+	
 		$query['location'] = "$address, $city, $state, $zip, $country";
 		$query['output'] = 'php'; 
 	
@@ -91,6 +87,43 @@ class myTools
 			return $response['ResultSet']['Result'];
 		}
 		return null;
+	}
+	
+	public static function getLatLngOne($address, $city = null, $state = null, $zip = null, $country = null)
+	{
+		$latLngs = myTools::getLatLng($address, $city, $state, $zip, $country);
+		if (myTools::is_associative_array($latLngs)) {
+			return $latLngs;
+		} 
+		else if (array_key_exists(0, $latLngs)){
+			return $latLngs[0];
+		}
+	}
+	
+	public static function getNormalizedLocation($assoc)
+	{
+		$location = null;
+		switch($assoc['precision']) {
+			case 'city':
+				$location = "{$assoc['City']}, {$assoc['State']}";
+				break;
+			default:
+				$a = array();
+				array_push($a,$assoc['City']);
+				
+				array_push($a,$assoc['State']);
+				array_push($a,$assoc['Zip']);
+				
+				array_push($a,$assoc['Country']);
+				$location = join(' ', $a);
+				break;
+		}
+		
+		return array($assoc['precision'], $location);
+	}
+	public static function is_associative_array( $var ) {
+
+	   return is_array( $var ) && !is_numeric( implode( array_keys( $var ) ) );
 	}
 }
 
