@@ -8,6 +8,10 @@ all:
     title_weight:        2
     tag_weight:          3
     results_max:         10
+    default_radius:      50
+    city_radius:         25
+    restaurant_index_file: /tmp/rbu.lucene.restaurant.index
+    
   yahoo:
     app_id: reviewsby.us
     geocode: http://api.local.yahoo.com/MapsService/V1/geocode

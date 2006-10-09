@@ -16,11 +16,13 @@ require_once 'lib/model/om/BaseRestaurant.php';
  */	
 class Restaurant extends BaseRestaurant {
 	private $newVersion;
-	
+ 	private $reindex = false;
+
 	public function getFeedDescription ()
 	{
 		return $this->getHtmlDescription();
 	}
+
 	public function getUserRating(Profile $u)
 	{
 		$c = new Criteria();
@@ -31,13 +33,13 @@ class Restaurant extends BaseRestaurant {
 		if ($rating instanceof RestaurantRating) return $rating->getValue();
 		return;
 	}
-	
-	
+		
 	public function getAverageRating() {
 		$rating = parent::getAverageRating();
 		
 		return $rating ? $rating : 0;
 	}
+	
 	public function getHashedId()
 	{
 		return md5('restaurant:'.$this->getId());
@@ -47,15 +49,19 @@ class Restaurant extends BaseRestaurant {
 	{
 		return $this->getRestaurantNotes();
 	}
+	
 	public function setName($v)
 	{
 		parent::setName($v);
 		$this->setStrippedTitle(myTools::stripText($v));
+		$this->reindex = true;
 	}
+	
 	public function getStripped_Title()
 	{
 		return $this->getStrippedTitle();
 	}
+	
 	public function __toString()
 	{
 		return $this->getName();
@@ -68,6 +74,7 @@ class Restaurant extends BaseRestaurant {
 		}
 		return null;
 	}
+	
 	public function getHtmlDescription()
 	{
 		if ($this->getRestaurantVersion()) {
@@ -96,6 +103,7 @@ class Restaurant extends BaseRestaurant {
 		$version = $this->getNewVersion();
 		$version->setDescription($v);
 	}
+	
 	public function getNewVersion()
 	{
 		if (!($this->newVersion instanceof RestaurantVersion)) {
@@ -109,8 +117,6 @@ class Restaurant extends BaseRestaurant {
 		
 		return $this->newVersion;
 	}
-
-	
 	
 	public function getUrl()
 	{
@@ -140,7 +146,7 @@ class Restaurant extends BaseRestaurant {
 
 	    $ret = parent::save($con);
 	    $this->updateSearchIndex();
-
+	
 	    $con->commit();
 
 	    return $ret;
@@ -150,8 +156,94 @@ class Restaurant extends BaseRestaurant {
 	    $con->rollback();
 	    throw $e;
 	  }
+	
 	}
 
+	public function index()
+	{
+		require_once 'Zend/Search/Lucene.php';
+		$index = new Zend_Search_Lucene(sfConfig::get('app_search_restaurant_index_file'));
+		// first find any references to this user and delete them
+		$hits = $index->find('restaurantid:'. $this->getId());
+		foreach ($hits AS $hit) {
+			$index->delete($hit->id);
+		}
+
+		$doc = $this->generateZSLDocument();
+		$index->addDocument($doc);
+		$index->commit();
+	}
+	
+	public function generateZSLDocument ()
+	{
+
+	    require_once 'Zend/Search/Lucene.php';
+	    $doc = new Zend_Search_Lucene_Document();
+		$doc = new Zend_Search_Lucene_Document();
+
+		$doc->addField(Zend_Search_Lucene_Field::UnIndexed('restaurantid', $restaurant->getId()));
+
+		$name = iconv('UTF-8', 'ASCII//TRANSLIT', $restaurant->getName());
+
+		$doc->addField(Zend_Search_Lucene_Field::Keyword('name', $name));
+		$doc->addField(Zend_Search_Lucene_Field::Text('tag', join(' ', $restaurant->getTags())));
+
+		$comments = $restaurant->getRestaurantNotes();
+		$commentString = '';
+		foreach ($comments AS $comment)
+		{
+			$commentString .= ' ' . $comment->getNote();
+		}
+
+		$commentString = iconv('UTF-8', 'ASCII//TRANSLIT', $commentString);
+
+		$doc->addField(Zend_Search_Lucene_Field::Text('comment', trim($commentString)));
+
+		$menu_items = $restaurant->getMenuItems();
+		$menuString = '';
+		foreach ($menu_items AS $item)
+		{
+			$menuString .= ' ' . $item->getName();
+		}
+
+		$menuString = iconv('UTF-8', 'ASCII//TRANSLIT', $menuString);
+		$doc->addField(Zend_Search_Lucene_Field::Text('menu', trim($menuString)));
+
+		// build contents
+		// importance : 
+
+
+		$contents = str_repeat(' ' . $name, sfConfig::get('app_search_restaurant_title_weight',5));
+
+		$contents .= str_repeat(' ' . join(' ', $restaurant->getTags()), sfConfig::get('app_search_restaurant_tag_weight',4));
+		$contents .= str_repeat($menuString, sfConfig::get('app_search_restaurant_menu_weight',3));
+		$contents .= str_repeat(' ' . $restaurant->getDescription(), sfConfig::get('app_search_restaurant_description_weight',2));
+
+		$contents .= str_repeat($commentString, sfConfig::get('app_search_restaurant_comment_weight',1));
+
+
+		// get locations if there are any and for each location add a document, otherwise just add the document as is
+		$locations = $restaurant->getLocations();
+		if (count($locations)) {
+			foreach ($locations AS $location ) {
+				$contents .= str_repeat($location->__toString(), sfConfig::get('app_search_restaurant_location_weight',1));
+
+				$doc->addField(Zend_Search_Lucene_Field::UnIndexed('locationid', $location->getId()));
+
+				$doc->addField(Zend_Search_Lucene_Field::Keyword('latitude', $location->getLatitude()));
+				$doc->addField(Zend_Search_Lucene_Field::Keyword('longitude', $location->getLongitude()));
+				$index->addDocument($doc);
+
+			}
+		} 
+
+		$doc->addField(Zend_Search_Lucene_Field::Unstored('contents', $contents));
+
+		$contents = iconv('UTF-8', 'ASCII//TRANSLIT', $contents);
+	    return $doc;
+	}
+	
+	
 	public function updateSearchIndex()
 	{
 	  // delete existing SearchIndex entries about the current question

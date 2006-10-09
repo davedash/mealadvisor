@@ -1,5 +1,9 @@
  
 <h2>restaurants matching "<?php echo htmlspecialchars($sf_params->get('search')) ?>"</h2>
+<?php if (!empty($search_location)): ?>
+  <p>Within <?php echo $radius ?> miles of <?php echo $search_location ?>.</p>
+<?php endif ?>
+
 <ul class="restaurants">
 <?php foreach($restaurants as $restaurant): ?>
 	

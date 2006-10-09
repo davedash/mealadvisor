@@ -15,6 +15,7 @@ require_once 'lib/model/om/BaseLocation.php';
  * @package model
  */	
 class Location extends BaseLocation {
+	public $search_distance = null;
 	
 	public function toLargeString ()
 	{

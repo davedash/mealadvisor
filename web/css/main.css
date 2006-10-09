@@ -61,7 +61,8 @@ body {
   height: 2.2em;
 
   background: #222;
-  color: #ccc;
+  color: #fff;
+  letter-spacing: .1em;
   font: 12px Tahoma;
   text-align: center;
 }

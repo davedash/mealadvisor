@@ -107,7 +107,10 @@ location:
 location_add:
   url: /restaurant/:restaurant/add/location
   param: { module: location, action: edit }
-  
+
+restaurant_reindex:
+  url: /reindex
+  param: {module: restaurant, action: reindex}
 restaurant_index:
   url: /restaurant
   param: {module: restaurant, action: index}

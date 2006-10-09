@@ -1,6 +1,7 @@
 <?php use_helper('Validation') ?>
 <h2>Login</h2>
 
+<p>If you would like to be a reviewer <?php echo link_to('sign up now', '@register') ?>!</p>
 <?php echo form_tag('@sf_guard_signin') ?>
 
   <fieldset>
