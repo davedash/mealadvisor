@@ -17,6 +17,7 @@ require_once 'lib/model/om/BaseLocation.php';
 class Location extends BaseLocation {
 	public $search_distance = null;
 	
+	
 	public function toLargeString ()
 	{
 		$l = array();
@@ -47,6 +48,16 @@ class Location extends BaseLocation {
 		
 	}
 	
+	public function getFullAddress($format = '%a, %c, %s, %z', $options = null)
+	{
+		$str = $format;
+		$str = str_replace('%a', $this->getAddress(), $str);
+		$str = str_replace('%c', $this->getCity(), $str);
+		$str = str_replace('%s', $this->getState(), $str);
+		$str = str_replace('%z', $this->getZip(), $str);
+		$str = trim($str, ' ,');
+		return $str;
+	}
 	public function save($con = null)
 	{
 		if ($this->getName())

@@ -10,10 +10,13 @@ require_once('myActions.class.php');
 */
 class menuitem_imageActions extends myActions
 {
-	/**
-	* Executes index action
-	*
-	*/
+	public function executeShow()
+	{
+		$c = new Criteria();
+		$c->add(MenuItemImagePeer::MD5SUM, $this->getRequestParameter('hash'));
+		$this->image = MenuItemImagePeer::doSelectOne($c);
+		
+	}
 	public function executeShowImageForItem()
 	{
 		$menu_item = MenuItemPeer::retrieveByHash($this->getRequestParameter('hashed_id'));

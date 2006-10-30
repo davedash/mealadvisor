@@ -15,6 +15,15 @@ require_once 'lib/model/om/BaseMenuItemNote.php';
  * @package model
  */	
 class MenuItemNote extends BaseMenuItemNote {
+	
+	public function getExcerpt()
+	{
+		require_once('symfony/helper/TextHelper.php');
+		$e = $this->getHtmlNote();
+		$e = strip_tags($e);
+		return truncate_text($e, 200);
+		
+	}
 	public function setNote($v)
 	{
 	  parent::setNote($v);

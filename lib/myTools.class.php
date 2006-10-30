@@ -100,6 +100,29 @@ class myTools
 		}
 	}
 	
+	public static function getNearness($location)
+	{
+		$near = myTools::getLatLngOne($location);
+
+		list($precision, $search_location) = myTools::getNormalizedLocation($near);
+
+		$radius = sfConfig::get('app_search_default_radius');
+
+		switch($precision)
+		{
+			case 'zip':
+				$radius = sfConfig::get('app_search_zip_radius',20);
+				break;
+			case 'city':
+				$radius = sfConfig::get('app_search_city_radius',25);
+				break;
+			case 'address':
+				$radius = sfConfig::get('app_search_address_radius',15);
+				break;
+		}
+		return array($search_location, $near, $radius);
+	}
+	
 	public static function getNormalizedLocation($assoc)
 	{
 		$location = null;

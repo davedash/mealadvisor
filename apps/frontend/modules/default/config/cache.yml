@@ -1,0 +1,6 @@
+_header:
+  activate: on
+
+all:
+  activate: off
+  lifetime:   86400

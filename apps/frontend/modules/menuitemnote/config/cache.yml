@@ -1,0 +1,4 @@
+_latest:
+  activate: on
+all:
+  activate: off

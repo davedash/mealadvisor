@@ -1,6 +1,6 @@
 menu_item_image:
-  url: /menuitem_image/:hashed_id
-  param: {module: menuitem_image, action: showImageForItem }
+  url: /menuitem_image/:hash
+  param: {module: menuitem_image, action: show }
 menu_item_image_add:
   url: /restaurant/:restaurant/menu/:stripped_title/add/image
   param: { module: menuitem_image, action: add }

@@ -7,7 +7,7 @@
 
 <div id="subnav">
 		<?php if ($restaurant->getUrl()): ?>
-		<?php echo link_to($restaurant->getName() . ' website',$restaurant->getUrl())?>
+			<?php echo link_to($restaurant->getName() . ' website',$restaurant->getUrl())?>
 		<?php endif ?>
 		
 		<?php echo link_to_function($num_locations . ' ' . pluralize($num_locations, 'location'),
@@ -16,14 +16,15 @@
 
 <div class="description">
 	<?php if ($restaurant->getHtmlDescription()): ?>
-	<?php echo $restaurant->getHtmlDescription() ?>
-	<?php if ($sf_user->isLoggedIn()): ?>
-	<?php echo link_to('change description', '@restaurant_edit_description?stripped_title=' . $restaurant->getStrippedTitle()) ?>
+		<?php echo $restaurant->getHtmlDescription() ?>
+		<?php if ($sf_user->isLoggedIn()): ?>
+			<?php echo link_to('change description', '@restaurant_edit_description?stripped_title=' . $restaurant->getStrippedTitle()) ?>
 	  
-	<?php endif ?>
+		<?php endif ?>
 	<?php else:?>
-	<p>No description is available for this restaurant.  <?php echo link_to('Write one', '@restaurant_edit_description?stripped_title=' . $restaurant->getStrippedTitle()) ?>?</p>
+		<p>No description is available for this restaurant.  <?php echo link_to('Write one', '@restaurant_edit_description?stripped_title=' . $restaurant->getStrippedTitle()) ?>?</p>
 	<?php endif ?>
+
 	<div id="<?php echo $restaurant->getStrippedTitle() .'_tags' ?>"> 
 		<?php echo include_partial('restaurant/tags', array('restaurant' => $restaurant, 'add' => true));?>
 	</div>
@@ -31,19 +32,20 @@
 
 <?php if ($sf_user->isLoggedIn()): ?>
   
-<?php echo form_remote_tag(array( 
-	'url'    => '@restaurant_tag_add', 
-	'update' => $restaurant->getStrippedTitle() .'_tags',
-	'complete' => "$('tag').value = ''; " . visual_effect('highlight',$restaurant->getStrippedTitle() .'_tags')
+	<?php echo form_remote_tag(array( 
+		'url'    => '@restaurant_tag_add', 
+		'update' => $restaurant->getStrippedTitle() .'_tags',
+		'complete' => "$('tag').value = ''; " . visual_effect('highlight',$restaurant->getStrippedTitle() .'_tags')
 	))?>
-	<div>
-	Tag: 
+	
+		<div>
+			Tag: 
 
-		<?php echo input_hidden_tag('restaurant', $restaurant->getStrippedTitle()) ?> 
-		<?php echo input_auto_complete_tag('tag', '', '@tag_autocomplete', 'autocomplete=on', array('use_style'=>true, 'tokens'=> ' '));?>
-		<?php echo submit_tag('Tag') ?> 
-	</div>  
-</form>
+			<?php echo input_hidden_tag('restaurant', $restaurant->getStrippedTitle()) ?> 
+			<?php echo input_auto_complete_tag('tag', '', '@tag_autocomplete', 'autocomplete=on', array('use_style'=>true, 'tokens'=> ' '));?>
+			<?php echo submit_tag('Tag') ?> 
+		</div>  
+	</form>
 
 <?php endif ?>
 

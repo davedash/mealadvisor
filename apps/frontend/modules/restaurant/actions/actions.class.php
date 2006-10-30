@@ -61,29 +61,16 @@ class restaurantActions extends myActions
 		$location = $this->getRequestParameter('location');
 		
 		if ($location == 'Anywhere') $location = null;
-		
-		if ($location) {
-			$this->near = myTools::getLatLngOne($location);
-			list($precision, $this->search_location) = myTools::getNormalizedLocation($this->near);
-			$this->radius = sfConfig::get('app_search_default_radius');
-			switch($precision)
-			{
-				case 'city':
-					$this->radius = sfConfig::get('app_search_city_radius',25);
-					break;
-				case 'address':
-					$this->radius = sfConfig::get('app_search_address_radius',15);
-					break;
-			}
-			$this->getUser()->setPreference('location',$location);
-		} 
+
 		
 		$this->getResponse()->setTitle('Search for \'' . $this->getRequestParameter('search') . '\' &laquo; ' . sfConfig::get('app_title'), true);
 		
 		if ($query)
 		{
 			if ($location) {
-				$this->locations = LocationPeer::search($query, $this->near,$this->radius, $this->getRequestParameter('search_all', false), ($this->getRequestParameter('page', 1) - 1) * sfConfig::get('app_search_results_max'), sfConfig::get('app_search_results_max'));
+				$this->locations = LocationPeer::getNear($location, $query);
+				$this->getUser()->setPreference('location',$location);
+				list($this->search_location, $this->near, $this->radius) = myTools::getNearness($location);
 				return 'LocationSuccess';
 			}
 			else {

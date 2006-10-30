@@ -71,7 +71,7 @@ all:
 #
 #    suffix:                 .
 #
-#    standard_helpers:       [Partial, Cache, Form]
+    standard_helpers:       [Partial, Cache, Form, Global]
 #
 #    max_forwards:           5
 #

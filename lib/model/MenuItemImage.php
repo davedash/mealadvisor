@@ -15,5 +15,25 @@ require_once 'lib/model/om/BaseMenuItemImage.php';
  * @package model
  */	
 class MenuItemImage extends BaseMenuItemImage {
-
+	public function getScaledDimensions ($options = array())
+	{
+		$h = $this->getHeight();
+		$w = $this->getWidth();
+		
+		if (isset($options['longest_side'])) {
+			if ($this->isPortrait()) {
+				$h = $options['longest_side'];
+				$w = $h * $this->getWidth()/ $this->getHeight();
+			} else {
+				$w = $options['longest_side'];
+				$h = $w * $this->getHeight()/$this->getWidth();
+			}
+		}
+		return array($h, $w);
+	}
+	
+	public function isPortrait ()
+	{
+		return ($this->getHeight() > $this->getWidth());
+	}
 } // MenuItemImage

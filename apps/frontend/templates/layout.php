@@ -25,7 +25,14 @@
 
 		<div id="top_menu">
 			<?php echo link_to('home', '@homepage') ?>
+			| <?php if ($sf_user->isLoggedIn()): ?>
+			<?php echo link_to('logout', 'user/logout') ?>
+			<?php else: ?>
+			<?php echo link_to('login', '@sf_guard_signin')  ?> 
+			<?php endif ?>
 			| <?php echo link_to('add restaurant', '@restaurant_add') ?>
+			| <?php echo link_to('about' , '@about') ?>
+			
 		</div>
 	</div>
 	
@@ -113,7 +120,7 @@
 	<div id="footer">
 		<?php if ($sf_user->isLoggedIn()): ?>
 		<?php echo link_to('logout', 'user/logout') ?>
-		  <?php else: ?>
+		<?php else: ?>
 		<?php echo link_to('login', '@sf_guard_signin')  ?> 
 		<?php endif ?>
 		|

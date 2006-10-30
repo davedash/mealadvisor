@@ -17,6 +17,15 @@ require_once 'lib/model/om/BaseMenuItem.php';
 class MenuItem extends BaseMenuItem {
 	private $newVersion;
 	
+	public function getVisibleImage ()
+	{
+		$c = new Criteria();
+		$c->add(MenuItemImagePeer::MENU_ITEM_ID, $this->getId());
+		
+		$image = MenuItemImagePeer::doSelectOne($c);
+		
+		return $image;
+	}
 	
 	public function __toString ()
 	{

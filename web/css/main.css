@@ -1,64 +1,45 @@
-#rss_info ul {
-  clear: both;
-  padding: 0;
-  
-  margin: 0;
-  list-style: none;
-  font: x-small Arial;
-}
-
-#rss_info li {
-  display: inline;
-  margin-right: 1em;
-}
-
-.food_foto {
-  float: right;
-}
-
-.food_foto .caption {
-  font: x-small Arial;
-}
-
-.editable, .edit_control, .inplaceeditor-form .editor_ok_button,
-.inplaceeditor-form .editor_cancel  {
-  background: #ffc !important;
-}
-
-.inplaceeditor-form textarea { width: 99%; }
-
-.editable .edit_control {
-  border: solid 1px #666;
-  float: left;
-  margin: 0;
-  border-top: #666 1px dotted;
-  text-decoration: underline;
-  color: blue;
-  margin-left: -8px;
-  padding: 0 1em .2em;
-  font: small Arial;
-}
-
-
-.inplaceeditor-form .editor_ok_button,
-.inplaceeditor-form .editor_cancel {
-  font: small Arial;
-}
-
-
+/* home */
 
 body {
   text-align: center;
-  font-family: Tahoma, Arial, sans-serif;
+  font-family:  Arial, sans-serif; 
   margin: 0;
   background: white;
 }
 
+img {
+  border: none;
+}
+
+p.description {
+  margin-top: 0;
+  font-size: x-small;
+}
+
+ul.locations, ul.menuitems, ul.bulletless {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+.boxes .box {
+  border-top: 4px solid #222;
+  padding: 0 1%;
+  clear:  both;
+  margin-bottom:  10px;
+}
+.boxes h2 {
+  padding: 3px 0pt 0px;
+  margin: 0;
+  font: 17px Tahoma, Arial, sans-serif;
+  color: #222;
+  
+}
+
 #search_bar {
   position: relative;
-  margin-bottom: 1em;
-  padding: 0.6em;
-  height: 2.2em;
+  margin-bottom: 10px;
+  height: 35px;
 
   background: #222;
   color: #fff;
@@ -69,86 +50,70 @@ body {
 
 #search_bar #search_form {
   position: absolute;
-  left: 5%;
-  top: .6em;
+  left: 10px;
+  top: 5px;
   text-align: left;
 }
 
 #top_menu {
   position: absolute;
-  right: 5%;
-  top: .6em;
+  right: 10px;
+  top: 5px;
   text-align: right;
 }
-img {
-  border: none;
-}
 
-a:link {
+#search_bar a, #footer a {
   color: #307ABF;
-}
-.menuitems p {
-  margin:0;
-}
-ul.locations, ul.menuitems {
-
-  margin: 0;
-  padding: 0;
-  list-style-type: none;
-}
-li h3 { 
-  border-color: #d6d6d6; 
-  font: normal 22px Georgia, Times, serif; 
-  color: #06c; 
-  margin: 0;
-}
-h3 em, h2 em, h1 em {
-  color: #444;
-  font-family: Trebuchet MT, Arial, sans-serif;
-  font-size: small;
-  font-style: normal;
-}
-.short_desc {
-  font-size: small;
-  color: #333;
-  margin: 0 1em;
-}
-img.mini_action {
-  margin: 0 2px 2px 0;
-
-
+  text-decoration: none;
+  border-bottom: solid 1px;
 }
 
-.menuitem p {
-  margin: 0;
-}
-
-#subnav {
-  border-top: 4px solid rgb(51, 51, 51);
-  border-bottom: 1px solid rgb(153, 153, 153);
-  padding: 10px 0pt;
-  font-family: Georgia,Garamond,Times,serif;
-  font-size: 11px;
-  text-align: center;
-}
-
-#subnav a {
-  margin: 0 .5em;
-}
-.description {
-  font-family: Georgia,Garamond,Times,serif;
-
-}
 #header {
   padding: 0;
   font-size: small;
   font-weight: normal;
   border-bottom: 0px;
   text-align: center;
+  font-family: Tahoma;
 }
 
-#footer_logo {
-  text-align: right;
+#restaurant_list {
+  float: left;
+  width: 35%;
+}
+
+#restaurant_list .restaurant {
+  font-size: 14px;
+}
+
+#restaurant_list .address {
+  font-size: 12px ;
+}
+
+#features {
+  float:  left;
+  width: 35%;
+}
+
+#featured_item img {
+  float: right;
+  margin:  10px;
+}
+
+#featured_item div.description {
+  font-size: 12px ;
+}
+#cloud_box {
+  float: left;
+  width: 28%;
+}
+
+#rss_info ul {
+  clear: both;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  font-size: x-small;
 }
 
 #main {
@@ -157,136 +122,24 @@ img.mini_action {
   overflow: auto;
 }
 
-h1 {
-  font-family: Georgia,Garamond,Times,serif;
-  font-weight: normal;
-  font-size: 25px;
-  line-height: normal;
-  color: #222;
-  padding-top: 28px;
-  text-align: center;
-}
-
-h1 strong {
-  font-weight: normal;
-  color: #333;
-}
-
-
-#homepage_link {
-  float: left;
-  height: 45px;
-  width: 400px;
-}
-.box {
-  background: #FF8C01 -140px -150px;
-  width: 140px;
-  padding: 10px 5px;
-  font-size: small;
+#locations li {
+  position: relative;
   margin-bottom: 1em;
 }
 
-.box h3 {
-  margin: 0;
+#locations li .star_rating {
+  position: absolute;
+  right: 5px;
 }
 
-
-#link_unit_1 {
-  font-size:  small;
-  color:#fff;
-  background: #222;
+#locations .restaurant,
+#locations .address {
+  margin-right:110px;
 }
-
-
-#footer {
-  font: small Tahoma,sans-serif;
-  text-align: right;
-  clear: both;
-  color: #ccc;
-  background: #222;
-  padding: .6em;
-}
-
-#footer a, #search_bar a {
-  color: #307ABF;
-  text-decoration: none;
-  border-bottom: solid 1px;
-}
-#advertising {
-  text-align: center;
-}
-
-#restaurant_list {
-  float: left;
-  width: 75%;
-}
-#cloud_box {
-  float: left;
-  width: 22%;
-}
-.boxes h2 {
-  border-top: 4px solid rgb(51, 51, 51);
-  padding: 3px 0pt 15px;
-  font-size: 12px;
-  color: rgb(51, 51, 51);
-}
-em>em {
-  font-style: normal;
-}
-
-input.openid {
-  background: url(/images/openid-inputicon.gif) no-repeat;
-  background-color: #fff;
-  background-position: 0 50%;
-  padding-left: 18px;
-}
-
-fieldset {
-  border: none;
-}
-
-fieldset label {
-  display: block;
-  float: left;
-  width: 100px;
-  text-align: right;
-  margin-right: 10px;
-  font-size: small;
-  font-weight: bold;
-}
-.in_form {
-  margin-left: 110px;
-}
-
-p.information {
-  font-style: italic;
-}
-
-.review_block p.author {
-  font-style: italic;
-  font-size: smaller;
-  margin-top: 0;
-  background: #ccc;
-  padding: .2em .5em;
-}
-
-
-.review_text {
-  padding: 0 .5em;
-  font: small Arial;
-}
-
-.review_block {
-
-  border: solid 1px #666;
-  margin-bottom: 1em;
-  padding: 0;
-}
-
 
 ul.tag_cloud
 {
-  padding: 0 0 0 1em;
+  padding: 0 ;
   list-style: none;
 }
 
@@ -295,12 +148,12 @@ ul.tag_cloud li
   list-style: none;
   display: block;
   float: left;
-  margin: 1px;
+  margin: 2px;
 }
 
 ul.tag_cloud li.tag_popularity_1
 {
-  font-size: 70%;
+  font-size: 80%;
 }
 
 ul.tag_cloud li.tag_popularity_2
@@ -318,23 +171,28 @@ ul.tag_cloud li.tag_popularity_4
   font-size: 160%;
 }
 
-.menuitems {
-  overflow:auto;
-}
-.menuitems li.menuitem {
-  width: 45%;
-  float: left;
-  margin: 0 5% 1em 0;  
-  color: #222;
-  font-family: Trebuchet MT, Arial, sans-serif;
-  font-size: small;
-}
-#welcome {
-  font-size: small;
-  text-align: right;
-  margin: 0 1em;
+#latest_comments li {
+  font-size: 12px ;
 }
 
+#latest_comments .comment {
+  margin-top: 20px;
+}
+#latest_comments .meta {
+  margin-left: 20px;
+}
+
+#footer {
+  font: small Tahoma,sans-serif;
+  text-align: right;
+  clear: both;
+  color: #ccc;
+  background: #222;
+  padding: .6em;
+}
+
+/* /home */
+                      
 /* Rating */
 .star_rating{
   list-style: none;
@@ -347,12 +205,15 @@ ul.tag_cloud li.tag_popularity_4
 }
 
 .star_rating li {
-  padding:0px; margin:0px; float: left;
+  padding: 0; 
+  margin: 0;
+  float: left;
 }
+
 .star_rating li a,
 .star_rating li span {
-  display:block;
-  width:20px;
+  display: block;
+  width: 20px;
   height: 20px;
   text-decoration: none;
   z-index: 20;
@@ -360,9 +221,11 @@ ul.tag_cloud li.tag_popularity_4
   padding: 0px;
   background-image:none;
 }
+
 .star_rating .current_rating {
   background: url(/images/ui/rating/orangestar.png)  left bottom repeat-x ;
 }
+
 .star_rating .joint_rating {
   background: url(/images/ui/rating/orangestar_faded.png)  left bottom repeat-x ;
   left: 0px;
@@ -420,11 +283,219 @@ ul.tag_cloud li.tag_popularity_4
   font: .7em tahoma,arial;
 }
 
-/* Rating on main pages */
-ul.restaurants .star_rating  {
+/* End Rating */
+
+ /Rating 
+
+
+#rss_info li {
+  display: inline;
+  margin-right: 1em;
+}
+
+.food_foto {
   float: right;
 }
-/* End Rating */
+
+.food_foto .caption {
+  font: x-small Arial;
+}
+
+.editable, .edit_control, .inplaceeditor-form .editor_ok_button,
+.inplaceeditor-form .editor_cancel  {
+  background: #ffc !important;
+}
+
+.inplaceeditor-form textarea { width: 99%; }
+
+.editable .edit_control {
+  border: solid 1px #666;
+  float: left;
+  margin: 0;
+  border-top: #666 1px dotted;
+  text-decoration: underline;
+  color: blue;
+  margin-left: -8px;
+  padding: 0 1em .2em;
+  font: small Arial;
+}
+
+
+.inplaceeditor-form .editor_ok_button,
+.inplaceeditor-form .editor_cancel {
+  font: small Arial;
+}
+
+a:link {
+  color: #307ABF;
+}
+.menuitems p {
+  margin:0;
+}
+li h3 { 
+  border-color: #d6d6d6; 
+  font: normal 22px Georgia, Times, serif; 
+  color: #06c; 
+  margin: 0;
+}
+h3 em, h2 em, h1 em {
+  color: #444;
+  font-family: Trebuchet MT, Arial, sans-serif;
+  font-size: small;
+  font-style: normal;
+}
+.short_desc {
+  font-size: small;
+  color: #333;
+  margin: 0 1em;
+}
+img.mini_action {
+  margin: 0 2px 2px 0;
+
+
+}
+
+.menuitem p {
+  margin: 0;
+}
+
+#subnav {
+  border-top: 4px solid rgb(51, 51, 51);
+  border-bottom: 1px solid rgb(153, 153, 153);
+  padding: 10px 0pt;
+  font-family: Georgia,Garamond,Times,serif;
+  font-size: 11px;
+  text-align: center;
+}
+
+#subnav a {
+  margin: 0 .5em;
+}
+
+#footer_logo {
+  text-align: right;
+}
+
+
+h1 {
+  font-family: Georgia,Garamond,Times,serif;
+  font-weight: normal;
+  font-size: 25px;
+  line-height: normal;
+  color: #222;
+  padding-top: 28px;
+  text-align: center;
+}
+
+h1 strong {
+  font-weight: normal;
+  color: #333;
+}
+
+
+#homepage_link {
+  float: left;
+  height: 45px;
+  width: 400px;
+}
+
+/*.box {*/
+/*  background: #FF8C01 -140px -150px;*/
+/*  width: 140px;*/
+/*  padding: 10px 5px;*/
+/*  font-size: small;*/
+/*  margin-bottom: 1em;*/
+/*}*/
+
+.box h3 {
+  margin: 0;
+}
+
+
+#link_unit_1 {
+  font-size:  small;
+  color:#fff;
+  background: #222;
+}
+
+
+
+#advertising {
+  text-align: center;
+}
+
+
+em>em {
+  font-style: normal;
+}
+
+input.openid {
+  background: url(/images/openid-inputicon.gif) no-repeat;
+  background-color: #fff;
+  background-position: 0 50%;
+  padding-left: 18px;
+}
+
+fieldset {
+  border: none;
+}
+
+fieldset label {
+  display: block;
+  float: left;
+  width: 100px;
+  text-align: right;
+  margin-right: 10px;
+  font-size: small;
+  font-weight: bold;
+}
+.in_form {
+  margin-left: 110px;
+}
+
+p.information {
+  font-style: italic;
+}
+
+.review_block p.author {
+  font-style: italic;
+  font-size: smaller;
+  margin-top: 0;
+  background: #ccc;
+  padding: .2em .5em;
+}
+
+
+.review_text {
+  padding: 0 .5em;
+  font: small Arial;
+}
+
+.review_block {
+
+  border: solid 1px #666;
+  margin-bottom: 1em;
+  padding: 0;
+}
+
+
+.menuitems {
+  overflow:auto;
+}
+.menuitems li.menuitem {
+  width: 45%;
+  float: left;
+  margin: 0 5% 1em 0;  
+  color: #222;
+  font-family: Trebuchet MT, Arial, sans-serif;
+  font-size: small;
+}
+#welcome {
+  font-size: small;
+  text-align: right;
+  margin: 0 1em;
+}
+
 ul.menuitems li {
   position: relative;
 }
@@ -811,4 +882,8 @@ form div.wide small {
 .item_info 
 {
   margin-right: 100px;
+}
+
+.ad {
+  background:  #222;
 }

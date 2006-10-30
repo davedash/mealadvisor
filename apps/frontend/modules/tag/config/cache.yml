@@ -1,0 +1,7 @@
+_popularCloud:
+  activate: on
+_popularRestaurantCloud:
+  activate: on
+all: 
+  activate: off
+  

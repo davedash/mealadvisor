@@ -3,9 +3,8 @@
 <h1><?php echo link_to_restaurant($restaurant); ?>: <strong><?php echo $menu_item->getName() ?></strong></h1>
 
 
-
 <div class="food_foto">
-	<?php echo tag('img', array('src'=>url_for('@menu_item_image?hashed_id=' . $menu_item->getHashedId()))) ?>
+	<?php echo include_partial('menuitem_image/image', array('menu_item' => $menu_item ));?>
 	<div class="caption"><?php echo link_to('Upload your own photo', '@menu_item_image_add?stripped_title=' . $menu_item->getStrippedTitle() . '&restaurant=' . $restaurant->getStrippedTitle()) ?></div>
 </div>
 

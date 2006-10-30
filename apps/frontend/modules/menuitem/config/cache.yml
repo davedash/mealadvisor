@@ -1,0 +1,4 @@
+_feature:
+  activate: on
+all:
+  activate: off

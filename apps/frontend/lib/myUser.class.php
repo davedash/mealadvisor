@@ -68,6 +68,12 @@ class myUser extends sfGuardSecurityUser {
 		return 'Anywhere';
 	}
 	
+	public function hasLocation ()
+	{
+		$location = $this->getPreference('location');
+		return $location ? true : false;
+	}
+	
 	public function getId()
 	{
 		return $this->getProfile()->getId();

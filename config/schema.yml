@@ -123,15 +123,10 @@ propel:
       autoIncrement: true
     restaurant_id: 
     location_id: 
-    filename: 
-      type: varchar
-      size: 255
-    approved: 
-      type: boolean
-    updated_at: 
-      type: TIMESTAMP
-    created_at: 
-      type: TIMESTAMP
+    filename: varchar(255)
+    approved: boolean
+    updated_at:
+    created_at:
   menu_item: 
     _attributes: 
       phpName: MenuItem
@@ -285,11 +280,10 @@ propel:
       foreignTable: profile
       foreignReference: id
     menu_item_id: 
-    data: 
-      type: blob
-    md5sum: 
-      type: varchar
-      size: 32
+    data: blob
+    md5sum: varchar(32)
+    height: integer
+    width: integer
   restaurant_tag: 
     restaurant_id: 
       type: integer
