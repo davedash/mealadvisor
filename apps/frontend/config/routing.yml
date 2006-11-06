@@ -1,3 +1,7 @@
+indexhack:
+  url: /index
+  param: { module: default, action: index }
+
 menu_item_image:
   url: /menuitem_image/:hash
   param: {module: menuitem_image, action: show }
