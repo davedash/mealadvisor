@@ -4,7 +4,7 @@
 
 
 <div class="food_foto">
-	<?php echo include_partial('menuitem_image/image', array('menu_item' => $menu_item ));?>
+	<?php echo image_for_item($menu_item, 'longest_side=240', $sf_user->getProfile());?>
 	<div class="caption"><?php echo link_to('Upload your own photo', '@menu_item_image_add?stripped_title=' . $menu_item->getStrippedTitle() . '&restaurant=' . $restaurant->getStrippedTitle()) ?></div>
 </div>
 

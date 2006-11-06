@@ -1,16 +1,4 @@
-
-
 <?php
-/**
-* Require the OpenID consumer code.
-*/
-require_once "PHP-openid-0.9.2/Auth/OpenID/Consumer.php";
-
-/**
-* Require the "file store" module, which we'll need to store OpenID
-* information.
-*/
-require_once "PHP-openid-0.9.2/Auth/OpenID/FileStore.php";
 
 /**
 * user actions.

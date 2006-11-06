@@ -15,11 +15,21 @@ require_once 'lib/model/om/BaseMenuItemImage.php';
  * @package model
  */	
 class MenuItemImage extends BaseMenuItemImage {
+	public function save($con = null)
+	{
+		$gdimg = imagecreatefromstring($this->getData()->getContents());
+		$this->setWidth(imagesx($gdimg));
+		$this->setHeight(imagesy($gdimg));
+		
+		parent::save($con);
+	}
 	public function getScaledDimensions ($options = array())
 	{
 		$h = $this->getHeight();
 		$w = $this->getWidth();
-		
+		if (!($h && $w)) {
+			return array(0, 0);
+		}
 		if (isset($options['longest_side'])) {
 			if ($this->isPortrait()) {
 				$h = $options['longest_side'];

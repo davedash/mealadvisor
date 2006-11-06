@@ -29,7 +29,7 @@ class locationActions extends sfActions
 	{
 		// build the url where we need to get redirected...
 		$this->setFlash('post_login', $this->getController()->genUrl('@location_add?restaurant=' . $this->getRequestParameter('restaurant'),1));
-		return $this->redirect('user/login');
+		return $this->redirect('@sf_guard_signin');
 	}
     $this->location = $this->getLocationOrCreate();
 	$c = new Criteria();

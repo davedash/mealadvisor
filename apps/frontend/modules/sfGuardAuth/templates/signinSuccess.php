@@ -22,8 +22,7 @@
 
   <?php echo input_hidden_tag('referer', $sf_request->getParameter('referer')) ?>
   <?php echo submit_tag('sign in') ?>
-  <?php// echo link_to('Forgot your password?', '@sf_guard_password') ?>
-
+  
 </form>
 
 <h2>Open Id sign-in</h2>

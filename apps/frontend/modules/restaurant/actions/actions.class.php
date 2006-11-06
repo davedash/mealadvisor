@@ -31,7 +31,7 @@ class restaurantActions extends myActions
 			// build the url where we need to get redirected...
 			$this->getUser()->setAttribute('post_login', 'restaurant/rate?object=' .$hash .'&rating=' .$rating);
 			$this->setFlash('use_post_login', true);
-			if(!$ajax) return $this->redirect('user/login');
+			if(!$ajax) return $this->redirect('@sf_guard_signin');
 		} 
 		else {
 			$c = new Criteria();
@@ -63,7 +63,7 @@ class restaurantActions extends myActions
 		if ($location == 'Anywhere') $location = null;
 
 		
-		$this->getResponse()->setTitle('Search for \'' . $this->getRequestParameter('search') . '\' &laquo; ' . sfConfig::get('app_title'), true);
+		$this->getResponse()->setTitle('Search for \'' . $this->getRequestParameter('search') . '\' &laquo; ' . sfConfig::get('app_title'), false);
 		
 		if ($query)
 		{
@@ -135,7 +135,7 @@ class restaurantActions extends myActions
 		$this->addFeed('@menu_item_feed?stripped_title=' . $this->restaurant->getStrippedTitle(), 'Menu items at ' . $this->restaurant->__toString());
 
 		$this->num_locations = count($this->restaurant->getLocations());
-		$this->getResponse()->setTitle($this->restaurant->__toString() . ' &laquo; ' . sfConfig::get('app_title'), true);
+		$this->getResponse()->setTitle($this->restaurant->__toString() . ' &laquo; ' . sfConfig::get('app_title'), false);
 		$this->rating = null;
 
 		if ($this->getUser()->isLoggedIn()) {
@@ -153,7 +153,7 @@ class restaurantActions extends myActions
 		{
 			// build the url where we need to get redirected...
 			$this->setFlash('post_login', $this->getController()->genUrl('@restaurant_add',1));
-			if(!$ajax) return $this->redirect('user/login');
+			if(!$ajax) return $this->redirect('@sf_guard_signin');
 		}
 		$this->restaurant = $this->getRestaurantOrCreate();
 	}

@@ -20,7 +20,7 @@
 	<div class="ad" id="link_unit_1">
 		<?php tla_ads() ?> 
 	</div>
-	<div id="search_bar" style="">
+	<div id="search_bar">
 		<?php echo include_partial('restaurant/search') ?>
 
 		<div id="top_menu">
@@ -29,9 +29,10 @@
 			<?php echo link_to('logout', 'user/logout') ?>
 			<?php else: ?>
 			<?php echo link_to('login', '@sf_guard_signin')  ?> 
+			| <?php echo link_to('register' , '@register') ?>
 			<?php endif ?>
 			| <?php echo link_to('add restaurant', '@restaurant_add') ?>
-			| <?php echo link_to('about' , '@about') ?>
+
 			
 		</div>
 	</div>

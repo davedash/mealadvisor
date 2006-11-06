@@ -17,14 +17,25 @@ require_once 'lib/model/om/BaseMenuItem.php';
 class MenuItem extends BaseMenuItem {
 	private $newVersion;
 	
-	public function getVisibleImage ()
+	public function getVisibleImage (Profile $p = null)
 	{
 		$c = new Criteria();
 		$c->add(MenuItemImagePeer::MENU_ITEM_ID, $this->getId());
+		if ($p instanceof Profile) {
+			$c2 = $c;
+			$c2->add(MenuItemImagePeer::USER_ID, $p->getId());
+			$image = MenuItemImagePeer::doSelectOne($c);
+			if ($image instanceof MenuItemImage) {
+				return $image;
+			}
+		}
 		
-		$image = MenuItemImagePeer::doSelectOne($c);
+		$images = MenuItemImagePeer::doSelect($c);
 		
-		return $image;
+		if (count($images)) {
+			shuffle($images);
+			return $images[0];
+		}
 	}
 	
 	public function __toString ()

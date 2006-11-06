@@ -1,8 +1,8 @@
 stats
 .svn
 web/uploads
-cache
-log
+/cache
+/log
 web/.htaccess
 web/cgi-bin
-web/sf
+/web/sf

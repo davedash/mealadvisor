@@ -26,7 +26,7 @@ class menuitemActions extends myActions
 			// build the url where we need to get redirected...
 			$this->getUser()->setAttribute('post_login', 'menuitem/rate?object=' .$hash .'&rating=' .$rating);
 			$this->setFlash('use_post_login', true);
-			if(!$ajax) return $this->redirect('user/login');
+			if(!$ajax) return $this->redirect('@sf_guard_signin');
 		} 
 		else {
 			$c = new Criteria();
@@ -43,7 +43,7 @@ class menuitemActions extends myActions
 			$itemRating->save();
 			$this->rating = $rating;
 
-			require_once('helper/GlobalHelper.php');
+			//require_once('helper/GlobalHelper.php');
 			if(!$ajax) return $this->redirect(url_for_menuitem($menu_item));
 		}
 		$this->menu_item = $menu_item;
@@ -75,7 +75,7 @@ class menuitemActions extends myActions
 
 
 		$this->forward404Unless($this->menu_item instanceof MenuItem);
-		$this->getResponse()->setTitle($this->menu_item->getName() . ' &laquo; ' .$this->menu_item->getRestaurant()->__toString() . ' &laquo; ' . sfConfig::get('app_title'), true);
+		$this->getResponse()->setTitle($this->menu_item->getName() . ' &laquo; ' .$this->menu_item->getRestaurant()->__toString() . ' &laquo; ' . sfConfig::get('app_title'), false);
 
 		$this->rating = null;
 
@@ -107,6 +107,7 @@ class menuitemActions extends myActions
 
 	}
 
+
 	public function executeEdit ()
 	{
 		$this->menu_item = $this->getMenuItemOrCreate();
@@ -120,7 +121,7 @@ class menuitemActions extends myActions
 		{
 			// display the form
 		
-			$this->getResponse()->setTitle('adding a new dish' . ' &laquo; ' .$this->menu_item->getRestaurant()->__toString() . ' &laquo; ' . sfConfig::get('app_title'), true);
+			$this->getResponse()->setTitle('adding a new dish' . ' &laquo; ' .$this->menu_item->getRestaurant()->__toString() . ' &laquo; ' . sfConfig::get('app_title'), false);
 				
 			return sfView::SUCCESS;
 		}	

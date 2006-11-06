@@ -1,18 +1,20 @@
 <?php
 
-	function image_for_item(MenuItem $item, $options = array())
+	function image_for_item(MenuItem $item, $options = array(), Profile $p = null)
 	{
 		$options = _parse_attributes($options);
-		$img = $item->getVisibleImage();
-		$hash = $img->getMd5Sum();
-		$img_options = array('src'=>url_for('@menu_item_image?hash=' . $img->getMd5sum()));
-		if (isset($options['longest_side'])) 
-		{
-			list($h, $w) = $img->getScaledDimensions($options);
-			$img_options['height'] = $h;
-			$img_options['width']  = $w;
+		$img = $item->getVisibleImage($p);
+		if ($img instanceof MenuItemImage) {
+			$hash = $img->getMd5Sum();
+			$img_options = array('src'=>url_for('@menu_item_image?hash=' . $img->getMd5sum()),'alt' => 'Picture of ' . $item->getName() );
+			if (isset($options['longest_side'])) 
+			{
+				list($h, $w) = $img->getScaledDimensions($options);
+				$img_options['height'] = $h;
+				$img_options['width']  = $w;
+			}
+			return tag('img', $img_options);
 		}
-		return tag('img', $img_options);
 	}
 
 	function markdown_enabled_link()
@@ -32,8 +34,9 @@
 	
 	function link_to_restaurant(Restaurant $r, $absolute = false)
 	{
-		return link_to($r->__toString(), '@restaurant?stripped_title=' . $r->getStrippedTitle(), 'absolute_url='.$absolute);
+		return link_to($r->__toString(), '@restaurant?stripped_title=' . $r->getStrippedTitle(), array('absolute_url' => $absolute));
 	}
+	
 	function link_to_menuitem(MenuItem $i)
 	{
 		return link_to(htmlentities($i->getName()), url_for_menuitem($i));

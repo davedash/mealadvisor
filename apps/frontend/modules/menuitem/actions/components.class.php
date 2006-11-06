@@ -14,7 +14,7 @@ class menuitemComponents extends sfComponents
 
 		if ($this->getUser()->isLoggedIn()) {
 			$c = new Criteria();
-			$c->add(MenuItemRatingPeer::MENU_ITEM_ID, $this->menu_item->getId());
+			$c->add(MenuItemRatingPeer::MENU_ITEM_ID, $this->item->getId());
 			$c->add(MenuItemRatingPeer::USER_ID, $this->getUser()->getId());
 			$rating = MenuItemRatingPeer::doSelectOne($c);
 			if ($rating instanceof MenuItemRating) $this->rating = $rating->getValue();

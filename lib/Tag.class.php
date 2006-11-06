@@ -35,4 +35,3 @@ class Tag
 		return $tags; 
 	} 
 } 
-?> 

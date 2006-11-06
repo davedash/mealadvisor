@@ -11,20 +11,14 @@ propel:
   restaurant: 
     _attributes: { phpName: Restaurant }
     id: 
-    name: 
-      type: varchar
-      size: 255
-    stripped_title: 
-      type: varchar
-      size: 128
-    approved: 
-      type: boolean
+    name: varchar(255)
+    stripped_title: varchar(128)
+    approved: boolean
     average_rating: 
       type: float
       size: 2
       scale: 1
-    num_ratings: 
-      type: integer
+    num_ratings: integer
     version_id: 
       type: integer
       foreignTable: restaurant_version
@@ -131,15 +125,8 @@ propel:
     _attributes: 
       phpName: MenuItem
     id: 
-      type: integer
-      primaryKey: true
-      autoIncrement: true
-    name: 
-      type: varchar
-      size: 255
-    url: 
-      type: varchar
-      size: 255
+    name: varchar(255)
+    url: varchar(255)
     version_id: 
       type: integer
       foreignTable: menuitem_version

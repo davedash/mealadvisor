@@ -36,7 +36,10 @@ class defaultActions extends sfActions
 	public function executeUpdateIndex()
 	{
 
-		$menu_item_image = MenuItemImagePeer::doSelect(new Criteria());
+		$c = new Criteria();
+		$c->add(MenuItemImage::HEIGHT, null, Criteria::ISNULL);
+		$menu_item_image = MenuItemImagePeer::doSelect($c);
+		
 		foreach ($menu_item_image AS $img) {
 			$data = $img->getData()->getContents();
 			$gdimg = imagecreatefromstring($data);

@@ -264,10 +264,11 @@ class Restaurant extends BaseRestaurant {
 
 	public function getWords()
 	{
-	  // body
-	  $raw_text =  str_repeat(' '.strip_tags($this->getDescription()), sfConfig::get('app_search_body_weight'));
-	  // title
-	  $raw_text .= str_repeat(' '.$this->getName(), sfConfig::get('app_search_title_weight'));
+		// body
+		$raw_text =  str_repeat(' '.strip_tags($this->getDescription()), sfConfig::get('app_search_body_weight'));
+		// title
+		$name = str_replace('\'', '', $this->getName());
+		$raw_text .= str_repeat(' '.$name, sfConfig::get('app_search_title_weight'));
 
 	  // title and body stemming
 	  $stemmed_words = myTools::stemPhrase($raw_text);
