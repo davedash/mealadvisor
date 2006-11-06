@@ -88,6 +88,13 @@ class myUser extends sfGuardSecurityUser {
     {
 		return !$this->isAnonymous();
 	}	
+	
+	public function getProfile()
+	{
+		if ($this->isLoggedIn()) {
+			return parent::getProfile();
+		}
+	}
 }
 
 ?>
