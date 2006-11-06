@@ -1,0 +1,292 @@
+/* home */
+body {
+text-align:center;
+font-family:Arial, sans-serif;
+background:#fff;
+margin:0
+}
+
+p.description {
+margin-top:0;
+font-size:x-small
+}
+
+ul.locations,ul.menuitems,ul.bulletless {
+list-style-type:none;
+margin:0;
+padding:0
+}
+
+.boxes .box {
+border-top:4px solid #222;
+clear:both;
+margin-bottom:10px;
+padding:0 1%
+}
+
+.boxes h2 {
+font:17px Tahoma, Arial, sans-serif;
+color:#222;
+margin:0;
+padding:3px 0 0
+}
+
+#search_bar {
+position:relative;
+margin-bottom:10px;
+height:35px;
+background:#222;
+color:#fff;
+letter-spacing:.1em;
+font:12px Tahoma;
+text-align:center
+}
+
+#search_bar #search_form {
+position:absolute;
+left:10px;
+top:5px;
+text-align:left
+}
+
+#search_form input.text
+{
+  width: 95px;
+  padding: 2px;
+  border: #666 solid 1px;
+  font-size: small;
+}
+
+#top_menu {
+position:absolute;
+right:10px;
+top:5px;
+text-align:right
+}
+
+#search_bar a,#footer a {
+color:#307ABF;
+text-decoration:none;
+border-bottom:solid 1px
+}
+
+#header {
+font-size:small;
+font-weight:normal;
+border-bottom:0;
+text-align:center;
+font-family:Tahoma;
+padding:0
+}
+
+#restaurant_list .restaurant {
+font-size:14px
+}
+
+#featured_item img {
+float:right;
+margin:10px
+}
+
+#cloud_box {
+float:left;
+width:27%
+}
+
+#rss_info ul {
+clear:both;
+list-style:none;
+font-size:x-small;
+margin:0;
+padding:0
+}
+
+#main {
+text-align:left;
+overflow:auto;
+margin:1em
+}
+
+#locations li {
+position:relative;
+margin-bottom:1em
+}
+
+#locations li .star_rating {
+position:absolute;
+right:5px
+}
+
+#locations .restaurant,#locations .address {
+margin-right:110px
+}
+
+ul.tag_cloud {
+list-style:none;
+padding:0;
+margin:0;
+}
+
+ul.tag_cloud a {
+text-decoration:none
+}
+
+ul.tag_cloud li {
+list-style:none;
+display:block;
+float:left;
+margin: 2px 4px 0 0;
+padding: 0;
+}
+
+ul.tag_cloud li.tag_popularity_1 {
+font-size:80%
+}
+
+ul.tag_cloud li.tag_popularity_2 {
+font-size:100%
+}
+
+ul.tag_cloud li.tag_popularity_3 {
+font-size:130%
+}
+
+ul.tag_cloud li.tag_popularity_4 {
+font-size:160%
+}
+
+#latest_comments .comment {
+margin-top:20px
+}
+
+#latest_comments .meta {
+margin-left:20px
+}
+
+#footer {
+font:small Tahoma,sans-serif;
+text-align:right;
+clear:both;
+color:#ccc;
+background:#222;
+padding:.6em
+}
+
+.ad {
+background:#222
+}
+
+#rss_info li {
+display:inline;
+margin-right:1em
+}
+
+/* /home 
+ Rating */
+.star_rating {
+list-style:none;
+width:100px;
+height:20px;
+position:relative;
+background:url(/images/ui/rating/star_rating.gif) top left repeat-x;
+margin:3px;
+padding:0
+}
+
+.star_rating li {
+float:left;
+margin:0;
+padding:0
+}
+
+.star_rating li a,.star_rating li span {
+display:block;
+width:20px;
+height:20px;
+text-decoration:none;
+z-index:20;
+position:absolute;
+background-image:none;
+padding:0
+}
+
+.star_rating .current_rating {
+background:url(/images/ui/rating/orangestar.png) left bottom repeat-x
+}
+
+.star_rating .joint_rating {
+background:url(/images/ui/rating/orangestar_faded.png) left bottom repeat-x;
+left:0
+}
+
+.star_rating li a:hover {
+background:url(/images/ui/rating/star_rating.gif) left bottom;
+z-index:2;
+left:0
+}
+
+.star_rating a.star_1 {
+left:0
+}
+
+.star_rating a.star_1:hover {
+width:20px
+}
+
+.star_rating a.star_2 {
+left:20px
+}
+
+.star_rating a.star_2:hover {
+width:40px
+}
+
+.star_rating a.star_3 {
+left:40px
+}
+
+.star_rating a.star_3:hover {
+width:60px
+}
+
+.star_rating a.star_4 {
+left:60px
+}
+
+.star_rating a.star_4:hover {
+width:80px
+}
+
+.star_rating a.star_5 {
+left:80px
+}
+
+.star_rating a.star_5:hover {
+width:100px
+}
+
+.star_rating .current_rating,.star_rating .joint_rating {
+z-index:1
+}
+
+#rating {
+overflow:auto
+}
+
+#rating .rating {
+float:left;
+width:120px
+}
+
+#rating .rating .head {
+font:.7em tahoma,arial
+}
+
+#restaurant_list,#features {
+float:left;
+width:35%
+}
+
+#restaurant_list .address,#featured_item div.description,#latest_comments li {
+font-size:12px
+}
