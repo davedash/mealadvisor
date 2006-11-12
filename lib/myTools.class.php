@@ -92,6 +92,10 @@ class myTools
 	public static function getLatLngOne($address, $city = null, $state = null, $zip = null, $country = null)
 	{
 		$latLngs = myTools::getLatLng($address, $city, $state, $zip, $country);
+		
+		if (!$latLngs) {
+			return;
+		}
 		if (myTools::is_associative_array($latLngs)) {
 			return $latLngs;
 		} 
