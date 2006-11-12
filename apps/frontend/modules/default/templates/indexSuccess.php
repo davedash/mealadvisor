@@ -4,6 +4,7 @@
 <div class="boxes">
 	
 	<div id = "restaurant_list" class="box">
+		
 		<?php include_component('location','freshest', array('near' => $sf_user->getLocation())) ?>
    		<p>Add a <?php echo link_to('new restaurant', '@restaurant_add') ?>.</p>
 	</div>

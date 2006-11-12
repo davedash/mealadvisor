@@ -1,3 +1,4 @@
+<?php use_helper('Rating');?>
 <div id="feature_foto">
 	<?php echo image_for_item($item, 'longest_side=125') ?>
 </div>

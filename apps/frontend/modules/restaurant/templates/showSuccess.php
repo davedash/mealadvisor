@@ -72,7 +72,6 @@
 <h2 style="clear: both">Menu items</h2>
 <?php 
 	if (count($restaurant->getMenuItems())): 
-		$ad_placed = false;
 ?>
 	<ul class="menuitems">
 		<?php foreach ($restaurant->getMenuItems() as $m): ?>
@@ -80,25 +79,11 @@
 			<div class="rater" id="<?php echo $m->getStrippedTitle() ?>_rating"><?php echo include_partial('menuitem/jointRater', array('menuitem' => $m ));?></div>
 			<div class="item_info">
 				<h3><?php echo link_to_menuitem($m); ?></h3>
-			
 				<?php echo $m->getHtmlDescription() ?>
 				<?php echo include_partial('menuitem/tags', array('menu_item' => $m,'add' => false  ));?>
 			</div>
 		</li>
-		<?php if (!$ad_placed && !mt_rand(0,2)): 
-			$ad_placed = true;
-		?>
-		<li class="menuitem">
-			<?php echo include_partial('internal_ad');?>
-		
-		</li>		  
-		<?php endif ?>
 		<?php endforeach ?>
-		<?php if (!$ad_placed): ?>
-		<li class="menuitem">
-		<?php echo include_partial('internal_ad');?>
-		</li>
-		<?php endif ?>
 	</ul>
 	<p style="clear: both"><?php echo link_to('Add a menu item', '@menu_item_add?restaurant='.$restaurant->getStrippedTitle()) ?></p>
 <?php else: ?>

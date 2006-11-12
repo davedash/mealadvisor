@@ -126,7 +126,7 @@
 		<?php endif ?>
 		|
 		<?php echo link_to('google co-op', 'http://google.com/coop/profile?user=015173080624703800226') ?>
-		| <?php echo link_to('blog', 'http://spindrop.us/reviewsby.us') ?>
+		| <?php echo link_to('blog', 'http://yumbo.reviewsby.us/') ?>
 		| <?php echo link_to('about' , '@about') ?>
 		|
 		<?php echo link_to('contact us','@feedback') ?>

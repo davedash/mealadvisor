@@ -59,25 +59,28 @@ class restaurantActions extends myActions
 	{
 		$query = $this->getRequestParameter('search');
 		$location = $this->getRequestParameter('location');
-		
+		$page = $this->getRequestParameter('page',1);
+		if ($query == 'Anything') $query = null; 
 		if ($location == 'Anywhere') $location = null;
 
 		
 		$this->getResponse()->setTitle('Search for \'' . $this->getRequestParameter('search') . '\' &laquo; ' . sfConfig::get('app_title'), false);
 		
-		if ($query)
+		if ($query||$location)
 		{
 			if ($location) {
-				$this->locations = LocationPeer::getNear($location, $query);
-				$this->getUser()->setPreference('location',$location);
+				$this->locations = LocationPeer::getNear($location, $query, $page);
+				
+				$this->getUser()->setPreference('location', $location);
+				
 				list($this->search_location, $this->near, $this->radius) = myTools::getNearness($location);
 				return 'LocationSuccess';
 			}
 			else {
-				$this->restaurants = RestaurantPeer::search($query, $this->getRequestParameter('search_all', false), ($this->getRequestParameter('page', 1) - 1) * sfConfig::get('app_search_results_max'), sfConfig::get('app_search_results_max'));
+				$this->restaurants = RestaurantPeer::search($query, $this->getRequestParameter('search_all', false), ($page - 1) * sfConfig::get('app_search_results_max'), sfConfig::get('app_search_results_max'));
 			}
 		
-			$this->items = MenuItemPeer::search($query, $this->getRequestParameter('search_all', false), ($this->getRequestParameter('page', 1) - 1) * sfConfig::get('app_search_results_max'), sfConfig::get('app_search_results_max'));
+			$this->items = MenuItemPeer::search($query, $this->getRequestParameter('search_all', false), ($page - 1) * sfConfig::get('app_search_results_max'), sfConfig::get('app_search_results_max'));
 		}
 		else
 		{
