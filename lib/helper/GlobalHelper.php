@@ -39,7 +39,7 @@
 	
 	function link_to_menuitem(MenuItem $i)
 	{
-		return link_to(htmlentities($i->getName()), url_for_menuitem($i));
+		return link_to($i->getName(), url_for_menuitem($i));
 	}
 	function url_for_menuitem(MenuItem $i)
 	{
@@ -204,4 +204,9 @@
 			$n++;
 		}
 		return $retarr;
+	}
+
+	function _or($a,$b)
+	{
+		return empty($a) ? $b:$a;
 	}
