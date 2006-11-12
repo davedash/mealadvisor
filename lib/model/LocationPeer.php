@@ -43,7 +43,10 @@ class LocationPeer extends BaseLocationPeer {
 			unset($options['limit']);
 		}
 		
-		list($search_location, $near, $radius) = myTools::getNearness($location);		
+		list($search_location, $near, $radius) = myTools::getNearness($location);	
+		if (!$near) {
+			return array();
+		}
 		return LocationPeer::search($query, $near,$radius, false, ($page - 1) * sfConfig::get('app_search_results_max'), $max, $options);
 	}
 	
@@ -61,9 +64,9 @@ class LocationPeer extends BaseLocationPeer {
 		$lng = $geo_info['Longitude'];
 
 		$query = '
-		SELECT DISTINCT '.RestaurantSearchIndexPeer::RESTAURANT_ID.', '.LocationPeer::ID.',
-		COUNT(*) AS nb, SUM('.RestaurantSearchIndexPeer::WEIGHT.') AS total_weight,
-		';
+		SELECT DISTINCT '.LocationPeer::RESTAURANT_ID.', '.LocationPeer::ID.',
+		'.LocationPeer::LATITUDE.','.LocationPeer::LONGITUDE.'
+		,';
 		
 		$math = "
 		(
@@ -87,19 +90,16 @@ class LocationPeer extends BaseLocationPeer {
 		}
 		
 		$query .= '
-		FROM '.RestaurantSearchIndexPeer::TABLE_NAME
-		.', '.LocationPeer::TABLE_NAME
+		FROM '.LocationPeer::TABLE_NAME
 		.', '.RestaurantPeer::TABLE_NAME;
 
 		$query .= '
-		WHERE '.LocationPeer::RESTAURANT_ID.
-		'='.RestaurantSearchIndexPeer::RESTAURANT_ID.
-		' AND '.LocationPeer::RESTAURANT_ID.'='.RestaurantPeer::ID;
+		WHERE '.LocationPeer::RESTAURANT_ID.'='.RestaurantPeer::ID;
 		
 //		$query .= '
 //		('.implode(' OR ', array_fill(0, $nb_words, RestaurantSearchIndexPeer::WORD.' LIKE ?')).')
 		$query .= '
-		GROUP BY '.RestaurantSearchIndexPeer::RESTAURANT_ID;
+		GROUP BY '.LocationPeer::RESTAURANT_ID.','.LocationPeer::LATITUDE.','.LocationPeer::LONGITUDE;
 		
 		if ($use_distance) {
 			$query .= '
@@ -109,7 +109,7 @@ class LocationPeer extends BaseLocationPeer {
 			HAVING distance IS NOT NULL';
 		}
 		$query .= "
-		ORDER BY $order, nb DESC, total_weight DESC";
+		ORDER BY $order";
 
 		// prepare the statement
 		$stmt = $con->prepareStatement($query);
@@ -151,6 +151,7 @@ class LocationPeer extends BaseLocationPeer {
 		$lat = $geo_info['Latitude'];
 		$lng = $geo_info['Longitude'];
 
+
 		$query = '
 		SELECT DISTINCT '.RestaurantSearchIndexPeer::RESTAURANT_ID.', '.LocationPeer::ID.',
 		COUNT(*) AS nb, SUM('.RestaurantSearchIndexPeer::WEIGHT.") AS total_weight,
@@ -167,17 +168,24 @@ class LocationPeer extends BaseLocationPeer {
 				* 180/pi()
 			)
 			*60*1.1515
-		) AS distance
+		) AS distance, " . LocationPeer::LATITUDE .','. LocationPeer::LONGITUDE .'
 		
-		FROM ".RestaurantSearchIndexPeer::TABLE_NAME.', '.LocationPeer::TABLE_NAME;
-
+		FROM '.RestaurantSearchIndexPeer::TABLE_NAME.', '.LocationPeer::TABLE_NAME;
+/*            
+SELECT id,name,    
+(
+	(
+		(
+			acos(sin(($lat*pi()/180)) * sin((latitude*pi()/180)) + cos(($lat*pi()/180)) * cos((latitude*pi()/180)) * cos((($lng - longitude)*pi()/180))))*180/pi())*60*1.1515) as distance FROM companies HAVING distance <= $miles ORDER BY distance ASC LIMIT xx
+*/
 		$query .= '
 		WHERE '.LocationPeer::RESTAURANT_ID.
 		'='.RestaurantSearchIndexPeer::RESTAURANT_ID.' AND';
 
 		$query .= '
 		('.implode(' OR ', array_fill(0, $nb_words, RestaurantSearchIndexPeer::WORD.' LIKE ?')).')
-		GROUP BY '.RestaurantSearchIndexPeer::RESTAURANT_ID;
+		GROUP BY '.RestaurantSearchIndexPeer::RESTAURANT_ID . ', '
+		 . LocationPeer::LATITUDE .','. LocationPeer::LONGITUDE;
 
 
 		$query .= '
