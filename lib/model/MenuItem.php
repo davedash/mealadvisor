@@ -16,6 +16,10 @@ require_once 'lib/model/om/BaseMenuItem.php';
  */	
 class MenuItem extends BaseMenuItem {
 	private $newVersion;
+	public function getTitle ()
+	{
+		return $this->getName();
+	}
 	
 	public function getVisibleImage (Profile $p = null)
 	{
@@ -61,6 +65,7 @@ class MenuItem extends BaseMenuItem {
 	{
 		return $this->getRestaurant()->getStrippedTitle();
 	}
+	
 	public function getFeedStrippedTitle()
 	{
 		$st = $this->getStrippedTitle();
