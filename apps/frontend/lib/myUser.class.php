@@ -61,7 +61,11 @@ class myUser extends sfGuardSecurityUser {
 	public function getLocation()
 	{
 		$location = $this->getPreference('location');
-		if ($location) return $location;
+		
+		list($search_location, $near, $radius) = myTools::getNearness($location);
+		
+		if ($location && $near) return $location;
+		// if there's no lat longitude... um, return Anywhere
 		
 		// if nothing yet... then use anywhere
 		
@@ -70,8 +74,8 @@ class myUser extends sfGuardSecurityUser {
 	
 	public function hasLocation ()
 	{
-		$location = $this->getPreference('location');
-		return $location ? true : false;
+		$location = $this->getLocation();
+		return ($location != 'Anywhere') ? true : false;
 	}
 	
 	public function getId()
