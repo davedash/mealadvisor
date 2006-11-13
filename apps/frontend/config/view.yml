@@ -19,5 +19,3 @@ default:
   slots:          {}
 
   use_default_slots: on
-#  components:
-#    test: [tag, popularCloud]
