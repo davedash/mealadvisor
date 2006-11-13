@@ -4,7 +4,7 @@ indexhack:
 
 menu_item_image:
   url: /menuitem_image/:hash
-  param: {module: menuitem_image, action: show }
+  param: { module: menuitem_image, action: show }
 menu_item_image_add:
   url: /restaurant/:restaurant/menu/:stripped_title/add/image
   param: { module: menuitem_image, action: add }
@@ -14,10 +14,10 @@ menu_item_edit:
   param: { module: menuitem, action: edit }  
 profile:
   url: /profile/:user
-  param: {module: user, action: profile}
+  param: { module: user, action: profile}
 about:
   url: /about
-  param: {module: default, action: static, page: about}
+  param: { module: default, action: static, page: about}
 feed_latest_georss:
   url: /feed/latest.georss
   param: { module: feed, action: latestRestaurantLocations}
@@ -50,7 +50,7 @@ tag:
   param: { module: tag, action: show }
 feed_tag_georss:
   url: /tag/:tag/geo.rss
-  param: {module: feed, action: tagGeoRss}
+  param: { module: feed, action: tagGeoRss}
   
 tag_remove:
   url: /tag_remove/:menuitem_hash/:tag
@@ -84,7 +84,7 @@ user:
   param: { module: user }
 restaurant_update:
   url: /restaurant/update
-  param: {module: restaurant, action: update}
+  param: { module: restaurant, action: update}
 restaurant_edit_description:
   url: /restaurant/:stripped_title/edit
   param: { module: restaurant, action: editInformation }
@@ -114,10 +114,10 @@ location_add:
 
 restaurant_reindex:
   url: /reindex
-  param: {module: restaurant, action: reindex}
+  param: { module: restaurant, action: reindex}
 restaurant_index:
   url: /restaurant
-  param: {module: restaurant, action: index}
+  param: { module: restaurant, action: index}
 
 openid_signin:
   url:  /openid
@@ -126,6 +126,9 @@ openid_signin:
 openid_finishauth:
   url: /openid/finish
   param: { module: openid, action: finishAuth}
+
+# sfGuard
+
 sf_guard_signin:
   url:   /login
   param: { module: sfGuardAuth, action: signin }
@@ -137,14 +140,12 @@ sf_guard_signout:
 sf_guard_password:
   url:   /request_password
   param: { module: sfGuardAuth, action: password }
+
+# Defaults 
+
 homepage:
   url:   /
   param: { module: default, action: index }
-
-
-default_symfony:
-  url:   /symfony/:action/*
-  param: { module: default }
 
 default:
   url:   /:module/:action/*
