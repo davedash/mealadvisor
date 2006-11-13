@@ -1,4 +1,4 @@
-<?php use_helper('Object','Global') ?>
+<?php use_helper('Object') ?>
 <h1><?php echo link_to_restaurant($restaurant) ?></h1>
 
 <?php if ($menu_item->getId()): ?>

@@ -1,5 +1,3 @@
-<?php use_helper('Global');?>
-
 <h2>Is there a problem with our information on <?php echo link_to_restaurant($restaurant) ?> in <?php echo link_to_location($location) ?>?</h2>
 
 <p>This is what we know:</p>
