@@ -38,22 +38,23 @@ all:
     secure_module:          sfGuardAuth
     secure_action:          signin
 
+  .settings:
+    activated_modules:      [default, sfGuardAuth]
+    timeout:                86400
+    standard_helpers:       [Partial, Cache, Form, Global]
+
 #    default_module:         default
 #    default_action:         index
 #
 #    error_404_module:       default
 #    error_404_action:       error404
 #
-#
 #    module_disabled_module: default
 #    module_disabled_action: disabled
-#
 #
 #    unavailable_module:     default
 #    unavailable_action:     unavailable
 #
-  .settings:
-    activated_modules:      [default, sfGuardAuth]
 #    available:              on
 #
 #    module_accessor:        module
@@ -74,20 +75,11 @@ all:
 #
 #    i18n:                   off
 #
-    timeout:                86400
-#
 #    suffix:                 .
-#
-    standard_helpers:       [Partial, Cache, Form, Global]
 #
 #    max_forwards:           5
 #
 #    web_debug:              off
-#
-#    cache:                  on
-#    default_cache_lifetime: 86400
-#
-#    no_script_name:         on
 #
 #    stats:                  off
 #
@@ -100,7 +92,4 @@ all:
 #
 #    use_flash:              on
 #
-#
 #    strip_comments:         off
-#
-#    etag:                   on
