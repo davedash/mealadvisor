@@ -1,4 +1,4 @@
-<?php use_helper('Global','Text');?>
+<?php use_helper('Text');?>
 <Results>
 	<AuthorInfo description="Find restaurants" author="reviewsby.us/Dave Dash"/>
 	<ResultSpec id="restaurant">
