@@ -1,4 +1,4 @@
-<?php use_helper('Global','Javascript', 'MyText');?>
+<?php use_helper('Javascript', 'MyText');?>
 <h1><?php echo $restaurant->getName() ?>
 	<?php if ($restaurant->getChain()): ?>
 		<em>(chain)</em>

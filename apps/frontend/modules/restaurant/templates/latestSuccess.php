@@ -1,5 +1,3 @@
-
-<?php use_helper('Global');?>
 <h1>latest restaurants</h1>
 <?php echo $pager->getNbResults() ?> results found.<br /> 
 Displaying results <?php echo $pager->getFirstIndice() ?> to  <?php echo $pager->getLastIndice() ?>

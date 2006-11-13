@@ -1,4 +1,4 @@
-<?php use_helper('Ymap','Global');?>
+<?php use_helper('Ymap');?>
 <script type="text/javascript" 
 src="http://api.maps.yahoo.com/ajaxymap?v=3.0&appid=reviewsby.us"></script>
 <style type="text/css">

@@ -1,4 +1,4 @@
-<?php use_helper('Global','Object');?>
+<?php use_helper('Object');?>
 <h2>Description for <?php echo $restaurant ?></h2>
 
 <?php echo form_tag('@restaurant_edit_description?stripped_title=' . $restaurant->getStrippedTitle()) ?>
