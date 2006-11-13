@@ -3,6 +3,93 @@ behavior:url("/pngbehavior.htc");
 border:0
 }
 
+#header {
+background: #222;
+height: 45px;
+position:relative;
+font:12px Tahoma;
+text-align:center;
+letter-spacing:.1em;
+color:#fff;
+
+}
+
+#mini_logo {
+position: absolute;
+left: 9px;
+top: 5px;
+}
+
+
+#search_bar {
+background: #444;
+top: 45px;
+right: 0;
+padding: 10px;
+font:12px Tahoma;
+text-align:center;
+letter-spacing:.1em;
+color:#fff;
+position: absolute;
+position:fixed;
+position:expression("absolute");
+
+
+}
+
+#search_bar a {
+  color: #27d;
+}
+
+#search_form input.text
+{
+  width: 95px;
+  padding: 2px;
+  border: #666 solid 1px;
+  font-size: small;
+}
+
+#top_menu a, #footer a {
+color:#27d;
+text-decoration:none;
+border-bottom:solid 1px
+}
+
+#top_menu {
+position:absolute;
+right:50px;
+bottom:9px;
+}
+
+#header .ad {
+  position: absolute;
+  top: 9px;
+  left: 188px;
+}
+
+#corner_pic {
+  position: absolute;
+  right:0;
+  background: #444;
+  width: 45px;
+  line-height: 45px;
+  text-align: center;
+}
+
+#welcome {
+  position: absolute;
+  right: 50px;
+  bottom: 30px;
+  font-size: small;
+  text-transform: lowercase;
+}
+
+#welcome a {
+  color: #27d;
+}
+
+
+
 #sfWebDebugBar
 {
   top:auto;

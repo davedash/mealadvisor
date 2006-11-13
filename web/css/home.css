@@ -31,46 +31,7 @@ margin:0;
 padding:3px 0 0
 }
 
-#search_bar {
-position:relative;
-margin-bottom:10px;
-height:35px;
-background:#222;
-color:#fff;
-letter-spacing:.1em;
-font:12px Tahoma;
-text-align:center
-}
-
-#search_bar #search_form {
-position:absolute;
-left:10px;
-top:5px;
-text-align:left
-}
-
-#search_form input.text
-{
-  width: 95px;
-  padding: 2px;
-  border: #666 solid 1px;
-  font-size: small;
-}
-
-#top_menu {
-position:absolute;
-right:10px;
-top:5px;
-text-align:right
-}
-
-#search_bar a,#footer a {
-color:#307ABF;
-text-decoration:none;
-border-bottom:solid 1px
-}
-
-#header {
+#slogan {
 font-size:small;
 font-weight:normal;
 border-bottom:0;

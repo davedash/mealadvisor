@@ -196,11 +196,6 @@ p.information {
   font-family: Trebuchet MT, Arial, sans-serif;
   font-size: small;
 }
-#welcome {
-  font-size: small;
-  text-align: right;
-  margin: 0 1em;
-}
 
 ul.menuitems li {
   position: relative;

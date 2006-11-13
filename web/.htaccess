@@ -1,8 +1,11 @@
-Options +FollowSymLinks +ExecCGI
+Options +FollowSymLinks +ExecCGI -MultiViews
 
 <IfModule mod_rewrite.c>
   RewriteEngine On
-  RewriteRule ^index$ / [R,L]
+
+  RewriteCond %{REQUEST_URI} \/\/index$
+  
+  RewriteRule .* / [R,L]
 
   # we skip all files with .something
   RewriteCond %{REQUEST_URI} \..+$

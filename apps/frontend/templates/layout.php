@@ -17,39 +17,46 @@
 
 </head>
 <body>
-	<div class="ad" id="link_unit_1">
-		<?php tla_ads() ?> 
-	</div>
-	<div id="search_bar">
-		<?php echo include_partial('restaurant/search') ?>
+	<div id="indicator" style="display: none"></div>
+	
+	<div id = "header">
+		<div id="mini_logo"><?php echo logo_tag() ?></div>
+		<div class="ad" id="link_unit_1">
+			<?php tla_ads() ?>
+		</div>
+		
+		<?php if ($sf_user->isLoggedIn()): ?>
+		<div id="welcome">Welcome <?php echo link_to_user($sf_user) ?></div>
+		<div id="corner_pic">=)</div>
+		<?php endif ?>
+		
 
 		<div id="top_menu">
-			<?php echo link_to('home', '@homepage') ?>
-			| <?php if ($sf_user->isLoggedIn()): ?>
-			<?php echo link_to('logout', 'user/logout') ?>
+			<?php if ($sf_user->isLoggedIn()): ?>
+			<?php echo link_to('logout', '@sf_guard_signout') ?>
 			<?php else: ?>
 			<?php echo link_to('login', '@sf_guard_signin')  ?> 
 			| <?php echo link_to('register' , '@register') ?>
 			<?php endif ?>
 			| <?php echo link_to('add restaurant', '@restaurant_add') ?>
-
-			
+			| <?php echo link_to_function('search', visual_effect('toggle_blind', 'search_bar')) ?>
 		</div>
 	</div>
+
+	<div id="search_bar" style="display:none">
+		<?php echo include_partial('restaurant/search') ?>
+		<p><?php echo link_to_function('cancel', visual_effect('toggle_blind', 'search_bar')) ?>
+	</div>	
 	
-	<div id="indicator" style="display: none"></div>
+
 	<?php if($sf_flash->has('notice')): ?>
-	
 		<?php foreach ($sf_flash->get('notice') as $key=>$notice): ?>
 			<p class="notice" id="notice_<?php echo $key ?>"><?php echo $notice ?></p>
 			<?php echo javascript_tag(visual_effect('fade', 'notice_'.$key,array('duration'=>'5'))) ?>
 		<?php endforeach ?>
 	<?php endif ?>
 	
-	<?php if ($sf_user->isLoggedIn()): ?>
-	<p id="welcome">Welcome <?php echo $sf_user->getUsername() ?> (<?php echo link_to('logout', '@sf_guard_signout') ?>)</p>
-	  
-	<?php endif ?>
+
 	<?php if (empty($hideLogin)): ?>
 	<div id="login" style="display: none">
 		<h2>sign in</h2>
@@ -78,6 +85,7 @@
 	  </form>
 	</div>	  
 	<?php endif ?>
+	
 
 	<div id="main">	
 		<?php echo $content ?>
