@@ -1,4 +1,4 @@
-<?php use_helper('Javascript','Object','Global') ?>
+<?php use_helper('Javascript','Object') ?>
 
 <h1><?php echo link_to_restaurant($restaurant); ?>: <strong><?php echo $menu_item->getName() ?></strong></h1>
 
