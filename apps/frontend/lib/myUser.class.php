@@ -1,11 +1,22 @@
 <?php
 
 class myUser extends sfGuardSecurityUser {
-		
+	
+	/**
+	 * myUser::loginAs
+	 *  
+	 * @param mixed Profile/sfGuardUser or string representing a user	 	 
+	 * @param boolean if true, will set the "openId" flag to true
+	 * 	 
+	 * This function will log a user in.  If the user truly does not exist, 	 
+	 * a new account will be created -> this is helpful for validated openID 	 
+	 * logins
+	 *
+	 * @return null
+	 * @author Dave Dash
+	 **/
 	public function loginAs($user, $openid = false)
 	{
-		// find a matching user
-		// if none exists... create one
 		$username = null;
 		if ($user instanceof Profile) 
 		{
@@ -28,12 +39,11 @@ class myUser extends sfGuardSecurityUser {
 	
 	protected function getPreferences()
 	{
-		if ($this->isAnonymous())
+		if ($this->isLoggedIn())
 		{
-			$prefs = base64_decode(sfContext::getInstance()->getRequest()->getCookie('preferences'));
-			
-		} else {
 			$prefs = $this->getProfile()->getPreferences();
+		} else {
+			$prefs = base64_decode(sfContext::getInstance()->getRequest()->getCookie('preferences'));
 		}
 		return $prefs ? unserialize($prefs) : array();
 	}
@@ -47,7 +57,8 @@ class myUser extends sfGuardSecurityUser {
 			$p->setPreferences(serialize($prefs));
 		}
 		$expiration_age = sfConfig::get('app_preference_cookie_expiration_age', 15 * 24 * 3600);    
-		$this->getContext()->getResponse()->setCookie('preferences', base64_encode(serialize($prefs)),time()+$expiration_age);
+		$this->getContext()->getResponse()->setCookie('preferences', 
+		base64_encode(serialize($prefs)),time()+$expiration_age);
 	}
 	
 	public function getPreference($key)
@@ -65,17 +76,16 @@ class myUser extends sfGuardSecurityUser {
 		list($search_location, $near, $radius) = myTools::getNearness($location);
 		
 		if ($location && $near) return $location;
-		// if there's no lat longitude... um, return Anywhere
 		
 		// if nothing yet... then use anywhere
 		
-		return 'Anywhere';
+		return sfConfig::get('app_location_anywhere', 'Anywhere');
 	}
 	
-	public function hasLocation ()
+	public function hasLocation()
 	{
 		$location = $this->getLocation();
-		return ($location != 'Anywhere') ? true : false;
+		return ($location != sfConfig::get('app_location_anywhere', 'Anywhere')) ? true : false;
 	}
 	
 	public function getId()
@@ -90,7 +100,7 @@ class myUser extends sfGuardSecurityUser {
 	
     public function isLoggedIn() 
     {
-		return !$this->isAnonymous();
+		return (!$this->isAnonymous() && $this->isAuthenticated());
 	}	
 	
 	public function getProfile()
@@ -100,5 +110,3 @@ class myUser extends sfGuardSecurityUser {
 		}
 	}
 }
-
-?>

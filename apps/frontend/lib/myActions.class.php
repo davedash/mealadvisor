@@ -8,6 +8,11 @@
 
 	class myActions extends sfActions
 	{
+		public function addPrototype()
+		{
+			$this->getResponse()->addJavascript(sfConfig::get('SF_PROTOTYPE_WEB_DIR').'/js/prototype.js');
+		}
+		
 		public function isPost()
 		{
 			return ($this->getRequest()->getMethod() == sfRequest::POST);
@@ -19,6 +24,7 @@
 
 			$this->getRequest()->setAttribute($feed, $feedArray, 'helper/asset/auto/feed');
 		}
+		
 		public function notice($m) {
 			$notice = $this->getFlash('notice');
 			if ($notice && !is_array($notice)) {
@@ -31,6 +37,3 @@
 			$this->setFlash('notice', $notice);
 		}
 	}
-	###
-
-?>
