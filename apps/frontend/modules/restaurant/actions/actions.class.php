@@ -50,7 +50,7 @@ class restaurantActions extends myActions
 			if(!$ajax) return $this->redirect('@restaurant?stripped_title='.$restaurant->getStrippedTitle());
 		}
 		$this->restaurant = $restaurant;
-		//if ($joint) return 'joint';
+		if ($joint) return 'Joint';
 		return sfView::SUCCESS;
 	}
 
@@ -72,7 +72,7 @@ class restaurantActions extends myActions
 				$this->locations = LocationPeer::getNear($location, $query, $page);
 				
 				$this->getUser()->setPreference('location', $location);
-				
+			
 				list($this->search_location, $this->near, $this->radius) = myTools::getNearness($location);
 				return 'LocationSuccess';
 			}
@@ -105,6 +105,7 @@ class restaurantActions extends myActions
 		
 				
 	}
+
 	public function executeIndex ()
 	{
 		return $this->redirect('@homepage');
@@ -137,7 +138,8 @@ class restaurantActions extends myActions
 
 		$this->addFeed('@menu_item_feed?stripped_title=' . $this->restaurant->getStrippedTitle(), 'Menu items at ' . $this->restaurant->__toString());
 
-		$this->num_locations = count($this->restaurant->getLocations());
+		$this->locations = $this->restaurant->getLocations();
+		$this->num_locations = count($this->locations);
 		$this->getResponse()->setTitle($this->restaurant->__toString() . ' &laquo; ' . sfConfig::get('app_title'), false);
 		$this->rating = null;
 
@@ -147,6 +149,18 @@ class restaurantActions extends myActions
 			$c->add(RestaurantRatingPeer::USER_ID, $this->getUser()->getId());
 			$rating = RestaurantRatingPeer::doSelectOne($c);
 			if ($rating instanceof RestaurantRating) $this->rating = $rating->getValue();
+		}
+		
+		/* map */
+		
+		// need to get a location
+		if ($this->num_locations)
+		{
+			if ($this->getUser()->hasLocation()) {
+				$this->location = LocationPeer::getNearestForRestaurant($this->restaurant, $this->getUser()->getLocation(), null, 1, 'min_distance=off gradients=on order=distance,restaurant.updated_at DESC limit=8');
+			} else {
+				$this->location = $this->locations[0];
+			}
 		}
 	}
 
@@ -278,4 +292,3 @@ class restaurantActions extends myActions
 	}
 }
 
-?>

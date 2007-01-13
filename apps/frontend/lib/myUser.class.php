@@ -39,10 +39,12 @@ class myUser extends sfGuardSecurityUser {
 	
 	protected function getPreferences()
 	{
+		$prefs = null;
 		if ($this->isLoggedIn())
 		{
 			$prefs = $this->getProfile()->getPreferences();
-		} else {
+		} 
+		if (!$prefs) {
 			$prefs = base64_decode(sfContext::getInstance()->getRequest()->getCookie('preferences'));
 		}
 		return $prefs ? unserialize($prefs) : array();

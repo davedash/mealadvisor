@@ -1,4 +1,4 @@
 _feature:
-  activate: on
+  enabled:  on
 all:
-  activate: off
+  enabled:  off

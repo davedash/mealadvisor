@@ -1,4 +1,4 @@
-<?php use_helper('Javascript');?>
+<?php use_helper('Javascript', 'Validation');?>
 <p>
 	We support 
 	<?php echo link_to_function('openID', visual_effect('blind_down', 'login_openid', array('duration' => 0.5))) ?> so if you

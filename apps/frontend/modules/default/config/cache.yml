@@ -1,6 +1,6 @@
 _header:
-  activate: on
+  enabled:  on
 
 all:
-  activate: off
+  enabled:  off
   lifetime:   86400

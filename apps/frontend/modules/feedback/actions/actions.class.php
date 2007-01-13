@@ -17,9 +17,23 @@ class feedbackActions extends myActions
 	public function executeIndex()
 	{
 		if ($this->isPost()) {
-			
-			$raw_email = $this->sendEmail('mail', 'sendFeedback');
-			return 'FeedbackSent';
+			$WordPressAPIKey =  '1fdb39172641';
+			$MyBlogURL = 'http://reviewsby.us/';
+
+			$akismet = new Akismet($MyBlogURL ,$WordPressAPIKey);
+			$akismet->setCommentAuthor($this->getRequestParameter('name'));
+			$akismet->setCommentAuthorEmail($this->getRequestParameter('email'));
+			$akismet->setCommentContent($this->getRequestParameter('message'));
+			$akismet->setPermalink('http://reviewsby.us/feedback');
+
+			if($akismet->isCommentSpam()) {
+				return 'Spam';	
+				  $this->logMessage("We caught us some spam!", 'debug');
+			}
+			else {
+			    $raw_email = $this->sendEmail('mail', 'sendFeedback');
+					return 'FeedbackSent';
+			}
 		}
 	}
 	

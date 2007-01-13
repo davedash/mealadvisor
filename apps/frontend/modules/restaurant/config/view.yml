@@ -2,3 +2,6 @@ rateSuccess:
   has_layout: off
 addCommentSuccess:
   has_layout: off
+showSuccess:
+  stylesheets: [-extra]
+  javascripts: [map]

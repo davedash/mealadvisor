@@ -53,6 +53,27 @@ class feedActions extends sfActions
 		$this->feed = $feed; 
 	}
 	
+	public function executeFreshest()
+	{
+		$near = $this->getRequestParameter('near');
+		// limit somehow to just restaurants near a given location
+		if ($near) {
+			$locations = LocationPeer::getNear($near, null, 1, 'min_distance=off gradients=on order=distance,restaurant.updated_at DESC limit=' . sfConfig::get('app_feed_max_restaurants'));
+		} 
+		else {
+			$c = new Criteria();
+			$c->addDescendingOrderByColumn(RestaurantPeer::UPDATED_AT);
+			$c->setLimit(sfConfig::get('app_feed_max_restaurants'));
+			$locations = LocationPeer::doSelectJoinRestaurant($c);
+		}
+		
+		$feed = sfFeed::newInstance('geoRss');
+		$feed->setTitle('Freshest restaurant locations'); 
+		$feed->setLink('@homepage'); 
+		$feed->setDescription('A geocoded list of the freshest restaurant locations posted to reviewsby.us');
+		$feed->setItems($locations); 
+		$this->feed = $feed;		
+	}
 	
 	/* This will eventually serve the geo+rss feed that'll power the front page map */
 	public function executeLatestRestaurantLocations()
@@ -77,8 +98,7 @@ class feedActions extends sfActions
 		// channel 
 		$feed->setTitle('Latest restaurants\' locations'); 
 		$feed->setLink('@homepage'); 
-		$feed->setDescription('A geocoded list of the latest restaurants\' locations posted to my reviewsby.us');
-//		$feed->setFeedItemsRouteName('@location'); 
+		$feed->setDescription('A geocoded list of the latest restaurants\' locations posted to reviewsby.us');
 		$feed->setItems($locations); 
 		$this->feed = $feed;
 	}

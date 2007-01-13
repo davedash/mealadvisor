@@ -1,7 +1,7 @@
 _popularCloud:
-  activate: on
+  enabled:  on
 _popularRestaurantCloud:
-  activate: on
+  enabled:  on
 all: 
-  activate: off
+  enabled:  off
   

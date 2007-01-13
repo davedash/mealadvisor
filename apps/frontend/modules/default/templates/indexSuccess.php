@@ -2,11 +2,12 @@
 
 <?php include_partial('default/header');?>
 <div class="boxes">
-	
+
 	<div id = "restaurant_list" class="box">
-		
+
 		<?php include_component('location','freshest', array('near' => $sf_user->getLocation())) ?>
-   		<p>Add a <?php echo link_to('new restaurant', '@restaurant_add') ?>.</p>
+		<p>View <?php echo link_to('all restaurants', '@restaurant_list') ?> 
+		<?php echo rss_link_to('feed/freshest') ?>.</p>
 	</div>
 
 	<div id ="features">
@@ -17,15 +18,15 @@
 			<?php include_component('menuitemnote', 'latest') ?>
 		</div>
 	</div>
-	
-	
+
+
 	<div id="cloud_box">
 		<div class="box">
 			<h2>Tags // Restaurants</h2>
 			<?php include_component('tag', 'popularRestaurantCloud')?>
 		</div>
 		<div class="box" style = "clear:both">
-		
+
 			<h2 >Tags // Menu Items</h2>
 			<?php include_component('tag', 'popularCloud')?>
 		</div>

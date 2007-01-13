@@ -15,7 +15,8 @@ class menuitem_imageActions extends myActions
 		$c = new Criteria();
 		$c->add(MenuItemImagePeer::MD5SUM, $this->getRequestParameter('hash'));
 		$this->image = MenuItemImagePeer::doSelectOne($c);
-		
+		$this->getResponse()->setContentType('image/png');
+		$this->setLayout(false);
 	}
 	public function executeShowImageForItem()
 	{

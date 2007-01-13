@@ -17,9 +17,8 @@ class openidActions extends myActions
 	* SignIn
 	*
 	*/
-	public function executeSignIn()
+	public function executeSignin()
 	{
-
 		// this action doesn't have a template, it just forwards requests to an open id server
 
 		if (!$this->isPost())
@@ -32,15 +31,20 @@ class openidActions extends myActions
 		}
 		else
 		{
+			//$errorlevel = error_reporting(E_ALL);
+			
 			$errorlevel = error_reporting(E_ERROR);
 			/* Do the OpenID login */
 			define('Auth_OpenID_NO_MATH_SUPPORT', true);
+			
 			$this->init_openid();
+			
 			$openid = $this->getRequestParameter('openid');
 
+			
 			$process_url = $this->getController()->genUrl('@openid_finishauth', true);
 
-
+			
 			$trust_root = $this->getController()->genUrl('@homepage', true);
 			// Begin the OpenID authentication process.
 			$auth_request = $this->consumer->begin($openid);
@@ -84,7 +88,7 @@ class openidActions extends myActions
 			" Please check the effective permissions.";
 			exit(0);
 		}
-
+				
 		$this->store = new Auth_OpenID_FileStore($this->store_path);
 		$this->consumer = new Auth_OpenID_Consumer($this->store);
 	}

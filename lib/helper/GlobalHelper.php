@@ -215,3 +215,11 @@ function logo_tag($options = array())
 	{
 		return empty($a) ? $b:$a;
 	}
+	function rss_link_to($url, $title = null)
+	{
+		$r = link_to(image_tag('feedicon'), $url); 
+		if ($title) {
+			$r .= link_to($title, $url);
+		}
+	  return $r;
+	}

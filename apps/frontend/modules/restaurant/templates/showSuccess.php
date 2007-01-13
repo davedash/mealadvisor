@@ -1,74 +1,128 @@
-<?php use_helper('Javascript', 'MyText');?>
-<h1><?php echo $restaurant->getName() ?>
-	<?php if ($restaurant->getChain()): ?>
-		<em>(chain)</em>
-	<?php endif ?>
-</h1>
+<?php use_helper('Javascript', 'MyText', 'Rating', 'Ymap');?>
 
-<div id="subnav">
-		<?php if ($restaurant->getUrl()): ?>
-			<?php echo link_to($restaurant->getName() . ' website',$restaurant->getUrl())?>
-		<?php endif ?>
-		
-		<?php echo link_to_function($num_locations . ' ' . pluralize($num_locations, 'location'),
-		visual_effect('toggle_blind', 'locations')) ?>
-</div>
+<script type="text/javascript" 
+src="http://api.maps.yahoo.com/ajaxymap?v=3.0&appid=reviewsby.us"></script>
 
-<div class="description">
-	<?php if ($restaurant->getHtmlDescription()): ?>
-		<?php echo $restaurant->getHtmlDescription() ?>
-		<?php if ($sf_user->isLoggedIn()): ?>
-			<?php echo link_to('change description', '@restaurant_edit_description?stripped_title=' . $restaurant->getStrippedTitle()) ?>
-	  
-		<?php endif ?>
-	<?php else:?>
-		<p>No description is available for this restaurant.  <?php echo link_to('Write one', '@restaurant_edit_description?stripped_title=' . $restaurant->getStrippedTitle()) ?>?</p>
-	<?php endif ?>
 
-	<div id="<?php echo $restaurant->getStrippedTitle() .'_tags' ?>"> 
-		<?php echo include_partial('restaurant/tags', array('restaurant' => $restaurant, 'add' => true));?>
-	</div>
-</div>
-
-<?php if ($sf_user->isLoggedIn()): ?>
+<?php if ($location instanceof Location): ?>
   
-	<?php echo form_remote_tag(array( 
-		'url'    => '@restaurant_tag_add', 
-		'update' => $restaurant->getStrippedTitle() .'_tags',
-		'complete' => "$('tag').value = ''; " . visual_effect('highlight',$restaurant->getStrippedTitle() .'_tags')
-	))?>
+<script type="text/javascript" charset="utf-8">
+	ymap.div = 'restaurant_map';
+
+	//var myPoint = new YGeoPoint(<?php echo $location->getLatitude() ?>,<?php echo $location->getLongitude() ?>);
+	Event.observe(window, "load", function() { 
+		ymap.init(); 
+		ymap.map.drawZoomAndCenter("<?php echo $location->getFullAddress() ?>", 4);
+		var marker = new YMarker("<?php echo $location->getFullAddress() ?>");
+		
+		marker.addAutoExpand("<?php echo $location ?>");
+		ymap.map.addOverlay(marker);
+		ymap.map.disableKeyControls();
+	});
 	
-		<div>
-			Tag: 
 
-			<?php echo input_hidden_tag('restaurant', $restaurant->getStrippedTitle()) ?> 
-			<?php echo input_auto_complete_tag('tag', '', '@tag_autocomplete', 'autocomplete=on', array('use_style'=>true, 'tokens'=> ' '));?>
-			<?php echo submit_tag('Tag') ?> 
-		</div>  
-	</form>
-
+</script>
 <?php endif ?>
 
-<div id="rating">
-	<?php echo include_partial('rater', array('rating'=>$rating, 'restaurant' => $restaurant ));?>
+
+<div class="yui-gc">
+
+	<div class="yui-u first">
+		<div id="restaurant_header">
+			<h2><?php echo $restaurant->getName() ?>
+				<?php if ($restaurant->getChain()): ?><small>(chain)</small><?php endif ?>
+			</h2>
+
+
+			<div id="<?php echo $restaurant->getStrippedTitle() ?>_rating" class="rating">
+				<?php echo include_partial('jointRater', array('restaurant' => $restaurant ));?>
+			</div>
+		</div>
+		<ul id="restaurant_info">
+			<?php if ($restaurant->getUrl()): ?>
+			<li>
+				<p><?php echo link_to($restaurant->getName() . ' website',$restaurant->getUrl())?></p>
+			</li>
+			<?php endif ?>
+			<li>
+				<p>
+					<?php echo link_to_function($num_locations . ' ' . pluralize($num_locations, 'location'),
+					visual_effect('toggle_blind', 'locations')) ?>
+				</p>
+			</li>
+		</ul>
+
+
+		<div id="tag_area">
+			<div id="<?php echo $restaurant->getStrippedTitle() .'_tags' ?>"> 
+				<?php echo include_component('tag','restaurant', array('restaurant' => $restaurant)) ?>
+			</div>
+	
+			<?php if ($sf_user->isLoggedIn()): ?>
+
+			<?php echo form_remote_tag(array(
+				'url'    => '@restaurant_tag_add', 
+				'update' => $restaurant->getStrippedTitle() .'_tags',
+				'complete' => "$('tag').value = ''; " . visual_effect('highlight',$restaurant->getStrippedTitle() .'_tags')
+				), 'class=less_snug')?>
+
+				<div>
+					Tag: 
+
+					<?php echo input_hidden_tag('restaurant', $restaurant->getStrippedTitle()) ?> 
+					<?php echo input_auto_complete_tag('tag', '', 'tag/autocomplete', array('autocomplete'=>'off'), array('use_style'=>'true')) ?>					
+					<?php echo submit_tag('Tag') ?> 
+				</div>  
+			</form>
+			<?php endif ?>
+		</div>
+		<!-- information about the restaurant -->
+		<div class="description">
+			<?php if ($restaurant->getHtmlDescription()): ?>
+				<?php echo $restaurant->getHtmlDescription() ?>
+				<?php if ($sf_user->isLoggedIn()): ?>
+					<?php echo link_to('edit description', '@restaurant_edit_description?stripped_title=' . $restaurant->getStrippedTitle()) ?>
+				<?php endif ?>
+			<?php else:?>
+				<p>No description is available for this restaurant.  <?php echo link_to('Write one', '@restaurant_edit_description?stripped_title=' . $restaurant->getStrippedTitle()) ?>?</p>
+			<?php endif ?>
+		</div>
+				
+	
+	
+		<div id="restaurant_location">
+		</div>
+		
+	</div>
+	<div class="yui-u">
+		<div id="restaurant_map" style="width: 100%; height: 250px">
+		</div>
+		<p><?php echo link_to_location($location) ?>: <?php echo $location->toLargeString() ?></p>
+	</div>
+
+	<div id="locations" style="display: none">
+		<h2>Restaurant locations <em> <?php echo link_to_function('hide',
+		visual_effect('blind_up', 'locations'))?></em></h2>
+		<?php if (count($restaurant->getLocations())): ?>
+		<ul class="locations">
+			<?php foreach ($restaurant->getLocations() as $l): ?>
+			<li><?php echo link_to_location($l) ?> - <?php echo $l->toLargeString() ?></li>
+			<?php endforeach ?>
+		</ul>
+		<p><?php echo link_to('Add a restaurant location', '@location_add?restaurant='.$restaurant->getStrippedTitle()) ?></p>
+		<?php else: ?>
+		<p>No locations... <?php echo link_to('add one', '@location_add?restaurant='.$restaurant->getStrippedTitle()) ?>!</p>
+		<?php endif ?>
+	</div>		
 </div>
+
+
+
+
 
 
 <div class="boxes">
-<div id="locations" style="display: none">
-	<h2>Restaurant locations <em> <?php echo link_to_function('hide',
-	visual_effect('blind_up', 'locations'))?></em></h2>
-	<?php if (count($restaurant->getLocations())): ?>
-	<ul class="locations">
-		<?php foreach ($restaurant->getLocations() as $l): ?>
-		<li><?php echo link_to_location($l) ?> - <?php echo $l->toLargeString() ?></li>
-		<?php endforeach ?>
-	</ul>
-	<p><?php echo link_to('Add a restaurant location', '@location_add?restaurant='.$restaurant->getStrippedTitle()) ?></p>
-	<?php else: ?>
-	<p>No locations... <?php echo link_to('add one', '@location_add?restaurant='.$restaurant->getStrippedTitle()) ?>!</p>
-	<?php endif ?>
-</div>
+
 <h2 style="clear: both">Menu items</h2>
 <?php 
 	if (count($restaurant->getMenuItems())): 

@@ -22,7 +22,7 @@ test:
 
 all:
   .settings:
-    activated_modules:      [default, sfGuardGroup, sfGuardUser, sfGuardPermission, sfGuardModule, sfGuardAuth]
+    enabled_modules:        [default, sfGuardGroup, sfGuardUser, sfGuardPermission, sfGuardModule, sfGuardAuth]
     login_module:           sfGuardAuth
     login_action:           signin
 
@@ -85,7 +85,7 @@ all:
 #
 #    use_flash:              on
 #
-#    activated_modules:      [default]
+#    enabled_modules:        [default]
 #
 #    strip_comments:         on
 #

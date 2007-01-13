@@ -14,6 +14,6 @@ nameValidator:
 
 
 fillin:
-  activate: on   # activate the form repopulation
+  enabled:  on   # activate the form repopulation
   param:
     name: add   # name of the form

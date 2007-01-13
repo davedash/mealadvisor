@@ -1,6 +1,93 @@
+p {
+  margin-bottom: 1em;
+}
+form.less_snug {
+  margin: .5em 0;
+}
+
+
+.tags li  {
+float: left;
+margin: 0 .4em .1em 0;
+}
+
+.tags a {
+  text-decoration: none;
+}
+
+.tags a.my {
+border-bottom: solid 1px
+}
+
+
+.tags a.tag_size_1 {
+font-size: 1.1em;
+}
+
+.tags a.tag_size_2 {
+font-size: 1.2em;
+}
+
+.tags a.tag_size_3 {
+font-size: 1.3em;
+}
+.tags a.tag_size_4 {
+font-size: 1.4em;
+}
+.tags a.tag_size_5 {
+font-size: 1.5em;
+}
+.tags a.tag_size_6 {
+font-size: 1.6em;
+}
+.tags a.tag_size_7 {
+font-size: 1.7em;
+}
+
+.clear {
+  clear: both;
+}
+
 img {
 behavior:url("/pngbehavior.htc");
 border:0
+}
+
+h2 {
+  font-size: 150%;
+  margin-bottom: 1em;
+}
+
+#restaurant_header {
+  position: relative;
+}
+
+#restaurant_header .rating {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+#restaurant_map {
+  height: 250px;
+}
+
+
+#restaurant_info li {
+  float: left;
+}
+
+#restaurant_info a {
+  border-top: solid 1px black;
+  border-bottom: solid 1px black;
+  padding: 0 1em;
+  display: block;
+  line-height: 1em;
+  text-decoration: none;
+}
+
+#tag_area {
+  clear: both;
 }
 
 #header {

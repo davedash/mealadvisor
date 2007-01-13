@@ -9,7 +9,7 @@ default:
     keywords:     menus food menu tags restaurants web2.0 eats drinks openid
     language:     en
 
-  stylesheets:    [home, main, extra]
+  stylesheets:    [reset-fonts-grids/reset-fonts-grids, home, main, extra]
 
   javascripts:    [%SF_PROTOTYPE_WEB_DIR%/js/prototype, %SF_PROTOTYPE_WEB_DIR%/js/effects]
 

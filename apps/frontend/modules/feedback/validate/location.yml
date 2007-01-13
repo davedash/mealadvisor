@@ -19,6 +19,6 @@ emailValidator:
     email_error:  Email address invalid.
 
 fillin:
-  activate: on   # activate the form repopulation
+  enabled:  on   # activate the form repopulation
   param:
     name: feedback   # name of the form

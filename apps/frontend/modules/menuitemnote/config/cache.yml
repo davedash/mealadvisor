@@ -1,4 +1,4 @@
 _latest:
-  activate: on
+  enabled:  on
 all:
-  activate: off
+  enabled:  off

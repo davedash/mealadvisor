@@ -107,7 +107,6 @@ class menuitemActions extends myActions
 
 	}
 
-
 	public function executeEdit ()
 	{
 		$this->menu_item = $this->getMenuItemOrCreate();

@@ -1,3 +1,6 @@
+restaurant_list:
+  url: /restaurants/*
+  param: { module: location, action: index }
 indexhack:
   url: /index
   param: { module: default, action: index }

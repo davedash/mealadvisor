@@ -1,1 +1,1 @@
-<?php echo include_partial('restaurant/tags', array('restaurant' => $restaurant, 'add'=>true)) ?>
+<?php echo include_component('tag','restaurant', array('restaurant' => $restaurant)) ?>

@@ -95,7 +95,12 @@ class LocationPeer extends BaseLocationPeer {
 
 		$query .= '
 		WHERE '.LocationPeer::RESTAURANT_ID.'='.RestaurantPeer::ID;
-		
+
+		if (array_key_exists('restaurant', $options))
+		{
+			$query .= '
+			AND '.LocationPeer::RESTAURANT_ID.' = '.$options['restaurant']->getId();
+		}		
 //		$query .= '
 //		('.implode(' OR ', array_fill(0, $nb_words, RestaurantSearchIndexPeer::WORD.' LIKE ?')).')
 		$query .= '
@@ -182,6 +187,7 @@ SELECT id,name,
 		WHERE '.LocationPeer::RESTAURANT_ID.
 		'='.RestaurantSearchIndexPeer::RESTAURANT_ID.' AND';
 
+		
 		$query .= '
 		('.implode(' OR ', array_fill(0, $nb_words, RestaurantSearchIndexPeer::WORD.' LIKE ?')).')
 		GROUP BY '.RestaurantSearchIndexPeer::RESTAURANT_ID . ', '
@@ -221,6 +227,18 @@ SELECT id,name,
 		}
 
 		return $locations;
+	}
+
+
+	public static function getNearestForRestaurant(Restaurant $restaurant, $location, $page = 1, $options = array()) 
+	{
+		list($search_location, $near, $radius) = myTools::getNearness($location);	
+		
+		$locations = LocationPeer::allNear($near, $radius, $exact = false, $offset = 0, $max = 10, array('restaurant' => $restaurant ));
+		if (count($locations))
+		{
+			return $locations[0];
+		}
 	}
 
 } // LocationPeer

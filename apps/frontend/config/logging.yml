@@ -1,5 +1,5 @@
 prod:
-  active: off
+  enabled: off
   level:  err
 
 dev:
@@ -7,5 +7,5 @@ dev:
 test:
 
 all:
-#  active: on
+#  enabled: on
 #  level:  debug

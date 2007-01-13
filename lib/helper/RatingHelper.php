@@ -183,6 +183,7 @@
 		{
 			$options['id'] = $object->getStrippedTitle().'_rater';
 		}
+		
 		if (!array_key_exists('class', $options))
 		{
 			$options['class'] = 'star_rating';
@@ -254,6 +255,8 @@
 		. content_tag('script', javascript_cdata_section($js), 'type=text/javascript');
 		
 	}
-
-
-?>
+	
+	function joint_restaurant_rater(Restaurant $r)
+	{
+		return $r->getAverageRating();
+	}
