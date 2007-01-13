@@ -1,0 +1,1 @@
+<?php echo include_partial('jointRater', array('restaurant' => $restaurant));?>
