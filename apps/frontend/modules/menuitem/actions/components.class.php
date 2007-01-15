@@ -20,4 +20,16 @@ class menuitemComponents extends sfComponents
 			if ($rating instanceof MenuItemRating) $this->rating = $rating->getValue();
 		}
 	}
+	
+	public function executeInRestaurant()
+	{
+		$c = new Criteria();
+		$c->add(MenuItemPeer::RESTAURANT_ID, $this->restaurant->getId());
+		$pager = new sfPropelPager('MenuItem', 10);
+		$pager->setCriteria($c);
+		$pager->setPage(myTools::_or($this->page, 1));
+		$pager->init();
+		$this->pager = $pager;
+		$this->nav_url = '@menuitems_in_restaurant?restaurant='.$this->restaurant->getStrippedTitle().'&scope='.$this->scope.'&page=';
+	}
 }

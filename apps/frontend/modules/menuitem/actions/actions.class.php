@@ -10,6 +10,12 @@
 */
 class menuitemActions extends myActions
 {
+	public function executeInRestaurant()
+	{
+		$this->scope = $this->getRequestParameter('scope');
+		$this->page = $this->getRequestParameter('page', 1);
+		$this->restaurant = RestaurantPeer::retrieveByStrippedTitle($this->getRequestParameter('restaurant'));
+	}
 	public function executeRate()
 	{
 		sfConfig::set('sf_web_debug', false);

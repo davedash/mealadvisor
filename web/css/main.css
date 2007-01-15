@@ -72,18 +72,50 @@ h2 {
   height: 250px;
 }
 
+#restaurant_info {
+  background: #555;
+  overflow: auto;
+  padding: .5em;
+  margin-bottom: 1em;
+}
 
 #restaurant_info li {
   float: left;
+  margin: 0 1em;
 }
 
 #restaurant_info a {
-  border-top: solid 1px black;
-  border-bottom: solid 1px black;
-  padding: 0 1em;
-  display: block;
-  line-height: 1em;
   text-decoration: none;
+  color: #999;  
+}
+
+/* box */
+/* box */
+.box {
+  border-top: solid 2px black;
+  border-bottom: solid 1px black;
+  
+}
+
+.box .header 
+{
+position: relative;
+border-bottom: solid 1px black;
+}
+
+.box .header .hide {
+position: absolute;
+top: 0;
+right: 0;
+}
+
+.box h3 {
+font-weight: bold;
+font-size: 1.2em;
+}
+
+#restaurant_info a:hover {
+  color: #eee;  
 }
 
 #tag_area {

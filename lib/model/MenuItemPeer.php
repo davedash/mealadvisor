@@ -20,6 +20,8 @@
  */	
 class MenuItemPeer extends BaseMenuItemPeer {
 	
+	const ALL = 'ALL';
+	
 	public static function search($phrase, $exact = false, $offset = 0, $max = 10)
 	{
 	  $words    = array_values(myTools::stemPhrase($phrase));

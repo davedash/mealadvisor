@@ -152,6 +152,10 @@ class myTools
 
 	   return is_array( $var ) && !is_numeric( implode( array_keys( $var ) ) );
 	}
+	
+	
+	public static function _or($a,$b)
+	{
+		return empty($a) ? $b:$a;
+	}
 }
-
-?>

@@ -38,17 +38,16 @@ src="http://api.maps.yahoo.com/ajaxymap?v=3.0&appid=reviewsby.us"></script>
 				<?php echo include_partial('jointRater', array('restaurant' => $restaurant ));?>
 			</div>
 		</div>
+		
+		<!-- restaurant menu -->
+		
 		<ul id="restaurant_info">
 			<?php if ($restaurant->getUrl()): ?>
-			<li>
-				<p><?php echo link_to($restaurant->getName() . ' website',$restaurant->getUrl())?></p>
-			</li>
+			<li><?php echo link_to($restaurant->getName() . ' website',$restaurant->getUrl())?></li>
 			<?php endif ?>
 			<li>
-				<p>
-					<?php echo link_to_function($num_locations . ' ' . pluralize($num_locations, 'location'),
-					visual_effect('toggle_blind', 'locations')) ?>
-				</p>
+				<?php echo link_to_function($num_locations . ' ' . pluralize($num_locations, 'location'),
+				visual_effect('toggle_blind', 'location_body')) ?>
 			</li>
 		</ul>
 
@@ -76,6 +75,7 @@ src="http://api.maps.yahoo.com/ajaxymap?v=3.0&appid=reviewsby.us"></script>
 			</form>
 			<?php endif ?>
 		</div>
+
 		<!-- information about the restaurant -->
 		<div class="description">
 			<?php if ($restaurant->getHtmlDescription()): ?>
@@ -88,57 +88,67 @@ src="http://api.maps.yahoo.com/ajaxymap?v=3.0&appid=reviewsby.us"></script>
 			<?php endif ?>
 		</div>
 				
-	
-	
-		<div id="restaurant_location">
-		</div>
+		<div id="locations" class="box">
+			<div class="header">
+				<h3>Restaurant locations</h3>
+				<div class="hide">
+					<?php echo link_to_function('show', toggle_element("location_body", 'location_hide'), 'id=location_hide')?>
+				</div>	
+			</div>
+			<div class="body" id="location_body" style="display:none">
+				<?php if (count($restaurant->getLocations())): ?>
+				<ul class="locations">
+					<?php foreach ($restaurant->getLocations() as $l): ?>
+					<li><?php echo link_to_location($l, $l->getName()) ?>: <?php echo $l->toLargeString() ?></li>
+					<?php endforeach ?>
+				</ul>
+				<p><?php echo link_to('Add a restaurant location', '@location_add?restaurant='.$restaurant->getStrippedTitle()) ?></p>
+				<?php else: ?>
+				<p>No locations... <?php echo link_to('add one', '@location_add?restaurant='.$restaurant->getStrippedTitle()) ?>!</p>
+				<?php endif ?>
+			</div>
+		</div>		
+			
 		
 	</div>
 	<div class="yui-u">
 		<div id="restaurant_map" style="width: 100%; height: 250px">
 		</div>
-		<p><?php echo link_to_location($location) ?>: <?php echo $location->toLargeString() ?></p>
+		<p><?php echo link_to_location($location, $location->getName()) ?>: <?php echo $location->toLargeString() ?></p>
 	</div>
 
-	<div id="locations" style="display: none">
-		<h2>Restaurant locations <em> <?php echo link_to_function('hide',
-		visual_effect('blind_up', 'locations'))?></em></h2>
-		<?php if (count($restaurant->getLocations())): ?>
-		<ul class="locations">
-			<?php foreach ($restaurant->getLocations() as $l): ?>
-			<li><?php echo link_to_location($l) ?> - <?php echo $l->toLargeString() ?></li>
-			<?php endforeach ?>
-		</ul>
-		<p><?php echo link_to('Add a restaurant location', '@location_add?restaurant='.$restaurant->getStrippedTitle()) ?></p>
-		<?php else: ?>
-		<p>No locations... <?php echo link_to('add one', '@location_add?restaurant='.$restaurant->getStrippedTitle()) ?>!</p>
-		<?php endif ?>
-	</div>		
+	
 </div>
 
 
 
+<!-- begin... menu area-->
 
+<div id="menu_item_box" class="box">
+	<div class="header">
+		<h3>Menu Items</h3>
+<!-- 		we need to finish the ajax.updater call here... and populate the menu propperly -->
+		<select id="options" onchange="new Ajax.Updater() ?>">
+	        <option value="0">Hello</option>
+	        <option value="1">World</option>
+	      </select>
+		<div class="hide">
+			<?php echo link_to_function('hide', toggle_element('menu_item_body', 'menu_item_hide'), 'id=menu_item_hide') ?>
+		</div>
+	</div>
+	<div class="body" id="menu_item_body" style="display:block">
 
+		<!-- We need to call a component with the default settings "MenuItemPeer::ALL", page 1 -->
+		<?php include_component('menuitem', 'inRestaurant', array('scope' => MenuItemPeer::ALL, 'page'=> 1, 'restaurant' => $restaurant  ))?>
+	</div>
+</div>
+
+<!-- end menu -->
 
 <div class="boxes">
 
 <h2 style="clear: both">Menu items</h2>
-<?php 
-	if (count($restaurant->getMenuItems())): 
-?>
-	<ul class="menuitems">
-		<?php foreach ($restaurant->getMenuItems() as $m): ?>
-		<li class="menuitem">
-			<div class="rater" id="<?php echo $m->getStrippedTitle() ?>_rating"><?php echo include_partial('menuitem/jointRater', array('menuitem' => $m ));?></div>
-			<div class="item_info">
-				<h3><?php echo link_to_menuitem($m); ?></h3>
-				<?php echo $m->getHtmlDescription() ?>
-				<?php echo include_partial('menuitem/tags', array('menu_item' => $m,'add' => false  ));?>
-			</div>
-		</li>
-		<?php endforeach ?>
-	</ul>
+<?php if (count($restaurant->getMenuItems())): ?>
 	<p style="clear: both"><?php echo link_to('Add a menu item', '@menu_item_add?restaurant='.$restaurant->getStrippedTitle()) ?></p>
 <?php else: ?>
   <p>No items on the menu yet... <?php echo link_to('add one', '@menu_item_add?restaurant='.$restaurant->getStrippedTitle()) ?>!</p>
