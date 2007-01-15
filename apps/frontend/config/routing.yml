@@ -1,3 +1,6 @@
+menuitems_in_restaurant:
+  url: /menuitem/inRestaurant/:restaurant/:scope/:page
+  param: { module: menuitem, action: inRestaurant }
 restaurant_list:
   url: /restaurants/*
   param: { module: location, action: index }
