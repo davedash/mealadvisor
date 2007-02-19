@@ -6,17 +6,20 @@ Displaying results <?php echo $pager->getFirstIndice() ?> to  <?php echo $pager-
 <ul class="menuitems">
 	<?php foreach ($pager->getResults() as $m): ?>
 	<li class="menuitem">
+		<?php if ($image = image_for_item($m,'longest_side=90')): ?>
+		  <div class="image"><?php echo $image ?></div>
+		<?php endif ?>
+		<h4 class="title"><?php echo link_to_menuitem($m); ?></h4>
+
+		<p class="description"><?php echo $m->getDescription(100) ?></p>
+		
 		<div class="rater" id="<?php echo $m->getStrippedTitle() ?>_rating"><?php echo include_partial('menuitem/jointRater', array('menuitem' => $m ));?></div>
-		<div class="item_info">
-			<h3><?php echo link_to_menuitem($m); ?></h3>
-			<?php echo $m->getHtmlDescription() ?>
-			<?php echo include_partial('menuitem/tags', array('menu_item' => $m,'add' => false  ));?>
-		</div>
+		<div class="tags"><?php echo include_partial('menuitem/tags', array('menu_item' => $m,'add' => false  ));?></div>
 	</li>
 	<?php endforeach ?>
 </ul>
 
-<div id="pagination">
+<div class="pagination">
 <?php if ($pager->haveToPaginate()): ?>
 <!-- need to setup the following pages and have them work ajaxfully -->
 <!-- setup routing rules, etc -->

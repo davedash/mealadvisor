@@ -234,7 +234,7 @@ SELECT id,name,
 	{
 		list($search_location, $near, $radius) = myTools::getNearness($location);	
 		
-		$locations = LocationPeer::allNear($near, $radius, $exact = false, $offset = 0, $max = 10, array('restaurant' => $restaurant ));
+		$locations = LocationPeer::allNear($near, $radius, $exact = false, $offset = 0, $max = 10, array('restaurant' => $restaurant, 'min_distance' => 'off'  ));
 		if (count($locations))
 		{
 			return $locations[0];

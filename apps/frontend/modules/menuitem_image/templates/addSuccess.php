@@ -1,3 +1,4 @@
+<?php use_helper('Validation');?>
 <h2>Upload a picture of <?php echo $menu_item->getName() ?> from <?php echo $restaurant ?></h2>
 
 <ul class="information">

@@ -158,4 +158,27 @@ class myTools
 	{
 		return empty($a) ? $b:$a;
 	}
+	
+	public static function truncate_text($text, $length = 30, $truncate_string = '...', $truncate_lastspace = false)
+	{
+	  if ($text == '')
+	  {
+	    return '';
+	  }
+
+	  if (strlen($text) > $length)
+	  {
+	    $truncate_text = substr($text, 0, $length - strlen($truncate_string));
+	    if ($truncate_lastspace)
+	    {
+	      $truncate_text = preg_replace('/\s+?(\S+)?$/', '', $truncate_text);
+	    }
+
+	    return $truncate_text.$truncate_string;
+	  }
+	  else
+	  {
+	    return $text;
+	  }
+	}
 }

@@ -114,7 +114,10 @@ src="http://api.maps.yahoo.com/ajaxymap?v=3.0&appid=reviewsby.us"></script>
 	<div class="yui-u">
 		<div id="restaurant_map" style="width: 100%; height: 250px">
 		</div>
+		<?php if ($location): ?>
 		<p><?php echo link_to_location($location, $location->getName()) ?>: <?php echo $location->toLargeString() ?></p>
+		  
+		<?php endif ?>
 	</div>
 
 	
@@ -126,12 +129,18 @@ src="http://api.maps.yahoo.com/ajaxymap?v=3.0&appid=reviewsby.us"></script>
 
 <div id="menu_item_box" class="box">
 	<div class="header">
+		<script type="text/javascript" charset="utf-8">
+			function changeScope(scope)
+			{
+				var url = new String('<?php echo url_for('@menuitems_in_restaurant?page=1&scope=__EDIT__&restaurant=' .$restaurant->getStrippedTitle()) ?>');
+				new Ajax.Updater('menu_item_body', url.replace('__EDIT__', scope));
+			}
+		</script>
 		<h3>Menu Items</h3>
-<!-- 		we need to finish the ajax.updater call here... and populate the menu propperly -->
-		<select id="options" onchange="new Ajax.Updater() ?>">
-	        <option value="0">Hello</option>
-	        <option value="1">World</option>
-	      </select>
+		<select id="options" onchange="changeScope(this.value)">
+			<option value="<?php echo MenuItemPeer::ALL ?>">All</option>
+			<option value="<?php echo MenuItemPeer::ALL ?>">All</option>
+		</select>
 		<div class="hide">
 			<?php echo link_to_function('hide', toggle_element('menu_item_body', 'menu_item_hide'), 'id=menu_item_hide') ?>
 		</div>
@@ -145,14 +154,12 @@ src="http://api.maps.yahoo.com/ajaxymap?v=3.0&appid=reviewsby.us"></script>
 
 <!-- end menu -->
 
-<div class="boxes">
-
-<h2 style="clear: both">Menu items</h2>
 <?php if (count($restaurant->getMenuItems())): ?>
 	<p style="clear: both"><?php echo link_to('Add a menu item', '@menu_item_add?restaurant='.$restaurant->getStrippedTitle()) ?></p>
 <?php else: ?>
   <p>No items on the menu yet... <?php echo link_to('add one', '@menu_item_add?restaurant='.$restaurant->getStrippedTitle()) ?>!</p>
 <?php endif ?>
+
 
 <h2>Comments about <?php echo $restaurant->getName() ?></h2>
 <div id="reviews">
@@ -189,6 +196,3 @@ src="http://api.maps.yahoo.com/ajaxymap?v=3.0&appid=reviewsby.us"></script>
 <?php else: ?>
 <div><?php echo link_to('Login', '@sf_guard_signin') ?> and tell us what <em>you</em> think!</div>
 <?php endif ?>
-
-<!--/review form-->
-</div>

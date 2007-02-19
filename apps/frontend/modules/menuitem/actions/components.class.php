@@ -25,7 +25,7 @@ class menuitemComponents extends sfComponents
 	{
 		$c = new Criteria();
 		$c->add(MenuItemPeer::RESTAURANT_ID, $this->restaurant->getId());
-		$pager = new sfPropelPager('MenuItem', 10);
+		$pager = new sfPropelPager('MenuItem', sfConfig::get('app_restaurant_max_menuitems'));
 		$pager->setCriteria($c);
 		$pager->setPage(myTools::_or($this->page, 1));
 		$pager->init();

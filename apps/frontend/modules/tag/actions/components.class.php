@@ -24,7 +24,7 @@ class tagComponents extends sfComponents
 			
 			$tags = array();
 			
-			$max_count = max($pop_tags);
+			$max_count = isset($pop_tags[0]) ? max($pop_tags) : 0;
 			
 			
 			foreach($pop_tags as $tag => $count) 

@@ -7,4 +7,4 @@ all:
   propel:
     class:          sfPropelDatabase
     param:
-      dsn:          mysql://mym:mznipul8@mysql.mymen.us/mymenus
+      dsn:          mysql://rbu:yicdogh$@localhost/rbu

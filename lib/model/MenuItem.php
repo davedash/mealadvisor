@@ -96,12 +96,19 @@ class MenuItem extends BaseMenuItem {
 		$version->setPrice($v);
 	}
 		
-	public function getDescription()
+	public function getDescription($length = null)
 	{
+		$desc;
 		if ($this->getMenuitemVersion()) 
 		{
-			return $this->getMenuitemVersion()->getDescription();
+			$desc = $this->getMenuitemVersion()->getDescription();
 		}
+		if ($length) {
+			
+			$desc = myTools::truncate_text($desc, $length);
+		}
+		
+		return $desc;
 	}
 	
 	public function getHtmlDescription()
