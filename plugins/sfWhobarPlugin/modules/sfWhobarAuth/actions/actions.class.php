@@ -15,6 +15,8 @@
  * @author     Dave Dash <dave.dash@spindrop.us>
  * @version    SVN: $Id: actions.class.php $
  */
-class sfWhobarAuthActions extends BasewhobarAuthActions
+
+require_once(dirname(__FILE__).'/../lib/BasesfWhobarAuthActions.class.php');
+class sfWhobarAuthActions extends BasesfWhobarAuthActions
 {
 }

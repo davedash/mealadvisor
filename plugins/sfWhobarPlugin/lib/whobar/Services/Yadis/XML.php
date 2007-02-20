@@ -162,7 +162,7 @@ class Services_Yadis_domxml extends Services_Yadis_XMLParser {
         return xpath_register_ns($this->xpath, $prefix, $uri);
     }
 
-    function &evalXPath($xpath, $node = null)
+    function evalXPath($xpath, $node = null)
     {
         if ($node) {
             $result = @$this->xpath->xpath_eval($xpath, $node);
@@ -247,7 +247,7 @@ class Services_Yadis_dom extends Services_Yadis_XMLParser {
         return $this->xpath->registerNamespace($prefix, $uri);
     }
 
-    function &evalXPath($xpath, $node = null)
+    function evalXPath($xpath, $node = null)
     {
         if ($node) {
             $result = @$this->xpath->query($xpath, $node);

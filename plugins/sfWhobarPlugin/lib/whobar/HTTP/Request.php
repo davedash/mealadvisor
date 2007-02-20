@@ -237,7 +237,7 @@ class HTTP_Request {
     */
     function HTTP_Request($url = '', $params = array())
     {
-        $this->_sock           = &new Net_Socket();
+        $this->_sock           = new Net_Socket();
         $this->_method         =  HTTP_REQUEST_METHOD_GET;
         $this->_http           =  HTTP_REQUEST_HTTP_VER_1_1;
         $this->_requestHeaders = array();
@@ -334,7 +334,7 @@ class HTTP_Request {
     */
     function setURL($url)
     {
-        $this->_url = &new Net_URL($url, $this->_useBrackets);
+        $this->_url = new Net_URL($url, $this->_useBrackets);
 
         if (!empty($this->_url->user) || !empty($this->_url->pass)) {
             $this->setBasicAuth($this->_url->user, $this->_url->pass);
@@ -888,7 +888,7 @@ class HTTP_Request {
         if (!is_a($listener, 'HTTP_Request_Listener')) {
             return false;
         }
-        $this->_listeners[$listener->getId()] =& $listener;
+        $this->_listeners[$listener->getId()] = $listener;
         return true;
     }
 
@@ -997,8 +997,8 @@ class HTTP_Response
     */
     function HTTP_Response(&$sock, &$listeners)
     {
-        $this->_sock      =& $sock;
-        $this->_listeners =& $listeners;
+        $this->_sock      = $sock;
+        $this->_listeners = $listeners;
     }
 
 

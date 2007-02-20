@@ -198,9 +198,9 @@ class Services_Yadis_XRDS {
      */
     function Services_Yadis_XRDS(&$xmlParser, &$xrdNodes)
     {
-        $this->parser =& $xmlParser;
+        $this->parser = $xmlParser;
         $this->xrdNode = $xrdNodes[count($xrdNodes) - 1];
-        $this->allXrdNodes =& $xrdNodes;
+        $this->allXrdNodes = $xrdNodes;
         $this->serviceList = array();
         $this->_parse();
     }
@@ -293,9 +293,9 @@ class Services_Yadis_XRDS {
         $services = $this->parser->evalXPath('xrd:Service', $this->xrdNode);
 
         foreach ($services as $node) {
-            $s =& new Services_Yadis_Service();
+            $s = new Services_Yadis_Service();
             $s->element = $node;
-            $s->parser =& $this->parser;
+            $s->parser = $this->parser;
 
             $priority = $s->getPriority();
 
