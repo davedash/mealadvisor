@@ -38,7 +38,17 @@ class Profile extends BaseProfile {
 		return $this->getsfGuardUser();
 	}
 
+	public function save ($con = null)
+	{
+		if ($this->save_user) {
+			$u = $this->getUser();
+			$u->save();
+			$this->setUserid($u->getId());
+		}
+		parent::save($con);
 
+	}
+	
 	public function setUsername ( $v )
 	{
 		$u = $this->getUser();
@@ -61,16 +71,7 @@ class Profile extends BaseProfile {
 		$this->reindex = true;
 	}
 
-	public function save ($con = null)
-	{
-		if ($this->save_user) {
-			$u = $this->getUser();
-			$u->save();
-			$this->setUserid($u->getId());
-		}
-		parent::save($con);
 
-	}
 
 		public function getAssociatedRestaurants($max = null, $offset = 0)
 		{
