@@ -30,8 +30,8 @@
 <?php echo form_tag('@openid_signin') ?>
 	<fieldset>
 		<div class="form-row">
-			<label for="openid">OpenID</label>
-			<?php echo input_tag('openid',$sf_request->getParameter('openid'),'class=openid') ?>
+			<label for="openid_url">OpenID</label>
+			<?php echo input_tag('openid_url',$sf_request->getParameter('openid_url'),'class=openid') ?>
 		</div>
 	</fieldset>
 	<?php echo submit_tag('authenticate') ?>
