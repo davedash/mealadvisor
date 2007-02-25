@@ -98,7 +98,7 @@ class MenuItem extends BaseMenuItem {
 		
 	public function getDescription($length = null)
 	{
-		$desc;
+		$desc ='';
 		if ($this->getMenuitemVersion()) 
 		{
 			$desc = $this->getMenuitemVersion()->getDescription();
