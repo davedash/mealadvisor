@@ -39,7 +39,7 @@ all:
     secure_action:          signin
 
   .settings:
-    enabled_modules:        [default, sfGuardAuth]
+    enabled_modules:        [default, sfGuardAuth, sfOpenIDAuth]
     timeout:                864000
     standard_helpers:       [Partial, Cache, Form, Global]
 
