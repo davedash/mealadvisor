@@ -1,3 +1,11 @@
+openid_signin:
+  url:  /openid
+  param: { module: sfOpenIDAuth, action: signin }
+
+openid_finishauth:
+  url: /openid/finish
+  param: { module: sfOpenIDAuth, action: finish}
+
 menuitems_in_restaurant:
   url: /menuitem/inRestaurant/:restaurant/:scope/:page
   param: { module: menuitem, action: inRestaurant }
@@ -124,14 +132,6 @@ restaurant_reindex:
 restaurant_index:
   url: /restaurant
   param: { module: restaurant, action: index}
-
-openid_signin:
-  url:  /openid
-  param: { module: openid, action: signin }
-
-openid_finishauth:
-  url: /openid/finish
-  param: { module: openid, action: finishAuth}
 
 # sfGuard
 
