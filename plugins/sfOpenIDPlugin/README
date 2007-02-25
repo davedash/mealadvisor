@@ -1,0 +1,25 @@
+sfWhoBarPlugin symfony plugin
+=============================
+
+Overview
+--------
+
+Module to handle authentication via WhoBar (including openID)
+
+License
+-------
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+
+== Installation ==
+
+  * Install the plugin
+  
+  {{{
+    symfony plugin-install http://plugins.symfony-project.com/sfWhobarPlugin
+  }}}
+  
+
+  * Enable the sfWhobarAuth module
+
