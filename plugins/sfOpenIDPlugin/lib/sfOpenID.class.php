@@ -42,7 +42,10 @@ class sfOpenID {
 		if (strpos($identity, 'http://') === false) {
 			$identity = 'http://'.$identity;
 		}
-		if ($identity[strlen($identity)-1] != '/')
+		// if this is a server we want a trailing slash
+		// therefore if there isn't a slash somewhere in the url after
+		// http:// add one
+		if (preg_match('|^http[s]?://[^/]+$|', $identity)) 
 		{
 			$identity .= '/';
 		}
@@ -98,9 +101,8 @@ class sfOpenID {
 
 		if (is_array($params)) $params = $this->arrayToQueryString($params);
 
-		if ($method == 'GET' && !empty($params)) {
-			$url .= '?' . $params;
-		}
+		if (!empty($params) && $method == 'GET') $url .= '?' . $params;
+	
 		
 		$curl = curl_init($url);
 
@@ -174,7 +176,6 @@ class sfOpenID {
 		}
 		
 		$data = $this->KVstoArray($this->web_request($openid_server,'POST',$params));
-var_dump($data);
 		if (isset($data['is_valid']) && $data['is_valid'] == 'true') {
 			return true;
 		}
