@@ -1,13 +1,10 @@
-sfOpenIDPlugin symfony plugin
-=============================
+= sfOpenIDPlugin symfony plugin =
 
-Overview
---------
+== Overview ==
 
 Module to handle authentication via OpenID.
 
-License
--------
+== License ==
 
 For the full copyright and license information, please view the LICENSE
 file that was distributed with this source code.
