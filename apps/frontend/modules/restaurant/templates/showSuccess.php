@@ -20,7 +20,6 @@ src="http://api.maps.yahoo.com/ajaxymap?v=3.0&appid=reviewsby.us"></script>
 		ymap.map.disableKeyControls();
 	});
 	
-
 </script>
 <?php endif ?>
 
@@ -29,9 +28,12 @@ src="http://api.maps.yahoo.com/ajaxymap?v=3.0&appid=reviewsby.us"></script>
 
 	<div class="yui-u first">
 		<div id="restaurant_header">
-			<h2><?php echo $restaurant->getName() ?>
+			<h2><span id="restaurant_name"><?php echo $restaurant->getName() ?></span>
 				<?php if ($restaurant->getChain()): ?><small>(chain)</small><?php endif ?>
 			</h2>
+			<?php if ($sf_user->isAdmin()): ?>
+			<?php echo input_in_place_editor_tag('restaurant_name', '@ajax_restaurant_save_name?stripped_title='.$restaurant->getStrippedTitle()) ?>
+			<?php endif ?>
 
 
 			<div id="<?php echo $restaurant->getStrippedTitle() ?>_rating" class="rating">
