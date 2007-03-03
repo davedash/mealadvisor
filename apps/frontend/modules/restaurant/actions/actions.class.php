@@ -17,6 +17,41 @@ require_once('myActions.class.php');
 
 class restaurantActions extends myActions
 {
+	public function executeAdminAjax()
+	{
+		$command = $this->getRequestParameter('command');
+		$restaurant = $this->getRestaurant();
+		switch($command) 
+		{
+			case 'save_name':
+				$restaurant->setName($this->getRequestParameter('value'));
+				$restaurant->save();
+				$this->message = $restaurant->getName();
+			break;
+		}
+	}
+	
+	private function getRestaurant()
+	{
+		$st = $this->getRequestParameter('stripped_title');
+		$restaurant = RestaurantPeer::retrieveByStrippedTitle($st);
+		if (!$restaurant instanceof Restaurant) {
+			// we need to find the URL that this should be
+			$rr = RestaurantRedirectPeer::retrieveByPK($st);
+			
+			$this->forwardIf($rr instanceof RestaurantRedirect, 'restaurant', 'moved');
+			$this->forward404();
+		}
+		return $restaurant;
+	}
+	
+	public function executeMoved()
+	{
+		$st = $this->getRequestParameter('stripped_title');
+		
+		$this->restaurantRedirect = RestaurantRedirectPeer::retrieveByPK($st);
+		
+	}
 	public function executeRate()
 	{
 		sfConfig::set('sf_web_debug', false);
@@ -132,9 +167,8 @@ class restaurantActions extends myActions
 		$this->getResponse()->addJavascript(sfConfig::get('SF_PROTOTYPE_WEB_DIR').'/js/prototype');
 		$this->getResponse()->addJavascript(sfConfig::get('SF_PROTOTYPE_WEB_DIR').'/js/controls');
 		$this->getResponse()->addJavascript('comment');
-		
-		$this->restaurant = RestaurantPeer::retrieveByStrippedTitle($this->getRequestParameter('stripped_title'));
-		$this->forward404Unless($this->restaurant instanceof Restaurant);
+
+		$this->restaurant = $this->getRestaurant();
 
 		$this->addFeed('@menu_item_feed?stripped_title=' . $this->restaurant->getStrippedTitle(), 'Menu items at ' . $this->restaurant->__toString());
 
