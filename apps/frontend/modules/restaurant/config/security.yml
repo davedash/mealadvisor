@@ -3,3 +3,7 @@ all:
   
 addComment:
   is_secure: on
+
+adminAjax:
+  is_secure: on
+  credentials: backend
