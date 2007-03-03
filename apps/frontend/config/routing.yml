@@ -1,3 +1,9 @@
+#ajax routes
+
+ajax_restaurant_save_name:
+  url: /ashjdklaf/arsn/:stripped_title
+  param: {module: restaurant, action: adminAjax, command: save_name }
+
 openid_signin:
   url:  /openid
   param: { module: sfOpenIDAuth, action: signin }
