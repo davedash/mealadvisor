@@ -111,4 +111,9 @@ class myUser extends sfGuardSecurityUser {
 			return parent::getProfile();
 		}
 	}
+	
+	public function isAdmin()
+	{
+		return $this->hasGroup('administrator');
+	}
 }
