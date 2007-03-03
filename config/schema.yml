@@ -8,6 +8,12 @@ propel:
     preferences: longvarchar
     updated_at: 
     created_at: 
+  restaurant_redirect:
+    _attributes: { phpName: RestaurantRedirect }
+    old_stripped_title: {type: varchar, size: 255, primaryKey: true}
+    restaurant_id:
+    updated_at:
+    created_at:
   restaurant: 
     _attributes: { phpName: Restaurant }
     id: 
