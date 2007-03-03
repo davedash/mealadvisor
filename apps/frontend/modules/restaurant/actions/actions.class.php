@@ -24,8 +24,14 @@ class restaurantActions extends myActions
 		switch($command) 
 		{
 			case 'save_name':
+				$ost = $restaurant->getStrippedTitle();
 				$restaurant->setName($this->getRequestParameter('value'));
 				$restaurant->save();
+				$nst = $restaurant->getStrippedTitle();
+				if ($ost != $nst) // the url has changed
+				{
+					$this->redirect_to = $this->getController()->genUrl('@restaurant?stripped_title='.$nst);
+				}
 				$this->message = $restaurant->getName();
 			break;
 		}

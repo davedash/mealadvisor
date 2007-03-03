@@ -32,7 +32,9 @@ src="http://api.maps.yahoo.com/ajaxymap?v=3.0&appid=reviewsby.us"></script>
 				<?php if ($restaurant->getChain()): ?><small>(chain)</small><?php endif ?>
 			</h2>
 			<?php if ($sf_user->isAdmin()): ?>
-			<?php echo input_in_place_editor_tag('restaurant_name', '@ajax_restaurant_save_name?stripped_title='.$restaurant->getStrippedTitle()) ?>
+			<?php echo input_in_place_editor_tag('restaurant_name', 
+			'@ajax_restaurant_save_name?stripped_title='.$restaurant->getStrippedTitle(),
+			array('complete' => 'function(transport,element){window.location.reload();}' )) ?>
 			<?php endif ?>
 
 
