@@ -57,6 +57,15 @@ class Restaurant extends BaseRestaurant {
 		$this->reindex = true;
 	}
 	
+	public function setStrippedTitle($v)
+	{
+		$old_st = parent::getStrippedTitle();
+		if (!empty($old_st) && $this->getId() && $old_st != $v) {
+			RestaurantRedirectPeer::create($old_st, $this);
+		}
+		parent::setStrippedTitle($v);
+	}
+	
 	public function getStripped_Title()
 	{
 		return $this->getStrippedTitle();
