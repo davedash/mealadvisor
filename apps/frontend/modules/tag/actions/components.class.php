@@ -16,6 +16,7 @@ class tagComponents extends sfComponents
 	{
 	
 			$pop_tags = $this->restaurant->getPopularTags(10);
+		
 			$user_tags = array();
 			if ($this->getUser()->isLoggedIn())
 			{
@@ -24,8 +25,7 @@ class tagComponents extends sfComponents
 			
 			$tags = array();
 			
-			$max_count = isset($pop_tags[0]) ? max($pop_tags) : 0;
-			
+			$max_count = !empty($pop_tags) ? max($pop_tags) : 0;
 			
 			foreach($pop_tags as $tag => $count) 
 			{ 
