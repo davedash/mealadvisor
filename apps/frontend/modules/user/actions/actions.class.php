@@ -18,8 +18,9 @@ class userActions extends sfActions
 	public function executeProfile()
 	{
 		$c = new Criteria();
-		$c->add(ProfilePeer::USERID, $this->getRequestParameter('user'));
-		$this->user = ProfilePeer::doSelectOne($c);
+		$c->add(sfGuardUserPeer::USERNAME, $this->getRequestParameter('username'));
+		$sfgu = sfGuardUserPeer::doSelectOne($c);
+		$this->user = $sfgu->getProfile();
 		$this->restaurants = $this->user->getAssociatedRestaurants(10);
 		$this->moreRestaurants = $this->user->getAssociatedRestaurants(null,10);
 	}

@@ -33,7 +33,7 @@ menu_item_edit:
   url: /restaurant/:restaurant/menu/:stripped_title/edit
   param: { module: menuitem, action: edit }  
 profile:
-  url: /profile/:user
+  url: /profile/:username
   param: { module: user, action: profile}
 about:
   url: /about

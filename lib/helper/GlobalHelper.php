@@ -92,7 +92,7 @@ function link_to_user($mixed)
 		return "Anonymous Diner";
 	}
 
-	return link_to($user->__toString(), '@profile?user='. $user->getUserId());
+	return link_to($user->__toString(), '@profile?username='. $user->getUsernameForURL());
 }
 
 /* TLA helpers */
