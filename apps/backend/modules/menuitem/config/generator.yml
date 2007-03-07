@@ -5,7 +5,7 @@ generator:
     theme:            default
     list:
       max_per_page: 10
-      display:        [restaurant, name, description, price]
+      display:        [restaurant, =name, description, price, num_ratings, num_reviews]
       filters: [restaurant_id]
       actions:
         _create: -
