@@ -319,4 +319,11 @@ class MenuItem extends BaseMenuItem {
 
 	  return $words;
 	}
+	
+	public function getNumReviews()
+	{
+		$c = new Criteria();
+		$c->add(MenuItemNotePeer::MENU_ITEM_ID, $this->getId());
+		return MenuItemNotePeer::doCount($c);
+	}
 } // MenuItem
