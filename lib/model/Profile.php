@@ -17,6 +17,11 @@ require_once 'lib/model/om/BaseProfile.php';
 class Profile extends BaseProfile {
 	protected $reindex = false, $sfGuardUser = null, $save_user = false;
 
+	public function getUsernameForURL()
+	{
+		// normalize it by putting it in lowercase
+		return strtolower($this->getUsername());
+	}
 	public function getsfGuardUser ()
 	{
 
