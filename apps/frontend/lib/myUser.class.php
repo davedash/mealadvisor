@@ -114,6 +114,7 @@ class myUser extends sfGuardSecurityUser {
 	
 	public function isAdmin()
 	{
-		return $this->hasGroup('administrator');
+		
+		return (!$this->isAnonymous() && $this->hasGroup('administrator'));
 	}
 }
