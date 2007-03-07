@@ -8,8 +8,10 @@ function pluralize($count, $singular, $plural = false)
   return ($count == 1 ? $singular : $plural) ;
 }
 
-function brif ( $value )
+function brif ( $test, $value = null )
 {
+	if ($value === null) $value = $test;
+	
 	if ($value) return $value . '<br/>';
 }
 
