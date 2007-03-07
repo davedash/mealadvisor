@@ -1,3 +1,6 @@
+# New SQL
+# alter table profile add column about_text text after preferences
+
 propel: 
   profile: 
     _attributes: {phpName: Profile}
@@ -6,6 +9,7 @@ propel:
     email: varchar(128)
     openid: varchar(255)
     preferences: longvarchar
+    about_text: longvarchar
     updated_at: 
     created_at: 
   restaurant_redirect:
@@ -144,8 +148,7 @@ propel:
       type: float
       size: 2
       scale: 1
-    num_ratings: 
-      type: integer
+    num_ratings: INTEGER
     updated_at: 
       type: TIMESTAMP
     created_at: 
