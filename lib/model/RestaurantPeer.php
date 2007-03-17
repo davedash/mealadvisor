@@ -19,24 +19,7 @@ include_once 'lib/model/Restaurant.php';
 * @package model
 */	
 class RestaurantPeer extends BaseRestaurantPeer {
-	public static function reindex ()
-	{
-		require_once 'Zend/Search/Lucene.php';
-		$index = new Zend_Search_Lucene(sfConfig::get('app_search_restaurant_index_file'),true);
 
-		$restaurants = RestaurantPeer::doSelect(new Criteria());
-		foreach ($restaurants AS $restaurant)
-		{
-			$doc->getZSLDocument();
-
-			$index->addDocument($doc);
-
-		}
-
-		$index->commit();
-		return $index;
-
-	}
 	public static function getPopularByTag($tag, $page = 0) 
 	{ 
 		$c = new Criteria(); 
@@ -56,7 +39,9 @@ class RestaurantPeer extends BaseRestaurantPeer {
 
 	public static function search($phrase, $exact = false, $offset = 0, $max = 10)
 	{
-		$words    = array_values(myTools::stemPhrase($phrase));
+		// remove apostrophe's since our stemmer does not
+		
+		$words    = array_values(myTools::stemPhrase(str_replace('\'', '', $phrase)));
 		$nb_words = count($words);
 
 		if (!$words)
