@@ -41,7 +41,7 @@ all:
   .settings:
     enabled_modules:        [default, sfGuardAuth, sfOpenIDAuth]
     timeout:                864000
-    standard_helpers:       [Partial, Cache, Form, Global]
+    standard_helpers:       [Partial, Cache, Form, Global, Feed, nifty]
 
 #    default_module:         default
 #    default_action:         index

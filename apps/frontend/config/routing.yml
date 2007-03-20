@@ -1,9 +1,17 @@
 #ajax routes
 
+ajax_register:
+  url: /YLKU/ar
+  param: {module: user, action: ajaxRegister }
+  
+ajax_login:
+  url: /LKJHgfjk/al
+  param: {module: sfGuardAuth, action: ajaxSignin }
 ajax_restaurant_save_name:
   url: /ashjdklaf/arsn/:stripped_title
   param: {module: restaurant, action: adminAjax, command: save_name }
 
+#/ajax routes
 openid_signin:
   url:  /openid
   param: { module: sfOpenIDAuth, action: signin }

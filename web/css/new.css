@@ -1,0 +1,49 @@
+/* header */
+#hd {
+  background: #9f9;
+  padding: .5em 1em;
+}
+
+/* dialog */
+
+.x-dlg-hd a {
+  color: white;
+} 
+
+/* headings */
+
+h2 {
+  font-size: 1.5em;
+}
+
+p { 
+  margin-bottom: 1em;
+}
+
+fieldset label {
+  font-weight: bold;
+  float: left;
+  display: block;
+  width: 6em;
+}
+
+fieldset label, fieldset input {
+  font-size: 1.5em;
+}
+
+p.submit_line {
+  text-align: right;
+  margin-top: 1em;
+  width: 25em;
+}
+
+fieldset .form_error {
+  text-align: right;
+  margin-top: 1em;
+  width: 25em;
+}
+
+.form_error, .warning {
+  color: red;
+  font-weight: bold;
+}

@@ -21,7 +21,7 @@ class BasesfOpenIDAuthActions extends sfActions
 	public function executeSignin()
 	{
 		if ($this->isPost()) {
-			
+			$this->getUser()->setAttribute('referer', $this->getRequestParameter('referer', '@homepage'));
 			$openid = new sfOpenID();
 			$openid->setIdentity($this->getRequestParameter('openid_url'));
 			
@@ -39,7 +39,8 @@ class BasesfOpenIDAuthActions extends sfActions
 	public function executeFinish()
 	{
 		$mode = $this->getRequestParameter('openid_mode');
-		if ($mode == 'id_res') {
+		if ($mode == 'id_res') 
+		{
 			$openid = new sfOpenID();
 			$openid->setIdentity($this->getRequestParameter('openid_identity'));
 			$openid_validation_result = $openid->validateWithServer();

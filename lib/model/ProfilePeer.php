@@ -19,5 +19,11 @@
  * @package model
  */	
 class ProfilePeer extends BaseProfilePeer {
-
+	public static function retrieveByUsername($v)
+	{		
+			$c = new Criteria();
+			$c->add(sfGuardUserPeer::USERNAME, $v);
+			$sfgu = sfGuardUserPeer::doSelectOne($c);
+			return $sfgu->getProfile();
+	}
 } // ProfilePeer

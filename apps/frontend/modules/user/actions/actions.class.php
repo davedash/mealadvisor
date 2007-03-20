@@ -17,12 +17,19 @@ class userActions extends sfActions
 
 	public function executeProfile()
 	{
-		$c = new Criteria();
-		$c->add(sfGuardUserPeer::USERNAME, $this->getRequestParameter('username'));
-		$sfgu = sfGuardUserPeer::doSelectOne($c);
-		$this->user = $sfgu->getProfile();
+		$this->user = ProfilePeer::retrieveByUsername($this->getRequestParameter('username'));
+		$this->getResponse()->setTitle($this->user->getUsername() . ' &raquo; ' . sfConfig::get('app_title', 'rbu'), false);
 		$this->restaurants = $this->user->getAssociatedRestaurants(10);
 		$this->moreRestaurants = $this->user->getAssociatedRestaurants(null,10);
+	}
+	
+	public function executeAjaxRegister()
+	{
+		$u = new Profile();
+		$u->setUsername($this->getRequestParameter('username'));
+		$u->setPassword($this->getRequestParameter('password'));
+		$u->save();
+		$this->getUser()->loginAs($u);	
 	}
 	
 	public function executeRegister()
@@ -42,38 +49,6 @@ class userActions extends sfActions
 	{
 		return sfView::SUCCESS;
 	}
-
-	public function executeLogin()
-	{
-
-	}
-
-	public function handleErrorLocalLogin()
-	{
-	
-		$this->getRequest()->getAttributeHolder()->set('referer', $this->getRequestParameter('referer'));
-		return sfView::SUCCESS;
-	}
-
-	
-	public function executeLocalLogin()
-	{
-		if ($this->getRequest()->getMethod() != sfRequest::POST)
-		{
-			
-			$this->forward('default', 'login');
-		}
-		else
-		{
-
-			$redirect = $this->getRequestParameter('referer', '@homepage');
-			
-			return $this->redirect($redirect);
-		
-		}
-	}
-
-
 
 	public function executeShow ()
 	{
@@ -99,5 +74,3 @@ class userActions extends sfActions
 	}
 
 }
-
-?>

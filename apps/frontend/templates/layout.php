@@ -18,7 +18,7 @@
 </head>
 <body>
 	<div id="indicator" style="display: none"></div>
-	<div id="doc3">	
+
 		<div id="header">
 			<div id="mini_logo"><?php echo logo_tag() ?></div>
 			<div class="ad" id="link_unit_1">

@@ -25,6 +25,9 @@ class sfOpenIDAuthActions extends BasesfOpenIDAuthActions
 		// id
 		$openid = sfOpenID::simplifyURL($this->getRequestParameter('openid_identity'));
 		$this->getUser()->loginAs($openid, true);
-		return $this->redirect('@homepage');
+		
+		$referer = $this->getUser()->getAttribute('referer', '@homepage');
+		$this->getUser()->getAttributeHolder()->remove('referer');
+		return $this->redirect($referer);
 	}
 }

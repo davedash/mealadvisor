@@ -13,6 +13,13 @@ require_once(sfConfig::get('sf_root_dir').'/plugins/sfGuardPlugin/modules/sfGuar
 
 class sfGuardAuthActions extends BasesfGuardAuthActions
 {
- 
+	public function executeAjaxSignin()
+	{
 
+	}
+  public function executeSignout()
+  {
+    $this->getUser()->signOut();
+    $this->redirect($this->getRequest()->getReferer());
+  }
 }
