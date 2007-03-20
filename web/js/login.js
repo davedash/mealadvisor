@@ -2,8 +2,7 @@
 
 var LoginDialog = function(){
     
-    var dialog, showBtn;
-    
+    var dialog, showBtn, layout;
 
     // return a public interface
     return {
@@ -15,6 +14,9 @@ var LoginDialog = function(){
              }
            },
         hide : function() { dialog.hide() },
+        showRegister: function() { this.showDialog();  layout.getRegion("center").showPanel("login_dlg_register"); },
+        showOpenID: function() { this.showDialog();  layout.getRegion("center").showPanel("login_dlg_openid"); },
+        showLogin: function() { this.showDialog(); layout.getRegion("center").showPanel("login_dlg_standard"); },
         showDialog : function(){
             if(!dialog){ // lazy initialize the dialog and only create it once
                 dialog = new Ext.LayoutDialog("login-dlg", { 
@@ -34,14 +36,15 @@ var LoginDialog = function(){
                 dialog.addKeyListener(27, dialog.hide, dialog);
                 dialog.addButton('Cancel', dialog.hide, dialog);
                 
-                var layout = dialog.getLayout();
+                layout = dialog.getLayout();
                 dialog.beginUpdate();
   	            
   	            layout.add('center', new Ext.ContentPanel('login_dlg_register', {title: 'Register'}));
   	            layout.add('center', new Ext.ContentPanel('login_dlg_openid', {title: 'Open ID'}));
                 layout.add('center', new Ext.ContentPanel('login_dlg_standard', {title: 'Sign In'}));
 
-                  // generate some other tabs
+
+                // generate some other tabs
   	            layout.endUpdate();
                 dialog.endUpdate();
               }

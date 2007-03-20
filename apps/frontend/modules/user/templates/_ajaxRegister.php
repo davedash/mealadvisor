@@ -5,7 +5,8 @@
 <p>
 	We support 
 	openID so if you
-	have a LiveJournal or other openID account, you don't need to register.
+	have a LiveJournal or other openID account, you can 
+	<?php echo link_to_function('sign-in without registering', 'LoginDialog.showOpenID()') ?>.
 </p>
 
 <p>
