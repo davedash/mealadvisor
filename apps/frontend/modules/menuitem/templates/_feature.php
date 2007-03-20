@@ -9,5 +9,5 @@
 	<?php echo average_rating(array('rating' => $item->getAverageRating(), 'votes' => $item->getNumRatings(), 'omit_heading'=>true)) ?>
 </div>
 <div class="description">
-	<?php echo $item->getDescription() ?>
+	<?php echo $item->getDescription(300) ?>
 </div>

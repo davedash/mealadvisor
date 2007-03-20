@@ -3,11 +3,12 @@ class menuitemComponents extends sfComponents
 {
 	public function executeFeature()
 	{
-		
-		$mis = MenuItemImagePeer::doSelectJoinAll(new Criteria());
-		shuffle($mis);
-		$mi = new MenuItemImage();
-		if (isset($mis[0])) $mi = $mis[0];
+		$c = new Criteria();
+		$c->addDescendingOrderByColumn("rand()");
+		$c->setLimit(1);
+		$mis = MenuItemImagePeer::doSelectJoinAll($c);
+		$mi = $mis[0];
+				
 		$this->item = $mi->getMenuItem();
 		$this->image = $mi;
 		$this->rating = null;
