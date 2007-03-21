@@ -1,1 +1,0 @@
-<?php include_partial('sfOpenIDAuth/form', array());?>
