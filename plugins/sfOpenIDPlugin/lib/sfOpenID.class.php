@@ -69,8 +69,8 @@ class sfOpenID {
 
 		if (!isset($servers[0]))
 		{
-			$this->setError(self::NO_SERVERS_FOUND);
-			return false;
+			//			$this->setError(self::NO_SERVERS_FOUND);
+			throw new sfException(self::NO_SERVERS_FOUND);
 		}
 		if (!empty($delegates[0]))
 		{

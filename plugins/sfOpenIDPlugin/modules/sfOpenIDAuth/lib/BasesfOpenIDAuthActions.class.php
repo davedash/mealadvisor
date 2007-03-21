@@ -31,8 +31,15 @@ class BasesfOpenIDAuthActions extends sfActions
 			$trust_root = $this->getController()->genUrl('@homepage', true);
 			$openid->SetTrustRoot($trust_root);
 
-			$this->redirect($openid->getRedirectURL());
-			 
+			try 
+			{
+				$this->redirect($openid->getRedirectURL());
+			}
+			catch (sfException $e)
+			{
+				$this->error = $e->getMessage();
+				return sfView::ERROR;
+			}
 		}
 	}
 	
