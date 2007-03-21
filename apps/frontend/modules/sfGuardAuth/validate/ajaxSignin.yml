@@ -16,3 +16,5 @@ userValidator:
     param:
       password:    password
       remember:    remember
+fillin:
+  enabled: true  # Enable the form repopulation

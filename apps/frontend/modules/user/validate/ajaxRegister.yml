@@ -27,3 +27,5 @@ passwordValidator:
   param:
     check:          password
     compare_error:  The passwords you entered do not match.
+fillin:
+  enabled: true
