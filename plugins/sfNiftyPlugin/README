@@ -1,0 +1,121 @@
+= sfNifty plugin =
+
+sfNifty provide some helper to use the '''Nifty Corner Cube''' javascript library (http://www.html.it/articoli/niftycube/index.html) of '''Alessandro Fulciniti'''(a.fulciniti@html.it)[[BR]]
+The concept of this library is to '''rounded corners of DOM Elements without images'''. 
+
+== Installation ==
+
+  * Install the plugin
+  
+  {{{
+    $ symfony plugin-install http://plugins.symfony-project.com/sfNiftyPlugin
+  }}}
+  
+  * Clear your cache
+
+  {{{
+    $symfony cc
+  }}}  
+  
+=== Use the helpers ===
+
+To round corners :
+
+  ''function nifty_round_elements( $element, $options = "" )''
+
+  * $element
+ 
+    '''tag selector'''
+      - "p"[[BR]]
+      - "h2"
+      
+    '''id selector'''
+      - "div#header"[[BR]]
+      - "h2#about"
+      
+    '''class selector'''
+      - "div.news"[[BR]]
+      - "span.date"[[BR]]
+      - "p.comment"
+      
+    '''descendant selector (with id)'''
+      - "div#content h2"[[BR]]
+      - "div#menu a"
+      
+    '''descendant selector (with class)'''
+      - "ul.news li"[[BR]]
+      - "div.entry h4"
+      
+    '''grouping (any number and combination of the previous selectors)'''
+      - "h2,h3"[[BR]]
+      - "div#header,div#content,div#footer"[[BR]]
+      - "ul#menu li,div.entry li"  
+
+  * $options
+  
+    '''tl'''	
+      top left corner
+      
+    '''tr'''
+      top right corner
+      
+    '''bl'''
+      bottom left corner
+      
+    '''br'''
+      bottom right corner
+
+    '''top'''
+      upper corners
+    
+    '''bottom'''
+      lower corners
+    
+    '''left'''
+      left corners
+    
+    '''right'''
+      right corners
+    
+    '''all'''
+      (default)	all the four corners
+    
+    '''none'''
+      no corners will be rounded (to use for nifty columns)
+    
+    '''small'''
+      small corners (2px)
+    
+    '''normal'''
+      (default)	normal size corners (5px)
+    
+    '''big'''
+      big size corners (10px)
+    
+    '''transparent'''
+      inner transparent, alias corners will be obtained. This option activates automatically if the element to round does not have a background-color specified.
+    
+    '''fixed-height'''
+      to be applied when a fixed height is set via CSS
+    
+    '''same-height'''
+      Parameter for nifty columns: all elements identified by the CSS selector of the first parameter will have the same height. If the effect is needed without rounded corners, simply use this parameter in conjuction with the keyword none.  
+      
+  * Exemples
+  {{{
+     <?php echo javascript_tag( nifty_round_elements( "div#content_div", "big") ) ?>
+     <?php echo javascript_tag( nifty_round_elements( "div.menu", "top") ) ?>
+     <?php echo javascript_tag( nifty_round_elements( "div.encart", "small br tl") ) ?>
+     <?php echo javascript_tag( nifty_round_elements( "h2, h3, div#content" ) ) ?>
+  }}} 
+
+      
+=== Read the complete documentation ===  
+
+...of Nifty Library, here : http://www.html.it/articoli/niftycube/index.html
+
+=== Versions ===
+
+1.0.0 => First version
+1.0.1 => correcting link bug in niftyHelper.php
+1.0.2 => refactoring, use Prototype for adding window.onload events 
