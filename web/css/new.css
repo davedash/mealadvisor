@@ -47,3 +47,14 @@ fieldset .form_error {
   color: red;
   font-weight: bold;
 }
+
+#top_menu li {
+  float: left;
+  border-right: dotted 1px black;
+  margin-right: .5em;
+  padding-right: .5em;
+}
+
+#top_menu {
+  overflow: auto;
+}
