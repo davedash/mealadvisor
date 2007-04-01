@@ -1,4 +1,4 @@
 profileSuccess:
-  layout: newlayout
-  stylesheets: [-main, -extra, -home, ext-all, new]
-  javascripts: [ext-prototype-adapter, ext-all, rbu, login]
+#  layout: newlayout
+#  stylesheets: [-main, -extra, -home, ext-all, new]
+#  javascripts: [ext-prototype-adapter, ext-all, rbu, login]

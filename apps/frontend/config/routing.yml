@@ -78,7 +78,7 @@ tag:
   param: { module: tag, action: show }
 feed_tag_georss:
   url: /tag/:tag/geo.rss
-  param: { module: feed, action: tagGeoRss}
+  param: { module: feed, action: tagGeoRSS}
   
 tag_remove:
   url: /tag_remove/:menuitem_hash/:tag

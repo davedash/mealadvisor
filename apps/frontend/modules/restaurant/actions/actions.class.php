@@ -170,9 +170,6 @@ class restaurantActions extends myActions
 
 	public function executeShow()
 	{
-		$this->getResponse()->addJavascript(sfConfig::get('SF_PROTOTYPE_WEB_DIR').'/js/prototype');
-		$this->getResponse()->addJavascript(sfConfig::get('SF_PROTOTYPE_WEB_DIR').'/js/controls');
-		$this->getResponse()->addJavascript('comment');
 
 		$this->restaurant = $this->getRestaurant();
 
@@ -210,7 +207,7 @@ class restaurantActions extends myActions
 		{
 			// build the url where we need to get redirected...
 			$this->setFlash('post_login', $this->getController()->genUrl('@restaurant_add',1));
-			if(!$ajax) return $this->redirect('@sf_guard_signin');
+			if(empty($ajax)) return $this->redirect('@sf_guard_signin');
 		}
 		$this->restaurant = $this->getRestaurantOrCreate();
 	}

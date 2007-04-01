@@ -4,4 +4,4 @@ addCommentSuccess:
   has_layout: off
 showSuccess:
   stylesheets: [-extra]
-  javascripts: [map]
+  javascripts: [map, comment]
