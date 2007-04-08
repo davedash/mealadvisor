@@ -5,7 +5,7 @@ prod:
     
 staging:
   .settings:
-    web_debug: on
+    web_debug: off
     no_script_name: on
     cache: on
     error_reporting: 4095

@@ -1,15 +1,12 @@
-
-<?php if ($sf_params->get('search') && trim($search_location)): ?>
-<h2>restaurants matching "<?php echo htmlspecialchars($sf_params->get('search')) ?>"</h2>
-<p>Within <?php echo $radius ?> miles of <?php echo $search_location ?>.</p>
-
-<?php elseif(!$sf_params->get('search')):?>
-<h2>Restaurants near <?php echo $search_location ?></h2>
-
-<?php else:?>
-<p>Your location didn't make sense, try entering a zip-code or a city.</p>  
-
-<?php endif ?> 
+<h2>restaurants matching "<?php echo htmlspecialchars($sf_params->get('search')) ?>"
+	<br/>	
+	<?php if ($in): ?>
+	in <?php echo $search_location ?>
+	<?php else:?>
+	near <?php echo $search_location ?>
+		
+	<?php endif ?>
+</h2>
 
 
 <ul class="restaurants">
@@ -26,7 +23,8 @@
   <div>There are no more results for your search.</div>
 <?php elseif (!count($locations)): ?>
 <p>No restaurants match your search try 
-<?php echo link_to('searching for ' .htmlspecialchars($sf_params->get('search')). trim($search_location) ? " outside of $search_location" : ' Anywhere','@search_restaurant?location=Anywhere&search=' . $sf_params->get('search')) ?>.
+	
+<?php echo link_to('searching for ' .htmlspecialchars($sf_params->get('search')). trim($search_location) ? " outside of $search_location" : ' Anywhere','@search_restaurant?search=' . $sf_params->get('search')) ?>.
 
 <?php endif ?>
  

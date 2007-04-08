@@ -22,7 +22,7 @@ propel:
     _attributes: { phpName: Restaurant }
     id: 
     name: varchar(255)
-    stripped_title: varchar(128)
+    stripped_title: { type: varchar, size: 128, index: unique }
     approved: boolean
     average_rating: 
       type: float
@@ -71,12 +71,8 @@ propel:
       foreignTable: profile
       foreignReference: id
   location: 
-    _attributes: 
-      phpName: Location
+    _attributes: { phpName: Location }
     id: 
-      type: integer
-      primaryKey: true
-      autoIncrement: true
     restaurant_id:
     stripped_title: 
       type: varchar
@@ -95,7 +91,7 @@ propel:
       size: 16
     zip: 
       type: varchar
-      size: 9
+      size: 10
     country_id: 
       type: char
       size: 2
@@ -267,6 +263,10 @@ propel:
       size: 3
     numcode: 
       type: smallint
+  state:
+    _attributes: { phpName: State }
+    usps: {type: char, size: 2, required: true, primaryKey: true }
+    name: {type: varchar, size: 80, index: true}
   menu_item_image: 
     _attributes: 
       phpName: MenuItemImage

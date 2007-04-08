@@ -12,12 +12,27 @@ $databaseManager = new sfDatabaseManager();
 $databaseManager->initialize();
 
 $c = new Criteria();
-$c->add(LocationPeer::LATITUDE, null, Criteria::ISNULL);
+$c->add(LocationPeer::COUNTRY_ID, null, Criteria::ISNULL);
+
+$c->setLimit(40);
 $locations = LocationPeer::doSelect($c);
 
 foreach ($locations AS $l)
 {
 	$l->save();
 	
-	echo "{$l->getLatitude()}, {$l->getLongitude()}\n";
+	echo $l->getCountry(), "\n";
+}
+
+$c = new Criteria();
+$c->add(LocationPeer::CITY, '%paul%', Criteria::LIKE);
+
+$c->setLimit(40);
+$locations = LocationPeer::doSelect($c);
+
+foreach ($locations AS $l)
+{
+	$l->save();
+	
+	echo $l->getCity(), "\n";
 }

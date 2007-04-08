@@ -101,9 +101,74 @@ class restaurantActions extends myActions
 		$query = $this->getRequestParameter('search');
 		$location = $this->getRequestParameter('location');
 		$page = $this->getRequestParameter('page',1);
-		if ($query == 'Anything') $query = null; 
-		if ($location == 'Anywhere') $location = null;
+		
+		// remove default anything/anywhere terms
+		if (strtolower(trim($query))    == 'anything') $query    = null; 
+		if (strtolower(trim($location)) == 'anywhere') $location = null;
 
+		// determine the type of search
+		// each needs to set an appropriate title and fetch appropriate results
+
+		// 3 query near location
+		if ($query && $location)
+		{
+			$geo = new YahooGeo($location);
+			// first determine if this is a search for something *IN* something else
+			// or a search for something NEAR something else...
+			switch ($geo->getPrecision())
+			{
+				case YahooGeo::COUNTRY:
+				case YahooGeo::STATE:
+				$this->locations = LocationPeer::searchIn($query, $geo, $page);
+				$this->in = true;
+				$this->search_location = $geo->getShortString();
+				
+				return 'LocationSuccess';
+				break;
+				
+				case YahooGeo::CITY:
+				case YahooGeo::ZIP:
+				$this->locations = LocationPeer::searchNear($query, $geo, $page);
+				$this->in = false;
+				$this->search_location = $geo->getShortString();
+
+				// near search
+				return 'LocationSuccess';
+				
+				default:
+				break;
+			}			
+		} 
+		// 1 $query only
+		elseif ($query)
+		{
+			$exact             = $this->getRequestParameter('search_all', false);
+			$offset            = ($page - 1) * sfConfig::get('app_search_results_max');
+			$limit             = sfConfig::get('app_search_results_max');
+			$this->restaurants = RestaurantPeer::search($query, $exact, $offset, $limit);
+			return sfView::SUCCESS;
+		} 
+		// 2 location only
+		elseif ($location)
+		{
+			
+			$geo = new YahooGeo($location);
+			
+			switch ($geo->getPrecision())
+			{
+				case YahooGeo::COUNTRY:
+				case YahooGeo::STATE:
+				case YahooGeo::CITY:
+				case YahooGeo::ZIP:
+					$this->redirect('@locations_in?' . $geo->getQueryString());
+				default:
+				break;
+			}
+		}
+
+		// search for nothing .. later this can include an error message, etc
+		$this->redirect('@homepage');
+		
 		
 		$this->getResponse()->setTitle('Search for \'' . $this->getRequestParameter('search') . '\' &laquo; ' . sfConfig::get('app_title'), false);
 		
@@ -117,15 +182,6 @@ class restaurantActions extends myActions
 				list($this->search_location, $this->near, $this->radius) = myTools::getNearness($location);
 				return 'LocationSuccess';
 			}
-			else {
-				$this->restaurants = RestaurantPeer::search($query, $this->getRequestParameter('search_all', false), ($page - 1) * sfConfig::get('app_search_results_max'), sfConfig::get('app_search_results_max'));
-			}
-		
-			$this->items = MenuItemPeer::search($query, $this->getRequestParameter('search_all', false), ($page - 1) * sfConfig::get('app_search_results_max'), sfConfig::get('app_search_results_max'));
-		}
-		else
-		{
-			$this->redirect('@homepage');
 		}
 	}
 	

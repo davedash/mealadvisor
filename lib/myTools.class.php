@@ -103,7 +103,8 @@ class myTools
 			return $latLngs[0];
 		}
 	}
-	
+
+	/* TODO: get rid of this in favor of YahooGeo */
 	public static function getNearness($location)
 	{
 		$near = myTools::getLatLngOne($location);

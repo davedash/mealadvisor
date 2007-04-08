@@ -67,16 +67,47 @@ class Location extends BaseLocation {
 			$this->setStrippedTitle(myTools::stripText($this->__toString()));
 		}
 		
-		// save latitude and longitude
-		$locdata = myTools::getLatLng($this->getAddress(), $this->getCity(), $this->getState(), $this->getZip());
-
-		if ($locdata) 
+		try {
+			$geo = new YahooGeo($this->getFullAddress('%a, %c, %s'));
+		
+			if ($country = $geo->getCountry()) 
+			{
+				$this->setCountryByName($country);
+				if ($state = $geo->getState());
+				{
+					$this->setState($state);
+				}
+				if ($city = $geo->getCity());
+				{
+					$this->setCity($city);
+				}
+				if ($zip = $geo->getZip());
+				{
+					$this->setZip($zip);
+				}
+				
+				$this->setLatitude($geo->getLatitude());
+				$this->setLongitude($geo->getLongitude());
+			}
+		} 
+		catch (Exception $e)
 		{
-			$this->setLatitude($locdata['Latitude']);
-			$this->setLongitude($locdata['Longitude']);
+			echo $e->getMessage();
 		}
 		
 		parent::save($con);
+	}
+	
+	public function setCountryByName($name)
+	{
+		$c = new Criteria();
+		$cton1 = $c->getNewCriterion(CountryPeer::NAME, $name);
+		$cton2 = $c->getNewCriterion(CountryPeer::ISO, $name);
+		$cton1->addOr($cton2);
+		$c->add($cton1);
+		
+		$country = CountryPeer::doSelectOne($c);
+		$this->setCountry($country);
 	}
 	
 	public function getFeedTitle()

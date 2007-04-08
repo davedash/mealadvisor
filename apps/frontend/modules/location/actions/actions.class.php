@@ -11,6 +11,66 @@
 class locationActions extends sfActions
 {
 
+	public function executeIn()
+	{
+		$page = $this->getRequestParameter('page',1);
+		$pager = new sfPropelPager('Location', 10);
+	
+		$c = new Criteria();
+
+		$this->in = null;
+		if ($countryStr = $this->getRequestParameter('country'))
+		{
+			$country = CountryPeer::retrieveByMagic($countryStr);
+			if ($country instanceof Country) 
+			{
+				$c->add(LocationPeer::COUNTRY_ID, $country->getIso());
+			}
+			
+			$this->in = $country->getPrintableName();
+		}
+		
+		if ($stateStr = $this->getRequestParameter('state'))
+		{
+			$state = StatePeer::retrieveByMagic($stateStr);
+			if ($state instanceof State)
+			{
+				$cton1 = $c->getNewCriterion(LocationPeer::STATE, $state->getUsps());
+				$cton2 = $c->getNewCriterion(LocationPeer::STATE, $state->getName());
+				$cton1->addOr($cton2);
+				$c->add($cton1);
+				$this->in = $state->getName() . ', ' . $this->in; 
+			}
+			else
+			{
+				$c->add(LocationPeer::STATE, $stateStr);
+				
+				$this->in = ucwords($stateStr) . ', ' . $this->in;
+			}
+		}
+		
+		if ($cityStr = $this->getRequestParameter('city'))
+		{
+			$cityStr = strtr($cityStr, '_', ' ');
+			$cc = new Criteria();
+			$c->add(LocationPeer::CITY, $cityStr);
+			$this->in = ucwords($cityStr) . ', ' . $this->in;
+		}
+		
+		$pager->setCriteria($c);
+		$pager->setPage($page);
+		$pager->init();
+
+		$this->pager = $pager;
+		$this->nav_url = '@locations_in?country=' . $countryStr;
+		if ($state = $this->getRequestParameter('state'))
+		{
+			$this->nav_url .= '&state='.$state;
+			
+		}
+		$this->nav_url .= '&page=';
+	}
+
 	public function executeShow ()
 	{
 		$this->location = LocationPeer::retrieveByStrippedTitles($this->getRequestParameter('restaurant'), $this->getRequestParameter('location'));
