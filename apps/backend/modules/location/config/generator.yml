@@ -4,9 +4,11 @@ generator:
     model_class:      Location
     theme:            default
     list:
+      fields:
+        country_id:   { filter_is_empty: true }
       max_per_page: 10
-      display:        [restaurant, name, address, city, state, zip]
-      filters: [restaurant_id]
+      display:        [=id, restaurant, name, address, city, state, zip, country_id]
+      filters: [restaurant_id, country_id]
       actions:
         _create: -
         batch: { name: Batch Update, action: batch }
