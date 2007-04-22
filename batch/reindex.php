@@ -10,8 +10,9 @@ require_once(SF_ROOT_DIR.DIRECTORY_SEPARATOR.'apps'.DIRECTORY_SEPARATOR.SF_APP.D
 // initialize database manager
 $databaseManager = new sfDatabaseManager();
 $databaseManager->initialize();
- 
-$data = new sfPropelData();
-//$data->setDeleteCurrentData(false);
-$data->dumpData(sfConfig::get('sf_data_dir').DIRECTORY_SEPARATOR.'fixtures/dump.yml');
-?>    
+$c = new Criteria();
+$restaurants = RestaurantPeer::doSelect($c); 
+foreach ($restaurants AS $restaurant)
+{
+	$restaurant->updateSearchIndex();
+}
