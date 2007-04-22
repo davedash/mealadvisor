@@ -207,4 +207,30 @@ class LocationPeer extends BaseLocationPeer {
 		}
 	}
 
+	public static function getBounds($number, $scale)
+	{
+		$number *= pow(10,$scale);
+		$lower = floor($number) / pow(10,$scale);
+		$upper = ceil($number) / pow(10,$scale);
+		return array($lower, $upper);
+	}
+	
+	public static function findNearLatLng($lat, $lng)
+	{
+		// do a query like:
+		$c = new Criteria();
+		// round lat/lng to 2 decimals...
+		list($l, $u) = self::getBounds($lat, 3);
+
+		$c->add(LocationPeer::LATITUDE, 'latitude BETWEEN '.$l.' AND '.$u, Criteria::CUSTOM);
+		list($l, $u) = self::getBounds($lng, 3);
+
+		$c->add(LocationPeer::LONGITUDE, 'longitude BETWEEN '.$l.' AND '.$u, Criteria::CUSTOM);
+		// SELECT * FROM `location` 
+		// 
+		// 		WHERE latitude BETWEEN 44.95 AND 44.96
+		// 		AND longitude BETWEEN -93.28 AND -93.27
+		// 		 ORDER BY `latitude`
+		return self::doSelect($c);
+	}
 } // LocationPeer

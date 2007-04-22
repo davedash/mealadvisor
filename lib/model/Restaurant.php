@@ -143,29 +143,32 @@ class Restaurant extends BaseRestaurant {
 
 	public function save($con = null)
 	{
+		$ret = null;
 	  $con = Propel::getConnection('propel');
-	  try
-	  {
-	    $con->begin();
-	
-		if ($this->newVersion instanceof RestaurantVersion) {
-			$this->newVersion->save();
-			$this->setRestaurantVersion($this->newVersion);
+		try
+		{
+			$con->begin();
+
+			if ($this->newVersion instanceof RestaurantVersion) 
+			{
+				$this->newVersion->save();
+				$this->setRestaurantVersion($this->newVersion);
+			}
+
+			$ret = parent::save($con);
+
+			$con->commit();
+
 		}
+		catch (Exception $e)
+		{
+			$con->rollback();
+			throw $e;
+		}
+		$this->updateSearchIndex();
+		
+		return $ret;
 
-	    $ret = parent::save($con);
-	    $this->updateSearchIndex();
-	
-	    $con->commit();
-
-	    return $ret;
-	  }
-	  catch (Exception $e)
-	  {
-	    $con->rollback();
-	    throw $e;
-	  }
-	
 	}
 
 	public function index()
@@ -210,9 +213,11 @@ class Restaurant extends BaseRestaurant {
 		// title
 		$name = str_replace('\'', '', $this->getName());
 		$raw_text .= str_repeat(' '.$name, sfConfig::get('app_search_title_weight'));
+		//var_dump ($raw_text);
 
 	  // title and body stemming
 	  $stemmed_words = myTools::stemPhrase($raw_text);
+//var_dump ($stemmed_words);
 
 	  // unique words with weight
 	  $words = array_count_values($stemmed_words);

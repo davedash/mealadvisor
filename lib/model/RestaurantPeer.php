@@ -39,11 +39,11 @@ class RestaurantPeer extends BaseRestaurantPeer {
 
 	public static function search($phrase, $exact = false, $offset = 0, $max = 10)
 	{
+		
 		// remove apostrophe's since our stemmer does not
 		
 		$words    = array_values(myTools::stemPhrase(str_replace('\'', '', $phrase)));
 		$nb_words = count($words);
-
 		if (!$words)
 		{
 			return array();

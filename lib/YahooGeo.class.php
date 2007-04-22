@@ -180,6 +180,7 @@
 		{
 			$function_cache_dir = sfConfig::get('sf_cache_dir').'/function';
 			$cache = new sfFunctionCache($function_cache_dir);
+			$this->rawData = YahooGeo::doQueryGIS($this->rawLocation);
 			$this->rawData = $cache->call(array('YahooGeo','doQueryGIS'), $this->rawLocation);
 			return $this->rawData;
 			
@@ -199,7 +200,6 @@
 			$curl = curl_init($url);
 			curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 			$response = curl_exec($curl);
-		
 
 			if ($response != 'Array') 
 			{
