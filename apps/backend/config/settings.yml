@@ -28,6 +28,8 @@ all:
 
     secure_module:          sfGuardAuth
     secure_action:          signin
+    timeout:                86400
+    
 
 #  .actions:
 #    default_module:         default
