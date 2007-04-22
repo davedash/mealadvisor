@@ -74,6 +74,14 @@ class yahoolocalActions extends myActions
 		
   }
 
+	public function executeAddLocation()
+	{
+		if ($id = $this->getRequestParameter('restaurant'))
+		{
+			$this->saveLocation($id);
+			$this->restaurant = RestaurantPeer::retrieveByPK($id);
+		}
+	}
 	public function executeAdd()
 	{
 		// search for similar restaurant names
@@ -81,6 +89,25 @@ class yahoolocalActions extends myActions
 		$this->locations = LocationPeer::findNearLatLng($this->getRequestParameter('latitude'), $this->getRequestParameter('longitude'));
 	}
 	
+	public function saveLocation($r_id)
+	{
+		$location = new Location();
+		$location->setRestaurantId($r_id);
+		$location->setAddress($this->getRequestParameter('address'));
+		
+		$location->setCity($this->getRequestParameter('city'));
+		
+		$location->setState($this->getRequestParameter('state'));
+					
+		$location->setPhone($this->getRequestParameter('phone'));
+		
+		if ( $this->getRequestParameter('location_name') )
+		{
+			$location->setName($this->getRequestParameter('location_name'));
+		}
+	
+		$location->save();
+	}
 	public function executeAddRestaurant()
 	{
 		
@@ -95,25 +122,7 @@ class yahoolocalActions extends myActions
 
 		if ($this->getRequestParameter('address') || $this->getRequestParameter('city') || $this->getRequestParameter('state') || $this->getRequestParameter('zip') || $this->getRequestParameter('phone')) 
 		{
-			
-			$location = new Location();
-			$location->setRestaurant($restaurant);
-			$location->setAddress($this->getRequestParameter('address'));
-			
-			$location->setCity($this->getRequestParameter('city'));
-			
-			$location->setState($this->getRequestParameter('state'));
-			
-			$location->setZip($this->getRequestParameter('zip'));
-			
-			$location->setPhone($this->getRequestParameter('phone'));
-			
-			if ( $this->getRequestParameter('location_name') )
-			{
-				$location->setName($this->getRequestParameter('location_name'));
-			}
-		
-			$location->save();
+			$this->saveLocation($restaurant->getId(), $this->getRequestParameter('address'), $this->getRequestParameter('city'), $this->getRequestParameter('state'), $this->getRequestParameter('phone'));
 		}
 		
 		return $this->redirect('yahoolocal/index');

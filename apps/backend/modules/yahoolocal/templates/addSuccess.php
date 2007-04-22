@@ -1,3 +1,4 @@
+<?php use_helper('Javascript');?>
 <h2>Adding a new restaurant/location</h2>
 <p class="warning">
 	See below to see if restaurants or locations match this place!
@@ -32,17 +33,29 @@
 <p>
 	<?php echo submit_tag('ADD ONLY IF THIS IS NEW') ?>
 </p>
-
+</form>
 <h2>The following restaurants match this restaurant name...</h2>
 <?php if ($restaurants): ?>
 	<ol>
 		<?php foreach ($restaurants as $restaurant): ?>
-		<li><?php echo $restaurant ?></li>
-		<ul>
-		<?php foreach ($restaurant->getLocations() as $location): ?>
-		  <li><?php echo $location->toLargeString() ?></li>
-		<?php endforeach ?>
-		</ul>
+		<li><?php echo $restaurant ?>
+
+			<?php echo form_remote_tag(array(
+					'url' => 'yahoolocal/addLocation?restaurant='.$restaurant->getId(), 
+					'update' => 'locations_'.$restaurant->getId()
+				)) ?>
+			
+			<?php echo input_hidden_tag('address', $sf_request->getParameter('address')) ?>
+			<?php echo input_hidden_tag('city',$sf_request->getParameter('city')) ?>
+			<?php echo input_hidden_tag('state',$sf_request->getParameter('state')) ?>
+			<?php echo input_hidden_tag('phone', $sf_request->getParameter('phone')) ?>
+			
+			<?php echo submit_tag('add new location') ?>
+			</form>
+		</li>
+		<div id="locations_<?php echo $restaurant->getId() ?>">
+			<?php include_partial('yahoolocal/locations', array('restaurant' => $restaurant ));?>
+		</div>
 		<?php endforeach ?>
 	</ol>
 <?php endif ?>
