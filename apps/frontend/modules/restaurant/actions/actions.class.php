@@ -142,6 +142,7 @@ class restaurantActions extends myActions
 		// 1 $query only
 		elseif ($query)
 		{
+			$this->debugMessage('search: (QUERY_ONLY): ' . $query);
 			$exact             = $this->getRequestParameter('search_all', false);
 			$offset            = ($page - 1) * sfConfig::get('app_search_results_max');
 			$limit             = sfConfig::get('app_search_results_max');

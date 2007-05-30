@@ -212,12 +212,13 @@ class Restaurant extends BaseRestaurant {
 		$raw_text =  str_repeat(' '.strip_tags($this->getDescription()), sfConfig::get('app_search_body_weight'));
 		// title
 		$name = str_replace('\'', '', $this->getName());
+		//echo $name, "\n";
 		$raw_text .= str_repeat(' '.$name, sfConfig::get('app_search_title_weight'));
 		//var_dump ($raw_text);
 
 	  // title and body stemming
 	  $stemmed_words = myTools::stemPhrase($raw_text);
-//var_dump ($stemmed_words);
+		var_dump ($stemmed_words);
 
 	  // unique words with weight
 	  $words = array_count_values($stemmed_words);

@@ -1,16 +1,13 @@
 <?php
-
-	// api into the yahoo geo rss api
+	/**
+	 * YahooGeo class
+	 *
+	 * @package symfony
+	 * @author Dave Dash <dave.dash@spindrop.us>
+	 **/
 	
-	#doc
-	#	classname:	YahooGeo
-	#	scope:		PUBLIC
-	#
-	#/doc
-
 	class YahooGeo 
 	{
-		#	internal variables
 		private $rawLocation;
 		private $rawData = array();
 		private $precision;
@@ -21,7 +18,7 @@
 		const STATE = 'state';
 		const CITY = 'city';
 		const ZIP = 'zip';
-		#	Constructor
+
 		function __construct ( $locationString )
 		{
 			$this->rawLocation = $locationString;
@@ -90,8 +87,6 @@
 		
 		public function getShortString()
 		{
-			// builds a string that we can use to describe where we are ;)
-			
 			$s = $this->getCSZAsArray();
 			
 			return implode(', ', array_reverse($s));

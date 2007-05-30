@@ -18,7 +18,7 @@ class MenuItemNote extends BaseMenuItemNote {
 	
 	public function getExcerpt()
 	{
-		require_once('symfony/helper/TextHelper.php');
+		sfLoader::loadHelpers('Text');
 		$e = $this->getHtmlNote();
 		$e = strip_tags($e);
 		return truncate_text($e, 200);

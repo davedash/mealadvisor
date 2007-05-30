@@ -24,8 +24,12 @@ class myTools
 		return array_diff($words, $stop_words);
 	}      
 
+
+
 	public static function stemPhrase($phrase)
 	{
+		// remove apostrophe's and periods
+		$phrase = str_replace(array('\'', '.'), null, $phrase);
 		// split into words
 		$words = str_word_count(strtolower($phrase), 1);
 
