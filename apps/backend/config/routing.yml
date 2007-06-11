@@ -13,7 +13,7 @@ sf_guard_password:
 # default rules
 homepage:
   url:   /
-  param: { module: default, action: index }
+  param: { module: yahoolocal, action: index }
 
 default_symfony:
   url:   /symfony/:action/*

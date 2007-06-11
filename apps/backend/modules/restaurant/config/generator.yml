@@ -1,0 +1,15 @@
+generator:
+  class:              sfPropelAdminGenerator
+  param:
+    model_class:      Restaurant
+    theme:            default
+    list:
+      filters: [name, updated_at, created_at]
+      display: [=name, average_rating, num_ratings, updated_at, created_at]
+    edit:
+      display: [name, approved, average_rating, num_ratings, _locations ]
+      fields:
+        average_rating: 
+          type: plain
+        num_ratings: 
+          type: plain

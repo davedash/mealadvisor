@@ -28,23 +28,29 @@ class myTools
 
 	public static function stemPhrase($phrase)
 	{
+		sfWebDebug::getInstance()->logShortMessage('stemmer: original phrase: ' . $phrase);
+		
 		// remove apostrophe's and periods
-		$phrase = str_replace(array('\'', '.'), null, $phrase);
+		$phrase = strtolower(str_replace(array('\'', '.'), null, $phrase));
+		
+		sfWebDebug::getInstance()->logShortMessage('stemmer: normalized phrase: ' . $phrase);
+				
 		// split into words
-		$words = str_word_count(strtolower($phrase), 1);
+		$words = str_word_count($phrase, 1);
 
 		// ignore stop words
 		$words = myTools::removeStopWordsFromArray($words);
+
 
 		// stem words
 		$stemmed_words = array();
 		foreach ($words as $word)
 		{
-			// ignore 1 and 2 letter words
-			if (strlen($word) <= 2)
-			{
-				continue;
-			}
+			// // ignore 1 letter words
+			// if (strlen($word) < 2)
+			// {
+			// 	continue;
+			// }
 
 			$stemmed_words[] = PorterStemmer::stem($word, true);
 		}
@@ -54,7 +60,7 @@ class myTools
 	
 	public static function stripText($text)
 	{
-		$text = strtolower($text);
+		$text = strtolower(myTools::unaccent($text));
 
 		//remove apostrophes
 		$text = preg_replace('/\'/', '', $text);
@@ -185,5 +191,26 @@ class myTools
 	  {
 	    return $text;
 	  }
+	}
+
+	public static function unaccent($text) {
+	  static $search, $replace;
+	  if (!$search) {
+	    $search = $replace = array();
+	    // Get the HTML entities table into an array
+	    $trans = get_html_translation_table(HTML_ENTITIES);
+	    // Go through the entity mappings one-by-one
+	    foreach ($trans as $literal => $entity) {
+	      // Make sure we don't process any other characters
+	      // such as fractions, quotes etc:
+	      if (ord($literal) >= 192) {
+	        // Get the accented form of the letter
+	        $search[] = utf8_encode($literal);
+	        // Get e.g. 'E' from the string '&Eacute'
+	        $replace[] = $entity[1];
+	      }
+	    }
+	  }
+	  return str_replace($search, $replace, $text);
 	}
 }

@@ -19,4 +19,4 @@ function textif($value, $text)
 {
 	return $value ? $value . $text : null;
 }
-?>
+

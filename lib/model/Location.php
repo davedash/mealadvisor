@@ -15,9 +15,34 @@ require_once 'lib/model/om/BaseLocation.php';
  * @package model
  */	
 class Location extends BaseLocation {
+	const YAHOO_LOCAL = 'YAHOO_LOCAL';
+	
 	public $search_distance = null;
 	
+	public function updateFromYahooLocalId($yid = null)
+	{
+		if ($yid === null)
+		{
+			$yid = $this->getDataSourceKey();
+		}
+		else
+		{
+			$this->setYahooLocalId($yid);
+		}
+		$result = YahooLocal::getOneResult($yid);
+		$this->setAddress($result->Address);
+		$this->setCity($result->City);
+		$this->setState($result->State);
+		$this->setPhone($result->Phone);
+		
+	}
 	
+	public function setYahooLocalId($yid)
+	{
+		$this->setDataSource(Location::YAHOO_LOCAL);
+		$this->setDataSourceKey($yid);
+		
+	}
 	public function toLargeString ()
 	{
 		$l = array();

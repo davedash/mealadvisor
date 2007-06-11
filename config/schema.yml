@@ -1,7 +1,12 @@
 # New SQL
-# alter table profile add column about_text text after preferences
 
+# alter table location add column data_source varchar(32) after restaurant_id;
+# alter table location add column data_source_key varchar(255) after data_source;
+# alter table location add UNIQUE KEY `data_source` (`data_source`, `data_source_key`);
 propel: 
+  yahoo_local_category:
+    yid: {type: integer, required: true, primaryKey: true}
+    description: {type: varchar(64)}
   profile: 
     _attributes: {phpName: Profile}
     id: 
@@ -74,12 +79,10 @@ propel:
     _attributes: { phpName: Location }
     id: 
     restaurant_id:
-    stripped_title: 
-      type: varchar
-      size: 255
-    name: 
-      type: varchar
-      size: 255
+    data_source: varchar(32)
+    data_source_key: varchar(255)
+    name: varchar(255)
+    stripped_title: varchar(255)
     address: 
       type: varchar
       size: 255
@@ -111,9 +114,10 @@ propel:
     approved: 
       type: boolean
     updated_at: 
-      type: TIMESTAMP
     created_at: 
-      type: TIMESTAMP
+    _uniques:
+      data_source: [data_source, data_source_key]
+    
   menu_image: 
     _attributes: 
       phpName: MenuImage

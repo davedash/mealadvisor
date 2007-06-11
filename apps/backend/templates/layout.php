@@ -11,8 +11,20 @@
 
 </head>
 <body>
+<div id="doc3">
+<div id="hd">
+	<?php echo link_to('restaurant editor', 'restaurant') ?>
+	<?php echo link_to('location editor', 'location') ?>
+	<?php echo link_to('menu item editor', 'menuitem') ?>
+	<?php echo link_to('yahoo local', 'yahoolocal') ?>
+	
+	
+</div>
+<div id="bd">
+	<?php echo $sf_data->getRaw('sf_content') ?>
+</div>
+</div>
 
-<?php echo $sf_data->getRaw('sf_content') ?>
 
 </body>
 </html>

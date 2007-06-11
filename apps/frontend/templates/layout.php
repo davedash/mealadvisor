@@ -140,22 +140,6 @@
 	urchinTracker();
 	</script>
 	<!-- /urchin -->
-	<!-- click tracking -->
-	<script type="text/javascript"> 
-	function asClick(){if (window.status.indexOf('go to') == 0) { 
-			urchinTracker('/adsense/ads/' + escape(window.status.substring(6))); 
-		} 
-		else if (window.status.indexOf('View ads about') == 0) { 
-			urchinTracker('/adsense/links/' + escape(window.status.substring(15))); 
-		} else {
-			urchinTracker('/adsense/ads/' + escape(window.status));
-		}
-	} 
-	var elements; 
-	if (document.getElementsByTagName) 
-	{ 
-		elements = document.body.getElementsByTagName("IFRAME"); } else if (document.body.all) { elements = document.body.all.tags("IFRAME"); } else { elements = Array(); } for (var i = 0; i < elements.length; i++) { if (elements[i].src.indexOf('googlesyndication.com') > -1) { elements[i].onfocus = asClick(); } }
-	</script>
-	<!-- click tracking -->
+
 </body>
 </html>

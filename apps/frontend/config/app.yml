@@ -20,3 +20,6 @@ all:
     profile_field_name: userid
   restaurant:
     max_menuitems: 8
+  google:
+    maps:
+      app_id: ABQIAAAAyAAmLPzn6NjNWlSghNqTKxTTEM7e85ZdOLxclOTP3CThLJ0yaxTCLs4phoI67W6KqIr1j4bqwaMTUQ

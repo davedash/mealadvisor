@@ -36,7 +36,7 @@ class tagComponents extends sfComponents
 				if ($this->getUser()->isLoggedIn() && in_array($tag, $user_tags)) {
 					
 					$key = array_search($tag, $user_tags);
-					require_once 'symfony/helper/JavascriptHelper.php';
+					sfLoader::loadHelpers(array('Javascript'));
 					$tags[$tag] = link_to($tag, '@tag?tag='.$tag, "class=my tag_size_$size") . link_to_remote(image_tag('minus.png','class=mini_action alt=-'), array('url'=>'@restaurant_tag_remove?restaurant='. $this->restaurant->getStrippedTitle() . '&tag='.$tag, 'update' => $this->restaurant->getStrippedTitle().'_tags'),
 					"confirm='Are you sure you want to remove this tag, $tag?'");
 					unset($user_tags[$key]);

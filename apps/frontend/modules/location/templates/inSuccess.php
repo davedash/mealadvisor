@@ -19,7 +19,7 @@ Displaying results <?php echo $pager->getFirstIndice() ?> to  <?php echo $pager-
 	<?php endif ?>
 
   <?php foreach ($pager->getLinks() as $page): ?>
-    <?php echo ($page == $pager->getPage()) ? $page : link_to($page, $nav_url . $pager->getFirstPage()) ?>
+    <?php echo ($page == $pager->getPage()) ? $page : link_to($page, $nav_url . $page) ?>
     <?php if ($page != $pager->getCurrentMaxLink()): ?> - <?php endif ?>
   <?php endforeach ?>
 

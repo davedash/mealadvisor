@@ -20,7 +20,6 @@
 
   </fieldset>
 
-  <?php echo input_hidden_tag('referer', $sf_request->getParameter('referer')) ?>
   <?php echo submit_tag('sign in') ?>
   
 </form>
@@ -35,6 +34,4 @@
 		</div>
 	</fieldset>
 	<?php echo submit_tag('authenticate') ?>
-  
-	<?php echo input_hidden_tag('referer', $sf_request->getParameter('referer')) ?>
 </form>

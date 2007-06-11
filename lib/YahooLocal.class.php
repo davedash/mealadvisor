@@ -10,6 +10,16 @@
 
 	class YahooLocal extends YahooREST
 	{
+		const CATEGORY_RESTAURANTS = '96926236';
+		
+		public static function sanitizeText($input)
+		{
+			$bad = array('/ llc$/i','/ incorporated$/i');
+			$input = preg_replace($bad,null,$input);
+			$bad  = array('a(C)');
+			$good = array('é');
+			return str_replace($bad, $good, $input);
+		}
 		#	internal variables
 		private $data;
 		private $totalResultsAvailable = 0, 
@@ -20,11 +30,17 @@
 		#	Constructor
 		function __construct ($query, $options = array())
 		{
-			$this->url = 'http://local.yahooapis.com/LocalSearchService/V2/localSearch';
+			$this->url = 'http://local.yahooapis.com/LocalSearchService/V3/localSearch';
 			$this->registerAppId();
 			$this->doQuery($query, $options);
 		}
 		
+		public static function getOneResult($yid)
+		{
+			$local = new YahooLocal('*', array('listing_id'=>$yid));
+			return $local->getResults();
+			
+		}
 		public function getPage()
 		{
 			return $this->page;
@@ -46,6 +62,11 @@
 			
 			$this->options = $options;
 			
+			if (array_key_exists('results',$options))
+			{
+				$this->resultsPerPage = $options['results'];
+			}
+			
 			if (array_key_exists('page', $options))
 			{
 				$this->page = $options['page'];
@@ -54,20 +75,21 @@
 			}
 			$this->executeQuery($options);
 			
-			
-			$data                        = $this->getRawData();
-
-			$this->totalResultsAvailable = $data['ResultSet']['totalResultsAvailable'];
-			$this->totalResultsReturned  = $data['ResultSet']['totalResultsReturned'];
-			$this->firstResultPosition   = $data['ResultSet']['firstResultPosition'];
+			$xml                         = new SimpleXMLElement($this->getRawData());
+			$this->totalResultsAvailable = $xml['totalResultsAvailable'];
+			$this->totalResultsReturned  = $xml['totalResultsReturned'];
+			$this->firstResultPosition   = $xml['firstResultPosition'];
 			$this->lastResultPosition    = $this->firstResultPosition + $this->totalResultsReturned - 1;
-			$this->lastPage              = floor($this->totalResultsAvailable/$this->resultsPerPage) + 1;
+			$this->lastPage              = ceil($this->totalResultsAvailable/$this->resultsPerPage);
 			//print_r($data);
-			if (!array_key_exists('Result', $data['ResultSet']))
+			if (empty($xml->Result))
 			{
-				throw new sfException('No results found');
+				throw new sfException('No results found: ' .$this->query_url);
 			}
-			$this->data                  = $data['ResultSet']['Result'];
+			// we want data to be an array of results always... so we test for 
+			// $results[0], if it doesn't exist that means we were returned a 
+			// single result which we need to turn into an array
+			$this->data = $xml->Result;
 			
 		}
 		

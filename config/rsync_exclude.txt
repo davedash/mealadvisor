@@ -5,4 +5,3 @@ web/uploads
 /log
 web/.htaccess
 web/cgi-bin
-/web/sf

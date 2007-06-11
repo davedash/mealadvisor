@@ -233,4 +233,12 @@ class LocationPeer extends BaseLocationPeer {
 		// 		 ORDER BY `latitude`
 		return self::doSelect($c);
 	}
+	
+	public static function retrieveByDataSourceKey($ds_type, $ds_key)
+	{
+		$c = new Criteria();
+		$c->add(LocationPeer::DATA_SOURCE,     $ds_type);
+		$c->add(LocationPeer::DATA_SOURCE_KEY, (string) $ds_key);
+		return self::doSelectOne($c);
+	}
 } // LocationPeer

@@ -1,1 +1,1 @@
-<?php include_partial('yahoolocal/locations', array('restaurant' => $restaurant ));?>
+<?php include_partial('yahoolocal/locations', array('restaurant' => $restaurant, 'yid' => $yid,  ));?>

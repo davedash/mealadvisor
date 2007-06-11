@@ -35,7 +35,7 @@
 		{
 			$url = $this->url;
 			
-			$this->standard_args['output'] = 'php';
+			//			$this->standard_args['output'] = 'php';
 			$encoded_params = array();
 			
 			foreach ($this->standard_args as $k => $v)
@@ -54,6 +54,12 @@
 			$function_cache_dir = sfConfig::get('sf_cache_dir').'/function';
 			$cache = new sfFunctionCache($function_cache_dir);
 			$this->rawData = $cache->call(array('YahooRest','doExecuteQuery'), $url);
+			$xml = new SimpleXMLElement($this->rawData);
+			if (empty($this->rawData->Result))
+			{
+				$cache->clean();
+			}
+
 			return $this->rawData;
 			
 		}
@@ -63,7 +69,7 @@
 			$curl = curl_init($url);
 			curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 			$response = curl_exec($curl);
-			return unserialize($response);
+			return $response;
 		}
 	}
 	###

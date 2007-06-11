@@ -84,7 +84,7 @@ class RestaurantPeer extends BaseRestaurantPeer {
 
 		for ($i = 0; $i < $nb_words; $i++)
 		{
-			$stmt->setString($i + $placeholder_offset, $words[$i] . '%'); // experiment with % for LIKE
+			$stmt->setString($i + $placeholder_offset, $words[$i]); // experiment with % for LIKE
 		}
 		$rs = $stmt->executeQuery(ResultSet::FETCHMODE_NUM);
 

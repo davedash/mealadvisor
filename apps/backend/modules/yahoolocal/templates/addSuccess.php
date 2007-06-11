@@ -1,15 +1,58 @@
 <?php use_helper('Javascript');?>
-<h2>Adding a new restaurant/location</h2>
+
+<p><?php echo link_to('< results', 'yahoolocal/index') ?></p>
+
+<h1>Adding a new restaurant and/or location</h1>
+<p><?php echo $result->Title ?> @ <?php echo $result->Address ?>, <?php echo $result->City ?>, <?php echo $result->State ?></p>
+
+<?php if ($locations): ?>
+<h2>The following locations match this location</h2>
+
+<p><a href="#add_restaurant_form">It's none of these.</a></p>
+<p>
+	The following restaurants near (<?php echo $result->Latitude ?>, 
+	<?php echo $result->Longitude ?>) came up.
+</p>
+
+	<dl>
+		<?php foreach ($locations as $location): ?>
+		<dt><?php echo $location->getRestaurant() ?></dt>
+		<dd><?php echo $location->toLargeString() ?></dd>
+		</dt>
+		<?php endforeach ?>
+	</dl>
+<?php endif ?>
+
+
+<?php if ($restaurants): ?>
+<h2>The following restaurants have a similar name...</h2>
+<p><a href="#add_restaurant_form">It's none of these.</a></p>
+	<ol>
+		<?php foreach ($restaurants as $restaurant): ?>
+		<li><?php echo link_to($restaurant->getName(),'restaurant/edit?id='.$restaurant->getId()) ?>
+
+			<?php echo link_to_remote('add '.$result->Address,  
+			array('url' => 'yahoolocal/addLocation?restaurant='.$restaurant->getId().'&yid='.$result['id'],
+			 'update' => 'locations_'.$restaurant->getId())) ?>
+			
+		</li>
+		<div id="locations_<?php echo $restaurant->getId() ?>">
+			<?php include_partial('yahoolocal/locations', array('restaurant' => $restaurant, 'yid' =>$result['id'],  ));?>
+		</div>
+		<?php endforeach ?>
+	</ol>
+<?php endif ?>
+
 <p class="warning">
 	See below to see if restaurants or locations match this place!
 </p>
 
-<?php echo form_tag('yahoolocal/addRestaurant') ?>
+<?php echo form_tag('yahoolocal/addRestaurant','id=add_restaurant_form') ?>
 <fieldset>
 	<ol>
 		<li>
 			<label for="name">Name:</label>
-			<?php echo input_tag('name', $sf_request->getParameter('title')) ?>
+			<?php echo input_tag('name', $result->Title) ?>
 		</li>
 		<li>
 			<label for="chain">Chain:</label>
@@ -21,56 +64,19 @@
 		</li>
 		<li>
 			<label for="url"><acronym title="Universal Resource Locator">URL</acronym></label>
-			<?php echo input_tag('url',$sf_request->getParameter('url') ) ?>
+			<?php echo input_tag('url',$result->BusinessUrl) ?>
 		</li>
-		<li>Address: <?php echo input_tag('address', $sf_request->getParameter('address')) ?></li>
-		<li>City: <?php echo input_tag('city',$sf_request->getParameter('city')) ?></li>
-		<li>State: <?php echo input_tag('state',$sf_request->getParameter('state')) ?></li>
-		<li>Phone: <?php echo input_tag('phone', $sf_request->getParameter('phone')) ?></li>
+		<li>Address: <?php echo input_tag('address', $result->Address) ?></li>
+		<li>City: <?php echo input_tag('city',$result->City) ?></li>
+		<li>State: <?php echo input_tag('state',$result->State) ?></li>
+		<li>Phone: <?php echo input_tag('phone', $result->Phone) ?></li>
 		</li>
 		
 </fieldset>
 <p>
-	<?php echo submit_tag('ADD ONLY IF THIS IS NEW') ?>
+	<?php echo input_hidden_tag('yid',$result['id']) ?>
+	<?php echo submit_tag('add') ?>
 </p>
 </form>
-<h2>The following restaurants match this restaurant name...</h2>
-<?php if ($restaurants): ?>
-	<ol>
-		<?php foreach ($restaurants as $restaurant): ?>
-		<li><?php echo $restaurant ?>
-
-			<?php echo form_remote_tag(array(
-					'url' => 'yahoolocal/addLocation?restaurant='.$restaurant->getId(), 
-					'update' => 'locations_'.$restaurant->getId()
-				)) ?>
-			
-			<?php echo input_hidden_tag('address', $sf_request->getParameter('address')) ?>
-			<?php echo input_hidden_tag('city',$sf_request->getParameter('city')) ?>
-			<?php echo input_hidden_tag('state',$sf_request->getParameter('state')) ?>
-			<?php echo input_hidden_tag('phone', $sf_request->getParameter('phone')) ?>
-			
-			<?php echo submit_tag('add new location') ?>
-			</form>
-		</li>
-		<div id="locations_<?php echo $restaurant->getId() ?>">
-			<?php include_partial('yahoolocal/locations', array('restaurant' => $restaurant ));?>
-		</div>
-		<?php endforeach ?>
-	</ol>
-<?php endif ?>
-
-<h2>The following locations match this location</h2>
-<p>Lat, Lng: <?php echo $sf_request->getParameter('latitude') ?>,
-<?php echo $sf_request->getParameter('longitude') ?>
 
 
-<?php if ($locations): ?>
-	<dl>
-		<?php foreach ($locations as $location): ?>
-		<dt><?php echo $location->getRestaurant() ?></dt>
-		<dd><?php echo $location->toLargeString() ?></dd>
-		</dt>
-		<?php endforeach ?>
-	</dl>
-<?php endif ?>
