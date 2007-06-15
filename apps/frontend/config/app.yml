@@ -20,6 +20,19 @@ all:
     profile_field_name: userid
   restaurant:
     max_menuitems: 8
-  google:
-    maps:
-      app_id: ABQIAAAAyAAmLPzn6NjNWlSghNqTKxTTEM7e85ZdOLxclOTP3CThLJ0yaxTCLs4phoI67W6KqIr1j4bqwaMTUQ
+  google_maps:
+    api_key: ABQIAAAAyAAmLPzn6NjNWlSghNqTKxTTEM7e85ZdOLxclOTP3CThLJ0yaxTCLs4phoI67W6KqIr1j4bqwaMTUQ
+
+  facebook:
+    api_key: 24640c033cfd834b5cd3506180daf827
+    api_secret: fec71bc1df1072f78db4265131fb0a51
+    callback_url: http://reviewsby.us/facebook/
+    canvas_url: http://apps.facebook.com/reviewsbyus/
+
+staging:
+  facebook:
+    api_key: eaba0391c6816a5b0d4406c3ef67de1b
+    api_secret: 001b782c4e4f34f1b3dd785878753c32
+    callback_url: http://staging.reviewsby.us/facebook/
+    canvas_url: http://apps.facebook.com/reviewsbyus/
+  
