@@ -24,9 +24,10 @@ class sfOpenIDAuthActions extends BasesfOpenIDAuthActions
 		// if we've gotten here then the authentication was a success.
 		// id
 		$openid = sfOpenID::simplifyURL($this->getRequestParameter('openid_identity'));
-		$this->getUser()->loginAs($openid, true);
 		
-		$referer = $this->getUser()->getAttribute('referer', '@homepage');
+		$user = $this->getUser();
+		$user->loginAs($openid, true);
+		$referer = $this->getUser()->getAttribute('referer');
 		$this->getUser()->getAttributeHolder()->remove('referer');
 		return $this->redirect($referer);
 	}
