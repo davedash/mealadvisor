@@ -12,14 +12,35 @@ function image_for_item(MenuItem $item, $options = array(), Profile $p = null)
 	$img = $item->getVisibleImage($p);
 	if ($img instanceof MenuItemImage) {
 		$hash = $img->getMd5Sum();
-		$img_options = array('src'=>url_for('@menu_item_image?hash=' . $img->getMd5sum()),'alt' => 'Picture of ' . $item->getName() );
+		
+		$absolute = false;
+		if (isset($options['absolute']))
+		{
+		  $absolute = true;
+		}
+		
+		$img_options = array('src'=>url_for('@menu_item_image?hash=' . $img->getMd5sum(),$absolute),'alt' => 'Picture of ' . $item->getName() );
 		if (isset($options['longest_side'])) 
 		{
 			list($h, $w) = $img->getScaledDimensions($options);
 			$img_options['height'] = $h;
 			$img_options['width']  = $w;
+			unset($options['longest_side']);
 		}
+		$img_options = array_merge($img_options, $options);
 		return tag('img', $img_options);
+	} 
+	else
+	{
+	  if (isset($options['longest_side'])) 
+		{
+			$img_options['height'] = $options['longest_side'];
+			$img_options['width']  = $options['longest_side'];
+			unset($options['longest_side']);
+		}
+		$img_options = array_merge($img_options, $options);
+		
+		return image_tag('g2/logo/bowl_100.gif', $img_options);
 	}
 }
 
@@ -43,10 +64,15 @@ function link_to_restaurant(Restaurant $r, $absolute = false)
 	return link_to($r->__toString(), '@restaurant?stripped_title=' . $r->getStrippedTitle(), array('absolute_url' => $absolute));
 }
 
-function link_to_menuitem(MenuItem $i)
+function link_to_menuitem(MenuItem $i, $options = array(), $text = null)
 {
-	return link_to($i->getName(), url_for_menuitem($i));
+  if (!$text)
+  {
+    $text = $i->getName();
+  }
+	return link_to($text, url_for_menuitem($i), $options);
 }
+
 function url_for_menuitem(MenuItem $i)
 {
 	return UrlHelper::url_for_menuitem($i);
