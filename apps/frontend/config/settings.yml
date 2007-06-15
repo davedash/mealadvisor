@@ -39,7 +39,7 @@ all:
     secure_action:          signin
 
   .settings:
-    enabled_modules:        [default, sfGuardAuth, sfOpenIDAuth]
+    enabled_modules:        [default, sfGuardAuth, sfOpenIDAuth, sfFacebook]
     standard_helpers:       [Partial, Cache, Form, Global, Feed, nifty]
     timeout:                86400
 
