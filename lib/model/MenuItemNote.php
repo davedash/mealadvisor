@@ -41,4 +41,9 @@ class MenuItemNote extends BaseMenuItemNote {
 			return 'anonymous diner';
 		}
 	}
+	
+	public function getRestaurant()
+	{
+	  return $this->getMenuItem()->getRestaurant();
+	}
 } // MenuItemNote
