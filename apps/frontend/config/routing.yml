@@ -1,3 +1,11 @@
+sfFacebook:
+  url: /facebook/*
+  param: { module: sfFacebook, action: index }
+
+sfFacebook_confirm:
+  url: /facebook/confirm
+  param: { module: sfFacebook, action: confirm }
+
 #ajax routes
 
 ajax_register:
@@ -17,7 +25,7 @@ openid_signin:
   param: { module: sfOpenIDAuth, action: signin }
 
 openid_finishauth:
-  url: /openid/finish
+  url: /openid/finish/*
   param: { module: sfOpenIDAuth, action: finish}
 
 menuitems_in_restaurant:
