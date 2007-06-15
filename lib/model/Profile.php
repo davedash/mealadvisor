@@ -22,6 +22,7 @@ class Profile extends BaseProfile {
 		// normalize it by putting it in lowercase
 		return strtolower($this->getUsername());
 	}
+	
 	public function getsfGuardUser ()
 	{
 
@@ -78,34 +79,42 @@ class Profile extends BaseProfile {
 
 
 
-		public function getAssociatedRestaurants($max = null, $offset = 0)
-		{
-			// get restaurants that user rated or commented on...
-			// we can do this cleaner
-			// select everything from the restaurant table
-			// left join it with RRating
-			// left join it with RComments
-			// where either RC.userid or RR.userid = the userid we want...
-			
-			$c = new Criteria();
-			
-			$c->addJoin(RestaurantPeer::ID, RestaurantRatingPeer::RESTAURANT_ID, Criteria::LEFT_JOIN);
-			$c->addJoin(RestaurantPeer::ID, RestaurantNotePeer::RESTAURANT_ID, Criteria::LEFT_JOIN);
-			$cton1 = $c->getNewCriterion(RestaurantRatingPeer::USER_ID, $this->getId());
-			$cton2 = $c->getNewCriterion(RestaurantNotePeer::USER_ID, $this->getId());
-			$cton1->addOr($cton2);
-			$c->add($cton1);
-			$c->setOffset($offset);
-			$c->setLimit($max);
-			$c->addDescendingOrderByColumn(RestaurantRatingPeer::VALUE);
-			$c->setDistinct();
-			$restaurants = RestaurantPeer::doSelect($c);
-			return $restaurants;
-			
-		}
-			public function __toString()
-			{
-				return $this->getUsername();
-			}
+  public function getAssociatedRestaurants($max = null, $offset = 0)
+  {
+    // get restaurants that user rated or commented on...
+    // we can do this cleaner
+    // select everything from the restaurant table
+    // left join it with RRating
+    // left join it with RComments
+    // where either RC.userid or RR.userid = the userid we want...
 
-			} // Profile
+    $c = new Criteria();
+
+    $c->addJoin(RestaurantPeer::ID, RestaurantRatingPeer::RESTAURANT_ID, Criteria::LEFT_JOIN);
+    $c->addJoin(RestaurantPeer::ID, RestaurantNotePeer::RESTAURANT_ID, Criteria::LEFT_JOIN);
+    $cton1 = $c->getNewCriterion(RestaurantRatingPeer::USER_ID, $this->getId());
+    $cton2 = $c->getNewCriterion(RestaurantNotePeer::USER_ID, $this->getId());
+    $cton1->addOr($cton2);
+    $c->add($cton1);
+    $c->setOffset($offset);
+    $c->setLimit($max);
+    $c->addDescendingOrderByColumn(RestaurantRatingPeer::VALUE);
+    $c->setDistinct();
+    $restaurants = RestaurantPeer::doSelect($c);
+    return $restaurants;
+
+  }
+  public function __toString()
+  {
+    return $this->getUsername();
+  }
+
+  public function getFacebookUserid()
+  {
+    $rels = $this->getFacebookProfileRels();
+    if (isset($rels[0]))
+    {
+      return $rels[0]->getFbid();
+    }
+  }
+} // Profile
