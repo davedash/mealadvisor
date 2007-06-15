@@ -4,6 +4,16 @@
 # alter table location add column data_source_key varchar(255) after data_source;
 # alter table location add UNIQUE KEY `data_source` (`data_source`, `data_source_key`);
 propel: 
+  facebook_profile_rel:
+    fbid: {type: integer, required: true, primaryKey: true}
+    profile_id: 
+      type: integer
+      onDelete: cascade
+      foreignTable: profile
+      foreignReference: id
+      index: unique
+    updated_at: 
+    created_at:
   yahoo_local_category:
     yid: {type: integer, required: true, primaryKey: true}
     description: {type: varchar(64)}
