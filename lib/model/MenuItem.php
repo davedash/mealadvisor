@@ -26,7 +26,7 @@ class MenuItem extends BaseMenuItem {
 		$c = new Criteria();
 		$c->add(MenuItemImagePeer::MENU_ITEM_ID, $this->getId());
 		if ($p instanceof Profile) {
-			$c2 = $c;
+			$c2 = clone $c;
 			$c2->add(MenuItemImagePeer::USER_ID, $p->getId());
 			$image = MenuItemImagePeer::doSelectOne($c);
 			if ($image instanceof MenuItemImage) {
