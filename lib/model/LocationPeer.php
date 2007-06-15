@@ -31,7 +31,7 @@ class LocationPeer extends BaseLocationPeer {
 		
 	}
 	
-	public static function searchIn($query, YahooGeo $geo, $page = 1)
+	public static function searchIn($query, sfGeocoderCache $geo, $page = 1)
 	{
 		$country = CountryPeer::retrieveByMagic($geo->getCountry());
 		
@@ -148,7 +148,7 @@ class LocationPeer extends BaseLocationPeer {
 		
 	}
 	
-	public static function searchNear($query, YahooGeo $geo, $page = 1)
+	public static function searchNear($query, sfGeocoderCache $geo, $page = 1)
 	{
 		$lat = $geo->getLatitude();
 		$lng = $geo->getLongitude();
