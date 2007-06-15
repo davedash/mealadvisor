@@ -112,8 +112,10 @@ class restaurantActions extends myActions
 		// 3 query near location
 		if ($query && $location)
 		{
-			$geo = new YahooGeo($location);
-			// first determine if this is a search for something *IN* something else
+			$geo = sfGeocoder::getGeocoder();
+			$geo->query($location);
+      
+      // first determine if this is a search for something *IN* something else
 			// or a search for something NEAR something else...
 			switch ($geo->getPrecision())
 			{
@@ -153,14 +155,15 @@ class restaurantActions extends myActions
 		elseif ($location)
 		{
 			
-			$geo = new YahooGeo($location);
+			$geo = sfGeocoder::getGeocoder();
+			$geo->query($location);
 			
 			switch ($geo->getPrecision())
 			{
-				case YahooGeo::COUNTRY:
-				case YahooGeo::STATE:
-				case YahooGeo::CITY:
-				case YahooGeo::ZIP:
+				case sfGeocoder::COUNTRY:
+				case sfGeocoder::STATE:
+				case sfGeocoder::CITY:
+				case sfGeocoder::ZIP:
 					$this->redirect('@locations_in?' . $geo->getQueryString());
 				default:
 				break;
