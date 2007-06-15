@@ -1,0 +1,5 @@
+default:
+  layout: facebook
+  has_layout: on
+confirmSuccess:
+  has_layout: on
