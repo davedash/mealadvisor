@@ -1,5 +1,26 @@
 <?php
 
+function link_to_geo($country, $state = null, $city = null)
+{
+  sfLoader::loadHelpers(array('Tag', 'Url'));
+  $text = $country;
+  $location = array('country' => urlencode($country) );
+  if ($state)
+  {
+    $location['state'] = $state;
+    $text              = $state;
+  }
+  
+  if ($city)
+  {
+    $location['city'] = $city;
+    $text             = $city;
+  }
+  
+  $qsa = strtolower(http_build_query($location, null, '&'));
+  return link_to($text,'@locations_in?'.$qsa);
+  
+}
 function logo_tag($options = array())
 {
 	$options = _parse_attributes($options);

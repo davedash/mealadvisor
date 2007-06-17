@@ -13,6 +13,7 @@ class locationActions extends myActions
 
 	public function executeIn()
 	{
+	  sfLoader::loadHelpers('Global');
 		$page = $this->getRequestParameter('page',1);
 		$pager = new sfPropelPager('Location', 10);
 	
@@ -23,13 +24,14 @@ class locationActions extends myActions
 		$this->in = null;
 		if ($countryStr = $this->getRequestParameter('country'))
 		{
+		  $countryStr = str_replace('%2b',' ', $countryStr);
 			$country = CountryPeer::retrieveByMagic($countryStr);
 			if ($country instanceof Country) 
 			{
 				$c->add(LocationPeer::COUNTRY_ID, $country->getIso());
 			}
 			
-			$this->in = $country->getPrintableName();
+			$this->in = link_to_geo($country->getPrintableName());
 		}
 		
 		if ($stateStr = $this->getRequestParameter('state'))
@@ -41,7 +43,7 @@ class locationActions extends myActions
 				$cton2 = $c->getNewCriterion(LocationPeer::STATE, $state->getName());
 				$cton1->addOr($cton2);
 				$c->add($cton1);
-				$this->in = $state->getName() . ', ' . $this->in; 
+				$this->in = $this->in = link_to_geo($country->getPrintableName(), $state->getName()) . ', ' . $this->in; 
 			}
 			else
 			{
@@ -56,7 +58,8 @@ class locationActions extends myActions
 			$cityStr = strtr($cityStr, '_', ' ');
 			$cc = new Criteria();
 			$c->add(LocationPeer::CITY, $cityStr);
-			$this->in = ucwords($cityStr) . ', ' . $this->in;
+			$this->in = link_to_geo($country->getPrintableName(), $state->getName(), ucwords($cityStr)) . ', ' . $this->in; 
+			
 		}
 		
 		$pager->setCriteria($c);
@@ -70,9 +73,9 @@ class locationActions extends myActions
 			$this->nav_url .= '&state='.$state;
 			
 		}
-		$this->nav_url .= '&page=';
+		$this->nav_url .= '&city='.$cityStr.'&page=';
 		
-		$this->prependTitle('Restaurants in '. $this->in);
+		$this->prependTitle('Restaurants in '. strip_tags($this->in));
 	}
 
 	public function executeShow ()
