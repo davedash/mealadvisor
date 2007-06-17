@@ -8,6 +8,15 @@
 
 	class myActions extends sfActions
 	{
+	  
+	  public function prependTitle($title)
+	  {
+	    $r = $this->getResponse();
+	    $d = sfConfig::get('app_title_delimiter', ' &laquo; ');
+	    $t = sfConfig::get('app_title');
+	    $r->setTitle($title.$d.$t, false);
+	  }
+	  
 		public function addPrototype()
 		{
 			$this->getResponse()->addJavascript(sfConfig::get('SF_PROTOTYPE_WEB_DIR').'/js/prototype.js');

@@ -8,7 +8,7 @@
 * @author     Your name here
 * @version    SVN: $Id: actions.class.php 500 2006-01-23 09:15:57Z fabien $
 */
-class locationActions extends sfActions
+class locationActions extends myActions
 {
 
 	public function executeIn()
@@ -71,6 +71,8 @@ class locationActions extends sfActions
 			
 		}
 		$this->nav_url .= '&page=';
+		
+		$this->prependTitle('Restaurants in '. $this->in);
 	}
 
 	public function executeShow ()

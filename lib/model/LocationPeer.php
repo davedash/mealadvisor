@@ -18,7 +18,8 @@
  *
  * @package model
  */	
-class LocationPeer extends BaseLocationPeer {
+class LocationPeer extends BaseLocationPeer 
+{
 	public static function retrieveByStrippedTitles($r, $l)
 	{
 		$c = new Criteria();
