@@ -17,7 +17,9 @@ class locationActions extends sfActions
 		$pager = new sfPropelPager('Location', 10);
 	
 		$c = new Criteria();
-
+    $c->addDescendingOrderByColumn(RestaurantPeer::NUM_RATINGS);
+    $c->addJoin(LocationPeer::RESTAURANT_ID, RestaurantPeer::ID);
+    
 		$this->in = null;
 		if ($countryStr = $this->getRequestParameter('country'))
 		{
