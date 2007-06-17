@@ -70,8 +70,7 @@ class restaurantActions extends myActions
 		if(!$this->getUser()->isLoggedIn())
 		{
 			// build the url where we need to get redirected...
-			$this->getUser()->setAttribute('post_login', 'restaurant/rate?object=' .$hash .'&rating=' .$rating);
-			$this->setFlash('use_post_login', true);
+			$this->getUser()->setAttribute('referer', 'restaurant/rate?object=' .$hash .'&rating=' .$rating);
 			if(!$ajax) return $this->redirect('@sf_guard_signin');
 		} 
 		else {
