@@ -35,7 +35,6 @@ class MenuItem extends BaseMenuItem {
 		}
 		
 		$images = MenuItemImagePeer::doSelect($c);
-		
 		if (count($images)) {
 			shuffle($images);
 			return $images[0];
