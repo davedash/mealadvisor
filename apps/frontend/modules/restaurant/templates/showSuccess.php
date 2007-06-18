@@ -103,7 +103,10 @@ src="http://api.maps.yahoo.com/ajaxymap?v=3.0&appid=reviewsby.us"></script>
 				<?php if (count($restaurant->getLocations())): ?>
 				<ul class="locations">
 					<?php foreach ($restaurant->getLocations() as $l): ?>
-					<li><?php echo link_to_location($l, $l->getName()) ?>: <?php echo $l->toLargeString() ?></li>
+					<li>
+            <?php echo link_to_location($l, $l->getName()) ?>: 
+            <?php echo $l->toLargeString() ?>
+					</li>
 					<?php endforeach ?>
 				</ul>
 				<p><?php echo link_to('Add a restaurant location', '@location_add?restaurant='.$restaurant->getStrippedTitle()) ?></p>
