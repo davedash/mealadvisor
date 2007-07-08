@@ -13,3 +13,5 @@ generator:
           type: plain
         num_ratings: 
           type: plain
+        url:
+          params: disabled=false
