@@ -132,7 +132,6 @@ class locationActions extends myActions
 		return $this->redirect('@restaurant?stripped_title='.$this->restaurant->getStrippedTitle());
 	}
 
-
 	private function getLocationOrCreate ($id = 'id')
 	{
 		if (!$this->getRequestParameter($id, 0))

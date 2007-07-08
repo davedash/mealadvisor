@@ -4,7 +4,7 @@
 src="http://api.maps.yahoo.com/ajaxymap?v=3.0&appid=reviewsby.us"></script>
 
 
-<?php if ($location instanceof Location): ?>
+<?php if (isset($location) && $location instanceof Location): ?>
   
 <script type="text/javascript" charset="utf-8">
 	ymap.div = 'restaurant_map';
@@ -121,7 +121,7 @@ src="http://api.maps.yahoo.com/ajaxymap?v=3.0&appid=reviewsby.us"></script>
 	<div class="yui-u">
 		<div id="restaurant_map" style="width: 100%; height: 250px">
 		</div>
-		<?php if ($location): ?>
+		<?php if (!empty($location)): ?>
 		<p><?php echo link_to_location($location, $location->getName()) ?>: <?php echo $location->toLargeString() ?></p>
 		  
 		<?php endif ?>
