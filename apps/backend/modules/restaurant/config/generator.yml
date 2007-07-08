@@ -7,7 +7,7 @@ generator:
       filters: [name, updated_at, created_at]
       display: [=name, average_rating, num_ratings, updated_at, created_at]
     edit:
-      display: [name, approved, average_rating, num_ratings, _locations ]
+      display: [name, approved, average_rating, num_ratings, url, _locations ]
       fields:
         average_rating: 
           type: plain

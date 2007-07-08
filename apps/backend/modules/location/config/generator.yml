@@ -12,3 +12,5 @@ generator:
       actions:
         _create: -
         batch: { name: Batch Update, action: batch }
+    edit:
+      display: [Restaurant, name, address, city, state, zip, country_id, latitude, longitude, phone]

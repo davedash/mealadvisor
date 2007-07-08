@@ -1,0 +1,7 @@
+generator:
+  class:              sfPropelAdminGenerator
+  param:
+    model_class:      RestaurantNote
+    theme:            default
+    list:
+      filters: [restaurant_id]

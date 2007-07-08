@@ -50,7 +50,7 @@
 		<?php endif ?>
 	</p>
 	
-	<?php echo form_tag('yahoolocal/addAll') ?>
+	<?php echo form_tag('yahoolocal/addAll', 'id=ylocal_add') ?>
 	
 	<table>
 		<thead>
@@ -84,7 +84,7 @@
 					  Matches: <?php echo $location->getRestaurant() ?>: <?php echo $location ?>
 					<?php else:?>
 					<?php echo link_to('add', 'yahoolocal/add?yid='.$result['id']) ?>
-					<?php echo checkbox_tag('yid[]',$result['id'], true) ?>
+					<?php echo checkbox_tag('yid[]',$result['id'], false) ?>
 					<?php endif ?>
 					
 				</td>

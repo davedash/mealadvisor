@@ -3,6 +3,7 @@ height: 100px;
 width: 50%;
 float: left;
 position: relative;
+overflow: hidden;
 }
 .menuitem .star_rating {
 position: absolute;

@@ -1,2 +1,6 @@
+
 replaceLocationSuccess:
   template: addLocation
+  
+all:
+  javascripts: [jquery, jquery.checkboxes.js, backend/ylocal]

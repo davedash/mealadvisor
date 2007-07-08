@@ -44,6 +44,7 @@ class locationActions extends myActions
 				$cton1->addOr($cton2);
 				$c->add($cton1);
 				$this->in = $this->in = link_to_geo($country->getPrintableName(), $state->getName()) . ', ' . $this->in; 
+				$stateStr = $state->getName();
 			}
 			else
 			{
@@ -58,7 +59,8 @@ class locationActions extends myActions
 			$cityStr = strtr($cityStr, '_', ' ');
 			$cc = new Criteria();
 			$c->add(LocationPeer::CITY, $cityStr);
-			$this->in = link_to_geo($country->getPrintableName(), $state->getName(), ucwords($cityStr)) . ', ' . $this->in; 
+			
+			$this->in = link_to_geo($country->getPrintableName(), $stateStr, ucwords($cityStr)) . ', ' . $this->in; 
 			
 		}
 		
