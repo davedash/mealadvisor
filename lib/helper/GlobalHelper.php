@@ -31,7 +31,8 @@ function image_for_item(MenuItem $item, $options = array(), Profile $p = null)
 {
 	$options = _parse_attributes($options);
 	$img = $item->getVisibleImage($p);
-	if ($img instanceof MenuItemImage) {
+	if ($img instanceof MenuItemImage) 
+	{
 		$hash = $img->getMd5Sum();
 		
 		$absolute = false;
@@ -55,8 +56,8 @@ function image_for_item(MenuItem $item, $options = array(), Profile $p = null)
 	{
 	  if (isset($options['longest_side'])) 
 		{
-			$img_options['height'] = $options['longest_side'];
-			$img_options['width']  = $options['longest_side'];
+			$img_options['height'] = min($options['longest_side'], 100);
+			$img_options['width']  = min($options['longest_side'], 100);
 			unset($options['longest_side']);
 		}
 		$img_options = array_merge($img_options, $options);
