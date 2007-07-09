@@ -17,8 +17,8 @@ src="http://api.maps.yahoo.com/ajaxymap?v=3.0&appid=reviewsby.us"></script>
 <?php endforeach ?></ul>
 
 <h2>Items tagged <em><?php echo $tag ?></em></h2>
-<div id="restaurantMap"></div>
-<?php echo ymap_overlay_rss('@feed_tag_georss?tag='.$tag) ?>
+<!-- <div id="restaurantMap"></div>
+<?php //echo ymap_overlay_rss('@feed_tag_georss?tag='.$tag) ?> -->
 
 <ul>
 <?php foreach ($items as $i): ?>
