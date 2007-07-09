@@ -31,7 +31,7 @@ class restaurantActions extends autorestaurantActions
 		$this->page        = $this->getRequestParameter('p');
 		try
 		{
-			$local = new YahooLocal($this->restaurant, array('results' => '20','category' => YahooLocal::CATEGORY_RESTAURANTS, 'page' => $this->page,'location'=>$this->loc,'radius' => '4000', ));
+			$local = new YahooLocal($this->restaurant, array('results' => '20','category' => YahooLocal::CATEGORY_RESTAURANTS, 'page' => $this->page,'location'=>$this->loc,'radius' => '50', ));
 			$this->results = $local->getResults();
 		}
 		catch (Exception $e)

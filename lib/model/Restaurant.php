@@ -217,7 +217,7 @@ class Restaurant extends BaseRestaurant {
 		//var_dump ($raw_text);
 
 	  // title and body stemming
-	  $stemmed_words = myTools::stemPhrase($raw_text);
+	  $stemmed_words = array_merge(myTools::stemPhrase($raw_text), myTools::extractNumbers($raw_text));
 		//var_dump ($stemmed_words);
 
 	  // unique words with weight

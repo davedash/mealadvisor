@@ -42,7 +42,7 @@ class RestaurantPeer extends BaseRestaurantPeer {
 		
 		// remove apostrophe's since our stemmer does not
 		
-		$words    = array_values(myTools::stemPhrase($phrase));
+		$words    = array_merge(array_values(myTools::stemPhrase($phrase)), myTools::extractNumbers($phrase));
 		
 		sfWebDebug::getInstance()->logShortMessage('search: STEMMED WORDS ' . join(' :: ', $words));
 		

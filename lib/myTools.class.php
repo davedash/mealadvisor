@@ -58,6 +58,12 @@ class myTools
 		return $stemmed_words;
 	}
 	
+  public static function extractNumbers($v)
+  {
+    preg_match_all('/\d+/', $v, $matches);
+    return $matches[0];
+  }
+
 	public static function stripText($text)
 	{
 		$text = strtolower(myTools::unaccent($text));
