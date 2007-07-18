@@ -5,7 +5,7 @@ names:
   username:
     required: Yes
     required_msg: Your username is required.
-    validators: usernameValidator, usernameLengthValidator
+    validators: usernameValidator, usernameLengthValidator, facebookValidator
   password:
     required: Yes
     required_msg: Your password is required.
@@ -13,6 +13,13 @@ names:
     required: Yes
     required_msg: Please re-enter your password
     validators: passwordValidator
+
+facebookValidator:
+  class: sfRegexValidator
+  param:
+    match:        No
+    match_error:  username must not begin with "fb:"
+    pattern:      /^fb\:/i
 usernameLengthValidator:
    class:        sfStringValidator
    param:
