@@ -1,5 +1,5 @@
 <?php
-require_once(sfConfig::get('sf_plugins_dir').'/sfFacebookPlugin/modules/sfFacebook/lib/BasesfFacebookActions.class.php');
+require_once(sfConfig::get('sf_plugins_dir').'/sfFacebookPlatformPlugin/modules/sfFacebook/lib/BasesfFacebookActions.class.php');
 
 
 class sfFacebookActions extends BasesfFacebookActions
