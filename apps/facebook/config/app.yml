@@ -1,2 +1,8 @@
 # default values
 #all:
+dev:
+  facebook:
+    api_key: eaba0391c6816a5b0d4406c3ef67de1b
+    api_secret: 001b782c4e4f34f1b3dd785878753c32
+    callback_url: http://fb.dev.reviewsby.us/
+    canvas_url: http://apps.facebook.com/reviewsbyus_/

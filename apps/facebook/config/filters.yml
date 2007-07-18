@@ -1,5 +1,10 @@
 rendering: ~
-web_debug: ~
+web_debug: 
+  enabled: false
+
+facebook:
+  class: sfFacebookFilter
+
 security:  ~
 
 # generally, you will want to insert your own filters here
