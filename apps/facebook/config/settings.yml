@@ -20,7 +20,11 @@ test:
     no_script_name:         off
     etag:                   off
 
-#all:
+all:
+  .settings:
+    # Helpers included in all templates by default
+    standard_helpers:       [Partial, Cache, Form, FBML]
+        
 #  .actions:
 #    default_module:         default   # Default module and action to be called when
 #    default_action:         index     # A routing rule doesn't set it
@@ -81,8 +85,6 @@ test:
 #    admin_web_dir:          /sf/sf_admin
 #    web_debug_web_dir:      /sf/sf_web_debug
 #
-#    # Helpers included in all templates by default
-#    standard_helpers:       [Partial, Cache, Form]
 #
 #    # Activated modules from plugins or from the symfony core
 #    enabled_modules:        [default]

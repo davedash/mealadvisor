@@ -11,7 +11,7 @@
   	protected function getPreferences()
   	{
   		$prefs = null;
-  		if ($this->isLoggedIn())
+  		if (!$this->isAnonymous())
   		{
   			$prefs = $this->getProfile()->getPreferences();
   		} 
@@ -34,12 +34,13 @@
   		base64_encode(serialize($prefs)),time()+$expiration_age);
   	}
 
-  	public function getPreference($key)
+  	public function getPreference($key, $default)
   	{
   		$prefs = $this->getPreferences();
   		if (array_key_exists($key, $prefs)) {
   			return $prefs[$key];
   		}
+      return $default;
   	}
 
   }

@@ -16,5 +16,12 @@ class homepageActions extends sfActions
    */
   public function executeIndex()
   {
+    $this->unlinked = false;
+    $ask_fb_linked = $this->getUser()->getPreference('ask_fb_linked', false);
+    if (!$ask_fb_linked && $this->getUser()->isUnlinked())
+    {
+      $this->unlinked = true;
+    }
+    
   }
 }

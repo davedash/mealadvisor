@@ -5,6 +5,9 @@ web_debug:
 facebook:
   class: sfFacebookFilter
 
+myFacebook:
+  class: myFacebookFilter
+
 security:  ~
 
 # generally, you will want to insert your own filters here
