@@ -10,7 +10,7 @@
     <?php echo link_to('reviewsby.us', 'http://reviewsby.us/')  ?>
     account,  you can 
 
-    <?php echo link_to('link it to your facebook account', '#', 'class=strong')?>.
+    <?php echo fb_link_to('link it to your facebook account', '@link_accounts', 'class=strong')?>.
   </p>
   <p>
     <?php echo link_to('No thanks', '#')?>.

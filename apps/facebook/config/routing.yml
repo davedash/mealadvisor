@@ -1,4 +1,8 @@
 # default rules
+link_accounts:
+  url:  /link_accounts
+  param: { module: profile, action: linkAccounts }
+
 homepage:
   url:   /
   param: { module: homepage, action: index }
