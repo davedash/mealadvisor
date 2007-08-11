@@ -19,6 +19,7 @@ test:
     web_debug:              off
     no_script_name:         off
     etag:                   off
+    enabled_modules:        [default, sfOpenIDAuth]
 
 all:
   .settings:
@@ -87,7 +88,6 @@ all:
 #
 #
 #    # Activated modules from plugins or from the symfony core
-#    enabled_modules:        [default]
 #
 #    # Charset used for the response
 #    charset:                utf-8
