@@ -1,6 +1,7 @@
 <?php
 
-class myUser extends myCommonUser {
+class myUser extends myCommonUser 
+{
 	
 	/**
 	 * myUser::loginAs

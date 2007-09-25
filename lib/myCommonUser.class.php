@@ -34,7 +34,7 @@
   		base64_encode(serialize($prefs)),time()+$expiration_age);
   	}
 
-  	public function getPreference($key, $default)
+  	public function getPreference($key, $default = null)
   	{
   		$prefs = $this->getPreferences();
   		if (array_key_exists($key, $prefs)) {
