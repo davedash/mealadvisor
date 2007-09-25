@@ -75,7 +75,13 @@ class locationActions extends myActions
 			$this->nav_url .= '&state='.$state;
 			
 		}
-		$this->nav_url .= '&city='.$cityStr.'&page=';
+		
+		if ($cityStr)
+		{
+      $this->nav_url .= '&city='.$cityStr;
+		}
+		
+		$this->nav_url .= '&page=';
 		
 		$this->prependTitle('Restaurants in '. strip_tags($this->in));
 	}
