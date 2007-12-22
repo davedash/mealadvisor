@@ -1,11 +1,11 @@
-<?php use_helper('Javascript','Feed') ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/2000/REC-xhtml1-200000126/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" 
+  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 
 	<?php echo include_http_metas() ?>
 	<?php echo include_metas() ?>
-
 	<?php echo include_title() ?>
 	<?php echo auto_discovery_link_tag('rss', 'feed/latest', array('title' => 'Latest restaurants'))?> 	
 	<?php echo auto_discovery_link_tag('rss', '@feed_latest_georss',
@@ -13,16 +13,33 @@
 	
 	<?php echo include_feeds() ?>
 	
-	<link rel="shortcut icon" href="/favicon.ico" />
+	<link rel="shortcut icon" href="/images/g2/logo/favicon.png" />
 
 </head>
 <body>
+  
+  <div id="doc4"> 
+    <div id="hd">
+      <div id="header">
+        <h1>
+          <?php echo link_to('meal advisor', '/') ?>
+        </h1>
+        <div id="searchbox">
+          <?php echo include_partial('restaurant/search') ?>
+        </div>
+      </div>
+      <!-- header -->
+    </div>  
+    <div id="bd">b<!-- body --></div>  
+    <div id="ft">f<!-- footer --></div>  
+  </div>
+  
+  ... end of new yui code... begining of old crud
 	<div id="indicator" style="display: none"></div>
 
 		<div id="header">
 			<div id="mini_logo"><?php echo logo_tag() ?></div>
 			<div class="ad" id="link_unit_1">
-				<?php tla_ads() ?>
 			</div>
 
 			<?php if ($sf_user->isLoggedIn()): ?>

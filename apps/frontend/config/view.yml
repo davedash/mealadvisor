@@ -3,13 +3,13 @@ default:
     content-type: text/html; charset=utf-8
 
   metas:
-    title:        reviewsby.us
+    title:        track your favorite meals from your favorite restaurants // meal advisor
     robots:       index, follow
-    description:  A collection of dish and restaurant reviews.
-    keywords:     menus food menu tags restaurants web2.0 eats drinks openid
+    description:  Choose your meal wisely...
+    keywords:     menus food menu tags restaurants web2.0 eats drinks openid reviewsby.us meal advisor
     language:     en
 
-  stylesheets:    [reset-fonts-grids/reset-fonts-grids, home, main, extra]
+  stylesheets:    [http://yui.yahooapis.com/2.4.1/build/reset-fonts-grids/reset-fonts-grids.css, main]
 
   javascripts:    [%SF_PROTOTYPE_WEB_DIR%/js/prototype, %SF_PROTOTYPE_WEB_DIR%/js/effects]
 
