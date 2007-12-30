@@ -18,8 +18,8 @@
 </head>
 <body>
   
-  <div id="doc4"> 
-    <div id="hd">
+  <div id="doc4" class="incomplete"> 
+    <div id="hd" class="incomplete">
       <div id="header">
         <h1>
           <?php echo link_to('meal advisor', '/') ?>
@@ -35,83 +35,42 @@
           </form>
         </div>
       </div>
+      <div id="top_menu" class="incomplete">
+        <ul>
+          <li>
+            <?php echo link_to('Review a meal', 'meal/review') ?>
+          </li>
+          <?php if ($sf_user->isLoggedIn()): ?>
+          
+          <li>
+            <?php echo link_to('logout', '@sf_guard_signout') ?>
+          </li>
+          
+          <?php else: ?>
+            <li>
+              <?php echo link_to('Sign In', '@sf_guard_signin') ?>
+            </li>
+            <li>
+              <?php echo link_to('Sign Up', '@register') ?>
+            </li>
+            <?php endif ?>
+            <li>
+              <?php echo link_to('About', '/about') ?>
+            </li>
+        </ul>
+      </div>
       <!-- header -->
     </div>  
-    <div id="bd">b<!-- body --></div>  
+    <div id="bd"><!-- body -->
+      <?php echo $sf_data->getRaw('sf_content') ?>
+    </div>  
+
     <div id="ft">f<!-- footer --></div>  
   </div>
   
   ... end of new yui code... begining of old crud
-	<div id="indicator" style="display: none"></div>
-
-		<div id="header">
-			<div id="mini_logo"><?php echo logo_tag() ?></div>
-			<div class="ad" id="link_unit_1">
-			</div>
-
-			<?php if ($sf_user->isLoggedIn()): ?>
-			<div id="welcome">Welcome <?php echo link_to_user($sf_user) ?></div>
-			<div id="corner_pic">=)</div>
-			<?php endif ?>
-
-			<div id="top_menu">
-				<?php if ($sf_user->isLoggedIn()): ?>
-				<?php echo link_to('logout', '@sf_guard_signout') ?>
-				<?php else: ?>
-				<?php echo link_to('login', '@sf_guard_signin')  ?> 
-				| <?php echo link_to('register' , '@register') ?>
-				<?php endif ?>
-				| <?php echo link_to('add restaurant', '@restaurant_add') ?>
-				| <?php echo link_to_function('search', visual_effect('toggle_blind', 'search_bar')) ?>
-			</div>
-		</div>
-
-		<div id="search_bar" style="display:none">
-			<?php echo include_partial('restaurant/search') ?>
-			<p><?php echo link_to_function('cancel', visual_effect('toggle_blind', 'search_bar')) ?></p>
-		</div>	
-
-
-		<?php if($sf_flash->has('notice')): ?>
-		<?php foreach ($sf_flash->get('notice') as $key=>$notice): ?>
-		<p class="notice" id="notice_<?php echo $key ?>"><?php echo $notice ?></p>
-		<?php echo javascript_tag(visual_effect('fade', 'notice_'.$key,array('duration'=>'5'))) ?>
-		<?php endforeach ?>
-		<?php endif ?>
-
-
-		<?php if (empty($hideLogin)): ?>
-		<div id="login" style="display: none">
-			<h2>sign in</h2>
-			<?php echo form_tag('user/localLogin') ?>
-			<?php echo input_hidden_tag('referer', $sf_params->get('referer') ? $sf_params->get('referer') : $sf_request->getUri()) ?>
-			<label for="username">username</label><?php echo input_tag('username') ?>
-			<label for="password">password</label><?php echo input_password_tag('password') ?>
-			<?php echo submit_tag('login') ?>
-			<br/>
-			<?php echo link_to_function('use openID', visual_effect('blind_up', 'login', array('duration' => 0.5)) . 
-			visual_effect('blind_down', 'login_openid', array('duration' => 0.5))) ?>
-
-			<?php echo link_to_function('cancel', visual_effect('blind_up', 'login', array('duration' => 0.5))) ?>
-
-			</form>
-		</div>
-		<div id="login_openid" style="display: none">
-			<h2>sign in with openID</h2>
-			<?php echo form_tag('@sf_guard_signin', 'id=loginform') ?>
-			OpenID: <?php echo input_tag('openid_url',null,'class=openid')?>
-			<?php echo input_hidden_tag('referer', $sf_params->get('referer') ? $sf_params->get('referer') : $sf_request->getUri(), 'id=referer_openid') ?>
-			<?php echo submit_tag('login') ?>
-			<?php echo link_to_function('cancel', visual_effect('blind_up', 'login_openid', array('duration' => 0.5))) ?>
-
-			<br/><small><em>e.g. <em>username</em>.livejournal.com</em></small>
-			</form>
-		</div>	  
-		<?php endif ?>
-
 
 		<div id="main">	
-			<?php echo $content ?>
 			<div id="rss_info">
 				<ul>
 

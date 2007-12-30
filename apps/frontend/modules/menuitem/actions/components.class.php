@@ -5,21 +5,8 @@ class menuitemComponents extends sfComponents
 	{
 		$c = new Criteria();
 		$c->addDescendingOrderByColumn("rand()");
-		$c->setLimit(1);
-		$mis = MenuItemImagePeer::doSelectJoinAll($c);
-		$mi = $mis[0];
-				
-		$this->item = $mi->getMenuItem();
-		$this->image = $mi;
-		$this->rating = null;
-
-		if ($this->getUser()->isLoggedIn()) {
-			$c = new Criteria();
-			$c->add(MenuItemRatingPeer::MENU_ITEM_ID, $this->item->getId());
-			$c->add(MenuItemRatingPeer::USER_ID, $this->getUser()->getId());
-			$rating = MenuItemRatingPeer::doSelectOne($c);
-			if ($rating instanceof MenuItemRating) $this->rating = $rating->getValue();
-		}
+		$c->setLimit(7);
+		$this->images = MenuItemImagePeer::doSelectJoinAll($c);
 	}
 	
 	public function executeInRestaurant()

@@ -18,8 +18,7 @@ class defaultActions extends myActions
 
 	public function executeIndex()
 	{
-		$this->addPrototype();
-		$this->footerLogoOff = true;
+	  
 	}
 
 	public function executeError404()

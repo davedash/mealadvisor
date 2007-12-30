@@ -1,8 +1,16 @@
+/*.incomplete{background:#c00 !important}
+.incomplete .incomplete{background:#e00 !important}
+.incomplete .incomplete .incomplete {background:#f00 !important}
+*/
 body{background:#222;padding:0;font-family:Futura, Centry Gothic, Verdana, sans-serif;}
 #doc4{background:#000;color:white;border:solid 1px #666;}
-#header{background:#444;margin-top:0;}
-#hd #header{padding:.5em 1em;height:70px;}
+#hd #header{background:#444;margin-top:0;border-bottom:2px solid #09c;padding:.5em 1em;height:70px;}
 #hd #header h1 a{float:left;background:url('/images/g2/logo/full_277x63.png');width:277px;height:63px;text-indent:-9999px;display:block;}
 #hd #search_box{float:right;margin-top:2em}
 #hd #search_box input.text{width:190px;background:#ccc;border:solid 1px #666;padding:.4em .5em;font:90% Arial; letter-spacing:.1em;}
 #hd #search_box input.text:hover{background:#eee;}
+#hd form .info { display: block;font-style:italic;font-size:90%;line-height:2em;}
+#hd #top_menu {position:relative; top:-2px; margin: 0 30%; border:2px solid #09c; border-top: none; padding: .2em; text-align: center;overflow:auto;background:#444;}
+
+#hd #top_menu ul li { float: left; width: 25%; font-size: 90%;}
+#hd #top_menu ul li a { color: white; text-decoration: none;}

@@ -1,3 +1,12 @@
+<div id="recent_dishes">
+<h2>Recent Dishes</h2>
+<?php include_component('menuitem', 'feature') ?>
+</div>
+
+
+
+
+
 <?php use_helper('MyText','Javascript');?>
 
 <?php include_partial('default/header');?>

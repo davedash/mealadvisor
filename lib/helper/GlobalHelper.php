@@ -21,11 +21,6 @@ function link_to_geo($country, $state = null, $city = null)
   return link_to($text,'@locations_in?'.$qsa);
   
 }
-function logo_tag($options = array())
-{
-	$options = _parse_attributes($options);
-	return link_to(image_tag('reviewsby.us.logo.small.png', 'alt=reviewsby.us'), '@homepage', 'id=logo_small size=170x35');
-}
 
 function image_for_item(MenuItem $item, $options = array(), Profile $p = null)
 {
