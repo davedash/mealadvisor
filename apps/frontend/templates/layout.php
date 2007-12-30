@@ -24,8 +24,15 @@
         <h1>
           <?php echo link_to('meal advisor', '/') ?>
         </h1>
-        <div id="searchbox">
-          <?php echo include_partial('restaurant/search') ?>
+        <div id="search_box">
+          <?php echo form_tag('@search_restaurant', 'id=search_form') ?>
+            <?php echo input_tag('q', htmlspecialchars($sf_params->get('search','Search for food')), 'class=text') ?>
+            &nbsp;
+            <?php echo submit_tag('search', 'class=small') ?>
+            <span class="info">
+              e.g. "Amber Cafe near Mountain View"
+            </span>
+          </form>
         </div>
       </div>
       <!-- header -->
