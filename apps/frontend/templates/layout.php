@@ -69,7 +69,8 @@
   </div>
   
   ... end of new yui code... begining of old crud
-
+  <p>View <?php echo link_to('all restaurants', '@restaurant_list') ?> 
+  <?php echo rss_link_to('feed/freshest') ?>.</p>
 		<div id="main">	
 			<div id="rss_info">
 				<ul>
