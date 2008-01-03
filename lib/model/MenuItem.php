@@ -14,15 +14,26 @@ require_once 'lib/model/om/BaseMenuItem.php';
  *
  * @package model
  */	
-class MenuItem extends BaseMenuItem {
-	private $newVersion;
+class MenuItem extends BaseMenuItem 
+{
+	private $newVersion, $menuitem_image;
 	public function getTitle ()
 	{
 		return $this->getName();
 	}
 	
+	public function setDefaultMenuItemImage(MenuItemImage $m)
+	{
+	  $this->menuitem_image = $m;
+	}
+	
 	public function getVisibleImage (Profile $p = null)
 	{
+	  if ($this->menuitem_image instanceof MenuItemImage)
+	  {
+	    return $this->menuitem_image;
+	  }
+	  
 		$c = new Criteria();
 		$c->add(MenuItemImagePeer::MENU_ITEM_ID, $this->getId());
 		if ($p instanceof Profile) {

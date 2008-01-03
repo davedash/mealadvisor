@@ -3,32 +3,13 @@
 <?php include_component('menuitem', 'feature') ?>
 </div>
 
+<p>View <?php echo link_to('all restaurants', '@restaurant_list') ?> 
+<?php echo rss_link_to('feed/freshest') ?>.</p>
 
 
 
 
-<?php use_helper('MyText','Javascript');?>
-
-<?php include_partial('default/header');?>
 <div class="boxes">
-
-	<div id = "restaurant_list" class="box">
-
-		<?php include_component('location','freshest', array('near' => $sf_user->getLocation())) ?>
-		<p>View <?php echo link_to('all restaurants', '@restaurant_list') ?> 
-		<?php echo rss_link_to('feed/freshest') ?>.</p>
-	</div>
-
-	<div id ="features">
-		<div id = "featured_item" class="box">
-			<?php include_component('menuitem', 'feature') ?>
-		</div>
-		<div id = "latest_comments" class="box">
-			<?php include_component('menuitemnote', 'latest') ?>
-		</div>
-	</div>
-
-
 	<div id="cloud_box">
 		<div class="box">
 			<h2>Tags // Restaurants</h2>

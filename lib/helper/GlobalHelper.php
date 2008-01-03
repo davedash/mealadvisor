@@ -24,6 +24,10 @@ function link_to_geo($country, $state = null, $city = null)
 
 function image_for_item(MenuItem $item, $options = array(), Profile $p = null)
 {
+  if ($item == null)
+  {
+    return;
+  }
 	$options = _parse_attributes($options);
 	$img = $item->getVisibleImage($p);
 	if ($img instanceof MenuItemImage) 
@@ -83,9 +87,17 @@ function link_to_restaurant(Restaurant $r, $absolute = false)
 
 function link_to_menuitem(MenuItem $i, $options = array(), $text = null)
 {
+  $options = _parse_attributes($options);
+  
   if (!$text)
   {
     $text = $i->getName();
+  }
+  
+  if (isset($options['truncate']))	
+  {
+    sfLoader::loadHelpers('Text');
+    $text = truncate_text($text, $options['truncate']);
   }
 	return link_to($text, url_for_menuitem($i), $options);
 }

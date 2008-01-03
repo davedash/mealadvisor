@@ -1,1 +1,0 @@
-<p id="slogan">reviews of dishes and restaurants by you and me</p>

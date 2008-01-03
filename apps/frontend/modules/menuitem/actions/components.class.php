@@ -5,8 +5,9 @@ class menuitemComponents extends sfComponents
 	{
 		$c = new Criteria();
 		$c->addDescendingOrderByColumn("rand()");
-		$c->setLimit(7);
-		$this->images = MenuItemImagePeer::doSelectJoinAll($c);
+		$c->setLimit(6);
+		
+		$this->images = MenuItemImagePeer::doSelectJoinItemAndRestaurant($c);
 	}
 	
 	public function executeInRestaurant()

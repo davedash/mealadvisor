@@ -1,12 +1,29 @@
 <?php use_helper('Rating');?>
-<dl>
-  <?php foreach ($images as $image): ?>
-    <dt><?php echo image_for_item($image->getMenuitem(), 'longest_side=125') ?></dt>
-    <dl>
-      <h3><?php echo link_to_menuitem($image->getMenuitem()) ?></h3>
-      <p class="description">
-        <?php echo link_to_restaurant($image->getMenuitem()->getRestaurant()) ?>
-      </p>      
-    </dl>
-  <?php endforeach ?>
-</dl>
+<ul>
+  
+  <?php 
+  $count = count($images); 
+  for($i = 0; $i < $count; $i++): 
+  $image = $images[$i];
+  ?>
+  <?php if ($i+1 <> $count): ?>
+  <li>
+  <?php else:?>
+  <li class="last">
+  <?php endif ?>
+
+    <div class="image">
+      <?php echo image_for_item($image->getMenuitem(), 'longest_side=125') ?>
+    </div>
+    
+    <h3>
+      <?php echo link_to_menuitem($image->getMenuitem(),'truncate=16') ?>
+      
+      from 
+      
+      <?php echo link_to_restaurant($image->getMenuitem()->getRestaurant()) ?>
+    </h3>      
+
+  </li>
+  <?php endfor ?>
+</ul>
