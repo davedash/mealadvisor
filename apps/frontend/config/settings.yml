@@ -42,7 +42,7 @@ all:
     enabled_modules:        [default, sfGuardAuth, sfOpenIDAuth, sfFacebook]
     standard_helpers:       [Partial, Cache, Form, Global, Feed, nifty]
     timeout:                86400
-
+    jquery_web_dir:         ''
 #    default_module:         default
 #    default_action:         index
 #
