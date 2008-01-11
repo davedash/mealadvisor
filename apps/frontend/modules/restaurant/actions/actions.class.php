@@ -82,9 +82,9 @@ class restaurantActions extends myActions
 	
 	public function executeSearch ()
 	{
-		$query = $this->getRequestParameter('search');
+		$query    = $this->getRequestParameter('search');
 		$location = $this->getRequestParameter('location');
-		$page = $this->getRequestParameter('page',1);
+		$page     = $this->getRequestParameter('page',1);
 		
 		// remove default anything/anywhere terms
 		if (strtolower(trim($query))    == 'anything') $query    = null; 
@@ -136,13 +136,13 @@ class restaurantActions extends myActions
 			$this->prependTitle("Search for '".$query."'");
 			return sfView::SUCCESS;
 		} 
+
 		// 2 location only
 		elseif ($location)
 		{
-			
 			$geo = sfGeocoder::getGeocoder();
 			$geo->query($location);
-			
+
 			switch ($geo->getPrecision())
 			{
 				case sfGeocoder::COUNTRY:
