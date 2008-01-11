@@ -7,44 +7,29 @@
   <h2>&#8230;so what have you been eating?</h2>
   
   <?php echo accessible_form_tag('#') ?>
-  <fieldset>
-    <legend>Delivery Details</legend>
-    <ol>
-      <li>
-        <label for="name">Name<em>*</em></label>
-        <input id="name" />
-      </li>
-      <li>
-        <label for="address1">Address<em>*</em></label>
-        <input id="address1" />
-      </li>
-      <li>
-        <label for="address2">Address 2</label>
-        <input id="address2" />
-      </li>
-      <li>
-        <label for="town-city">Town/City</label>
-        <input id="town-city" />
-      </li>
-      <li>
-        <label for="county">County<em>*</em></label>
-        <input id="county" />
-      </li>
-      <li>
-        <label for="postcode">Postcode<em>*</em></label>
-        <input id="postcode" />
-      </li>
-      <li>
-        <fieldset>
-          <legend>Is this address also your invoice »
-  address?<em>*</em></legend>
-          <label><input type="radio" »
-  name="invoice-address" /> Yes</label>
-          <label><input type="radio" »
-  name="invoice-address" /> No</label>
-        </fieldset>
-      </li>
-    </ol>
-  </fieldset>
-    </form>
+    <fieldset>
+      <ol>
+        <li>
+          <label for="restaurant">I ate at...</label>
+          <?php echo input_tag('restaurant',null,'autocomplete=off class=text') ?>
+        </li>
+        <li>
+          <label for="address1">and had...</em></label>
+          <input id="address1" />
+        </li>
+        <li>
+          <label for="address2">it cost</label>
+          <input id="address2" />
+        </li>
+        <li>
+          <label for="town-city">How was it?</label>
+          <input id="town-city" />
+        </li>
+        <li>
+          <label for="county">I'd rate it?</label>
+          <input id="county" />
+        </li>
+      </ol>
+    </fieldset>
+  </form>
 </div>

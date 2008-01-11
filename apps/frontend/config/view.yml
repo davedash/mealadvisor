@@ -11,7 +11,7 @@ default:
 
   stylesheets:    [reset-fonts-grids/reset-fonts-grids, http://yui.yahooapis.com/2.4.1/build/reset-fonts-grids/reset-fonts-grids.css, main]
 
-  javascripts:    [jquery, jquery.autoclearfield, main]
+  javascripts:    [jquery, jquery.autoclearfield.js, main]
 
   has_layout:     on
   layout:         layout
