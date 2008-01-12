@@ -104,6 +104,14 @@ class restaurantActions extends myActions
 			switch ($geo->getPrecision())
 			{
 				case YahooGeo::COUNTRY:
+				$this->locations = LocationPeer::searchIn($query, $geo, $page);
+				$this->in = true;
+				$country = CountryPeer::retrieveByMagic($geo->getCountry());
+  			
+				$this->search_location = $country->getPrintableName();
+				return 'LocationSuccess';
+				break;
+				
 				case YahooGeo::STATE:
 				$this->locations = LocationPeer::searchIn($query, $geo, $page);
 				$this->in = true;
@@ -125,6 +133,7 @@ class restaurantActions extends myActions
 				break;
 			}			
 		} 
+		
 		// 1 $query only
 		elseif ($query)
 		{

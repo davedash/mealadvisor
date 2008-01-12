@@ -1,7 +1,9 @@
 <?php
 
-  //test that we can find mountain, view
-  
+  /*
+   * test that we can find mountain, view
+   */
+   
   include(dirname(__FILE__).'/../../bootstrap/functional.php');
   
   // create test browser
@@ -14,4 +16,11 @@
     ->responseContains('Locations in ')
     ->responseContains('Mountain View');
   
-  // echo $b->getResponse()->getContent();
+  /*
+   * test that we can find "indian" (food) in "ca" (canada)
+   */
+ 
+ $b->get('/')
+   ->post('/search',  array('search' => 'indian', 'location' => 'ca', ))
+//   ->followRedirect()
+   ->responseContains('Canada');

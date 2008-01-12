@@ -1,5 +1,16 @@
 <?php
 
+function link_to_country($countryStr)
+{
+  $country = CountryPeer::retrieveByMagic($countryStr);
+	if ($country instanceof Country) 
+	{
+		$c->add(LocationPeer::COUNTRY_ID, $country->getIso());
+	}
+	
+	return link_to_geo($country->getPrintableName());
+}
+
 function link_to_geo($country, $state = null, $city = null)
 {
   sfLoader::loadHelpers(array('Tag', 'Url'));
