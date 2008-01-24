@@ -42,7 +42,8 @@ all:
     enabled_modules:        [default, sfGuardAuth, sfOpenIDAuth, sfFacebook]
     standard_helpers:       [Partial, Cache, Form, Global, Feed, nifty]
     timeout:                86400
-    jquery_web_dir:         ''
+    js_lib:                 yui
+    yui_web_dir:            http://yui.yahooapis.com/2.4.1/build/
 #    default_module:         default
 #    default_action:         index
 #
