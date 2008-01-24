@@ -108,7 +108,7 @@ class yahoolocalActions extends myActions
 		$local = new YahooLocal('*', array('listing_id'=>$this->getRequestParameter('yid')));
 		$this->result = $local->getResults();
 		// search for similar restaurant names
-		$title = str_ireplace(array('restaurant','cafe','sandwiches','bistro'), '',$this->result->Title);
+		$title = str_ireplace(array('restaurant','cafe','deli','sandwiches','bistro'), '',$this->result->Title);
 		$this->restaurants = RestaurantPeer::search($title);
 		$this->locations = LocationPeer::findNearLatLng((float) $this->result->Latitude, (float) $this->result->Longitude);
 	}
