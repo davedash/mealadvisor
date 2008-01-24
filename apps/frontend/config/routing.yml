@@ -1,3 +1,8 @@
+# ajax based routes
+ajax_restaurant_list:
+  url: /ajax/restaurant/list
+  param: { module: restaurant, action: ajaxList }
+
 sfFacebook:
   url: /facebook/*
   param: { module: sfFacebook, action: index }
