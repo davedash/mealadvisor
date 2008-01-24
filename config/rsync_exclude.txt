@@ -5,3 +5,7 @@ web/uploads
 /log
 web/.htaccess
 web/cgi-bin
+/test
+/assets
+/web/sf
+/web/sfNiftyPlugin
