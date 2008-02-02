@@ -11,9 +11,9 @@ MA.autoclearfield = function()
 		fnHandler: function(message) {
       e.addListener(this, "focus", function() 
       {
-        if( this.value  == this.defaultValue ) 
+        if( this.value == this.defaultValue ) 
         {
-          this.value    = "";
+          this.value = "";
         }
       });
 
@@ -21,7 +21,7 @@ MA.autoclearfield = function()
       {
         if( !this.value.length ) 
         {
-          this.value    = this.defaultValue;
+          this.value = this.defaultValue;
         }
       });
 		},

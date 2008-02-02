@@ -2,6 +2,13 @@
 
 class restaurantActions extends myActions
 {
+  public function executeAjaxList()
+  {
+    $q           = $this->getRequestParameter('query');
+    $restaurants = RestaurantPeer::searchJSON($q);
+    return $this->renderText($restaurants);
+  }
+  
 	public function executeAdminAjax()
 	{
 		$command = $this->getRequestParameter('command');

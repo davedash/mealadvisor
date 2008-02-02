@@ -1,3 +1,3 @@
 all:
-  stylesheets:  [home]
-  javascripts:  [home]
+  stylesheets:  [http://yui.yahooapis.com/2.4.1/build/autocomplete/assets/skins/sam/autocomplete.css, home]
+  javascripts:  [http://yui.yahooapis.com/2.4.1/build/connection/connection-min.js, http://yui.yahooapis.com/2.4.1/build/autocomplete/autocomplete-min.js, home]

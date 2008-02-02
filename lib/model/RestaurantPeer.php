@@ -37,9 +37,9 @@ class RestaurantPeer extends BaseRestaurantPeer {
 		return null;
 	}
 
-	public static function search($phrase, $exact = false, $offset = 0, $max = 10)
-	{
-		
+  // returns the resultset of the search
+  public static function doSearch($phrase, $exact = false, $offset = 0, $max = 10)
+  {
 		// remove apostrophe's since our stemmer does not
 		
 		$words    = array_merge(array_values(myTools::stemPhrase($phrase)), myTools::extractNumbers($phrase));
@@ -86,7 +86,12 @@ class RestaurantPeer extends BaseRestaurantPeer {
 		{
 			$stmt->setString($i + $placeholder_offset, $words[$i]); // experiment with % for LIKE
 		}
-		$rs = $stmt->executeQuery(ResultSet::FETCHMODE_NUM);
+		
+		return $stmt->executeQuery(ResultSet::FETCHMODE_NUM);    
+  }
+	public static function search($phrase, $exact = false, $offset = 0, $max = 10)
+	{
+		$rs = self::doSearch($phrase, $exact, $offset, $max);
 
 		// Manage the results
 		$restaurants = array();
@@ -97,6 +102,23 @@ class RestaurantPeer extends BaseRestaurantPeer {
 
 		return $restaurants;
 	}
+
+  // same as search, but in id => result format, good for json
+	public static function searchJSON($phrase, $exact = false, $offset = 0, $max = 10)
+	{
+		$rs = self::doSearch($phrase, $exact, $offset, $max);
+
+		// Manage the results
+		$restaurants = array();
+		while ($rs->next())
+		{
+		  $r                           = self::retrieveByPK($rs->getInt(1));
+			$restaurants[] = array('Id'=>$rs->getInt(1), 'Title'=>$r->getName());
+		}
+
+    return json_encode(array('ResultSet' => array("Result" => $restaurants)));
+	}
+
 
 	public static function retrieveByHash($h)
 	{

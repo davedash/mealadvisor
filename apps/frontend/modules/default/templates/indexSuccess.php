@@ -1,7 +1,11 @@
+<!--BEGIN SOURCE CODE FOR EXAMPLE =============================== -->
+
+
+
 <?php use_helper('AccessibleForm');?>
 <div id="recent_dishes">
 <h2>Recent Dishes</h2>
-<?php include_component('menuitem', 'feature') ?>
+<?php //include_component('menuitem', 'feature') ?>
 </div>
 <div id="review_form">
   <h2>&#8230;so what have you been eating?</h2>
@@ -10,8 +14,12 @@
     <fieldset>
       <ol>
         <li>
-          <label for="restaurant">I ate at...</label>
-          <?php echo input_tag('restaurant',null,'autocomplete=off class=text') ?>
+          <div id="restaurantAutoComplete">
+            <label for="restaurantInput">I ate at...</label>
+            <?php echo input_tag('restaurantInput',null,'class=text') ?>
+            <div id="restaurantACContainer"></div>
+            <?php echo input_hidden_tag('restaurant_id') ?>
+          </div>
         </li>
         <li>
           <label for="address1">and had...</em></label>

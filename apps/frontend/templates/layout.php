@@ -16,7 +16,7 @@
 	<link rel="shortcut icon" href="/images/g2/logo/favicon.png" />
 
 </head>
-<body>
+<body class="yui-skin-sam">
   
   <div id="doc4" class="incomplete"> 
     <div id="hd" class="incomplete">
