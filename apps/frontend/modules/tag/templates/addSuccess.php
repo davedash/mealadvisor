@@ -1,1 +1,0 @@
-<?php echo include_partial('menuitem/tags', array('menu_item' => $menu_item, 'add'=>true)) ?>

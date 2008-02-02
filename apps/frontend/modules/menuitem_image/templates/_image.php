@@ -1,1 +1,0 @@
-<?php echo tag('img', array('src'=>url_for('@menu_item_image?hashed_id=' . $menu_item->getHashedId()))) ?>

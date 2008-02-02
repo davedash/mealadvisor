@@ -1,1 +1,0 @@
-<p>Your email was sent, thanks!</p>

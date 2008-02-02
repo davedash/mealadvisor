@@ -1,6 +1,0 @@
-_header:
-  enabled:  on
-
-all:
-  enabled:  off
-  lifetime:   86400

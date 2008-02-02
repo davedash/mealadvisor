@@ -1,1 +1,0 @@
-<?php echo include_component('tag','restaurant', array('restaurant' => $restaurant)) ?>

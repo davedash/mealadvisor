@@ -1,7 +1,0 @@
-_popularCloud:
-  enabled:  on
-_popularRestaurantCloud:
-  enabled:  on
-all: 
-  enabled:  off
-  
