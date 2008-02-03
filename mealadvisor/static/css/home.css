@@ -1,0 +1,11 @@
+         #recent_dishes ul{overflow:none;height:200px}
+      #recent_dishes ul li{float:left;width:125px;margin-right:3em}
+ #recent_dishes ul li.last{margin-right:0}
+        #recent_dishes img{border:solid 2px #fff}
+     #recent_dishes .image{height:125px;margin-bottom:1em; text-align: center}
+            #recent_dishes{font-size: 90%}
+         #review_form form{margin:0 30%;background:#222}
+   #review_form input.text{width:230px}
+    .cmxform .yui-ac-input{position:static}
+.cmxform .yui-ac-container{margin-left:123px}
+  .cmxform .yui-ac-content{color:black}
