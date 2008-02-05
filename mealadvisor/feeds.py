@@ -1,5 +1,5 @@
 from django.contrib.syndication.feeds import FeedDoesNotExist, Feed
-from mealadvisor.common.models import Restaurant
+from mealadvisor.common.models import Restaurant, MenuItem
 
 class LatestRestaurants(Feed):
     title       = "Freshest Restaurants"
@@ -9,24 +9,31 @@ class LatestRestaurants(Feed):
     def items(self):
         return Restaurant.objects.order_by('-created_at')[:10]
 
-class MenuItemFeed(Feed, restaurantStrippedTitle):
+class MenuItems(Feed):
     """
     e.g. /restaurant/hobees/feed
+    
+    We need the equivalent of 
+    select menuitems from menuitems, restaurants where restaurant.slug = slug
     """
 
-    #   $restaurant = RestaurantPeer::retrieveByStrippedTitle($this->getRequestParameter('stripped_title'));
-    #   $this->forward404Unless($restaurant instanceof Restaurant);
-    #   
+    def get_object(self, bits):
+        return Restaurant.objects.get(stripped_title__exact=bits[0])
+        
+    def title(self, obj):
+        return "Menu items at %s" % obj.name
+    
+    def link(self, obj):
+        return obj.get_absolute_url()
+        
+    def description(self, obj):
+        return "A list of menu items served at %s" % obj.name
+        
+    def items(self, obj):
+        items = MenuItem.objects.filter(restaurant__id__exact=obj.id)
+        return items.order_by('-updated_at')[:10]
     #   $c = new Criteria();
     #   $c->addDescendingOrderByColumn(MenuItemPeer::CREATED_AT);
     #   $c->add(MenuItemPeer::RESTAURANT_ID, $restaurant->getId());
     #   
-    #   $items = MenuItemPeer::doSelect($c);
-    #   $feed = sfFeed::newInstance('rss201rev2');
-    #   $feed->setTitle('Menu items at ' . $restaurant->__toString());
-    #   $feed->setLink('@restaurant?stripped_title=' . $restaurant->getStrippedTitle());
-    #   $feed->setDescription('A list of the menu items served at '.$restaurant->__toString());
-    # 
-    #   $feed->setFeedItemsRouteName('@menu_item');
     #   $feed->setItems($items);
-    #   $this->feed = $feed;

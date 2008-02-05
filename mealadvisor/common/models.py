@@ -48,37 +48,75 @@ class RestaurantVersion(models.Model):
   class Meta:
     db_table = u'restaurant_version'
 
+class Country(models.Model):
+    iso            = models.CharField(max_length=6, primary_key=True)
+    name           = models.CharField(max_length=240)
+    printable_name = models.CharField(max_length=240)
+    iso3           = models.CharField(max_length=9, blank=True)
+    numcode        = models.IntegerField(null=True, blank=True)
+    class Meta:
+        db_table = u'country'
+
+class Location(models.Model):
+    id              = models.IntegerField(primary_key=True)
+    restaurant      = models.ForeignKey(Restaurant, null=True, blank=True)
+    data_source     = models.CharField(unique=True, max_length=96, blank=True)
+    data_source_key = models.CharField(unique=True, max_length=765, blank=True)
+    name            = models.CharField(max_length=765, blank=True)
+    stripped_title  = models.CharField(max_length=765, blank=True)
+    address         = models.CharField(max_length=765, blank=True)
+    city            = models.CharField(max_length=384, blank=True)
+    state           = models.CharField(max_length=48, blank=True)
+    zip             = models.CharField(max_length=30, blank=True)
+    country         = models.ForeignKey(Country, null=True, blank=True)
+    latitude        = models.FloatField(null=True, blank=True)
+    longitude       = models.FloatField(null=True, blank=True)
+    phone           = models.CharField(max_length=48, blank=True)
+    approved        = models.IntegerField(null=True, blank=True)
+    updated_at      = models.DateTimeField(null=True, blank=True)
+    created_at      = models.DateTimeField(null=True, blank=True)
+    class Meta:
+        db_table = u'location'
+
+
+class MenuItem(models.Model):
+    id             = models.IntegerField(primary_key=True)
+    name           = models.CharField(max_length=765, blank=True)
+    url            = models.CharField(max_length=765, blank=True)
+    version        = models.ForeignKey('MenuitemVersion', null=True, blank=True)
+    restaurant     = models.ForeignKey(Restaurant, null=True, blank=True)
+    approved       = models.IntegerField(null=True, blank=True)
+    average_rating = models.FloatField(null=True, blank=True)
+    num_ratings    = models.IntegerField(null=True, blank=True)
+    updated_at     = models.DateTimeField(null=True, blank=True)
+    created_at     = models.DateTimeField(null=True, blank=True)
+
+    class Meta:
+        db_table = u'menu_item'
+
+    def __unicode__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        "http://prod.rbu.sf/frontend_dev.php/restaurant/hobees/menu/special-traditional-eggs-benedict"
+        return "%s/menu/%s" % (self.restaurant.get_absolute_url(), self.url)
+
+
+class MenuitemVersion(models.Model):
+    id               = models.IntegerField(primary_key=True)
+    description      = models.TextField(blank=True)
+    html_description = models.TextField(blank=True)
+    location         = models.ForeignKey(Location, null=True, blank=True)
+    menuitem         = models.ForeignKey(MenuItem, null=True, blank=True)
+    user             = models.ForeignKey(Profile, null=True, blank=True)
+    price            = models.CharField(max_length=48, blank=True)
+    created_at       = models.DateTimeField(null=True, blank=True)
+    class Meta:
+        db_table = u'menuitem_version'
+
 # 
 # 
-# class Country(models.Model):
-#     iso = models.CharField(max_length=6, primary_key=True)
-#     name = models.CharField(max_length=240)
-#     printable_name = models.CharField(max_length=240)
-#     iso3 = models.CharField(max_length=9, blank=True)
-#     numcode = models.IntegerField(null=True, blank=True)
-#     class Meta:
-#         db_table = u'country'
 # 
-# class Location(models.Model):
-#     id = models.IntegerField(primary_key=True)
-#     restaurant = models.ForeignKey(Restaurant, null=True, blank=True)
-#     data_source = models.CharField(unique=True, max_length=96, blank=True)
-#     data_source_key = models.CharField(unique=True, max_length=765, blank=True)
-#     name = models.CharField(max_length=765, blank=True)
-#     stripped_title = models.CharField(max_length=765, blank=True)
-#     address = models.CharField(max_length=765, blank=True)
-#     city = models.CharField(max_length=384, blank=True)
-#     state = models.CharField(max_length=48, blank=True)
-#     zip = models.CharField(max_length=30, blank=True)
-#     country = models.ForeignKey(Country, null=True, blank=True)
-#     latitude = models.FloatField(null=True, blank=True)
-#     longitude = models.FloatField(null=True, blank=True)
-#     phone = models.CharField(max_length=48, blank=True)
-#     approved = models.IntegerField(null=True, blank=True)
-#     updated_at = models.DateTimeField(null=True, blank=True)
-#     created_at = models.DateTimeField(null=True, blank=True)
-#     class Meta:
-#         db_table = u'location'
 # 
 # class MenuImage(models.Model):
 #     id = models.IntegerField(primary_key=True)
@@ -91,19 +129,6 @@ class RestaurantVersion(models.Model):
 #     class Meta:
 #         db_table = u'menu_image'
 # 
-# class MenuItem(models.Model):
-#     id = models.IntegerField(primary_key=True)
-#     name = models.CharField(max_length=765, blank=True)
-#     url = models.CharField(max_length=765, blank=True)
-#     version = models.ForeignKey(MenuitemVersion, null=True, blank=True)
-#     restaurant = models.ForeignKey(Restaurant, null=True, blank=True)
-#     approved = models.IntegerField(null=True, blank=True)
-#     average_rating = models.FloatField(null=True, blank=True)
-#     num_ratings = models.IntegerField(null=True, blank=True)
-#     updated_at = models.DateTimeField(null=True, blank=True)
-#     created_at = models.DateTimeField(null=True, blank=True)
-#     class Meta:
-#         db_table = u'menu_item'
 # 
 # class MenuItemImage(models.Model):
 #     id = models.IntegerField(primary_key=True)
@@ -153,17 +178,6 @@ class RestaurantVersion(models.Model):
 #     class Meta:
 #         db_table = u'menuitem_tag'
 # 
-# class MenuitemVersion(models.Model):
-#     id = models.IntegerField(primary_key=True)
-#     description = models.TextField(blank=True)
-#     html_description = models.TextField(blank=True)
-#     location = models.ForeignKey(Location, null=True, blank=True)
-#     menuitem = models.ForeignKey(MenuItem, null=True, blank=True)
-#     user = models.ForeignKey(Profile, null=True, blank=True)
-#     price = models.CharField(max_length=48, blank=True)
-#     created_at = models.DateTimeField(null=True, blank=True)
-#     class Meta:
-#         db_table = u'menuitem_version'
 # 
 # class FacebookProfileRel(models.Model):
 #     fbid = models.IntegerField(primary_key=True)

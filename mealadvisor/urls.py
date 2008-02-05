@@ -1,11 +1,12 @@
 from django.conf.urls.defaults import *
 from django.views.generic import list_detail
-from mealadvisor.feeds import LatestRestaurants
+from mealadvisor.feeds import LatestRestaurants, MenuItems
 from mealadvisor.common.models import Restaurant
 from os import path
 
 feeds = {
     'latest'        : LatestRestaurants,
+    'restaurant'    : MenuItems,
 }
 
 restaurant_info_dict = {
@@ -17,6 +18,13 @@ urlpatterns = patterns('',
     # feed urls
     (
         r'^feed/(?P<url>.*)/$',
+        'django.contrib.syndication.views.feed',
+        {'feed_dict': feeds}
+    ),
+    
+    # restaurant feed
+    (
+        r'^(?P<url>restaurant.*)/feed',
         'django.contrib.syndication.views.feed',
         {'feed_dict': feeds}
     ),
