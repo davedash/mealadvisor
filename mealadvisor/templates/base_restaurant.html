@@ -1,0 +1,5 @@
+{%extends "base.html"%}
+{%block feeds %}
+{{block.super}}
+<link href="/restaurant/{{restaurant.slug}}/feed" title="Latest menu items at {{restaurant}}" type="application/rss+xml" rel="alternate"/>
+{%endblock feeds %}

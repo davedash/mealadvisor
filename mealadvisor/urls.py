@@ -31,8 +31,11 @@ urlpatterns = patterns('',
 )
 
 urlpatterns += patterns('mealadvisor.common.views',
+    # Menu Item
+    (r'^restaurant/(?P<slug>[^/]+)/menu/(?P<item_slug>[^/]+)$', 'menuitem'),
+
     # Restaurant
-    (r'^restaurant/(?P<slug>.+)$', list_detail.object_detail, restaurant_info_dict),
+    (r'^restaurant/(?P<slug>[^/]+)$', list_detail.object_detail, restaurant_info_dict),
     
     # Search
     (r'^search$', 'search'),

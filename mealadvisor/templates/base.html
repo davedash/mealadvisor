@@ -3,8 +3,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>mealadvisor</title>
-  <meta name="title" content="mealadvisor" />
+  <title>{%block title%}{%endblock title%}mealadvisor</title>
 
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta name="robots" content="index, follow" />
@@ -28,7 +27,9 @@
   <script type="text/javascript" src="/static/js/home.js"></script> 
   
   {# Feeds/RSS #}
-  <link href="http://reviewsby.us/feed/latest" title="Latest restaurants" type="application/rss+xml" rel="alternate"/>
+  {% block feeds %}
+  <link href="/feed/latest" title="Latest restaurants" type="application/rss+xml" rel="alternate"/>  
+  {% endblock feeds %}
 
 </head>
 <body class="yui-skin-sam">
@@ -40,7 +41,7 @@
           <a href="/">meal advisor</a>
         </h1>
         <div id="search_box">
-          <form action="search" method="get">
+          <form action="/search" method="get">
             <input id="q" name="q" value="Search for food" />
             <input type="submit" class="small" value="search" name="commit">
             <span class="info">
