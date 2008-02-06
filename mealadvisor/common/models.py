@@ -22,20 +22,29 @@ class Profile(models.Model):
     db_table = u'profile'
 
 class Restaurant(models.Model):
-  id             = models.IntegerField(primary_key=True)
-  name           = models.CharField(max_length=765, blank=True)
-  stripped_title = models.CharField(max_length=384, blank=True)
-  approved       = models.IntegerField(null=True, blank=True)
-  average_rating = models.FloatField(null=True, blank=True)
-  num_ratings    = models.IntegerField(null=True, blank=True)
-  version        = models.ForeignKey('RestaurantVersion', null=True, blank=True)
-  updated_at     = models.DateTimeField(null=True, blank=True)
-  created_at     = models.DateTimeField(null=True, blank=True)
-  class Meta:
-    db_table = u'restaurant'
-  def get_absolute_url(self):
-    return "/restaurant/%s" % (self.stripped_title,)
+    id             = models.IntegerField(primary_key=True)
+    name           = models.CharField(max_length=765, blank=True)
+    stripped_title = models.CharField(max_length=384, blank=True)
+    approved       = models.IntegerField(null=True, blank=True)
+    average_rating = models.FloatField(null=True, blank=True)
+    num_ratings    = models.IntegerField(null=True, blank=True)
+    version        = models.ForeignKey('RestaurantVersion', null=True, blank=True)
+    updated_at     = models.DateTimeField(null=True, blank=True)
+    created_at     = models.DateTimeField(null=True, blank=True)
 
+    class Meta:
+        db_table     = u'restaurant'
+
+    def get_absolute_url(self):
+        return "/restaurant/%s" % (self.stripped_title,)
+
+    def slug(self):
+        return self.stripped_title;
+
+    def __unicode__(self):
+        return self.name
+        
+        
 class RestaurantVersion(models.Model):
   id               = models.IntegerField(primary_key=True)
   chain            = models.IntegerField(null=True, blank=True)
