@@ -22,7 +22,7 @@ DATABASE_PORT     = ''             # Set to empty string for default. Not used w
 # although not all choices may be avilable on all operating systems.
 # If running in a Windows environment this must be set to the same as your
 # system time zone.
-TIME_ZONE = 'America/Los_Angelas'
+TIME_ZONE = 'America/Los_Angeles'
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
@@ -68,12 +68,28 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'mealadvisor.urls'
 
 TEMPLATE_DIRS = (
-os.path.join(os.path.dirname(__file__), "templates"),
+    os.path.join(os.path.dirname(__file__), "templates"),
 )
+
+LOGIN_URL          = '/login'
+LOGIN_REDIRECT_URL = '/'
+
+OPENID_SUCCESS = "mealadvisor.common.views.openid_success"
 
 INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
+    'spindrop.django.openid.consumer',
+    #'django_openidconsumer',
     # 'django.contrib.sites',
 )
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+    "django.core.context_processors.auth",
+    "django.core.context_processors.debug",
+    "django.core.context_processors.i18n",
+    "django.core.context_processors.media"
+)
+
+AUTH_PROFILE_MODULE = 'common.profile'
