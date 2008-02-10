@@ -8,21 +8,22 @@
 # into your database.
 
 from django.db import models
+from django.contrib.auth.models import User
 
 class Profile(models.Model):
-  id           = models.IntegerField(primary_key=True)
-  userid       = models.IntegerField(unique=True, null=True, blank=True)
-  email        = models.CharField(max_length=384, blank=True)
-  openid       = models.IntegerField(null=True, blank=True)
-  preferences  = models.TextField(blank=True)
-  about_text   = models.TextField(blank=True)
-  updated_at   = models.DateTimeField(null=True, blank=True)
-  created_at   = models.DateTimeField(null=True, blank=True)
-  class Meta:
-    db_table = u'profile'
+    user        = models.ForeignKey(User, db_column="userid", unique=True, null=True, blank=True)
+    email       = models.CharField(max_length=384, blank=True)
+    openid      = models.BooleanField(null=True, blank=True)
+    preferences = models.TextField(blank=True)
+    about_text  = models.TextField(blank=True)
+    updated_at  = models.DateTimeField(null=True, blank=True)
+    created_at  = models.DateTimeField(null=True, blank=True)
+
+    class Meta:
+        db_table = u'profile'
+
 
 class Restaurant(models.Model):
-    id             = models.IntegerField(primary_key=True)
     name           = models.CharField(max_length=765, blank=True)
     stripped_title = models.CharField(max_length=384, blank=True)
     approved       = models.IntegerField(null=True, blank=True)
@@ -46,7 +47,6 @@ class Restaurant(models.Model):
         
         
 class RestaurantVersion(models.Model):
-  id               = models.IntegerField(primary_key=True)
   chain            = models.IntegerField(null=True, blank=True)
   description      = models.TextField(blank=True)
   url              = models.CharField(max_length=765, blank=True)
@@ -67,10 +67,9 @@ class Country(models.Model):
         db_table = u'country'
 
 class Location(models.Model):
-    id              = models.IntegerField(primary_key=True)
     restaurant      = models.ForeignKey(Restaurant, null=True, blank=True)
-    data_source     = models.CharField(unique=True, max_length=96, blank=True)
-    data_source_key = models.CharField(unique=True, max_length=765, blank=True)
+    data_source     = models.CharField(max_length=96, blank=True)
+    data_source_key = models.CharField(max_length=765, blank=True)
     name            = models.CharField(max_length=765, blank=True)
     stripped_title  = models.CharField(max_length=765, blank=True)
     address         = models.CharField(max_length=765, blank=True)
@@ -86,10 +85,10 @@ class Location(models.Model):
     created_at      = models.DateTimeField(null=True, blank=True)
     class Meta:
         db_table = u'location'
-
+        unique_together = (("data_source", "data_source_key"),)
+        
 
 class MenuItem(models.Model):
-    id             = models.IntegerField(primary_key=True)
     name           = models.CharField(max_length=765, blank=True)
     url            = models.CharField(max_length=765, blank=True)
     version        = models.ForeignKey('MenuitemVersion', null=True, blank=True)
@@ -112,7 +111,6 @@ class MenuItem(models.Model):
 
 
 class MenuitemVersion(models.Model):
-    id               = models.IntegerField(primary_key=True)
     description      = models.TextField(blank=True)
     html_description = models.TextField(blank=True)
     location         = models.ForeignKey(Location, null=True, blank=True)
