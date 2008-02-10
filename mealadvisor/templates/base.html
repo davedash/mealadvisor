@@ -52,19 +52,18 @@
       </div>
       <div id="top_menu" class="incomplete">
         <ul>
-          <li>
+          {# <li> #}
             {# <?php echo link_to('Review a meal', 'meal/review') ?> #}
-          </li>
+          {# </li> #}
+          {% if user.is_authenticated %}
+            <li><a href="/logout">Sign Out</a></li>
+          {% else %}
+            <li><a href="/login">Sign In</a></li>
+          {% endif %}
           {# <?php if ($sf_user->isLoggedIn()): ?> #}
           {#  #}
-          {# <li> #}
-          {#    <?php echo link_to('logout', '@sf_guard_signout') ?>  #}
-          {# </li> #}
           {#  #}
           {# <?php else: ?> #}
-          {#   <li> #}
-          {#     <?php echo link_to('Sign In', '@sf_guard_signin') ?> #}
-          {#   </li> #}
           {#   <li> #}
           {#     <?php echo link_to('Sign Up', '@register') ?> #}
           {#   </li> #}
@@ -77,6 +76,7 @@
       <!-- header -->
     </div>  
     <div id="bd">
+      
       {% block body %}
       
       {% endblock body %}
