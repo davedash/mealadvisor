@@ -15,6 +15,23 @@ restaurant_info_dict = {
 }
 
 urlpatterns = patterns('',
+
+    # authentication
+    (
+        r'^login$', 
+        'django.contrib.auth.views.login'
+    ),
+    
+    (
+        r'^logout$', 
+        'django.contrib.auth.views.logout',
+        { 'next_page' : '/' }
+    ),
+    
+    # OpenID    
+    (r'^openid/', include('spindrop.django.openid.consumer.urls')),
+    
+
     # feed urls
     (
         r'^feed/(?P<url>.*)/$',
