@@ -1,3 +1,4 @@
+# coding=utf-8
 # This is an auto-generated Django model module.
 # You'll have to do the following manually to clean this up:
 #     * Rearrange models' order
@@ -29,7 +30,7 @@ class Restaurant(models.Model):
     approved       = models.IntegerField(null=True, blank=True)
     average_rating = models.FloatField(null=True, blank=True)
     num_ratings    = models.IntegerField(null=True, blank=True)
-    version        = models.ForeignKey('RestaurantVersion', null=True, blank=True)
+    version        = models.ForeignKey('RestaurantVersion', related_name="the_restaurant", null=True, blank=True)
     updated_at     = models.DateTimeField(null=True, blank=True)
     created_at     = models.DateTimeField(null=True, blank=True)
 
@@ -44,7 +45,7 @@ class Restaurant(models.Model):
 
     def __unicode__(self):
         return self.name
-        
+
         
 class RestaurantVersion(models.Model):
   chain            = models.IntegerField(null=True, blank=True)
@@ -90,9 +91,9 @@ class Location(models.Model):
 
 class MenuItem(models.Model):
     name           = models.CharField(max_length=765, blank=True)
-    url            = models.CharField(max_length=765, blank=True)
-    version        = models.ForeignKey('MenuitemVersion', null=True, blank=True)
-    restaurant     = models.ForeignKey(Restaurant, null=True, blank=True)
+    slug           = models.CharField(db_column='url', max_length=765, blank=True)
+    version        = models.ForeignKey('MenuitemVersion', related_name="the_menuitem", null=True, blank=True)
+    restaurant     = models.ForeignKey(Restaurant)
     approved       = models.IntegerField(null=True, blank=True)
     average_rating = models.FloatField(null=True, blank=True)
     num_ratings    = models.IntegerField(null=True, blank=True)
@@ -121,10 +122,21 @@ class MenuitemVersion(models.Model):
     class Meta:
         db_table = u'menuitem_version'
 
-# 
-# 
-# 
-# 
+class MenuItemImage(models.Model):
+    user      = models.ForeignKey(Profile, null=True, blank=True)
+    menu_item = models.ForeignKey(MenuItem)
+    data      = models.TextField(blank=True)
+    md5sum    = models.CharField(max_length=96, blank=True)
+    height    = models.IntegerField(null=True, blank=True)
+    width     = models.IntegerField(null=True, blank=True)
+
+    class Meta:
+        db_table = u'menu_item_image'
+
+    def is_portrait(self):
+        return (self.height > self.width);
+		
+
 # class MenuImage(models.Model):
 #     id = models.IntegerField(primary_key=True)
 #     restaurant = models.ForeignKey(Restaurant, null=True, blank=True)
@@ -137,16 +149,6 @@ class MenuitemVersion(models.Model):
 #         db_table = u'menu_image'
 # 
 # 
-# class MenuItemImage(models.Model):
-#     id = models.IntegerField(primary_key=True)
-#     user = models.ForeignKey(Profile, null=True, blank=True)
-#     menu_item = models.ForeignKey(MenuItem, null=True, blank=True)
-#     data = models.TextField(blank=True)
-#     md5sum = models.CharField(max_length=96, blank=True)
-#     height = models.IntegerField(null=True, blank=True)
-#     width = models.IntegerField(null=True, blank=True)
-#     class Meta:
-#         db_table = u'menu_item_image'
 # 
 # class MenuitemNote(models.Model):
 #     id = models.IntegerField(primary_key=True)
