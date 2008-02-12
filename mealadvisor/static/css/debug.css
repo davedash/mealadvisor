@@ -1,0 +1,4 @@
+.incomplete { background:#c0c !important}
+.incomplete .incomplete{background:#d0d !important}
+.incomplete .incomplete .incomplete{background:#e0e !important}
+.incomplete .incomplete .incomplete .incomplete{background:#f0f !important}

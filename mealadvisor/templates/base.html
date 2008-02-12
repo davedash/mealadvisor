@@ -17,10 +17,14 @@
   <link rel="shortcut icon" href="/static/images/g2/logo/favicon.png" />
 
   {# CSS #}
-  <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.4.1/build/reset-fonts-grids/reset-fonts-grids.css"> 
+  <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.4.1/build/reset-fonts-grids/reset-fonts-grids.css">  
+  
   <link rel="stylesheet" type="text/css" media="screen" href="/static/css/main.css" />
   <link rel="stylesheet" type="text/css" media="screen" href="/static/css/home.css" />
-
+  {% if debug %}
+  <link rel="stylesheet" type="text/css" media="screen" href="/static/css/debug.css" />
+  {% endif %}
+  
   {# JS #}
   <script type="text/javascript" src="http://yui.yahooapis.com/2.4.1/build/yahoo-dom-event/yahoo-dom-event.js"></script> 
   <script type="text/javascript" src="/static/js/main.js"></script> 
@@ -34,14 +38,14 @@
 </head>
 <body class="yui-skin-sam">
   
-  <div id="doc4" class="incomplete"> 
-    <div id="hd" class="incomplete">
+  <div id="doc4"> 
+    <div id="hd">
       <div id="header">
         <h1>
           <a href="/">meal advisor</a>
         </h1>
         <div id="search_box">
-          <form action="/search" method="get">
+          <form action="/search" method="get" class="incomplete">
             <input id="q" name="q" value="Search for food" />
             <input type="submit" class="small" value="search" name="commit">
             <span class="info">
@@ -50,8 +54,9 @@
           </form>
         </div>
       </div>
-      <div id="top_menu" class="incomplete">
+      <div id="top_menu">
         <ul>
+          <li class="incomplete">&nbsp;</li>
           {# <li> #}
             {# <?php echo link_to('Review a meal', 'meal/review') ?> #}
           {# </li> #}
@@ -59,32 +64,31 @@
             <li><a href="/logout">Sign Out</a></li>
           {% else %}
             <li><a href="/login">Sign In</a></li>
+            <li class="incomplete">
+              <a href="#">Join</a>
+            </li>
           {% endif %}
-          {# <?php if ($sf_user->isLoggedIn()): ?> #}
-          {#  #}
-          {#  #}
-          {# <?php else: ?> #}
-          {#   <li> #}
-          {#     <?php echo link_to('Sign Up', '@register') ?> #}
-          {#   </li> #}
-          {#   <?php endif ?> #}
-            <li>
-              {# <?php echo link_to('About', '/about') ?> #}
+            <li class="incomplete">
+              <a href="#">About</a>
             </li>
         </ul>
       </div>
       <!-- header -->
     </div>  
     <div id="bd">
-      
-      {% block body %}
-      
-      {% endblock body %}
+      {% block body %}{% endblock body %}
     </div>  
 
-    <div id="ft">f<!-- footer --></div>  
+    <div id="ft" class="incomplete"><!-- footer -->
+      
+    </div>  
   </div>
-  
+
+  {% if debug %}
+  {% include "debug.html" %}
+  {% endif %}
+
+
   {#   ... end of new yui code... begining of old crud #}
   {#   <p>View <?php echo link_to('all restaurants', '@restaurant_list') ?>  #}
   {#   <?php echo rss_link_to('feed/freshest') ?>.</p> #}
