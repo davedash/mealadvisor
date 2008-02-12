@@ -1,8 +1,5 @@
-/*.incomplete{background:#c00 !important}
-.incomplete .incomplete{background:#e00 !important}
-.incomplete .incomplete .incomplete{background:#f00 !important}
-*/
-body{background:#222;padding:0;font-family:Futura,Centry Gothic,Verdana,sans-serif;}
+html{background:#222}
+body{font-family:Futura,Centry Gothic,Verdana,sans-serif;}
 #doc4{background:#000;color:white;border:solid 1px #666;}
 #hd #header{background:#444;margin-top:0;border-bottom:2px solid #09c;padding:.5em 1em;height:70px;}
 #hd #header h1 a{float:left;background:url('../images/g2/logo/full_277x63.png');width:277px;height:63px;text-indent:-9999px;display:block;}

@@ -1,4 +1,32 @@
 {% extends "base.html" %}
+{% load image_extras %}
+
 {% block body %}
-pictures go here
+<div id="recent_dishes">
+<h2>Recent Dishes</h2>
+
+<ul>
+{% for image in images %}
+
+{% if forloop.last %}
+  <li class="last">
+{% else %}
+  <li>
+{% endif %}  
+  <div class="image">
+    {% menuitem_image image 125 %}
+  </div>
+  
+  <h3>
+    <a class="incomplete" href="{{image.menu_item.get_absolute_url}}">{{image.menu_item}}</a>
+    from 
+    <a class="incomplete" href="{{image.menu_item.restaurant.get_absolute_url}}">{{image.menu_item.restaurant}}</a>
+  </h3>
+</li>
+{% endfor %}
+</ul>
+
+</div>
+
+
 {% endblock body %}

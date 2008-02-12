@@ -10,8 +10,9 @@ feeds = {
 }
 
 restaurant_info_dict = {
-    'queryset'   : Restaurant.objects.all(),
-    'slug_field' : 'stripped_title',
+    'queryset'             : Restaurant.objects.all(),
+    'slug_field'           : 'stripped_title',
+    "template_object_name" : "restaurant"
 }
 
 urlpatterns = patterns('',
@@ -48,6 +49,9 @@ urlpatterns = patterns('',
 )
 
 urlpatterns += patterns('mealadvisor.common.views',
+    # Menu Item Image
+    (r'^menuitem_image/(?P<md5>[a-f0-9]{32})$', 'menuitem_image',),
+
     # Menu Item
     (r'^restaurant/(?P<slug>[^/]+)/menu/(?P<item_slug>[^/]+)$', 'menuitem'),
 

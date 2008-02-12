@@ -1,14 +1,17 @@
 from django.template import RequestContext
-from django.shortcuts import render_to_response, get_object_or_404
+from django.shortcuts import render_to_response, get_object_or_404, get_list_or_404
 from django.contrib.auth import login
-from django.http import HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect
 
-from mealadvisor.common.models import Restaurant
+from mealadvisor.common.models import Restaurant, MenuItemImage, MenuItem
 from mealadvisor.common import profiles
 
 
 def home(request):
-    return render_to_response("common/index.html", context_instance=RequestContext(request))
+    # load n pictures    
+    
+    images = MenuItemImage.objects.select_related(depth=2).order_by('?')[:6]
+    return render_to_response("common/index.html", {"images": images}, context_instance=RequestContext(request))
   
 def search(request):
     # get results from model
@@ -19,11 +22,17 @@ def search(request):
   
 def menuitem(request, slug, item_slug):
     # get results from model
-    restaurant = Restaurant.objects.get(stripped_title__exact=slug)
-    context = {'restaurant':restaurant}
+    restaurant = get_object_or_404(Restaurant, stripped_title__exact=slug)
+    menu_item  = get_object_or_404(MenuItem, restaurant__stripped_title__exact=slug, slug__exact=item_slug)
+    context = {'restaurant':restaurant, 'menu_item':menu_item}
     
     return render_to_response("common/menuitem.html", context, context_instance=RequestContext(request))
-    
+
+
+def menuitem_image(request, md5):
+    image = get_list_or_404(MenuItemImage, md5sum=md5)[0]
+    return HttpResponse(image.data, mimetype="image/jpeg")
+
 
 def openid_success(request, results):
     context = results
