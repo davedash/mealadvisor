@@ -2,3 +2,5 @@
 .incomplete .incomplete{background:#d0d !important}
 .incomplete .incomplete .incomplete{background:#e0e !important}
 .incomplete .incomplete .incomplete .incomplete{background:#f0f !important}
+
+#django_debug {position: fixed; bottom: 0; left:0;}
