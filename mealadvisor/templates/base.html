@@ -93,28 +93,36 @@
             <li>
               <a href="http://yumbo.reviewsby.us/">yumbo: the meal advisor blog</a>
             </li>
-            <li>About Meal Advisor</li>
-            <li>F.A.Q.</li>
-            <li>Help</li>
+            <li>
+              <a href="/about" class="incomplete">About Meal Advisor</a>
+            </li>
+            <li>
+              <a href="/faq" class="incomplete">F.A.Q.</a>
+            </li>
+            <li>
+              <a href="/help" class="incomplete">Help</a>
+            </li>
           </ul>
         </div>
-        <div class="yui-u incomplete">
+        <div class="yui-u">
             <h2>&hellip; subscribe</h2>
-            <li>Latest Restaurants</li>
-            <li>Latest Menu Items</li>
-            <li>Latest Reviews</li>
-            <li>Subscribe to Google Coop</li>
+            <ul>
+              <li class="rss"><a href="/feed/latest">Latest Restaurants</a></li>
+              <li>Latest Menu Items</li>
+              <li>Latest Reviews</li>
+              <li>Subscribe to Google Coop</li>
+            </ul>
         </div>
         <div class="yui-u incomplete">
-          
-            <h2>&hellip; more</h2>
-            {#   <p>View <?php echo link_to('all restaurants', '@restaurant_list') ?>  #}
 
-              <li>contact us</li>
-              
+          <h2>&hellip; more</h2>
+          <ul>
+            <li>contact us</li>
             <li>email to a friend</li>
             <li>post to del.icio.us</li>
+          </ul>
         </div>
+
 
       </div>
       {% include "ads.html" %}

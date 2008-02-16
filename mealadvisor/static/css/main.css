@@ -13,13 +13,8 @@ body{font-family:Futura,Centry Gothic,Verdana,sans-serif;}
 #bd{padding:1em;}
 h2{font-size:130%;text-transform:lowercase;margin-bottom:1em;}
 a{color:#09c}
-#ft { border-top: 2px solid #09c;}
-#ft h2{padding:0 .5em;}
-#ft ul{border-top:solid #fff 1px;margin: 0 .5em;}
-#ft li {
-    font-size: 90%;
-    padding: .2em;
-    text-align: right;
-    background: url('../images/g2/logo/mini.png') no-repeat top 5px;
-    border-bottom: solid #fff 1px;)
-}
+#ft{border-top:2px solid #09c;background:#333;padding:1em 0 2em;}
+#ft h2{padding:0 1em;}
+#ft ul{border-top:solid #fff 1px;margin:0 1em;}
+#ft li{text-transform:lowercase;font-size:95%;padding:.2em .5em;font-family:Arial;text-align:right;background:url('../images/g2/logo/mini.png') no-repeat 10px;border-bottom:solid #fff 1px;)}
+#ft li a { color: #6ab; text-decoration: none;}
