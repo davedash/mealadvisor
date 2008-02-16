@@ -10,6 +10,16 @@ body{font-family:Futura,Centry Gothic,Verdana,sans-serif;}
 #hd #top_menu{position:relative;top:-2px;margin:0 30%;border:2px solid #09c;border-top:none;padding:.2em;text-align:center;overflow:auto;background:#444;}
 #hd #top_menu ul li{float:left;width:25%;font-size:90%;}
 #hd #top_menu ul li a{color:white;text-decoration:none;}
-#bd {padding:1em;}
-h2 {font-size:130%;text-transform:lowercase;margin-bottom:1em;}
+#bd{padding:1em;}
+h2{font-size:130%;text-transform:lowercase;margin-bottom:1em;}
 a{color:#09c}
+#ft { border-top: 2px solid #09c;}
+#ft h2{padding:0 .5em;}
+#ft ul{border-top:solid #fff 1px;margin: 0 .5em;}
+#ft li {
+    font-size: 90%;
+    padding: .2em;
+    text-align: right;
+    background: url('../images/g2/logo/mini.png') no-repeat top 5px;
+    border-bottom: solid #fff 1px;)
+}
