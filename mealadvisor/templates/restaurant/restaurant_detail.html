@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block body %}
+{{restaurant}}
+restaurants go here...
+
+<ul>
+  {% for location in restaurant.location_set.all %}
+  	<li>{{ location.city }}</li>
+  {% endfor %}
+</ul>
+{% endblock body %}
