@@ -1,2 +1,34 @@
-we use:
- http://www.famfamfam.com/lab/icons/silk/
+{% extends "base.html" %}
+
+{% block body %}
+
+<h3>Colophon</h3>
+
+<p>
+    The original site (formerly "meal advisor") was built on the <a
+    href="http://symfony-project.com/">symfony PHP5 web framework</a> and was
+    used as a model for creating this current incarnation. 
+</p>
+
+<p> 
+    The site was redesigned using OmniGraffle and inspired by black-background
+    sites such as Popurls. We used the <a
+    href="http://www.famfamfam.com/lab/icons/silk/" title="famfamfam.com: Silk
+    Icons">Silk icons</a> from Fam Fam Fam. Occasional assistance came from
+    Adobe's Illustrator and Photoshop products.
+</p>
+
+<p>
+    We use Slicehost VPS to host a virtual Ubuntu server. We serve static
+    content using nginx (pronounced "Engine-X") and requests for dyanmic
+    content are delivered to an Apache 2 HTTP server running
+    <code>mod_python</code>. The meal advisor application is built using the
+    django web framework for python. Using mysql as its glue.
+</p>
+
+<p> 
+    The site is developed for Firefox, Safari, Internet Explorer 7 and
+    Internet Explorer 6.
+</p>
+
+{% endblock body %}
