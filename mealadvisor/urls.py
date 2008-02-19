@@ -1,7 +1,8 @@
 from django.conf.urls.defaults import *
 from django.views.generic import list_detail
 from mealadvisor.feeds import LatestRestaurants, MenuItems
-from mealadvisor.common.models import Restaurant
+from mealadvisor.restaurant.models import Restaurant
+
 from os import path
 
 feeds = {
@@ -63,6 +64,11 @@ urlpatterns += patterns('mealadvisor.common.views',
 
     # Home
     (r'^$', 'home'),
+)
+
+# static pages
+urlpatterns += patterns('django.views.generic.simple',
+    (r'^about$', 'direct_to_template', {'template': 'common/about.html'}),
 )
 
 urlpatterns += patterns('',
