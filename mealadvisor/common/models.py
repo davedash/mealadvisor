@@ -24,117 +24,15 @@ class Profile(models.Model):
         db_table = u'profile'
 
 
-class Restaurant(models.Model):
-    name           = models.CharField(max_length=765, blank=True)
-    stripped_title = models.CharField(max_length=384, blank=True)
-    approved       = models.IntegerField(null=True, blank=True)
-    average_rating = models.FloatField(null=True, blank=True)
-    num_ratings    = models.IntegerField(null=True, blank=True)
-    version        = models.ForeignKey('RestaurantVersion', related_name="the_restaurant", null=True, blank=True)
-    updated_at     = models.DateTimeField(null=True, blank=True)
-    created_at     = models.DateTimeField(null=True, blank=True)
-
-    class Meta:
-        db_table     = u'restaurant'
-
-    def get_absolute_url(self):
-        return "/restaurant/%s" % (self.stripped_title,)
-
-    def slug(self):
-        return self.stripped_title;
-
-    def __unicode__(self):
-        return self.name
-
-        
-class RestaurantVersion(models.Model):
-  chain            = models.IntegerField(null=True, blank=True)
-  description      = models.TextField(blank=True)
-  url              = models.CharField(max_length=765, blank=True)
-  created_at       = models.DateTimeField(null=True, blank=True)
-  restaurant       = models.ForeignKey(Restaurant, null=True, blank=True)
-  user             = models.ForeignKey(Profile, null=True, blank=True)
-  html_description = models.TextField(blank=True)
-  class Meta:
-    db_table = u'restaurant_version'
-
 class Country(models.Model):
     iso            = models.CharField(max_length=6, primary_key=True)
     name           = models.CharField(max_length=240)
     printable_name = models.CharField(max_length=240)
     iso3           = models.CharField(max_length=9, blank=True)
     numcode        = models.IntegerField(null=True, blank=True)
+
     class Meta:
         db_table = u'country'
-
-class Location(models.Model):
-    restaurant      = models.ForeignKey(Restaurant, null=True, blank=True)
-    data_source     = models.CharField(max_length=96, blank=True)
-    data_source_key = models.CharField(max_length=765, blank=True)
-    name            = models.CharField(max_length=765, blank=True)
-    stripped_title  = models.CharField(max_length=765, blank=True)
-    address         = models.CharField(max_length=765, blank=True)
-    city            = models.CharField(max_length=384, blank=True)
-    state           = models.CharField(max_length=48, blank=True)
-    zip             = models.CharField(max_length=30, blank=True)
-    country         = models.ForeignKey(Country, null=True, blank=True)
-    latitude        = models.FloatField(null=True, blank=True)
-    longitude       = models.FloatField(null=True, blank=True)
-    phone           = models.CharField(max_length=48, blank=True)
-    approved        = models.IntegerField(null=True, blank=True)
-    updated_at      = models.DateTimeField(null=True, blank=True)
-    created_at      = models.DateTimeField(null=True, blank=True)
-    class Meta:
-        db_table = u'location'
-        unique_together = (("data_source", "data_source_key"),)
-        
-
-class MenuItem(models.Model):
-    name           = models.CharField(max_length=765, blank=True)
-    slug           = models.CharField(db_column='url', max_length=765, blank=True)
-    version        = models.ForeignKey('MenuitemVersion', related_name="the_menuitem", null=True, blank=True)
-    restaurant     = models.ForeignKey(Restaurant)
-    approved       = models.IntegerField(null=True, blank=True)
-    average_rating = models.FloatField(null=True, blank=True)
-    num_ratings    = models.IntegerField(null=True, blank=True)
-    updated_at     = models.DateTimeField(null=True, blank=True)
-    created_at     = models.DateTimeField(null=True, blank=True)
-
-    class Meta:
-        db_table = u'menu_item'
-
-    def __unicode__(self):
-        return self.name
-
-    def get_absolute_url(self):
-        "http://prod.rbu.sf/frontend_dev.php/restaurant/hobees/menu/special-traditional-eggs-benedict"
-        return "%s/menu/%s" % (self.restaurant.get_absolute_url(), self.url)
-
-
-class MenuitemVersion(models.Model):
-    description      = models.TextField(blank=True)
-    html_description = models.TextField(blank=True)
-    location         = models.ForeignKey(Location, null=True, blank=True)
-    menuitem         = models.ForeignKey(MenuItem, null=True, blank=True)
-    user             = models.ForeignKey(Profile, null=True, blank=True)
-    price            = models.CharField(max_length=48, blank=True)
-    created_at       = models.DateTimeField(null=True, blank=True)
-    class Meta:
-        db_table = u'menuitem_version'
-
-class MenuItemImage(models.Model):
-    user      = models.ForeignKey(Profile, null=True, blank=True)
-    menu_item = models.ForeignKey(MenuItem)
-    data      = models.TextField(blank=True)
-    md5sum    = models.CharField(max_length=96, blank=True)
-    height    = models.IntegerField(null=True, blank=True)
-    width     = models.IntegerField(null=True, blank=True)
-
-    class Meta:
-        db_table = u'menu_item_image'
-
-    def is_portrait(self):
-        return (self.height > self.width);
 		
 
 # class MenuImage(models.Model):
