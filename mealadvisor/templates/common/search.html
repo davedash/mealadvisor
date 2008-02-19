@@ -1,7 +1,16 @@
 {% extends "base.html" %}
-{% block title %}Search for {{query}} &raquo; {% endblock title %}
+{% block title %}results for {{query}} &raquo; {% endblock title %}
 
 
 {% block body %}
-results go here
+
+<h2>Results for <q>{{query}}</q></h2>
+<h3>matching restaurants...</h3>
+
+{% for restaurant in restaurants %}
+<li>
+  <h4><a href="{{restaurant.get_absolute_url}}">{{restaurant}}</a></h4>
+</li>
+{% endfor %}
+
 {% endblock body %}
