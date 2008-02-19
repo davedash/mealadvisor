@@ -1,5 +1,5 @@
 from django.contrib.syndication.feeds import FeedDoesNotExist, Feed
-from mealadvisor.common.models import Restaurant, MenuItem
+from mealadvisor.restaurant.models import Restaurant, MenuItem
 
 class LatestRestaurants(Feed):
     title       = "Freshest Restaurants"

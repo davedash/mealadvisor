@@ -83,6 +83,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'spindrop.django.openid.consumer',
     'mealadvisor.common',
+    'mealadvisor.restaurant'
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (

@@ -3,20 +3,25 @@ from django.shortcuts import render_to_response, get_object_or_404, get_list_or_
 from django.contrib.auth import login
 from django.http import HttpResponse, HttpResponseRedirect
 
-from mealadvisor.common.models import Restaurant, MenuItemImage, MenuItem
+from mealadvisor.restaurant.models import Restaurant, MenuItemImage, MenuItem
 from mealadvisor.common import profiles
 
 
 def home(request):
-    # load n pictures    
-    
+    # load n pictures   
     images = MenuItemImage.objects.select_related(depth=2).order_by('?')[:6]
     return render_to_response("common/index.html", {"images": images}, context_instance=RequestContext(request))
   
 def search(request):
+    # determine the type of search
+    # - name of restaurant
+    # - restaurant near location
+    # - location
+    
     # get results from model
-    query   = request.GET.get('q', '')
-    context = { 'query' : query }
+    query       = request.GET.get('q', '')
+    restaurants = Restaurant.objects.search(query)
+    context     = { 'query' : query, 'restaurants' : restaurants }
     
     return render_to_response("common/search.html", context, context_instance=RequestContext(request))
   
@@ -24,7 +29,7 @@ def menuitem(request, slug, item_slug):
     # get results from model
     restaurant = get_object_or_404(Restaurant, stripped_title__exact=slug)
     menu_item  = get_object_or_404(MenuItem, restaurant__stripped_title__exact=slug, slug__exact=item_slug)
-    context = {'restaurant':restaurant, 'menu_item':menu_item}
+    context    = {'restaurant':restaurant, 'menu_item':menu_item}
     
     return render_to_response("common/menuitem.html", context, context_instance=RequestContext(request))
 
