@@ -3,3 +3,12 @@
 {{block.super}}
 <link href="/restaurant/{{restaurant.slug}}/feed" title="Latest menu items at {{restaurant}}" type="application/rss+xml" rel="alternate"/>
 {%endblock feeds %}
+
+{% block subscribe %}
+{{block.super}}
+<li class="rss">
+<a href="/restaurant/{{restaurant.slug}}/feed" 
+  title="Latest menu items at {{restaurant}}">
+  Latest menu items at {{restaurant}}
+</a>
+{% endblock subscribe %}

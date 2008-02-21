@@ -55,7 +55,7 @@
             <input id="q" name="q" value="Search for food" />
             <input type="submit" class="small" value="search" name="commit">
             <span class="info">
-              e.g. "Amber Cafe near Mountain View"
+              e.g. "Cafe Mazeh near Mountain View"
             </span>
           </form>
         </div>
@@ -110,11 +110,14 @@
               <li class="rss">
                 <a href="/feed/latest">Latest Restaurants</a>
               </li>
-              <li class="rss">
-                <a href="#" class="incomplete">
-                  Latest Menu Items
-                </a>
-              </li>
+              {% block subscribe %}
+              {% endblock subscribe %}
+              
+              {# <li class="rss"> #}
+              {#   <a href="#" class="incomplete"> #}
+              {#     Latest Menu Items #}
+              {#   </a> #}
+              {# </li> #}
               <li class="rss">
                 <a href="#" class="incomplete">
                   Latest Reviews
@@ -136,6 +139,8 @@
             {# <li> #}
             {#   post to del.icio.us #}
             {# </li> #}
+            
+            	<li>|||{{request.path}}///</li>
           </ul>
         </div>
 
