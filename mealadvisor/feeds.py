@@ -32,8 +32,3 @@ class MenuItems(Feed):
     def items(self, obj):
         items = MenuItem.objects.filter(restaurant__id__exact=obj.id)
         return items.order_by('-updated_at')[:10]
-    #   $c = new Criteria();
-    #   $c->addDescendingOrderByColumn(MenuItemPeer::CREATED_AT);
-    #   $c->add(MenuItemPeer::RESTAURANT_ID, $restaurant->getId());
-    #   
-    #   $feed->setItems($items);
