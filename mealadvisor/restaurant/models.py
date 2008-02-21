@@ -126,15 +126,15 @@ class MenuItem(models.Model):
     updated_at     = models.DateTimeField(null=True, blank=True)
     created_at     = models.DateTimeField(null=True, blank=True)
 
-    class Meta:
-        db_table = u'menu_item'
-
     def __unicode__(self):
         return self.name
 
     def get_absolute_url(self):
         "http://prod.rbu.sf/frontend_dev.php/restaurant/hobees/menu/special-traditional-eggs-benedict"
-        return "%s/menu/%s" % (self.restaurant.get_absolute_url(), self.url)
+        return "%s/menu/%s" % (self.restaurant.get_absolute_url(), self.slug)
+
+    class Meta:
+        db_table = u'menu_item'
 
 
 class MenuitemVersion(models.Model):
