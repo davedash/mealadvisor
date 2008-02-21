@@ -2,6 +2,78 @@ from django.db import models
 from mealadvisor.common.models import Profile, Country
 from mealadvisor.tools import stem_phrase, extract_numbers
 
+class LocationManager(models.Manager):
+    def anyin(self, place):
+        # let's geocode this first...
+        # then, let's break it down and understand how "zoomed in we are"
+        # using that we can get the appropriate sql query and get our propper 
+        # set of objects
+        pass
+        # $c->addDescendingOrderByColumn(RestaurantPeer::NUM_RATINGS);
+        # $c->addJoin(LocationPeer::RESTAURANT_ID, RestaurantPeer::ID);
+        # if ($countryStr = $this->getRequestParameter('country'))
+        # {
+        #   $countryStr = str_replace('%2b',' ', $countryStr);
+        #   $country = CountryPeer::retrieveByMagic($countryStr);
+        #   if ($country instanceof Country) 
+        #   {
+        #       $c->add(LocationPeer::COUNTRY_ID, $country->getIso());
+        #   }
+        # 
+        #   $this->in = link_to_geo($country->getPrintableName());
+        # }
+            # 
+            # if ($stateStr = $this->getRequestParameter('state'))
+            # {
+            #   $state = StatePeer::retrieveByMagic($stateStr);
+            #   if ($state instanceof State)
+            #   {
+            #       $cton1 = $c->getNewCriterion(LocationPeer::STATE, $state->getUsps());
+            #       $cton2 = $c->getNewCriterion(LocationPeer::STATE, $state->getName());
+            #       $cton1->addOr($cton2);
+            #       $c->add($cton1);
+            #       $this->in = $this->in = link_to_geo($country->getPrintableName(), $state->getName()) . ', ' . $this->in; 
+            #       $stateStr = $state->getName();
+            #   }
+            #   else
+            #   {
+            #       $c->add(LocationPeer::STATE, $stateStr);
+            # 
+            #       $this->in = ucwords($stateStr) . ', ' . $this->in;
+            #   }
+            # }
+            # 
+            # if ($cityStr = $this->getRequestParameter('city'))
+            # {
+            #   $cityStr = strtr($cityStr, '_', ' ');
+            #   $cc = new Criteria();
+            #   $c->add(LocationPeer::CITY, $cityStr);
+            # 
+            #   $this->in = link_to_geo($country->getPrintableName(), $stateStr, ucwords($cityStr)) . ', ' . $this->in; 
+            # 
+            # }
+            # 
+            # $pager->setCriteria($c);
+            # $pager->setPage($page);
+            # $pager->init();
+            # 
+            # $this->pager = $pager;
+            # $this->nav_url = '@locations_in?country=' . $countryStr;
+            # if ($state = $this->getRequestParameter('state'))
+            # {
+            #   $this->nav_url .= '&state='.$state;
+            # 
+            # }
+            # 
+            # if ($cityStr)
+            # {
+            #           $this->nav_url .= '&city='.$cityStr;
+            # }
+            # $this->nav_url .= '&page=';
+            # 
+            # 
+            # $this->prependTitle('Restaurants in '. strip_tags($this->in));
+        
 class RestaurantManager(models.Manager):
     def search(self, phrase, offset=0, max=10):
         # we want to stem the words AND extract any numbers
@@ -91,6 +163,7 @@ class RestaurantVersion(models.Model):
 
     class Meta:
         db_table = u'restaurant_version'
+
         
 class Location(models.Model):
     restaurant      = models.ForeignKey(Restaurant, null=True, blank=True)
@@ -109,6 +182,7 @@ class Location(models.Model):
     approved        = models.IntegerField(null=True, blank=True)
     updated_at      = models.DateTimeField(null=True, blank=True)
     created_at      = models.DateTimeField(null=True, blank=True)
+    objects         = LocationManager()
 
     class Meta:
         db_table = u'location'
@@ -148,6 +222,7 @@ class MenuitemVersion(models.Model):
     class Meta:
         db_table = u'menuitem_version'
 
+
 class MenuItemImage(models.Model):
     user      = models.ForeignKey(Profile, null=True, blank=True)
     menu_item = models.ForeignKey(MenuItem)
@@ -155,6 +230,7 @@ class MenuItemImage(models.Model):
     md5sum    = models.CharField(max_length=96, blank=True)
     height    = models.IntegerField(null=True, blank=True)
     width     = models.IntegerField(null=True, blank=True)
+
 
     class Meta:
         db_table = u'menu_item_image'
