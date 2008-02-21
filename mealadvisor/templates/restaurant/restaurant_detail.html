@@ -1,11 +1,23 @@
-{% extends "base.html" %}
+{% extends "base_restaurant.html" %}
+
+
+
 {% block body %}
-{{restaurant}}
-restaurants go here...
+<h2>{{restaurant}}</h2>
+
 
 <ul>
   {% for location in restaurant.location_set.all %}
   	<li>{{ location.city }}</li>
   {% endfor %}
 </ul>
+
+<ul>
+  {% for item in restaurant.menuitem_set.all %}
+  	<li>{{ item }}</li>
+  {% endfor %}
+</ul>
+
+
+
 {% endblock body %}
