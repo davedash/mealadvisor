@@ -6,20 +6,63 @@ from django.http import HttpResponse, HttpResponseRedirect
 from mealadvisor.restaurant.models import Restaurant, MenuItemImage, MenuItem
 from mealadvisor.common import profiles
 
+class Search:
+    RESTAURANT_BY_NAME            = 1
+    LOCATION_IN_PLACE             = 2
+    RESTAURANT_BY_NAME_IN_PLACE   = 3
+    LOCATION_NEAR_PLACE           = 4
+    RESTAURANT_BY_NAME_NEAR_PLACE = 5
+
+    def __init__(self, query):
+        self.query       = query
+        self.search_type = self.RESTAURANT_BY_NAME
+        self.name        = None
+        self.result_type = 'Restaurant'
+        
+        import re
+        r = re.compile(r'(?:(.*)\b(in|near)\b\W*(.*)|(.*))')
+        (restaurant_name, in_or_near, place, name) = r.match(query).groups()
+        
+        # we are RESTAURANT_BY_NAME if "\bnear[: ]"
+        if name <> None:
+            self.name = name.strip()
+        else:
+            self.place       = place.strip()
+            self.result_type = 'Location'
+            
+            if restaurant_name <> None:
+                self.name  = restaurant_name.strip()
+
+                # this can either be 
+                # RESTAURANT_BY_NAME_IN_PLACE   
+                # RESTAURANT_BY_NAME_NEAR_PLACE             
+                self.search_type = self.RESTAURANT_BY_NAME_IN_PLACE \
+                if in_or_near == 'in' else self.RESTAURANT_BY_NAME_NEAR_PLACE
+            
+            else:
+                self.search_type = self.LOCATION_IN_PLACE \
+                if in_or_near == 'in' else self.LOCATION_NEAR_PLACE
+            
+        
+        
 
 def home(request):
     # load n pictures   
     images = MenuItemImage.objects.select_related(depth=2).order_by('?')[:6]
     return render_to_response("common/index.html", {"images": images}, context_instance=RequestContext(request))
   
+
 def search(request):
     # determine the type of search
+    query = request.GET.get('q', '')
+    s     = Search(query)
+    
+    #get_search_type(query)
     # - name of restaurant
     # - restaurant near location
     # - location
     
     # get results from model
-    query       = request.GET.get('q', '')
     restaurants = Restaurant.objects.search(query)
     context     = { 'query' : query, 'restaurants' : restaurants }
     
