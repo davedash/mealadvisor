@@ -1,14 +1,25 @@
 from django.db import models
 from mealadvisor.common.models import Profile, Country
 from mealadvisor.tools import stem_phrase, extract_numbers
+from mealadvisor.geocoder import Geocoder
 
 class LocationManager(models.Manager):
+    def in_country(self, country):
+        c = Country.objects.retrieve_magically(country)
+        return self.filter(country=c)
+        
     def anyin(self, place):
         # let's geocode this first...
         # then, let's break it down and understand how "zoomed in we are"
         # using that we can get the appropriate sql query and get our propper 
         # set of objects
-        pass
+        g = Geocoder(place)
+        accuracy = g.accuracy()
+        
+        if accuracy == g.COUNTRY:
+            return self.in_country(g.country)
+        
+        
         # $c->addDescendingOrderByColumn(RestaurantPeer::NUM_RATINGS);
         # $c->addJoin(LocationPeer::RESTAURANT_ID, RestaurantPeer::ID);
         # if ($countryStr = $this->getRequestParameter('country'))
