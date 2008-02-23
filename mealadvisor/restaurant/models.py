@@ -1,12 +1,24 @@
 from django.db import models
-from mealadvisor.common.models import Profile, Country
+from django.db.models import Q
+from mealadvisor.common.models import Profile, Country, State
 from mealadvisor.tools import stem_phrase, extract_numbers
 from mealadvisor.geocoder import Geocoder
+
 
 class LocationManager(models.Manager):
     def in_country(self, country):
         c = Country.objects.retrieve_magically(country)
-        return self.filter(country=c)
+        return self.filter(country__exact=c)
+
+    def in_state(self, country, state):
+        s = State.objects.retrieve_magically(state)
+        return self.in_country(country).filter(Q(state__exact=s.usps)|Q(state__exact=s.name))
+
+    def in_city(self, country, state, city):
+        return self.in_state(country, state).filter(city__exact=city)
+
+    def in_zip(self, zip):
+        return self.filter(zip__startswith=zip)
         
     def anyin(self, place):
         # let's geocode this first...
@@ -14,77 +26,20 @@ class LocationManager(models.Manager):
         # using that we can get the appropriate sql query and get our propper 
         # set of objects
         g = Geocoder(place)
-        accuracy = g.accuracy()
+        accuracy = g.location.accuracy
+
+        result = None
         
         if accuracy == g.COUNTRY:
-            return self.in_country(g.country)
-        
-        
-        # $c->addDescendingOrderByColumn(RestaurantPeer::NUM_RATINGS);
-        # $c->addJoin(LocationPeer::RESTAURANT_ID, RestaurantPeer::ID);
-        # if ($countryStr = $this->getRequestParameter('country'))
-        # {
-        #   $countryStr = str_replace('%2b',' ', $countryStr);
-        #   $country = CountryPeer::retrieveByMagic($countryStr);
-        #   if ($country instanceof Country) 
-        #   {
-        #       $c->add(LocationPeer::COUNTRY_ID, $country->getIso());
-        #   }
-        # 
-        #   $this->in = link_to_geo($country->getPrintableName());
-        # }
-            # 
-            # if ($stateStr = $this->getRequestParameter('state'))
-            # {
-            #   $state = StatePeer::retrieveByMagic($stateStr);
-            #   if ($state instanceof State)
-            #   {
-            #       $cton1 = $c->getNewCriterion(LocationPeer::STATE, $state->getUsps());
-            #       $cton2 = $c->getNewCriterion(LocationPeer::STATE, $state->getName());
-            #       $cton1->addOr($cton2);
-            #       $c->add($cton1);
-            #       $this->in = $this->in = link_to_geo($country->getPrintableName(), $state->getName()) . ', ' . $this->in; 
-            #       $stateStr = $state->getName();
-            #   }
-            #   else
-            #   {
-            #       $c->add(LocationPeer::STATE, $stateStr);
-            # 
-            #       $this->in = ucwords($stateStr) . ', ' . $this->in;
-            #   }
-            # }
-            # 
-            # if ($cityStr = $this->getRequestParameter('city'))
-            # {
-            #   $cityStr = strtr($cityStr, '_', ' ');
-            #   $cc = new Criteria();
-            #   $c->add(LocationPeer::CITY, $cityStr);
-            # 
-            #   $this->in = link_to_geo($country->getPrintableName(), $stateStr, ucwords($cityStr)) . ', ' . $this->in; 
-            # 
-            # }
-            # 
-            # $pager->setCriteria($c);
-            # $pager->setPage($page);
-            # $pager->init();
-            # 
-            # $this->pager = $pager;
-            # $this->nav_url = '@locations_in?country=' . $countryStr;
-            # if ($state = $this->getRequestParameter('state'))
-            # {
-            #   $this->nav_url .= '&state='.$state;
-            # 
-            # }
-            # 
-            # if ($cityStr)
-            # {
-            #           $this->nav_url .= '&city='.$cityStr;
-            # }
-            # $this->nav_url .= '&page=';
-            # 
-            # 
-            # $this->prependTitle('Restaurants in '. strip_tags($this->in));
-        
+            return self.in_country(g.location.country).select_related(depth=1)
+        if accuracy == g.STATE:
+            return self.in_state(g.location.country, g.location.state).select_related(depth=1)
+        if accuracy == g.CITY:
+            return self.in_city(g.location.country, g.location.state, g.location.city).select_related(depth=1)
+        if accuracy >= g.ZIP:
+            return self.in_zip(g.location.zip).select_related(depth=1)
+
+            
 class RestaurantManager(models.Manager):
     def search(self, phrase, offset=0, max=10):
         # we want to stem the words AND extract any numbers
@@ -177,7 +132,7 @@ class RestaurantVersion(models.Model):
 
         
 class Location(models.Model):
-    restaurant      = models.ForeignKey(Restaurant, null=True, blank=True)
+    restaurant      = models.ForeignKey(Restaurant)
     data_source     = models.CharField(max_length=96, blank=True)
     data_source_key = models.CharField(max_length=765, blank=True)
     name            = models.CharField(max_length=765, blank=True)

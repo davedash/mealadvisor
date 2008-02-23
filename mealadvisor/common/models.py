@@ -9,7 +9,24 @@
 # into your database.
 
 from django.db import models
+from django.db.models import Q
 from django.contrib.auth.models import User
+
+
+class CountryManager(models.Manager):
+    
+    def retrieve_magically(self, country):
+        
+        return self.get(Q(name = country) \
+        | Q(iso = country) | Q(iso3 = country))
+
+class StateManager(models.Manager):
+
+    def retrieve_magically(self, state):
+
+        return self.get(Q(name = state) \
+        | Q(usps = state))
+
 
 class Profile(models.Model):
     user        = models.ForeignKey(User, db_column="userid", unique=True, null=True, blank=True)
@@ -30,24 +47,20 @@ class Country(models.Model):
     printable_name = models.CharField(max_length=240)
     iso3           = models.CharField(max_length=9, blank=True)
     numcode        = models.IntegerField(null=True, blank=True)
-
+    objects        = CountryManager()
     class Meta:
         db_table = u'country'
 		
 
-# class MenuImage(models.Model):
-#     id = models.IntegerField(primary_key=True)
-#     restaurant = models.ForeignKey(Restaurant, null=True, blank=True)
-#     location = models.ForeignKey(Location, null=True, blank=True)
-#     filename = models.CharField(max_length=765, blank=True)
-#     approved = models.IntegerField(null=True, blank=True)
-#     updated_at = models.DateTimeField(null=True, blank=True)
-#     created_at = models.DateTimeField(null=True, blank=True)
-#     class Meta:
-#         db_table = u'menu_image'
-# 
-# 
-# 
+class State(models.Model):
+    usps    = models.CharField(max_length=6, primary_key=True)
+    name    = models.CharField(max_length=240, blank=True)
+    objects = StateManager()
+    
+    class Meta:
+        db_table = u'state'
+
+
 # class MenuitemNote(models.Model):
 #     id = models.IntegerField(primary_key=True)
 #     menu_item = models.ForeignKey(MenuItem, null=True, blank=True)
@@ -201,11 +214,6 @@ class Country(models.Model):
 #     class Meta:
 #         db_table = u'sf_guard_user_permission'
 # 
-# class State(models.Model):
-#     usps = models.CharField(max_length=6, primary_key=True)
-#     name = models.CharField(max_length=240, blank=True)
-#     class Meta:
-#         db_table = u'state'
 # 
 # class YahooLocalCategory(models.Model):
 #     yid = models.IntegerField(primary_key=True)
