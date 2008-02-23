@@ -3,9 +3,9 @@ from mealadvisor.restaurant.models import Restaurant, Location
 class Search:
     RESTAURANT_BY_NAME            = 1
     LOCATION_IN_PLACE             = 2
-    RESTAURANT_BY_NAME_IN_PLACE   = 3
-    LOCATION_NEAR_PLACE           = 4
-    RESTAURANT_BY_NAME_NEAR_PLACE = 5
+    RESTAURANT_BY_NAME_IN_PLACE   = 3 # undone
+    LOCATION_NEAR_PLACE           = 4 # undone
+    RESTAURANT_BY_NAME_NEAR_PLACE = 5 # undone
 
     def __init__(self, query):
         self.query       = query
@@ -43,3 +43,5 @@ class Search:
             return Restaurant.objects.search(self.name)
         elif self.search_type == self.LOCATION_IN_PLACE:
             return Location.objects.anyin(self.place)
+        elif self.search_type == self.RESTAURANT_BY_NAME_IN_PLACE:
+            return Location.objects.search_in(self.name, self.place)

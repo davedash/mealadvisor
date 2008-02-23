@@ -25,10 +25,8 @@ class LocationManager(models.Manager):
         # then, let's break it down and understand how "zoomed in we are"
         # using that we can get the appropriate sql query and get our propper 
         # set of objects
-        g = Geocoder(place)
+        g        = Geocoder(place)
         accuracy = g.location.accuracy
-
-        result = None
         
         if accuracy == g.COUNTRY:
             return self.in_country(g.location.country).select_related(depth=1)
@@ -39,8 +37,77 @@ class LocationManager(models.Manager):
         if accuracy >= g.ZIP:
             return self.in_zip(g.location.zip).select_related(depth=1)
 
+    def search_in(self, phrase, place, offset=0, max=10):
+        g        = Geocoder(place)
+        accuracy = g.location.accuracy
+        
+        where = []
+        if accuracy >= g.COUNTRY:
+            c = Country.objects.retrieve_magically(g.location.country)
+            where.append("l.country_id LIKE '%s'" % c.iso)
+        if accuracy >= g.STATE:
+            s = State.objects.retrieve_magically(g.location.state)
+            where.append("l.state IN ('%s', '%s' ) " % (s.usps, s.name))
+            
+        # we want to stem the words AND extract any numbers
+        words = stem_phrase(phrase) + extract_numbers(phrase)
+        
+        num_words = len(words)
+        if num_words == 0:
+            return []
+        
+        
+        # mysql specifc
+        # e.g. longhorn steakhouse
+        # produces
+        # SELECT DISTINCT restaurant_search_index.RESTAURANT_ID, COUNT(*) AS nb,
+        # SUM(restaurant_search_index.WEIGHT) AS total_weight FROM
+        # restaurant_search_index WHERE (restaurant_search_index.WORD LIKE 'longhorn'
+        # OR restaurant_search_index.WORD LIKE 'steakhous') GROUP BY
+        # restaurant_search_index.RESTAURANT_ID ORDER BY nb DESC, total_weight DESC
+        # LIMIT 10
+        
+        query = """
+        SELECT DISTINCT 
+            l.`id`, 
+            COUNT(*) AS nb,
+            SUM(rsi.`weight`) AS total_weight
+        FROM 
+            `restaurant_search_index` rsi,
+            location l
+        WHERE
+            l.restaurant_id = rsi.restaurant_id AND
+            (%s)
+        """ \
+        % " OR ".join(["rsi.`word` LIKE '%s'" % k for k in words]) 
+        
+        if where != []:
+            query = query + "AND (%s) " % " AND ".join(where)
+        
+        query = query + """
+        GROUP BY
+            l.id
+        ORDER BY
+            nb DESC,
+            total_weight DESC
+        LIMIT %s
+        OFFSET %s
+        """ 
+
+        from django.db import connection
+        cursor  = connection.cursor()
+        results = cursor.execute(query, [max, offset])
+
+        locations = []
+        for row in cursor.fetchall():
+            location = self.get(pk=row[0])
+            locations.append(location)
+            
+        return locations
+
             
 class RestaurantManager(models.Manager):
+
     def search(self, phrase, offset=0, max=10):
         # we want to stem the words AND extract any numbers
         words = stem_phrase(phrase) + extract_numbers(phrase)
@@ -141,7 +208,7 @@ class Location(models.Model):
     city            = models.CharField(max_length=384, blank=True)
     state           = models.CharField(max_length=48, blank=True)
     zip             = models.CharField(max_length=30, blank=True)
-    country         = models.ForeignKey(Country, null=True, blank=True)
+    country         = models.ForeignKey(Country)
     latitude        = models.FloatField(null=True, blank=True)
     longitude       = models.FloatField(null=True, blank=True)
     phone           = models.CharField(max_length=48, blank=True)

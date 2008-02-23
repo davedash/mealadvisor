@@ -22,6 +22,9 @@
 {% for location in locations %}
 <li>
   <h4><a href="{{location.restaurant.get_absolute_url}}">{{location.restaurant}}</a></h4>
+  <p>
+    {{location.zip}}
+  </p>
 </li>
 {% endfor %}
 {% endif %}
