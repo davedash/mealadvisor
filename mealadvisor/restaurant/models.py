@@ -41,14 +41,21 @@ class LocationManager(models.Manager):
         g        = Geocoder(place)
         accuracy = g.location.accuracy
         
-        where = []
-        if accuracy >= g.COUNTRY:
-            c = Country.objects.retrieve_magically(g.location.country)
-            where.append("l.country_id LIKE '%s'" % c.iso)
-        if accuracy >= g.STATE:
-            s = State.objects.retrieve_magically(g.location.state)
-            where.append("l.state IN ('%s', '%s' ) " % (s.usps, s.name))
-            
+        where  = []
+        inputs = []
+        
+        if (accuracy != g.ZIP):
+            if accuracy >= g.COUNTRY:
+                c = Country.objects.retrieve_magically(g.location.country)
+                where.append("l.country_id LIKE '%s'" % c.iso)
+            if accuracy >= g.STATE:
+                s = State.objects.retrieve_magically(g.location.state)
+                where.append("l.state IN ('%s', '%s' ) " % (s.usps, s.name))
+            if accuracy >= g.CITY:
+                where.append("l.city LIKE '%s'" % g.location.city)
+        else:
+            where.append("l.zip LIKE %s")
+            inputs.append(g.location.zip+"%")
         # we want to stem the words AND extract any numbers
         words = stem_phrase(phrase) + extract_numbers(phrase)
         
@@ -96,7 +103,7 @@ class LocationManager(models.Manager):
 
         from django.db import connection
         cursor  = connection.cursor()
-        results = cursor.execute(query, [max, offset])
+        results = cursor.execute(query, inputs + [max, offset])
 
         locations = []
         for row in cursor.fetchall():
