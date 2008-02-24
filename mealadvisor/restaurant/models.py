@@ -1,5 +1,6 @@
 from django.db import models
 from django.db.models import Q
+from django.conf import settings
 from mealadvisor.common.models import Profile, Country, State
 from mealadvisor.tools import stem_phrase, extract_numbers
 from mealadvisor.geocoder import Geocoder
@@ -20,12 +21,21 @@ class LocationManager(models.Manager):
     def in_zip(self, zip):
         return self.filter(zip__startswith=zip)
         
-    def anyin(self, place):
+    def anyin(self, place = None, geocoder = None):
         # let's geocode this first...
         # then, let's break it down and understand how "zoomed in we are"
         # using that we can get the appropriate sql query and get our propper 
         # set of objects
-        g        = Geocoder(place)
+        
+        g = None
+        
+        if place != None:
+            g = Geocoder(place)
+        elif geocoder != None:
+            g = geocoder
+        else:
+            return []
+
         accuracy = g.location.accuracy
         
         if accuracy == g.COUNTRY:
@@ -37,8 +47,15 @@ class LocationManager(models.Manager):
         if accuracy >= g.ZIP:
             return self.in_zip(g.location.zip).select_related(depth=1)
 
-    def search_in(self, phrase, place, offset=0, max=10):
-        g        = Geocoder(place)
+    def search_in(self, phrase, place = None, offset=0, max=10, geocoder = None):
+        g = None
+        if place != None:
+            g = Geocoder(place)
+        elif geocoder != None:
+            g = geocoder
+        else:
+            return []
+        
         accuracy = g.location.accuracy
         
         where  = []
@@ -62,17 +79,6 @@ class LocationManager(models.Manager):
         num_words = len(words)
         if num_words == 0:
             return []
-        
-        
-        # mysql specifc
-        # e.g. longhorn steakhouse
-        # produces
-        # SELECT DISTINCT restaurant_search_index.RESTAURANT_ID, COUNT(*) AS nb,
-        # SUM(restaurant_search_index.WEIGHT) AS total_weight FROM
-        # restaurant_search_index WHERE (restaurant_search_index.WORD LIKE 'longhorn'
-        # OR restaurant_search_index.WORD LIKE 'steakhous') GROUP BY
-        # restaurant_search_index.RESTAURANT_ID ORDER BY nb DESC, total_weight DESC
-        # LIMIT 10
         
         query = """
         SELECT DISTINCT 
@@ -111,6 +117,91 @@ class LocationManager(models.Manager):
             locations.append(location)
             
         return locations
+        
+    def near(self, place, phrase = None):
+        g        = Geocoder(place)
+        accuracy = g.location.accuracy
+        
+        # we aren't interested in searching near countries, or states
+        # just cities... so deflect everything to anyin
+        if accuracy < g.CITY:
+            if phrase:
+                return self.search_in(phrase, geocoder = g)
+            else:
+                return self.anyin(geocoder = g)
+      
+        lat = g.location.latitude
+        lng = g.location.longitude
+        
+        distance = """
+        (
+            (
+                (
+                    acos(sin((%f*pi()/180)) * sin((latitude*pi()/180)) 
+                    + 
+                    cos((%f*pi()/180)) * cos((latitude*pi()/180)) 
+                    * 
+                    cos(((%f - longitude)*pi()/180)))
+                )
+                * 180/pi()
+            )
+            *60*1.1515
+        ) AS distance
+        """ % (lat, lat, lng)
+
+        select   = [distance, 'location.latitude', 'location.longitude']
+        group_by = ['location.latitude', 'location.longitude']
+        having   = ['distance < %d' % settings.SEARCH_DEFAULT_RADIUS ]
+        order_by = ['distance']
+        
+        results   = self.raw_search_query(select=select, group_by=group_by, having=having, order_by=order_by, phrase=phrase)
+        locations = []
+
+        for row in results:
+            location = self.get(pk=row[0])
+            locations.append(location)
+        
+        return locations
+        
+    def raw_search_query(self, select=[], where=[], group_by=[], having=[], order_by=[], phrase=None):
+        
+        # we're getting locations
+        select   = ['location.id'] + select
+        tables   = ['location']
+        group_by = ['location.id'] + group_by
+
+        if phrase:
+            words     = stem_phrase(phrase) + extract_numbers(phrase)
+            num_words = len(words)
+            tables    = ['restaurant_search_index rsi'] + tables
+            where     = [
+                'rsi.restaurant_id = location.restaurant_id', 
+                " OR ".join(["rsi.`word` LIKE '%s'" % k for k in words])
+            ]
+            group_by
+            
+        max    = 10
+        offset = 0
+        
+        query = "SELECT DISTINCT " + ",".join(select)
+        query = query + " FROM " + ",".join(tables)
+
+        if where != []:
+            query = query + " WHERE " + " AND ".join(where)
+
+        if group_by != []:
+            query = query + " GROUP BY " + ",".join(group_by)
+
+        if having != []:
+            query = query + " HAVING " + " AND ".join(having)
+            
+        if order_by != []:
+            query = query + " ORDER BY " + ",".join(order_by)
+
+        from django.db import connection
+        cursor  = connection.cursor()
+        results = cursor.execute(query)
+        return cursor.fetchall()
 
             
 class RestaurantManager(models.Manager):

@@ -45,3 +45,8 @@ class Search:
             return Location.objects.anyin(self.place)
         elif self.search_type == self.RESTAURANT_BY_NAME_IN_PLACE:
             return Location.objects.search_in(self.name, self.place)
+        elif self.search_type == self.LOCATION_NEAR_PLACE:
+            return Location.objects.near(place = self.place)
+        elif self.search_type == self.RESTAURANT_BY_NAME_NEAR_PLACE:
+            return Location.objects.near(place = self.place, phrase = self.name)
+            
