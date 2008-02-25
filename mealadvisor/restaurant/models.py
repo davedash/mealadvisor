@@ -259,16 +259,33 @@ class RestaurantManager(models.Manager):
         return restaurants
 
 
+class RestaurantVersion(models.Model):
+    chain            = models.IntegerField(null=True, blank=True)
+    description      = models.TextField(blank=True)
+    url              = models.CharField(max_length=765, blank=True)
+    created_at       = models.DateTimeField(null=True, blank=True)
+    restaurant       = models.ForeignKey('Restaurant', null=True, blank=True)
+    user             = models.ForeignKey(Profile, null=True, blank=True)
+    html_description = models.TextField(blank=True)
+
+    class Meta:
+        db_table = u'restaurant_version'
+
 class Restaurant(models.Model):
     name           = models.CharField(max_length=765, blank=True)
     stripped_title = models.CharField(max_length=384, blank=True)
     approved       = models.IntegerField(null=True, blank=True)
     average_rating = models.FloatField(null=True, blank=True)
     num_ratings    = models.IntegerField(null=True, blank=True)
-    version        = models.ForeignKey('RestaurantVersion', related_name="the_restaurant", null=True, blank=True)
+    version        = models.ForeignKey(RestaurantVersion, related_name="the_restaurant", null=True, blank=True)
     updated_at     = models.DateTimeField(null=True, blank=True)
     created_at     = models.DateTimeField(null=True, blank=True)
     objects        = RestaurantManager()
+    
+    def __getattr__(self, name):
+        if name == 'description':
+            return self.version.description
+        models.Model.__getattr__(self, name)
 
     class Meta:
         db_table     = u'restaurant'
@@ -283,17 +300,6 @@ class Restaurant(models.Model):
         return self.name
 
         
-class RestaurantVersion(models.Model):
-    chain            = models.IntegerField(null=True, blank=True)
-    description      = models.TextField(blank=True)
-    url              = models.CharField(max_length=765, blank=True)
-    created_at       = models.DateTimeField(null=True, blank=True)
-    restaurant       = models.ForeignKey(Restaurant, null=True, blank=True)
-    user             = models.ForeignKey(Profile, null=True, blank=True)
-    html_description = models.TextField(blank=True)
-
-    class Meta:
-        db_table = u'restaurant_version'
 
         
 class Location(models.Model):
