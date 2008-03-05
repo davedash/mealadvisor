@@ -1,8 +1,20 @@
 {%extends "base.html"%}
+
+{% block title %}{{restaurant|lower}} &laquo; {% endblock title %}
+
 {%block feeds %}
 {{block.super}}
 <link href="/restaurant/{{restaurant.slug}}/feed" title="Latest menu items at {{restaurant}}" type="application/rss+xml" rel="alternate"/>
 {%endblock feeds %}
+
+{% block css %}
+<link rel="stylesheet" type="text/css" media="screen" href="/static/css/restaurant.css" />
+{% endblock css %}
+
+{% block js %}
+<script type="text/javascript" src="/static/js/restaurant.js"></script> 
+{% endblock js %}
+
 
 {% block subscribe %}
 {{block.super}}

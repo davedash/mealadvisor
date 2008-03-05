@@ -1,23 +1,72 @@
 {% extends "base_restaurant.html" %}
-
-
+{% load tags %}
+{% load image_extras %}
 
 {% block body %}
-<h2>{{restaurant}}</h2>
+<h2>
+  {{restaurant}}
+  
+  <span class="url"> <a href="{{restaurant.url}}">[restaurant web site]</a></span>  
+  
+  {% star 'restaurant' restaurant.current_rating restaurant.average_rating restaurant.get_rating_url %}
+</h2>
+<div id="main_location">
+  <div class="address">
+    {{main_location.address}}<br />
+    {{main_location.city}}, {{main_location.state}} {{main_location.zip}}
+  </div>
+  <div class="phone">
+    {{main_location.phone}}
+  </div>
+</div>
+<p class="description">{{restaurant.description}}
+</p>
 
 
-<ul>
-  {% for location in restaurant.location_set.all %}
-  	<li>{{ location.city }}</li>
+{% if locations %}
+
+<div id="extra_locations" class="locations off">
+  <h3><span class="toggle">{{num_locations}} other locations</span></h3>
+
+  <dl id="locations_list">
+    {% for location in locations %}
+    	<dt>{{ location|safe }}:</dt>
+    	<dd>
+    	  {{ location.address }} 
+    	  (<abbr title="phone">p</abbr>: {{ location.phone }})
+    	  
+    	  <a href="" class="incomplete">view map</a>
+    	</dd>
+    {% endfor %}
+  </dl>
+</div>
+
+{% endif %}
+
+{% if dishes %}
+<h3>Menu Items</h3>
+
+
+<ul id="menuitems_list">
+  {% for item in dishes %}
+    <li>
+      
+      <div class="yui-gd {% cycle 'odd' 'odd' 'even' 'even' %}">
+        <div class="yui-u first">
+      	  {% random_menuitem_image item 100 %}
+        </div>
+        <div class="yui-u">
+          <h4><a href="{{item.get_absolute_url}}">{{ item }}</a></h4>
+          <p>
+            {{item.description}}
+          </p>
+        </div>
+      </div>
+  	  
+    </li>
   {% endfor %}
 </ul>
-
-<ul>
-  {% for item in restaurant.menuitem_set.all %}
-  	<li>{{ item }}</li>
-  {% endfor %}
-</ul>
-
+{% endif %}
 
 
 {% endblock body %}

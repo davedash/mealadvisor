@@ -10,12 +10,6 @@ feeds = {
     'restaurant'    : MenuItems,
 }
 
-restaurant_info_dict = {
-    'queryset'             : Restaurant.objects.all(),
-    'slug_field'           : 'stripped_title',
-    "template_object_name" : "restaurant"
-}
-
 urlpatterns = patterns('',
 
     # authentication
@@ -56,9 +50,6 @@ urlpatterns += patterns('mealadvisor.common.views',
     # Menu Item
     (r'^restaurant/(?P<slug>[^/]+)/menu/(?P<item_slug>[^/]+)$', 'menuitem'),
 
-    # Restaurant
-    (r'^restaurant/(?P<slug>[^/]+)$', list_detail.object_detail, restaurant_info_dict),
-    
     # Search
     (r'^search$', 'search'),
 
@@ -66,6 +57,13 @@ urlpatterns += patterns('mealadvisor.common.views',
     (r'^$', 'home'),
 )
 
+urlpatterns += patterns('mealadvisor.restaurant.views',
+    # Restaurant
+    (r'^restaurant/(?P<slug>[^/]+)$', 'restaurant'),
+    # Restaurant/rating
+    (r'^restaurant/(?P<slug>[^/]+)/rate/$', 'rate'),
+
+)
 # static pages
 urlpatterns += patterns('django.views.generic.simple',
     (r'^about$', 'direct_to_template', {'template': 'common/about.html'}),

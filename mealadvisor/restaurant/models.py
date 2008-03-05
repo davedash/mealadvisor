@@ -1,10 +1,16 @@
-from django.db import models
+from django.db import models, transaction, connection
 from django.db.models import Q
 from django.conf import settings
 from mealadvisor.common.models import Profile, Country, State
 from mealadvisor.tools import stem_phrase, extract_numbers
 from mealadvisor.geocoder import Geocoder
 
+class RandomManager(models.Manager):
+    def random(self):
+        try:
+            return self.all().order_by('?')[0]
+        except:
+            return None
 
 class LocationManager(models.Manager):
     def in_country(self, country):
@@ -107,7 +113,6 @@ class LocationManager(models.Manager):
         OFFSET %s
         """ 
 
-        from django.db import connection
         cursor  = connection.cursor()
         results = cursor.execute(query, inputs + [max, offset])
 
@@ -271,13 +276,14 @@ class RestaurantVersion(models.Model):
     class Meta:
         db_table = u'restaurant_version'
 
+
 class Restaurant(models.Model):
     name           = models.CharField(max_length=765, blank=True)
     stripped_title = models.CharField(max_length=384, blank=True)
     approved       = models.IntegerField(null=True, blank=True)
     average_rating = models.FloatField(null=True, blank=True)
     num_ratings    = models.IntegerField(null=True, blank=True)
-    version        = models.ForeignKey(RestaurantVersion, related_name="the_restaurant", null=True, blank=True)
+    version        = models.ForeignKey(RestaurantVersion, related_name="the_restaurant")
     updated_at     = models.DateTimeField(null=True, blank=True)
     created_at     = models.DateTimeField(null=True, blank=True)
     objects        = RestaurantManager()
@@ -285,6 +291,10 @@ class Restaurant(models.Model):
     def __getattr__(self, name):
         if name == 'description':
             return self.version.description
+
+        elif name == 'url':
+            return self.version.url
+            
         models.Model.__getattr__(self, name)
 
     class Meta:
@@ -293,13 +303,14 @@ class Restaurant(models.Model):
     def get_absolute_url(self):
         return "/restaurant/%s" % (self.stripped_title,)
 
+    def get_rating_url(self):
+        return self.get_absolute_url()+"/rate/"
+        
     def slug(self):
         return self.stripped_title;
 
     def __unicode__(self):
         return self.name
-
-        
 
         
 class Location(models.Model):
@@ -321,6 +332,18 @@ class Location(models.Model):
     created_at      = models.DateTimeField(null=True, blank=True)
     objects         = LocationManager()
 
+    def __unicode__(self):
+        loc     = [self.city, self.state]
+        loc     = [elem for elem in loc if elem]
+        loc_str = ', '.join(loc)
+        
+        if self.name:
+            return "%s <em>(%s)</em>" % (self.name, loc_str)
+        elif loc_str:
+            return loc_str
+        else:
+            return '-'
+        
     class Meta:
         db_table = u'location'
         unique_together = (("data_source", "data_source_key"),)
@@ -329,13 +352,19 @@ class Location(models.Model):
 class MenuItem(models.Model):
     name           = models.CharField(max_length=765, blank=True)
     slug           = models.CharField(db_column='url', max_length=765, blank=True)
-    version        = models.ForeignKey('MenuitemVersion', related_name="the_menuitem", null=True, blank=True)
+    version        = models.ForeignKey('MenuitemVersion', related_name="the_menuitem")
     restaurant     = models.ForeignKey(Restaurant)
     approved       = models.IntegerField(null=True, blank=True)
     average_rating = models.FloatField(null=True, blank=True)
     num_ratings    = models.IntegerField(null=True, blank=True)
     updated_at     = models.DateTimeField(null=True, blank=True)
     created_at     = models.DateTimeField(null=True, blank=True)
+
+    def __getattr__(self, name):
+        if name == 'description':
+            return self.version.description
+
+        models.Model.__getattr__(self, name)
 
     def __unicode__(self):
         return self.name
@@ -352,12 +381,12 @@ class MenuitemVersion(models.Model):
     description      = models.TextField(blank=True)
     html_description = models.TextField(blank=True)
     location         = models.ForeignKey(Location, null=True, blank=True)
-    menuitem         = models.ForeignKey(MenuItem, null=True, blank=True)
+    menuitem         = models.ForeignKey(MenuItem)
     user             = models.ForeignKey(Profile, null=True, blank=True)
     price            = models.CharField(max_length=48, blank=True)
     created_at       = models.DateTimeField(null=True, blank=True)
     class Meta:
-        db_table = u'menuitem_version'
+        db_table         = u'menuitem_version'
 
 
 class MenuItemImage(models.Model):
@@ -367,10 +396,38 @@ class MenuItemImage(models.Model):
     md5sum    = models.CharField(max_length=96, blank=True)
     height    = models.IntegerField(null=True, blank=True)
     width     = models.IntegerField(null=True, blank=True)
-
+    objects   = RandomManager()
 
     class Meta:
         db_table = u'menu_item_image'
 
     def is_portrait(self):
         return (self.height > self.width);
+
+class RestaurantRating(models.Model):
+    restaurant = models.ForeignKey(Restaurant)
+    value      = models.IntegerField(null=True, blank=True)
+    location   = models.ForeignKey(Location, null=True, blank=True)
+    user       = models.ForeignKey(Profile)
+    created_at = models.DateTimeField(null=True, blank=True)
+
+    class Meta:
+        db_table = u'restaurant_rating'
+    
+    def save(self, raw=False):
+        try:
+            models.Model.save(self, raw)
+            cursor  = connection.cursor()
+            query   = "SELECT count(value), avg(value) FROM restaurant_rating WHERE restaurant_id = %s"
+            results = cursor.execute(query, (self.restaurant.id,))
+
+            for row in cursor.fetchall():
+                self.restaurant.num_ratings    = row[0]
+                self.restaurant.average_rating = row[1]
+                self.restaurant.save()
+
+        except:
+              transaction.rollback()
+        else:
+              transaction.commit()
+      

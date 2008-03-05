@@ -1,4 +1,10 @@
 {% extends "base.html" %}
+
+{% block css %}
+<link rel="stylesheet" type="text/css" media="screen" href="/static/css/search.css" />
+{% endblock css %}
+
+
 {% block title %}results for {{query}} &raquo; {% endblock title %}
 
 
@@ -8,24 +14,27 @@
 
 {% if restaurants %}
 <h3>matching restaurants...</h3>
-
+<ul>
 {% for restaurant in restaurants %}
 <li>
   <h4><a href="{{restaurant.get_absolute_url}}">{{restaurant}}</a></h4>
 </li>
 {% endfor %}
+</ul>
 {% endif %}
 
 {% if locations %}
 <h3>matching locations...</h3>
 
+<ul id="locations">
 {% for location in locations %}
 <li>
   <h4><a href="{{location.restaurant.get_absolute_url}}">{{location.restaurant}}</a></h4>
-  <p>
-    {{location.zip}}
+  <p class="address">
+    {{location.address}}, {{location.city}}, {{location.state}} {{location.zip}}
   </p>
 </li>
 {% endfor %}
+</ul>
 {% endif %}
 {% endblock body %}

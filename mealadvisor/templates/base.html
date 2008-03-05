@@ -4,7 +4,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>{%block title%}{%endblock title%}mealadvisor</title>
+  <title>{%block title%}{%endblock title%}meal advisor</title>
 
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta name="robots" content="index, follow" />
@@ -21,21 +21,29 @@
   {% if debug %}
   <link rel="stylesheet" type="text/css" href="/static/js/yui/build/reset-fonts-grids/reset-fonts-grids.css">  
   <script type="text/javascript" src="/static/js/yui/build/yahoo-dom-event/yahoo-dom-event.js"></script> 
+  <script type="text/javascript" src="/static/js/yui/build/connection/connection-min.js"></script> 
   {% else %}
-  <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.4.1/build/reset-fonts-grids/reset-fonts-grids.css">  
-  <script type="text/javascript" src="http://yui.yahooapis.com/2.4.1/build/yahoo-dom-event/yahoo-dom-event.js"></script> 
+  <link rel    = "stylesheet" type="text/css" href="http://yui.yahooapis.com/2.4.1/build/reset-fonts-grids/reset-fonts-grids.css">  
+  <script type = "text/javascript" src="http://yui.yahooapis.com/2.5.0/build/yahoo-dom-event/yahoo-dom-event.js"></script> 
+  <script type   = "text/javascript" src="http://yui.yahooapis.com/2.5.0/build/connection/connection-min.js"></script> 
   {% endif %}
 
   {# CSS #}
   <link rel="stylesheet" type="text/css" media="screen" href="/static/css/main.css" />
+  
+  {% block css %}
   <link rel="stylesheet" type="text/css" media="screen" href="/static/css/home.css" />
+  {% endblock css %}
+  
   {% if debug %}
   <link rel="stylesheet" type="text/css" media="screen" href="/static/css/debug.css" />
   {% endif %}
   
   {# JS #}
   <script type="text/javascript" src="/static/js/main.js"></script> 
+  {% block js %}
   <script type="text/javascript" src="/static/js/home.js"></script> 
+  {% endblock js %}
   
   {# Feeds/RSS #}
   {% block feeds %}
@@ -43,7 +51,7 @@
   {% endblock feeds %}
 
 </head>
-<body class="yui-skin-sam">
+<body class="yui-skin-sam{% if user.is_authenticated %} authenticated{% endif %}">
   
   <div id="doc4"> 
     <div id="hd">
@@ -52,7 +60,7 @@
           <a href="/">meal advisor</a>
         </h1>
         <div id="search_box">
-          <form action="/search" method="get" class="incomplete">
+          <form action="/search" method="get">
             <input id="q" name="q" value="Search for food" />
             <input type="submit" class="small" value="search" name="commit">
             <span class="info">

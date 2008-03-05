@@ -120,15 +120,6 @@ class State(models.Model):
 #     class Meta:
 #         db_table = u'restaurant_note'
 # 
-# class RestaurantRating(models.Model):
-#     id = models.IntegerField(primary_key=True)
-#     restaurant = models.ForeignKey(Restaurant, null=True, blank=True)
-#     value = models.IntegerField(null=True, blank=True)
-#     location = models.ForeignKey(Location, null=True, blank=True)
-#     user = models.ForeignKey(Profile, null=True, blank=True)
-#     created_at = models.DateTimeField(null=True, blank=True)
-#     class Meta:
-#         db_table = u'restaurant_rating'
 # 
 # class RestaurantRedirect(models.Model):
 #     old_stripped_title = models.CharField(max_length=765, primary_key=True)
