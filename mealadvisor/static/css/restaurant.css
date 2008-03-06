@@ -53,7 +53,7 @@ h2 .url {
     border: solid 2px #fff
 }
 
-#menuitems_list li {
+#menuitems_list li.dish {
     float: left;
     width: 50%;
 }
@@ -78,12 +78,12 @@ h2 .url {
     background: #111;
 }
 
-#menuitems_list h4 
-{
-    margin-bottom: 1em;
-}
-
 #menuitems_list p
 {
     font-size: 80%;
+}
+
+#menuitems_list .stars 
+{
+    margin-bottom: .5em;
 }
