@@ -5,12 +5,49 @@ from mealadvisor.common.models import Profile, Country, State
 from mealadvisor.tools import stem_phrase, extract_numbers
 from mealadvisor.geocoder import Geocoder
 
+
 class RandomManager(models.Manager):
     def random(self):
         try:
             return self.all().order_by('?')[0]
         except:
             return None
+
+
+class MenuItemManager(models.Manager):
+    
+    def with_ratings(self, user=None):
+
+        items = self.all().select_related(depth=1)
+        
+        if user != None and user.is_authenticated() and len(items) > 0:
+            
+            r_id = items[0].restaurant_id
+            
+            sql = """
+            SELECT r.menu_item_id, r.value
+            FROM menuitem_rating r, menu_item m
+            WHERE r.menu_item_id = m.id 
+            AND restaurant_id = %s
+            AND user_id = %s
+            """
+            
+            cursor = connection.cursor()
+            
+            cursor.execute(sql, [r_id, user.get_profile().id])
+            result_dict = {}
+            
+            for row in cursor.fetchall():
+                result_dict[row[0]] = row[1]
+            
+            for item in items:
+                if item.id in result_dict:
+                    item.current_rating = result_dict[item.id]
+            
+        return items
+            
+    
+
 
 class LocationManager(models.Manager):
     def in_country(self, country):
@@ -281,6 +318,7 @@ class Restaurant(models.Model):
     name           = models.CharField(max_length=765, blank=True)
     stripped_title = models.CharField(max_length=384, blank=True)
     approved       = models.IntegerField(null=True, blank=True)
+    current_rating = None
     average_rating = models.FloatField(null=True, blank=True)
     num_ratings    = models.IntegerField(null=True, blank=True)
     version        = models.ForeignKey(RestaurantVersion, related_name="the_restaurant")
@@ -359,6 +397,9 @@ class MenuItem(models.Model):
     num_ratings    = models.IntegerField(null=True, blank=True)
     updated_at     = models.DateTimeField(null=True, blank=True)
     created_at     = models.DateTimeField(null=True, blank=True)
+    objects        = MenuItemManager()
+    current_rating = None
+
 
     def __getattr__(self, name):
         if name == 'description':
@@ -372,6 +413,10 @@ class MenuItem(models.Model):
     def get_absolute_url(self):
         "http://prod.rbu.sf/frontend_dev.php/restaurant/hobees/menu/special-traditional-eggs-benedict"
         return "%s/menu/%s" % (self.restaurant.get_absolute_url(), self.slug)
+
+
+    def get_rating_url(self):
+        return self.get_absolute_url()+"/rate/"
 
     class Meta:
         db_table = u'menu_item'
@@ -431,3 +476,29 @@ class RestaurantRating(models.Model):
         else:
               transaction.commit()
       
+      
+class MenuitemRating(models.Model):
+    menu_item  = models.ForeignKey(MenuItem, null=True, blank=True)
+    user       = models.ForeignKey(Profile, null=True, blank=True)
+    value      = models.IntegerField(null=True, blank=True)
+    created_at = models.DateTimeField(null=True, blank=True)
+
+    class Meta:
+        db_table = u'menuitem_rating'
+
+    def save(self, raw=False):
+        try:
+            models.Model.save(self, raw)
+            cursor  = connection.cursor()
+            query   = "SELECT count(value), avg(value) FROM menuitem_rating WHERE menu_item_id = %s"
+            results = cursor.execute(query, (self.menu_item.id,))
+    
+            for row in cursor.fetchall():
+                self.menu_item.num_ratings    = row[0]
+                self.menu_item.average_rating = row[1]
+                self.menu_item.save()
+    
+        except:
+              transaction.rollback()
+        else:
+              transaction.commit()

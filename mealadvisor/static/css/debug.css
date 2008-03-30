@@ -1,3 +1,7 @@
+body {
+    margin-bottom: 50px;
+}
+
 .incomplete { background:#c0c !important}
 .incomplete .incomplete{background:#d0d !important}
 .incomplete .incomplete .incomplete{background:#e0e !important}
@@ -12,6 +16,8 @@
 background-color: white;
 width: 100%;
 z-index:20;
+max-height: 100%;
+overflow: auto;
     }
 
 #django_debug .even
@@ -19,10 +25,6 @@ z-index:20;
     background: #999;
 }
 
-/*
-#sfWebDebug
-{
-}
 
 #sfWebDebug a, #sfWebDebug a:hover
 {

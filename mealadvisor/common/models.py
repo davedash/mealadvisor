@@ -72,14 +72,6 @@ class State(models.Model):
 #     class Meta:
 #         db_table = u'menuitem_note'
 # 
-# class MenuitemRating(models.Model):
-#     id = models.IntegerField(primary_key=True)
-#     menu_item = models.ForeignKey(MenuItem, null=True, blank=True)
-#     user = models.ForeignKey(Profile, null=True, blank=True)
-#     value = models.IntegerField(null=True, blank=True)
-#     created_at = models.DateTimeField(null=True, blank=True)
-#     class Meta:
-#         db_table = u'menuitem_rating'
 # 
 # class MenuitemSearchIndex(models.Model):
 #     menuitem = models.ForeignKey(MenuItem, null=True, blank=True)
