@@ -1,6 +1,5 @@
 {% extends "base_restaurant.html" %}
 {% load tags %}
-{% load image_extras %}
 
 {% block body %}
 <h2>
@@ -10,6 +9,7 @@
   
   {% star 'restaurant' restaurant.current_rating restaurant.average_rating restaurant.get_rating_url %}
 </h2>
+
 <div id="main_location">
   <div class="address">
     {{main_location.address}}<br />
@@ -19,9 +19,8 @@
     {{main_location.phone}}
   </div>
 </div>
-<p class="description">{{restaurant.description}}
-</p>
 
+<p class="description">{{restaurant.description}}</p>
 
 {% if locations %}
 
@@ -49,34 +48,14 @@
 {% if dishes %}
 <h3>Menu Items</h3>
 
+{% include 'restaurant/include/menu_item_list.html' %}
 
-<ul id="menuitems_list">
-  {% for item in dishes %}
-    <li class="dish">
-      
-      <div class="yui-gd {% cycle 'odd' 'odd' 'even' 'even' %}">
-        <div class="yui-u first">
-      	  {% random_menuitem_image item 100 %}
-      	  
-        </div>
-        <div class="yui-u second">
-          <h4>
-            <a href="{{item.get_absolute_url}}">{{ item }}</a>
-            
-            
-          </h4>
-          <p class="stars">
-            {% star item.slug item.current_rating item.average_rating item.get_rating_url %}
-          </p>
-          <p>
-            {{item.description}}
-          </p>
-        </div>
-      </div>
-  	  
-    </li>
-  {% endfor %}
+<ul class="pagination">
+  <li>
+    <a href="{{restaurant.get_absolute_url}}/menu">Full Menu</a>
+  </li>
 </ul>
+
 {% endif %}
 
 

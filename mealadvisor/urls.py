@@ -58,10 +58,15 @@ urlpatterns += patterns('mealadvisor.common.views',
 )
 
 urlpatterns += patterns('mealadvisor.restaurant.views',
-    # Restaurant
+    # Restaurant    
     (r'^restaurant/(?P<slug>[^/]+)$', 'restaurant'),
+    
+    # Full Menu
+    (r'^restaurant/(?P<slug>[^/]+)/menu$', 'menu'),
+
     # Restaurant/rating
     (r'^restaurant/(?P<slug>[^/]+)/rate/$', 'rate'),
+    
     # Menu Item rating
     # Restaurant/rating
     (r'^restaurant/(?P<slug>[^/]+)/menu/(?P<item_slug>[^/]+)/rate/$', 'menuitem_rate'),

@@ -1,0 +1,30 @@
+{% load tags %}
+{% load image_extras %}
+
+<ul id="menuitems_list">
+  {% for item in dishes %}
+    <li class="dish">
+      
+      <div class="yui-gd {% cycle 'odd' 'odd' 'even' 'even' %}">
+        <div class="yui-u first">
+      	  {% random_menuitem_image item 100 %}
+      	  
+        </div>
+        <div class="yui-u second">
+          <h4>
+            <a href="{{item.get_absolute_url}}">{{ item }}</a>
+            
+            
+          </h4>
+          <p class="stars">
+            {% star item.slug item.current_rating item.average_rating item.get_rating_url %}
+          </p>
+          <p>
+            {{item.description}}
+          </p>
+        </div>
+      </div>
+  	  
+    </li>
+  {% endfor %}
+</ul>

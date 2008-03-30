@@ -34,6 +34,7 @@ body{font-family:Futura,Centry Gothic,Verdana,sans-serif;}
 #hd #top_menu ul li a{color:white;text-decoration:none;}
 #bd{padding:1em;}
 h2{font-size:130%;text-transform:lowercase;margin-bottom:1em;}
+h2 a, h2 a:visited{color: white;}
 h2 q{text-transform:none;font-style:italic;}
 h3{font-size:120%;text-transform:lowercase;margin-bottom:1em;}
 #ft{border-top:2px solid #09c;background:#333;padding:1em 0 2em;}

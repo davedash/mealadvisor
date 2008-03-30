@@ -18,11 +18,21 @@ def restaurant(request, slug):
     dishes        = restaurant.menuitem_set.with_ratings(request.user)
     
     return render_to_response("restaurant/restaurant_detail.html", locals(), context_instance=RequestContext(request))
+
+    
+def menu(request, slug):
+    restaurant = get_object_or_404(Restaurant.objects.all().select_related(depth=1), stripped_title__exact=slug)
+    dishes     = restaurant.menuitem_set.with_ratings(request.user)
+
+    return render_to_response("restaurant/menu.html", locals(), context_instance=RequestContext(request))
+
+    
     
 @login_required    
 def rate(request, slug):
-    restaurant                = get_object_or_404(Restaurant.objects.all().select_related(depth=1), stripped_title__exact=slug)
-    value                     = request['value']
+    
+    restaurant = get_object_or_404(Restaurant.objects.all().select_related(depth=1), stripped_title__exact=slug)
+    value      = request['value']
 
     rating, created = RestaurantRating.objects.get_or_create(restaurant=restaurant, user=request.user.get_profile())
     rating.value = value
