@@ -94,6 +94,7 @@ h2 .url {
     text-align:center;
     width:20px;
 }
+
 .pagination li 
 {
     background:#333;
@@ -120,4 +121,43 @@ h2 .url {
 .pagination li.current a
 {
     color: #000;
+}
+
+.title_container 
+{
+    overflow: auto;
+}
+
+.title_container h2
+{
+    float: left;
+    margin-right: 1em;
+}
+
+#menu_page {
+    margin-bottom: 1em;    
+}
+
+#reviews
+{
+    margin-top: 1em;
+    clear: both;
+    border-bottom: solid 1px #fff;
+    font-size: 90%;
+}
+
+.review
+{
+    border-top: solid 1px #fff;
+    padding: 1em 0;
+}
+
+#reviews .even
+{
+    background: #222;
+}
+
+#reviews .first p
+{
+    margin-left: 1em;
 }

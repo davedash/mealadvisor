@@ -12,7 +12,7 @@ def post_to_delicious(request, title=None, text=None):
         title = 'meal advisor'
     
     url = request.build_absolute_uri()
-    del_url = 'http://del.icio.us/post?%s' % urlencode({'url': url,'title': title})
+    del_url = 'http://del.icio.us/post?%s' % urlencode({'url': url,'title': title}).replace('&', '&amp;')
     
     return '<a href="%s">%s</a>' % (del_url, text)
     
@@ -47,12 +47,12 @@ def star(id_string, current, average, path, spanfree=False):
 			%s
 			%s
 			</ul>
+    		<input type="submit" class="submit" value="rate it" name="rate"/>
 		</fieldset>
-		<input type="submit" class="submit" value="rate it" name="rate"/>
 	</form>
     """ % (path, id_string, meta,stars)
     if spanfree:
         return html
     else:
-        return """<span class="joint_star_rater">%s</span>""" % html
+        return """<div class="joint_star_rater">%s</div>""" % html
     return html

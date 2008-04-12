@@ -24,12 +24,11 @@ class StateManager(models.Manager):
 
     def retrieve_magically(self, state):
 
-        return self.get(Q(name = state) \
-        | Q(usps = state))
+        return self.get(Q(name = state) | Q(usps = state))
 
 
 class Profile(models.Model):
-    user        = models.ForeignKey(User, db_column="userid", unique=True, null=True, blank=True)
+    user        = models.ForeignKey(User, db_column="userid", unique=True)
     email       = models.CharField(max_length=384, blank=True)
     openid      = models.BooleanField(null=True, blank=True)
     preferences = models.TextField(blank=True)
@@ -100,17 +99,6 @@ class State(models.Model):
 #         db_table = u'facebook_profile_rel'
 # 
 # 
-# class RestaurantNote(models.Model):
-#     id = models.IntegerField(primary_key=True)
-#     user = models.ForeignKey(Profile, null=True, blank=True)
-#     note = models.TextField(blank=True)
-#     restaurant = models.ForeignKey(Restaurant, null=True, blank=True)
-#     location = models.ForeignKey(Location, null=True, blank=True)
-#     updated_at = models.DateTimeField(null=True, blank=True)
-#     created_at = models.DateTimeField(null=True, blank=True)
-#     html_note = models.TextField(blank=True)
-#     class Meta:
-#         db_table = u'restaurant_note'
 # 
 # 
 # class RestaurantRedirect(models.Model):

@@ -16,9 +16,7 @@
             
             
           </h4>
-          <p class="stars">
-            {% star item.slug item.current_rating item.average_rating item.get_rating_url %}
-          </p>
+          {% star item.slug item.current_rating item.average_rating item.get_rating_url %}
           <p>
             {{item.description}}
           </p>

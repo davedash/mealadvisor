@@ -5,7 +5,8 @@ from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, InvalidPage
 
 def restaurant(request, slug):
-    restaurant                = get_object_or_404(Restaurant.objects.all().select_related(depth=1), stripped_title__exact=slug)
+    
+    restaurant = get_object_or_404(Restaurant.objects.all().select_related(depth=1), stripped_title__exact=slug)
 
     if request.user.is_authenticated():
         try:
@@ -21,6 +22,10 @@ def restaurant(request, slug):
     paginator = Paginator(restaurant.menuitem_set.with_ratings(request.user), 8)
     page      = paginator.page(1)
     dishes    = page.object_list
+    
+    # 17 with no reviews
+    # 26
+    reviews = restaurant.restaurantnote_set.all().select_related(depth=2)
     
     return render_to_response("restaurant/restaurant_detail.html", locals(), context_instance=RequestContext(request))
 

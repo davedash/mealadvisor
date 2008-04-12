@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" 
   "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
   <title>{%block title%}{%endblock title%}meal advisor</title>
 
@@ -19,13 +19,13 @@
 
   {# YUI #}
   {% if debug %}
-  <link rel="stylesheet" type="text/css" href="/static/js/yui/build/reset-fonts-grids/reset-fonts-grids.css">  
+  <link rel="stylesheet" type="text/css" href="/static/js/yui/build/reset-fonts-grids/reset-fonts-grids.css" />  
   <script type="text/javascript" src="/static/js/yui/build/yahoo-dom-event/yahoo-dom-event.js"></script> 
   <script type="text/javascript" src="/static/js/yui/build/connection/connection-min.js"></script> 
   {% else %}
-  <link rel    = "stylesheet" type="text/css" href="http://yui.yahooapis.com/2.4.1/build/reset-fonts-grids/reset-fonts-grids.css">  
-  <script type = "text/javascript" src="http://yui.yahooapis.com/2.5.0/build/yahoo-dom-event/yahoo-dom-event.js"></script> 
-  <script type   = "text/javascript" src="http://yui.yahooapis.com/2.5.0/build/connection/connection-min.js"></script> 
+  <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.4.1/build/reset-fonts-grids/reset-fonts-grids.css" />  
+  <script type="text/javascript" src="http://yui.yahooapis.com/2.5.0/build/yahoo-dom-event/yahoo-dom-event.js"></script> 
+  <script type="text/javascript" src="http://yui.yahooapis.com/2.5.0/build/connection/connection-min.js"></script> 
   {% endif %}
 
   {# CSS #}
@@ -61,11 +61,13 @@
         </h1>
         <div id="search_box">
           <form action="/search" method="get">
-            <input id="q" name="q" value="Search for food" />
-            <input type="submit" class="small" value="search" name="commit">
-            <span class="info">
-              e.g. "Cafe Mazeh near Mountain View"
-            </span>
+            <fieldset>
+              <input id="q" name="q" value="Search for food" />
+              <input type="submit" class="small" value="search" name="commit" />
+              <p class="info">
+                e.g. "Cafe Mazeh near Mountain View"
+              </p>
+            </fieldset>
           </form>
         </div>
       </div>
@@ -159,11 +161,11 @@
     </div>  
   </div>
 
-  {% if debug %}
-  {% include "debug.html" %}
-  {% else %}
-  {% include "stats.html" %}
-  {% endif %}
+  {% if debug %} 
+  {% include "debug.html" %} 
+  {% else %} 
+  {% include "stats.html" %} 
+  {% endif %} 
 
 </body>
 </html>

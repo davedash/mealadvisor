@@ -502,3 +502,20 @@ class MenuitemRating(models.Model):
               transaction.rollback()
         else:
               transaction.commit()
+
+
+class RestaurantNote(models.Model):
+    profile    = models.ForeignKey(Profile, db_column='user_id')
+    note       = models.TextField(blank=True)
+    restaurant = models.ForeignKey(Restaurant)
+    location   = models.ForeignKey(Location, null=True, blank=True)
+    updated_at = models.DateTimeField()
+    created_at = models.DateTimeField()
+    html_note  = models.TextField(blank=True)
+    
+    def author(self):
+        return self.profile.user
+        #return self.profile.user
+        
+    class Meta:
+        db_table = u'restaurant_note'

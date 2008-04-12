@@ -2,13 +2,15 @@
 {% load tags %}
 
 {% block body %}
+<div class="title_container">
 <h2>
   {{restaurant}}
   
   <span class="url"> <a href="{{restaurant.url}}">[restaurant web site]</a></span>  
-  
-  {% star 'restaurant' restaurant.current_rating restaurant.average_rating restaurant.get_rating_url %}
 </h2>
+
+{% star 'restaurant' restaurant.current_rating restaurant.average_rating restaurant.get_rating_url %}
+</div>
 
 <div id="main_location">
   <div class="address">
@@ -61,5 +63,24 @@
 
 {% endif %}
 
+{% if reviews %}
+<div id="reviews">
+<h3>Restaurant Reviews</h3>
+
+  {% for review in reviews %}
+  <div class="yui-gf review {% cycle 'odd' 'even' %}"> 
+    <div class="yui-u first">
+      <p class="author">{{review.author}}</p>
+      <p class="date">{{review.created_at|timesince}} ago</p>
+    </div>
+    <div class="yui-u note">
+      {{review.html_note|safe}}
+    </div>
+  </div>
+  {% endfor %}
+  
+</div>
+
+{% endif %}
 
 {% endblock body %}
