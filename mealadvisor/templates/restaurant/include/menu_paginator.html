@@ -1,0 +1,23 @@
+{% if page.has_other_pages %}
+{% if page.has_previous %}
+<li class="navigation">
+  <a href="{{restaurant.get_absolute_url}}/menu/page/{{page.previous_page_number}}">&laquo; previous</a>
+</li>
+{% endif %}
+
+{% for pnum in paginator.page_range %}
+{% ifequal page.number pnum %}
+<li class="page current">
+{% else %}
+<li class="page">
+{% endifequal %}
+  <a href="{{restaurant.get_absolute_url}}/menu/page/{{pnum}}">{{pnum}}</a>
+</li>
+{% endfor %}
+
+{% if page.has_next %}
+<li class="navigation">
+  <a href="{{restaurant.get_absolute_url}}/menu/page/{{page.next_page_number}}">
+  next &raquo;</li>
+{% endif %}
+{% endif %}

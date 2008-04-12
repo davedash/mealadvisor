@@ -4,9 +4,9 @@ MA.d = YAHOO.util.Dom;
 MA.c = YAHOO.util.Connect;
 
 MA.is_authenticated = function(msg) {
-    
-    status = MA.d.hasClass(MA.d.get('doc4').parentNode, 'authenticated')
-    if (status == false && msg)
+    var status = MA.d.hasClass(MA.d.get('doc4').parentNode, 'authenticated');
+
+    if (!status && msg)
     {
         alert(msg);
     }

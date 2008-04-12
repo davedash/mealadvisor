@@ -87,3 +87,37 @@ h2 .url {
 {
     margin-bottom: .5em;
 }
+
+.pagination li.page 
+{
+    margin-left:5px;
+    text-align:center;
+    width:20px;
+}
+.pagination li 
+{
+    background:#333;
+    border:1px solid white;
+    float:left;
+    padding: 0 3px;
+}
+
+.pagination li.current
+{
+    background:#eee;
+}
+
+.pagination a
+{
+    color: #fff;
+}
+
+.pagination .navigation
+{
+    margin-left:5px;
+}
+
+.pagination li.current a
+{
+    color: #000;
+}

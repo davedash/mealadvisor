@@ -2,6 +2,7 @@ from django.template import RequestContext
 from django.shortcuts import render_to_response, get_object_or_404, get_list_or_404
 from models import Restaurant, RestaurantRating, MenuItem, MenuitemRating
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator, InvalidPage
 
 def restaurant(request, slug):
     restaurant                = get_object_or_404(Restaurant.objects.all().select_related(depth=1), stripped_title__exact=slug)
@@ -12,10 +13,14 @@ def restaurant(request, slug):
             restaurant.current_rating = rating.value
         except:
           pass
+    
     locations     = list(restaurant.location_set.all())
     main_location = locations.pop(0)
     num_locations = len(locations)
-    dishes        = restaurant.menuitem_set.with_ratings(request.user)
+
+    paginator = Paginator(restaurant.menuitem_set.with_ratings(request.user), 8)
+    page      = paginator.page(1)
+    dishes    = page.object_list
     
     return render_to_response("restaurant/restaurant_detail.html", locals(), context_instance=RequestContext(request))
 
@@ -26,6 +31,15 @@ def menu(request, slug):
 
     return render_to_response("restaurant/menu.html", locals(), context_instance=RequestContext(request))
 
+
+def menu_page(request, slug, page):
+    restaurant = get_object_or_404(Restaurant.objects.all().select_related(depth=1), stripped_title__exact=slug)
+    paginator  = Paginator(restaurant.menuitem_set.with_ratings(request.user), 8)
+    page       = paginator.page(page)
+    dishes     = page.object_list
+    
+    return render_to_response("restaurant/menu_page.html", locals(), context_instance=RequestContext(request))
+    
     
     
 @login_required    

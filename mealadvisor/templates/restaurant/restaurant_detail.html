@@ -48,13 +48,16 @@
 {% if dishes %}
 <h3>Menu Items</h3>
 
-{% include 'restaurant/include/menu_item_list.html' %}
+<div id="menu_page">
+  {% include 'restaurant/include/menu_item_list.html' %}
 
-<ul class="pagination">
-  <li>
-    <a href="{{restaurant.get_absolute_url}}/menu">Full Menu</a>
-  </li>
-</ul>
+  <ul class="pagination">
+    <li>
+      <a href="{{restaurant.get_absolute_url}}/menu">Full Menu</a>
+    </li>
+    {% include 'restaurant/include/menu_paginator.html' %}
+  </ul>
+</div>
 
 {% endif %}
 

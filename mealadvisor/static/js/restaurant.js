@@ -33,4 +33,39 @@ MA.toggler = function()
     }
 }();
 
+MA.paginator = function() {
+
+    return {
+        init: function() {
+            MA.e.onDOMReady(this.setup,this, true)
+        },
+
+        setup: function() {
+            MA.e.on(MA.d.get('doc4'),'click',this.handleClick,this,true);
+        },
+
+        handleClick: function(ev) {
+            var target = MA.e.getTarget(ev);
+            container = target.parentNode.parentNode.parentNode;
+            
+            if ((MA.d.hasClass(target.parentNode, 'page') || MA.d.hasClass(target.parentNode, 'navigation'))
+            && (container.id == 'menu_page')) {
+                
+                MA.e.preventDefault(ev);
+                
+                // do the ajax call 
+                handleSuccess = function(o) { container.innerHTML = o.responseText }
+                
+                callback = { 
+                    success:handleSuccess,
+                }
+                
+                var request = MA.c.asyncRequest('GET', target.pathname, callback);
+            }
+        },
+
+    }
+}();
+
 MA.toggler.init();
+MA.paginator.init();
