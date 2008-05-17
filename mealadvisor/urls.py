@@ -73,8 +73,10 @@ urlpatterns += patterns('mealadvisor.restaurant.views',
     # Menu Item rating
     # Restaurant/rating
     (r'^restaurant/(?P<slug>[^/]+)/menu/(?P<item_slug>[^/]+)/rate/$', 'menuitem_rate'),
-    
 
+    # Menu Rating
+    (r'^restaurant/(?P<slug>[^/]+)/review$', 'review'),
+    
 )
 # static pages
 urlpatterns += patterns('django.views.generic.simple',

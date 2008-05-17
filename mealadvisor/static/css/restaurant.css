@@ -140,10 +140,11 @@ h2 .url {
 
 #reviews
 {
-    margin-top: 1em;
+    margin: 1em 0;
     clear: both;
     border-bottom: solid 1px #fff;
     font-size: 90%;
+    overflow: auto;
 }
 
 .review
@@ -160,4 +161,18 @@ h2 .url {
 #reviews .first p
 {
     margin-left: 1em;
+}
+
+#reviews_options
+{
+    padding-top: 1em;
+    clear: both;
+}
+
+li.button 
+{
+    background:#333;
+    border:1px solid white;
+    float:left;
+    padding: 0 3px;
 }
