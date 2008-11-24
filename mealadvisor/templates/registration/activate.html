@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %}registration &raquo; {% endblock %}
+{% block body %}
+
+{% if account %}
+Hooray, your {{account}} is now valid!
+{% else %}
+Hmm... that activation code is invalid.
+{% endif %}
+
+{% endblock body %}

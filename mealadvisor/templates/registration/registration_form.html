@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}registration &raquo; {% endblock %}
+{% block body %}
+<h2>Sign up!</h2>
+
+
+<p>Sign up and keep track of your favorite dishes at your favorite restaurants, and recommend items for other people.</p>
+
+<form action="/register/" method="POST" id="registration_form" class="cmxform">
+<ol>
+  {{form.as_ul}}
+</ol>
+<input type="submit" value="Sign Up" />
+</form>
+
+{% endblock body %}

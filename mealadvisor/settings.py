@@ -4,6 +4,9 @@ import os
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
+EMAIL_HOST = 'smtp.comcast.net'
+EMAIL_PORT = 25
+
 ADMINS = (
   ('Dave Dash', 'dave.dash@mealadvisor.us'),
 )
@@ -84,12 +87,16 @@ OPENID_SUCCESS = "mealadvisor.common.views.openid_success"
 
 INSTALLED_APPS = (
     'django.contrib.auth',
+    'django.contrib.sites',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'spindrop.django.openid.consumer',
     'mealadvisor.common',
-    'mealadvisor.restaurant'
+    'mealadvisor.restaurant',
+    'registration'
 )
+
+ACCOUNT_ACTIVATION_DAYS = 30
 
 TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.request',

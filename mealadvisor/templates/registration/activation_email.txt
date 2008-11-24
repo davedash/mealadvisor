@@ -1,0 +1,12 @@
+Welcome to mealadvisor!
+
+Please activate your account by clicking on the following activation link:
+
+http://mealadvisor.us/accounts/activate/{{activation_key}}/
+
+If you do not do so within {{expiration_days}} your account will be removed, and we will be sad that you've ignored us.
+
+Love,
+
+The mealadvisor robot.
+
