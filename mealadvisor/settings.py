@@ -6,6 +6,7 @@ TEMPLATE_DEBUG = DEBUG
 
 EMAIL_HOST = 'smtp.comcast.net'
 EMAIL_PORT = 25
+DEFAULT_FROM_MAIL = 'hungry.robot@mealadvsor.us'
 
 ADMINS = (
   ('Dave Dash', 'dave.dash@mealadvisor.us'),

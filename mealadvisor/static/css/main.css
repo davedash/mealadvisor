@@ -92,3 +92,8 @@ form.cmxform fieldset fieldset label {
 .errorlist {
     color: red;
  font-style:italic;}
+ 
+ p
+ {
+     margin-bottom: 1em;
+ }
