@@ -3,6 +3,7 @@
 {% block title %}login &raquo; {% endblock %}
 {% block body %}
 
+{% if form %}
 {% if form.has_errors %}
 <p>Your username and password didn't match. Please try again.</p>
 {% endif %}
@@ -18,13 +19,15 @@
 </form>
 
 <h2>... or use Open ID</h2>
-
+{% else %}
+<h2>Open ID ...</h2>
+{% endif %}
 {% if openid_error %}
-<p class="error">There was an error with your Open ID</p>
+<p class="error">There was an error with your Open ID?  Was it a lie?</p>
 {% endif %}
 
 <form method="post" action="/openid/">
-  <input type="text"  name="openid_url" />
+  <input type="text"  name="openid_url" value="{{openid_url}}" />
   <input type="submit" value="Begin" />
 </form>
 
