@@ -136,6 +136,7 @@ h2 .url {
 
 #menu_page {
     margin-bottom: 1em;    
+    overflow: auto;
 }
 
 #reviews
@@ -144,7 +145,6 @@ h2 .url {
     clear: both;
     border-bottom: solid 1px #fff;
     font-size: 90%;
-    overflow: auto;
 }
 
 .review
