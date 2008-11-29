@@ -1,0 +1,13 @@
+{% extends "base_restaurant.html" %}
+{% block body %}
+<h2>Write a note about <a href="{{restaurant.get_absolute_url}}">{{restaurant}}</a></h2>
+
+<form action="" method="POST" id="restaurant_review" class="cmxform">
+<ol>
+  {{form.as_ul}}
+</ol>
+<p class="instructions">Basic <a href="http://daringfireball.net/projects/markdown/syntax">Markdown formatting</a> allowed.</p>
+<input type="submit" value="Post" />
+</form>
+
+{% endblock body %}
