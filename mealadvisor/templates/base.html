@@ -73,10 +73,6 @@
       </div>
       <div id="top_menu">
         <ul>
-          <li class="incomplete">&nbsp;</li>
-          {# <li> #}
-            {# <?php echo link_to('Review a meal', 'meal/review') ?> #}
-          {# </li> #}
           {% if user.is_authenticated %}
             <li><a href="/logout">Sign Out</a></li>
           {% else %}
