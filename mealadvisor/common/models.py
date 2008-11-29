@@ -33,8 +33,8 @@ class Profile(models.Model):
     openid      = models.BooleanField(null=True, blank=True)
     preferences = models.TextField(blank=True)
     about_text  = models.TextField(blank=True)
-    updated_at  = models.DateTimeField(null=True, blank=True)
-    created_at  = models.DateTimeField(null=True, blank=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         db_table = u'profile'
