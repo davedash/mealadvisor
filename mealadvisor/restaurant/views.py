@@ -1,12 +1,17 @@
 from django.template import RequestContext
 from django.shortcuts import render_to_response, get_object_or_404, get_list_or_404
-from models import Restaurant, RestaurantRating, MenuItem, MenuitemRating
+from django.http import HttpResponseRedirect
+from models import *
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, InvalidPage
+from forms import ReviewForm
 
-def restaurant(request, slug):
+
+def get_restaurant(slug):
+    return get_object_or_404(Restaurant.objects.all().select_related(depth=1), stripped_title__exact=slug)
     
-    restaurant = get_object_or_404(Restaurant.objects.all().select_related(depth=1), stripped_title__exact=slug)
+def restaurant(request, slug):
+    restaurant = get_restaurant(slug)
 
     if request.user.is_authenticated():
         try:
@@ -31,14 +36,14 @@ def restaurant(request, slug):
 
     
 def menu(request, slug):
-    restaurant = get_object_or_404(Restaurant.objects.all().select_related(depth=1), stripped_title__exact=slug)
+    restaurant = get_restaurant(slug)
     dishes     = restaurant.menuitem_set.with_ratings(request.user)
 
     return render_to_response("restaurant/menu.html", locals(), context_instance=RequestContext(request))
 
 
 def menu_page(request, slug, page):
-    restaurant = get_object_or_404(Restaurant.objects.all().select_related(depth=1), stripped_title__exact=slug)
+    restaurant = get_restaurant(slug)
     paginator  = Paginator(restaurant.menuitem_set.with_ratings(request.user), 8)
     page       = paginator.page(page)
     dishes     = page.object_list
@@ -49,9 +54,8 @@ def menu_page(request, slug, page):
     
 @login_required    
 def rate(request, slug):
-    
-    restaurant = get_object_or_404(Restaurant.objects.all().select_related(depth=1), stripped_title__exact=slug)
-    value      = request['value']
+    restaurant = get_restaurant(slug)
+    value      = request.REQUEST['value']
 
     rating, created = RestaurantRating.objects.get_or_create(restaurant=restaurant, user=request.user.get_profile())
     rating.value = value
@@ -63,9 +67,9 @@ def rate(request, slug):
     
 @login_required    
 def menuitem_rate(request, slug, item_slug):
-    restaurant = get_object_or_404(Restaurant, stripped_title__exact=slug)
+    restaurant = get_restaurant(slug)
     menu_item  = get_object_or_404(MenuItem, restaurant__stripped_title__exact=slug, slug__exact=item_slug)
-    value      = request['value']
+    value      = request.REQUEST['value']
 
     rating, created = MenuitemRating.objects.get_or_create(menu_item=menu_item, user=request.user.get_profile())
     rating.value = value
@@ -73,3 +77,24 @@ def menuitem_rate(request, slug, item_slug):
 
     menu_item.current_rating = rating.value
     return render_to_response("restaurant/menuitem_rating.html", locals(), context_instance=RequestContext(request))
+
+@login_required
+def review(request, slug):    
+    restaurant = get_restaurant(slug)
+    
+    if request.method == 'POST': # If the form has been submitted...
+        form = ReviewForm(request.POST) # A form bound to the POST data
+        if form.is_valid(): # All validation rules pass
+            note = RestaurantNote()
+            note.profile = request.user.get_profile()
+            note.note = form.cleaned_data['note']
+            note.restaurant = restaurant
+            note.save()
+            
+            return HttpResponseRedirect(restaurant.get_absolute_url()) # Redirect after POST
+    else:
+        form = ReviewForm() # An unbound form
+
+    return render_to_response('restaurant/review.html', locals(), context_instance=RequestContext(request))
+    
+    
