@@ -4,6 +4,7 @@ from django.conf import settings
 from mealadvisor.common.models import Profile, Country, State
 from mealadvisor.tools import stem_phrase, extract_numbers
 from mealadvisor.geocoder import Geocoder
+from markdown import markdown
 
 
 class RandomManager(models.Manager):
@@ -53,14 +54,14 @@ class LocationManager(models.Manager):
     def in_country(self, country):
         c = Country.objects.retrieve_magically(country)
         return self.filter(country__exact=c)
-
+    
     def in_state(self, country, state):
         s = State.objects.retrieve_magically(state)
         return self.in_country(country).filter(Q(state__exact=s.usps)|Q(state__exact=s.name))
-
+    
     def in_city(self, country, state, city):
         return self.in_state(country, state).filter(city__exact=city)
-
+    
     def in_zip(self, zip):
         return self.filter(zip__startswith=zip)
         
@@ -78,7 +79,7 @@ class LocationManager(models.Manager):
             g = geocoder
         else:
             return []
-
+        
         accuracy = g.location.accuracy
         
         if accuracy == g.COUNTRY:
@@ -89,7 +90,7 @@ class LocationManager(models.Manager):
             return self.in_city(g.location.country, g.location.state, g.location.city).select_related(depth=1)
         if accuracy >= g.ZIP:
             return self.in_zip(g.location.zip).select_related(depth=1)
-
+        
     def search_in(self, phrase, place = None, offset=0, max=10, geocoder = None):
         g = None
         if place != None:
@@ -322,8 +323,8 @@ class Restaurant(models.Model):
     average_rating = models.FloatField(null=True, blank=True)
     num_ratings    = models.IntegerField(null=True, blank=True)
     version        = models.ForeignKey(RestaurantVersion, related_name="the_restaurant")
-    updated_at     = models.DateTimeField(null=True, blank=True)
-    created_at     = models.DateTimeField(null=True, blank=True)
+    updated_at     = models.DateTimeField(auto_now=True)
+    created_at     = models.DateTimeField(auto_now_add=True)
     objects        = RestaurantManager()
     
     def __getattr__(self, name):
@@ -366,8 +367,8 @@ class Location(models.Model):
     longitude       = models.FloatField(null=True, blank=True)
     phone           = models.CharField(max_length=48, blank=True)
     approved        = models.IntegerField(null=True, blank=True)
-    updated_at      = models.DateTimeField(null=True, blank=True)
-    created_at      = models.DateTimeField(null=True, blank=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True)
     objects         = LocationManager()
 
     def __unicode__(self):
@@ -395,8 +396,8 @@ class MenuItem(models.Model):
     approved       = models.IntegerField(null=True, blank=True)
     average_rating = models.FloatField(null=True, blank=True)
     num_ratings    = models.IntegerField(null=True, blank=True)
-    updated_at     = models.DateTimeField(null=True, blank=True)
-    created_at     = models.DateTimeField(null=True, blank=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True)
     objects        = MenuItemManager()
     current_rating = None
 
@@ -459,9 +460,9 @@ class RestaurantRating(models.Model):
     class Meta:
         db_table = u'restaurant_rating'
     
-    def save(self, raw=False):
+    def save(self, force_insert=False, force_update=False):
         try:
-            models.Model.save(self, raw)
+            super(MenuitemRating, self).save(force_insert, force_update)
             cursor  = connection.cursor()
             query   = "SELECT count(value), avg(value) FROM restaurant_rating WHERE restaurant_id = %s"
             results = cursor.execute(query, (self.restaurant.id,))
@@ -486,9 +487,9 @@ class MenuitemRating(models.Model):
     class Meta:
         db_table = u'menuitem_rating'
 
-    def save(self, raw=False):
+    def save(self, force_insert=False, force_update=False):
         try:
-            models.Model.save(self, raw)
+            super(MenuitemRating, self).save(force_insert, force_update)
             cursor  = connection.cursor()
             query   = "SELECT count(value), avg(value) FROM menuitem_rating WHERE menu_item_id = %s"
             results = cursor.execute(query, (self.menu_item.id,))
@@ -509,9 +510,14 @@ class RestaurantNote(models.Model):
     note       = models.TextField(blank=True)
     restaurant = models.ForeignKey(Restaurant)
     location   = models.ForeignKey(Location, null=True, blank=True)
-    updated_at = models.DateTimeField()
-    created_at = models.DateTimeField()
+    updated_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True)
     html_note  = models.TextField(blank=True)
+    
+    def save(self, force_insert=False, force_update=False):
+        self.html_note = markdown(self.note)
+        super(RestaurantNote, self).save(force_insert, force_update) # Call the "real" save() method.
+    
     
     def author(self):
         return self.profile.user
