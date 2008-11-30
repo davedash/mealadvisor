@@ -67,5 +67,19 @@ MA.paginator = function() {
     }
 }();
 
+MA.map = function() {
+    return {
+        draw: function(address, title) {
+            var map = new YMap(document.getElementById('restaurant_map'));  
+            map.drawZoomAndCenter(address, 4);
+            var marker = new YMarker(address);
+            marker.addAutoExpand(title);
+            map.addOverlay(marker);
+            map.disableKeyControls();
+            map.addZoomLong();
+        },
+    }
+}();
+
 MA.toggler.init();
 MA.paginator.init();

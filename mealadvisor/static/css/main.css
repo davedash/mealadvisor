@@ -100,3 +100,27 @@ form.cmxform fieldset fieldset label {
  
  strong { font-weight: bold;}
  em { font-style: italic;}
+ 
+.columns_n_400 {
+    overflow: hidden;
+}
+
+.columns_n_400 .column
+{
+    width: 548px;
+    float: left;
+}
+
+.columns_n_400 .column_400
+{
+    width: 400px;
+    float: right;
+}
+
+#restaurant_map
+{
+    background: #333;
+    width: 100%;
+    height: 300px;
+    color: #000;
+}

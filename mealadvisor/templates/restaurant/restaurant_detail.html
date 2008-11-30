@@ -12,40 +12,48 @@
 {% star 'restaurant' restaurant.current_rating restaurant.average_rating restaurant.get_rating_url %}
 </div>
 
-<div id="main_location">
-  <div class="address">
-    {{main_location.address}}<br />
-    {{main_location.city}}, {{main_location.state}} {{main_location.zip}}
+<div id="location_container" class="columns_n_400">
+
+  <div class="column">
+    <div id="main_location">
+      <div class="address">
+        {{main_location.address}}<br />
+        {{main_location.city}}, {{main_location.state}} {{main_location.zip}}
+      </div>
+      <div class="phone">
+        {{main_location.phone}}
+      </div>
+    </div>
+
+    <p class="description">{{restaurant.description}}</p>
+
+    {% if locations %}
+
+    <div id="extra_locations" class="locations off">
+      <h3>
+        <span class="toggle">{{num_locations}} other locations</span>
+      </h3>
+
+      <dl id="locations_list">
+        {% for location in locations %}
+        <dt>{{ location|safe }}:</dt>
+        <dd>
+          {{ location.address }} 
+          (<abbr title="phone">p</abbr>: {{ location.phone }})
+        </dd>
+        {% endfor %}
+      </dl>
+    </div>
+
+    {% endif %}
   </div>
-  <div class="phone">
-    {{main_location.phone}}
+  <div class="column_400 column">
+    <div id="restaurant_map"></div>    
+    <script type="text/javascript" charset="utf-8">
+      MA.map.draw("{{main_location.address}}, {{main_location.city}}, {{main_location.state}} {{main_location.zip}}", "{{restaurant}}<br/>{{main_location}}");
+    </script>
   </div>
 </div>
-
-<p class="description">{{restaurant.description}}</p>
-
-{% if locations %}
-
-<div id="extra_locations" class="locations off">
-  <h3>
-    <span class="toggle">{{num_locations}} other locations</span>
-  </h3>
-
-  <dl id="locations_list">
-    {% for location in locations %}
-    	<dt>{{ location|safe }}:</dt>
-    	<dd>
-    	  {{ location.address }} 
-    	  (<abbr title="phone">p</abbr>: {{ location.phone }})
-    	  
-    	  <a href="" class="incomplete">view map</a>
-    	</dd>
-    {% endfor %}
-  </dl>
-</div>
-
-{% endif %}
-
 
 {% if dishes %}
 <h3>Menu Items</h3>
