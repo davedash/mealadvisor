@@ -101,12 +101,6 @@ class State(models.Model):
 #     class Meta:
 #         db_table = u'restaurant_redirect'
 # 
-# class RestaurantSearchIndex(models.Model):
-#     restaurant = models.ForeignKey(Restaurant, null=True, blank=True)
-#     word = models.CharField(max_length=765, blank=True)
-#     weight = models.IntegerField(null=True, blank=True)
-#     class Meta:
-#         db_table = u'restaurant_search_index'
 # 
 # 
 # class YahooLocalCategory(models.Model):
