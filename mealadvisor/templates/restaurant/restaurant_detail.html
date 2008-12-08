@@ -2,6 +2,10 @@
 {% load tags %}
 
 {% block body %}
+
+<h3>Search our database:</h3>
+
+
 <div class="title_container">
 <h2>
   {{restaurant}}
@@ -12,6 +16,23 @@
 {% star 'restaurant' restaurant.current_rating restaurant.average_rating restaurant.get_rating_url %}
 </div>
 
+<div id="tag_box">
+  <div class="tags" id="tag_list"> 
+    {% include 'restaurant/tags.html' %}
+  </div>
+
+  {% if user.is_authenticated %}
+  <div id="restaurant_tag_input">
+    <form action="/ajax/tag_add_restaurant" method="POST" id="tag_form">
+      <input type="hidden" name="restaurant" value="{{restaurant.slug}}"/>
+      <input type="text" name="tag" id="tag_input"/>
+      <input type="submit" value="add" id="tag_submit" />
+      <div id="tag_listing"></div>
+    </form>
+  </div>
+  {% endif %}
+</div>
+	
 <div id="location_container" class="columns_n_400">
 
   <div class="column">
@@ -50,7 +71,7 @@
   <div class="column_400 column">
     <div id="restaurant_map"></div>    
     <script type="text/javascript" charset="utf-8">
-      MA.map.draw("{{main_location.address}}, {{main_location.city}}, {{main_location.state}} {{main_location.zip}}", "{{restaurant}}<br/>{{main_location}}");
+      // MA.map.draw("{{main_location.address}}, {{main_location.city}}, {{main_location.state}} {{main_location.zip}}", "{{restaurant}}<br/>{{main_location}}");
     </script>
   </div>
 </div>

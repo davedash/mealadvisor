@@ -12,9 +12,12 @@
 {% endblock css %}
 
 {% block js %}
+<script type="text/javascript" src="http://yui.yahooapis.com/2.6.0/build/dragdrop/dragdrop-min.js" ></script> 
 <script type="text/javascript" src="/static/js/restaurant.js"></script> 
-<script type="text/javascript" src="http://api.maps.yahoo.com/ajaxymap?v=3.8&amp;appid=reviewsby.us"></script>
-  
+<script type="text/javascript" charset="utf-8">
+    var YMAPPID = 'reviewsby.us'
+</script>
+<script type="text/javascript" src="http://us.js2.yimg.com/us.js.yimg.com/lib/map/js/api/ymapapi_3_8_0_7.js"></script>
 {% endblock js %}
 
 
