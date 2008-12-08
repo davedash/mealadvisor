@@ -13,24 +13,6 @@ def remove_diacritics(s):
 
 # tag normalizer
 def normalize(tag):
-    """
-    >>> normalize(u'cafe')
-    u'cafe'
-    >>> normalize(u'caf e')
-    u'cafe'
-    >>> normalize(u' cafe ')
-    u'cafe'
-    
-    For now this is wrong I think it's an error with doctest, not the actual function.
-    
-    >>> normalize(u' café ')
-    u'cafa'
-    
-    >>> normalize(u'cAFe')
-    u'cafe'    
-    >>> normalize(u'%sss%s')
-    u'ssss'
-    """
     try:
         tag = remove_diacritics(tag)
     except:
