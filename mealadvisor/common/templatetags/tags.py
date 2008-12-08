@@ -6,16 +6,17 @@ register = template.Library()
 def restaurant_tags(user, restaurant):
     pop_tags = restaurant.get_popular_tags(10)
     
-    user_tags = []
-    
+    user_tags = {}
     if user.is_authenticated:
-        user_tags = restaurant.get_tags_from_user(user.get_profile())
-        for tag in user_tags:
-            if not tag in pop_tags:
-                pop_tags[tag] = 1
-        
+        user_tags_list = restaurant.get_tags_from_user(user.get_profile())
 
-	tags = {}
+        for tag in user_tags_list:
+            user_tags[tag.normalized_tag] = tag
+            
+            if not tag.normalized_tag in pop_tags:
+                pop_tags[tag.normalized_tag] = 1
+    
+    tags = {}
 
     # not a limit, but a query of what the max count we had
     if pop_tags:
@@ -30,11 +31,8 @@ def restaurant_tags(user, restaurant):
         extras = ''
         
         if tag in user_tags:
-            # we want to show that we can remove
-            #       $tags[$tag] = link_to($tag, '@tag?tag='.$tag, "class=my tag_size_$size") . link_to_remote(image_tag('minus.png','class=mini_action alt=-'), array('url'=>'@restaurant_tag_remove?restaurant='. $this->restaurant->getStrippedTitle() . '&tag='.$tag, 'update' => $this->restaurant->getStrippedTitle().'_tags'),
-            #       "confirm='Are you sure you want to remove this tag, $tag?'");
             class_ = 'my '+class_
-            extras = '-'
+            extras = '<a href="#" class="action remove" onclick="MA.tagger.remove(%d)">x</a>'%user_tags[tag].id
 
         tags[tag] = link_to(tag, '/tag/%s'%tag, {'class': class_}) + extras
         

@@ -137,9 +137,9 @@ MA.tagger = function() {
             }
             YAHOO.util.Connect.setForm(ev.target); 
             var sUrl = '/ajax/tag_add_restaurant';
-            var request = YAHOO.util.Connect.asyncRequest('POST', sUrl, callback);
-            MA.d.get('tag_input').value = '';
-            MA.e.preventDefault(ev);
+            // var request = YAHOO.util.Connect.asyncRequest('POST', sUrl, callback);
+            // MA.d.get('tag_input').value = '';
+            // MA.e.preventDefault(ev);
         }
     }
 }();

@@ -127,9 +127,16 @@ form.cmxform fieldset fieldset label {
 
 .tags ul, .tags li {
     display: inline;
+    margin-right: .5em;
 }
 
 #tag_box 
 {
     margin-bottom: 1em;
+}
+
+.tags li a.remove {
+    color: #eee;
+    font: 10px Helvetica;
+    vertical-align:super;    
 }
