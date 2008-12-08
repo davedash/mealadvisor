@@ -11,5 +11,9 @@ STARS = TOPIC_CHOICES = (
 
 class ReviewForm(forms.Form):
     # rating = forms.ChoiceField(choices=STARS, error_messages={'required': 'Please choose a star rating'})
-    note   = forms.CharField(widget=forms.Textarea(),error_messages={'required': 'Please type in your message'})
+    note = forms.CharField(widget=forms.Textarea(),error_messages={'required': 'Please type in your message'})
     
+
+class TagAddForm(forms.Form):
+    restaurant = forms.CharField(widget=forms.HiddenInput())
+    tag        = forms.CharField()
