@@ -137,10 +137,26 @@ MA.tagger = function() {
             }
             YAHOO.util.Connect.setForm(ev.target); 
             var sUrl = '/ajax/tag_add_restaurant';
-            // var request = YAHOO.util.Connect.asyncRequest('POST', sUrl, callback);
-            // MA.d.get('tag_input').value = '';
-            // MA.e.preventDefault(ev);
+            var request = YAHOO.util.Connect.asyncRequest('POST', sUrl, callback);
+            MA.d.get('tag_input').value = '';
+            MA.e.preventDefault(ev);
+        },
+        
+        remove: function(id) {
+            container = MA.d.get('tag_list');
+            
+            var sUrl = '/ajax/tag_rm_restaurant';
+            handleSuccess = function(o) { container.innerHTML = o.responseText }
+            
+            callback = { 
+                success: handleSuccess,
+            }
+            
+            var postData = 'id='+id
+            var request = YAHOO.util.Connect.asyncRequest('POST', sUrl, callback, postData);
+            return false;
         }
+        
     }
 }();
 
