@@ -102,4 +102,5 @@ urlpatterns += patterns('',
 urlpatterns += patterns('',
     (r'^ajax/tag_ac$', 'restaurant.ajax_views.tags'),
     (r'^ajax/tag_add_restaurant$', 'restaurant.ajax_views.tag_add'),
+    (r'^ajax/tag_rm_restaurant$', 'restaurant.ajax_views.tag_remove'),
 )
