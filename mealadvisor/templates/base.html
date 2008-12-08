@@ -18,15 +18,21 @@
   <link rel="shortcut icon" href="/static/images/g2/logo/favicon.png" />
 
   {# YUI #}
-  {% if debug %}
-  <link rel="stylesheet" type="text/css" href="/static/js/yui/build/reset-fonts-grids/reset-fonts-grids.css" />  
-  <script type="text/javascript" src="/static/js/yui/build/yahoo-dom-event/yahoo-dom-event.js"></script> 
-  <script type="text/javascript" src="/static/js/yui/build/connection/connection-min.js"></script> 
-  {% else %}
-  <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.4.1/build/reset-fonts-grids/reset-fonts-grids.css" />  
-  <script type="text/javascript" src="http://yui.yahooapis.com/2.5.0/build/yahoo-dom-event/yahoo-dom-event.js"></script> 
-  <script type="text/javascript" src="http://yui.yahooapis.com/2.5.0/build/connection/connection-min.js"></script> 
-  {% endif %}
+
+   
+    {% if debug %}
+    <link rel="stylesheet" type="text/css" href="/static/js/yui/build/reset-fonts-grids/reset-fonts-grids.css" />  
+    <script type="text/javascript" src="/static/js/yui/build/yahoo-dom-event/yahoo-dom-event.js"></script> 
+    <script type="text/javascript" src="/static/js/yui/build/connection/connection-min.js"></script> 
+    <script type="text/javascript" src="/static/js/yui/build/datasource/datasource-min.js"></script>
+    <script type="text/javascript" src="/static/js/yui/build/autocomplete/autocomplete-min.js"></script>
+    {% else %}
+    <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.6.0/build/reset-fonts-grids/reset-fonts-grids.css" />  
+    <script type="text/javascript" src="http://yui.yahooapis.com/2.6.0/build/yahoo-dom-event/yahoo-dom-event.js"></script> 
+    <script type="text/javascript" src="http://yui.yahooapis.com/2.6.0/build/connection/connection-min.js"></script> 
+    <script type="text/javascript" src="http://yui.yahooapis.com/2.6.0/build/datasource/datasource-min.js"></script>
+    <script type="text/javascript" src="http://yui.yahooapis.com/2.6.0/build/autocomplete/autocomplete-min.js"></script>
+    {% endif %}
 
   {# CSS #}
   <link rel="stylesheet" type="text/css" media="screen" href="/static/css/main.css" />
