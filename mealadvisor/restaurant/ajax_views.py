@@ -30,4 +30,15 @@ def tag_add(request):
     
     
     return render_to_response("restaurant/tags.html", locals(), context_instance=RequestContext(request))
+
+@login_required
+def tag_remove(request):
     
+    id         = request.REQUEST['id']
+    tag        = RestaurantTag.objects.get(id=id)
+    restaurant = tag.restaurant
+    
+    tag.delete()
+
+    return render_to_response("restaurant/tags.html", locals(), context_instance=RequestContext(request))
+
