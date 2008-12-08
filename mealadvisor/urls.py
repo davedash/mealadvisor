@@ -98,3 +98,8 @@ urlpatterns += patterns('',
         {'document_root': path.join(path.dirname(__file__), "static")}
     ),
 )
+
+urlpatterns += patterns('',
+    (r'^ajax/tag_ac$', 'restaurant.ajax_views.tags'),
+    (r'^ajax/tag_add_restaurant$', 'restaurant.ajax_views.tag_add'),
+)
