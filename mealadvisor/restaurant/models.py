@@ -9,14 +9,16 @@ Test stemming
 from django.db import models, transaction, connection
 from django.db.models import Q
 from django.conf import settings
-from django.utils import strip_tags
+from django.utils.html import strip_tags
 
 from mealadvisor.common.models import Profile, Country, State
-from mealadvisor.tools import stem_phrase, extract_numbers
+from mealadvisor.tools import *
 from mealadvisor.geocoder import Geocoder
+
 from markdown import markdown
 
-import unicodedata, re
+import unicodedata, re, math
+
 
 reTagnormalizer= re.compile(r'[^a-zA-Z0-9]')
 
@@ -480,43 +482,34 @@ class Restaurant(models.Model):
         """
         Get stemmed words that make up this entry
         """
-        raw_text = ' '.join([self.description]*settings.SEARCH_WEIGHT_BODY)
-        #   // body
-        #   $raw_text =  str_repeat(' '.strip_tags($this->getDescription()), sfConfig::get('app_search_body_weight'));
-        #   // title
-        #   $name = str_replace('\'', '', $this->getName());
-        #   //echo $name, "\n";
-        #   $raw_text .= str_repeat(' '.$name, sfConfig::get('app_search_title_weight'));
-        #   //var_dump ($raw_text);
-        # 
-        #   // title and body stemming
-        #   $stemmed_words = array_merge(myTools::stemPhrase($raw_text), myTools::extractNumbers($raw_text));
-        #   //var_dump ($stemmed_words);
-        # 
-        #   // unique words with weight
-        #   $words = array_count_values($stemmed_words);
-        # 
-        # 
-        #   return $words;
+        raw_text      = ' '.join([self.description]*settings.SEARCH_WEIGHT_BODY)
+        name          = self.name.replace("'", '')
+        raw_text      += ' '.join([name]*settings.SEARCH_WEIGHT_TITLE)
+        stemmed_words = stem_phrase(raw_text) + extract_numbers(raw_text)
+        words         = list_count_values(stemmed_words)
+        
+        max = 1
+        pop_tags = self.get_popular_tags(50)
+        
+        for tag, count in pop_tags.iteritems():
+            if max < count:
+                max = count
+            
+            stemmed_tag = stem(tag)
+            
+            if not stemmed_tag in words:
+                words[stemmed_tag] = 0
+            
+            words[stemmed_tag] += math.ceil(count/max) * settings.SEARCH_WEIGHT_TAG
+
+        return words
         
     def reindex(self):
         # Remove search_index entries for this restaurant:
         RestaurantSearchIndex.objects.filter(restaurant=self).delete()
-        
-        
-                #   foreach ($this->getWords() as $word => $weight)
-                #   {
-                #     $index = new RestaurantSearchIndex();
-                #     $index->setRestaurantId($this->getId());
-                #     $index->setWord($word);
-                #     $index->setWeight($weight);
-                #     $index->save();
-                #   }
-                # }
-                # 
-                # public function getWords()
-                # {
-                # }
+
+        for word, weight in self.get_words().iteritems():
+            RestaurantSearchIndex(restaurant=self, word=word, weight=weight).save()
     
     class Meta:
         db_table     = u'restaurant'
