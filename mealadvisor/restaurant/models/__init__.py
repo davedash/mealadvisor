@@ -16,46 +16,8 @@ from mealadvisor.tools import *
 from mealadvisor.geocoder import Geocoder
 
 from markdown import markdown
+from utils import *
 
-import unicodedata, re, math
-
-
-reTagnormalizer= re.compile(r'[^a-zA-Z0-9]')
-
-reCombining = re.compile(u'[\u0300-\u036f\u1dc0-\u1dff\u20d0-\u20ff\ufe20-\ufe2f]',re.U)
- 
-def remove_diacritics(s):
-    " Decomposes string, then removes combining characters "
-    return reCombining.sub('',unicodedata.normalize('NFD',unicode(s)) )
-
-
-# tag normalizer
-def normalize(tag):
-    """
-    >>> normalize(u'cafe')
-    u'cafe'
-    >>> normalize(u'caf e')
-    u'cafe'
-    >>> normalize(u' cafe ')
-    u'cafe'
-    
-    For now this is wrong I think it's an error with doctest, not the actual function.
-    
-    >>> normalize(u' café ')
-    u'cafa'
-    
-    >>> normalize(u'cAFe')
-    u'cafe'    
-    >>> normalize(u'%sss%s')
-    u'ssss'
-    """
-    try:
-        tag = remove_diacritics(tag)
-    except:
-        pass
-        
-    tag = reTagnormalizer.sub('', tag).lower()
-    return tag
     
 class RandomManager(models.Manager):
     def random(self):
@@ -485,6 +447,9 @@ class Restaurant(models.Model):
         raw_text      = ' '.join([self.description]*settings.SEARCH_WEIGHT_BODY)
         name          = self.name.replace("'", '')
         raw_text      += ' '.join([name]*settings.SEARCH_WEIGHT_TITLE)
+        
+        raw_text = rePunctuation.sub(' ', raw_text)
+        
         stemmed_words = stem_phrase(raw_text) + extract_numbers(raw_text)
         words         = list_count_values(stemmed_words)
         
