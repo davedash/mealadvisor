@@ -124,3 +124,12 @@ form.cmxform fieldset fieldset label {
     height: 300px;
     color: #000;
 }
+
+.tags ul, .tags li {
+    display: inline;
+}
+
+#tag_box 
+{
+    margin-bottom: 1em;
+}
