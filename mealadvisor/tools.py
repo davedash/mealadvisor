@@ -1,5 +1,5 @@
 
-STOP_WORDS = [ 'i', 'me', 'my', 'myself', 'we', 'our', 'ours', 'ourselves',
+STOP_WORDS = ( 'i', 'me', 'my', 'myself', 'we', 'our', 'ours', 'ourselves',
 'you', 'your', 'yours', 'yourself', 'yourselves', 'he', 'him', 'his',
 'himself', 'she', 'her', 'hers', 'herself', 'it', 'its', 'itself', 'they',
 'them', 'their', 'theirs', 'themselves', 'what', 'which', 'who', 'whom',
@@ -11,14 +11,14 @@ STOP_WORDS = [ 'i', 'me', 'my', 'myself', 'we', 'our', 'ours', 'ourselves',
 'down', 'in', 'out', 'on', 'off', 'over', 'under', 'again', 'further', 'then',
 'once', 'here', 'there', 'when', 'where', 'why', 'how', 'all', 'any', 'both',
 'each', 'few', 'more', 'most', 'other', 'some', 'such', 'no', 'nor', 'not',
-'only', 'own', 'same', 'so', 'than', 'too', 'very']
+'only', 'own', 'same', 'so', 'than', 'too', 'very')
 
 def stem_phrase(phrase):
     words = phrase.lower().replace('.','').replace("'",'').split()
 
     # ignore stop words
-    words = list(set(words)-set(STOP_WORDS))
-
+    words = [ word for word in words if not word in STOP_WORDS ]
+    
     from stemmer import PorterStemmer
     p = PorterStemmer()
     
