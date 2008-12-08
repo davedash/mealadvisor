@@ -197,12 +197,16 @@ class RestaurantTag(models.Model):
     class Meta:
         db_table = u'restaurant_tag'
 
+    def delete(self):
+        super(RestaurantTag, self).delete()
+        self.restaurant.reindex()
+        
     def save(self, force_insert=False, force_update=False):
         if not self.normalized_tag:
             self.normalized_tag = normalize(tag)
 
-        self.restaurant.reindex()
         super(RestaurantTag, self).save(force_insert, force_update)
+        self.restaurant.reindex()
 
 
 class RestaurantSearchIndex(models.Model):
