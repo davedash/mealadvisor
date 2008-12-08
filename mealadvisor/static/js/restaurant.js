@@ -41,7 +41,10 @@ MA.paginator = function() {
         },
 
         setup: function() {
-            MA.e.on(MA.d.get('doc4'),'click',this.handleClick,this,true);
+            var mp = MA.d.get('menu_page');
+            if (mp) {
+                MA.e.on(mp,'click',this.handleClick,this,true);
+            }
         },
 
         handleClick: function(ev) {
@@ -81,5 +84,66 @@ MA.map = function() {
     }
 }();
 
+MA.tagger = function() {
+    return {
+        init: function() {
+            MA.e.onDOMReady(this.setup, this, true)
+        },
+        setup: function() {
+            this.tagger = MA.d.get('restaurant_tag_input');
+            if (this.tagger) {
+                // add a node
+                // add a on click
+                // replace tagger with form
+                // set form to do an ajax submit
+       
+                var newdiv = document.createElement('div');
+                newdiv.innerHTML = '<a href="#">Add a tag?</a>';
+                this.tagger.appendChild(newdiv);
+                var link = newdiv.firstChild;
+                MA.e.on(link, 'click', this.handleClick, this, true);
+            }
+            
+        },
+        
+        handleClick: function(ev) {
+            MA.e.preventDefault(ev);
+            
+            form = MA.d.get('tag_form');
+            MA.d.setStyle(form, 'display', 'block'); 
+            MA.d.setStyle(ev.target, 'display', 'none'); 
+            
+            var oDS = new YAHOO.util.XHRDataSource("/ajax/tag_ac");
+            oDS.responseType = YAHOO.util.XHRDataSource.TYPE_TEXT;
+            oDS.responseSchema = { recordDelim: "\n", fieldDelim: "\t" };
+            oDS.maxCacheEntries = 5;
+
+            var oAC = new YAHOO.widget.AutoComplete("tag_input", "tag_listing", oDS);
+            oAC.generateRequest = function(sQuery) { 
+                return "?q=" + sQuery ; 
+            };
+            
+            // handle the form's submission
+            MA.e.on(form, 'submit', this.handleSubmit, this, true);
+        },
+        
+        handleSubmit: function(ev) {
+            container = MA.d.get('tag_list');
+            // do the ajax call 
+            handleSuccess = function(o) { container.innerHTML = o.responseText }
+            
+            callback = { 
+                success: handleSuccess,
+            }
+            YAHOO.util.Connect.setForm(ev.target); 
+            var sUrl = '/ajax/tag_add_restaurant';
+            var request = YAHOO.util.Connect.asyncRequest('POST', sUrl, callback);
+            MA.d.get('tag_input').value = '';
+            MA.e.preventDefault(ev);
+        }
+    }
+}();
+
 MA.toggler.init();
 MA.paginator.init();
+MA.tagger.init();
