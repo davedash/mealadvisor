@@ -1,3 +1,4 @@
+from stemmer import PorterStemmer
 
 STOP_WORDS = ( 'i', 'me', 'my', 'myself', 'we', 'our', 'ours', 'ourselves',
 'you', 'your', 'yours', 'yourself', 'yourselves', 'he', 'him', 'his',
@@ -19,13 +20,28 @@ def stem_phrase(phrase):
     # ignore stop words
     words = [ word for word in words if not word in STOP_WORDS ]
     
-    from stemmer import PorterStemmer
     p = PorterStemmer()
     
     return [p.stem(word,0,len(word)-1) for word in words]
     
+def stem(word):
+    p = PorterStemmer()
     
+    return p.stem(word,0,len(word)-1)
+    
+
 def extract_numbers(phrase):
     import re
     p = re.compile(r'\d+')
     return list(set(p.findall(phrase)))
+
+def list_count_values(l):
+    d = {}
+    
+    for item in l:
+        if item in d:
+            d[item] += 1
+        else:
+            d[item] = 1
+    
+    return d
