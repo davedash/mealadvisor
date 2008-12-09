@@ -1,6 +1,27 @@
-{% extends "base.html" %}
+{% extends "base_restaurant.html" %}
+{% load tags %}
+{% block title %}{{menu_item|lower}} &laquo; {{restaurant|lower}} &laquo; {% endblock title %}
+
 {% block body %}
+<div class="title_container">
+<h2>
+  {{menu_item}} from {% link_to restaurant restaurant.get_absolute_url %}
+</h2>
+
+{% star menu_item.slug menu_item.current_rating menu_item.average_rating menu_item.get_rating_url %}
+
+
+</div>
+
+
 {{restaurant}}
 
 {{menu_item}} go here...
+
+Inherit from base_restaurant
+Show the photo
+Show the star rating
+Show the comments
+Show the tag-crud
+Show the comment form
 {% endblock body %}
