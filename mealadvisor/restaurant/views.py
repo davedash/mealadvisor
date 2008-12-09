@@ -18,7 +18,7 @@ def restaurant(request, slug):
             rating                    = RestaurantRating.objects.get(restaurant = restaurant.id, user = request.user.get_profile().id)
             restaurant.current_rating = rating.value
         except:
-          pass
+            pass
     
     locations     = list(restaurant.location_set.all())
     main_location = locations.pop(0)
