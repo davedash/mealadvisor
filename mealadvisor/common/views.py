@@ -3,7 +3,7 @@ from django.shortcuts import render_to_response, get_object_or_404, get_list_or_
 from django.contrib.auth import login
 from django.http import HttpResponse, HttpResponseRedirect
 
-from mealadvisor.restaurant.models import Restaurant, MenuItemImage, MenuItem
+from mealadvisor.restaurant.models import Restaurant, MenuItemImage, MenuItem, MenuitemRating
 from mealadvisor.common import profiles
 from mealadvisor.common.search import Search
 
@@ -33,8 +33,16 @@ def menuitem(request, slug, item_slug):
     # get results from model
     restaurant = get_object_or_404(Restaurant, stripped_title__exact=slug)
     menu_item  = get_object_or_404(MenuItem, restaurant__stripped_title__exact=slug, slug__exact=item_slug)
-    context    = {'restaurant':restaurant, 'menu_item':menu_item}
     
+    if request.user.is_authenticated():
+        try:
+            rating                   = MenuitemRating.objects.get(menu_item = menu_item, user = request.user.get_profile())
+            menu_item.current_rating = rating.value
+        except:
+            pass
+
+    context    = {'restaurant':restaurant, 'menu_item':menu_item}
+
     return render_to_response("common/menuitem.html", context, context_instance=RequestContext(request))
 
 
