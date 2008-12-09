@@ -35,13 +35,4 @@ def extract_numbers(phrase):
     p = re.compile(r'\d+')
     return list(set(p.findall(phrase)))
 
-def list_count_values(l):
-    d = {}
-    
-    for item in l:
-        if item in d:
-            d[item] += 1
-        else:
-            d[item] = 1
-    
-    return d
+list_count_values = lambda x: dict((y, x.count(y)) for y in set(x))
