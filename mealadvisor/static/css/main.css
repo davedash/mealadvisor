@@ -1,5 +1,5 @@
-.joint_star_rater {display:inline-block;}
-.joint_star_rater legend {display:none;}
+.joint_star_rater{display:inline-block;}
+.joint_star_rater legend{display:none;}
 .joint_star_rater input.submit{display:none;}
 .joint_star_rater ul{width:100px;position:relative;height:20px;background:url(../images/icons/stars.png) repeat-x 0 0}
 .joint_star_rater li.meta{position:absolute;text-indent:-9999px;display:block;z-index:1;}
@@ -17,7 +17,6 @@
 .joint_star_rater li.star_3:hover{width:60px}
 .joint_star_rater li.star_4:hover{width:80px}
 .joint_star_rater li.star_5:hover{width:100px}
-
 a:link{color:#49d;text-decoration:none;}
 a:visited{color:#d6d;text-decoration:none;}
 html{background:#222}
@@ -34,7 +33,7 @@ body{font-family:Futura,Centry Gothic,Verdana,sans-serif;}
 #hd #top_menu ul li a{color:white;text-decoration:none;}
 #bd{padding:1em;}
 h2{font-size:130%;margin-bottom:1em;}
-h2 a, h2 a:visited{color: white;border-bottom: dotted 1px #fff;}
+h2 a,h2 a:visited{color:white;border-bottom:dotted 1px #fff;}
 h2 q{text-transform:none;font-style:italic;}
 h3{font-size:120%;margin-bottom:1em;}
 #ft{border-top:2px solid #09c;background:#333;padding:1em 0 2em;}
@@ -45,98 +44,25 @@ h3{font-size:120%;margin-bottom:1em;}
 #ft li.email{background:url('../images/icons/fam/email.png') no-repeat 10px}
 #ft li a{color:#49d;text-decoration:none;}
 .ad{text-align:center;margin-top:2em;padding-top:2em;border-top:dashed 1px #444;}
-
-
-form.cmxform
-{
-    margin-top: 1em;
-}
-form.cmxform label {
-  display: inline-block;
-  line-height: 1.8;
-  vertical-align: top;
-}
-form.cmxform fieldset ol {
-  margin: 0;
-  padding: 0;
-}
-form.cmxform fieldset li {
-  list-style: none;
-  padding: 5px;
-  margin: 0;
-}
-form.cmxform fieldset fieldset {
-  border: none;
-  margin: 3px 0 0;
-}
-form.cmxform fieldset fieldset legend {
-  padding: 0 0 5px;
-  font-weight: normal;
-}
-form.cmxform fieldset fieldset label {
-  display: block;
-  width: auto;
-}
-form.cmxform em {
-  font-weight: bold;
-  font-style: normal;
-  color: #f00;
-}
-form.cmxform label {
-  width: 120px; /* Width of labels */
-}
-form.cmxform fieldset fieldset label {
-  margin-left: 123px; /* Width plus 3 (html space) */
-}
-
-.errorlist {
-    color: red;
- font-style:italic;}
- 
- p
- {
-     margin-bottom: 1em;
- }
- 
- strong { font-weight: bold;}
- em { font-style: italic;}
- 
-.columns_n_400 {
-    overflow: hidden;
-}
-
-.columns_n_400 .column
-{
-    width: 548px;
-    float: left;
-}
-
-.columns_n_400 .column_400
-{
-    width: 400px;
-    float: right;
-}
-
-#restaurant_map
-{
-    background: #333;
-    width: 100%;
-    height: 300px;
-    color: #000;
-}
-
-.tags ul, .tags li {
-    display: inline;
-    margin-right: .5em;
-}
-
-#tag_box 
-{
-    margin-bottom: 1em;
-}
-
-.tags li a.remove {
-    color: #eee;
-    font: 10px Helvetica;
-    vertical-align:super;    
-}
+form.cmxform{margin-top:1em;}
+form.cmxform label{display:inline-block;line-height:1.8;vertical-align:top;}
+form.cmxform fieldset ol{margin:0;padding:0;}
+form.cmxform fieldset li{list-style:none;padding:5px;margin:0;}
+form.cmxform fieldset fieldset{border:none;margin:3px 0 0;}
+form.cmxform fieldset fieldset legend{padding:0 0 5px;font-weight:normal;}
+form.cmxform fieldset fieldset label{display:block;width:auto;}
+form.cmxform em{font-weight:bold;font-style:normal;color:#f00;}
+form.cmxform label{width:120px;/* Width of labels */}
+form.cmxform fieldset fieldset label{margin-left:123px;/* Width plus 3 (html space) */}
+.errorlist{color:red;font-style:italic;}
+p{margin-bottom:1em;}
+strong{font-weight:bold;}
+em{font-style:italic;}
+.columns_n_400{overflow:hidden;}
+.columns_n_400 .column{width:548px;float:left;}
+.columns_n_400 .column_400{width:400px;float:right;}
+.tags ul,.tags li{display:inline;margin-right:.5em;}
+#tag_box{margin-bottom:1em;}
+.tags li a.remove{color:#eee;font:10px Helvetica;vertical-align:super;}
+#tag_form_container{width:15em;position:relative;}
+#tag_form_container form{height:2em;display:none;}

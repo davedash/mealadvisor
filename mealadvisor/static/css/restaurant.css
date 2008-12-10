@@ -1,193 +1,37 @@
-p.description {
-    font-style: italic;
-    margin: 0 0 1em 1em;
-}
-
-#main_location 
-{
-    font-size: 80%;
-    margin-bottom: 1em;
-}
-
-
-.toggle {
-    background: url(../images/icons/sprite.png) no-repeat 0px -18px;
-    padding: 0 0 0 18px;
-}
-
-.off #locations_list {
-    display: none;
-}
-
-.on .toggle {
-    background-position: 0 6px;
-}
-
-.on #locations_list {
-    display: block;
-}
-
-h2 .url {
-    font-weight: normal;
-    font-size: 60%;
-}
-
-#extra_locations h3, #extra_locations dl {
-    font-size: 90%;
-}
-
-#extra_locations dl {
-    font-family: Arial;
-}
-
-#extra_locations dt {
-    float: left;
-    margin-right: 1em;
-}
-
-#extra_locations {
-    margin-bottom: 1em;
-}
-
-#menuitems_list img {
-    border: solid 2px #fff
-}
-
-#menuitems_list li.dish {
-    float: left;
-    width: 50%;
-}
-
-#menuitems_list .yui-gd
-{
-    margin-bottom: 1em;
-    height: 104px;
-    border-bottom: solid 1px #555;
-    padding-bottom: 1em;
-}
-
-
-#menuitems_list .yui-gd .first
-{
-    text-align: center;
-
-}
-
-#menuitems_list div.even
-{
-    background: #111;
-}
-
-#menuitems_list p
-{
-    font-size: 80%;
-}
-
-#menuitems_list .stars 
-{
-    margin-bottom: .5em;
-}
-
-.pagination li.page 
-{
-    margin-left:5px;
-    text-align:center;
-    width:20px;
-}
-
-.pagination li 
-{
-    background:#333;
-    border:1px solid white;
-    float:left;
-    padding: 0 3px;
-}
-
-.pagination li.current
-{
-    background:#eee;
-}
-
-.pagination a
-{
-    color: #fff;
-}
-
-.pagination .navigation
-{
-    margin-left:5px;
-}
-
-.pagination li.current a
-{
-    color: #000;
-}
-
-.title_container 
-{
-    overflow: auto;
-}
-
-.title_container h2
-{
-    float: left;
-    margin-right: 1em;
-}
-
-#menu_page {
-    margin-bottom: 1em;    
-    overflow: auto;
-}
-
-#reviews
-{
-    margin: 1em 0;
-    clear: both;
-    border-bottom: solid 1px #fff;
-    font-size: 90%;
-}
-
-.review
-{
-    border-top: solid 1px #fff;
-    padding: 1em 0;
-}
-
-#reviews .even
-{
-    background: #222;
-}
-
-#reviews .first p
-{
-    margin-left: 1em;
-}
-
-#reviews_options
-{
-    padding-top: 1em;
-    clear: both;
-}
-
-li.button 
-{
-    background:#333;
-    border:1px solid white;
-    float:left;
-    padding: 0 3px;
-}
-
-#restaurant_tag_input {
-    width: 15em;
-    position: relative;
-}
-
-#restaurant_tag_input form {
-    height: 2em;
-    display: none;
-}
+p.description{font-style:italic;margin:0 0 1em 1em;}
+#main_location{font-size:80%;margin-bottom:1em;}
+.toggle{background:url(../images/icons/sprite.png) no-repeat 0px -18px;padding:0 0 0 18px;}
+.off #locations_list{display:none;}
+.on .toggle{background-position:0 6px;}
+.on #locations_list{display:block;}
+h2 .url{font-weight:normal;font-size:60%;}
+#extra_locations h3,#extra_locations dl{font-size:90%;}
+#extra_locations dl{font-family:Arial;}
+#extra_locations dt{float:left;margin-right:1em;}
+#extra_locations{margin-bottom:1em;}
+#menuitems_list img{border:solid 2px #fff}
+#menuitems_list li.dish{float:left;width:50%;}
+#menuitems_list .yui-gd{margin-bottom:1em;height:104px;border-bottom:solid 1px #555;padding-bottom:1em;}
+#menuitems_list .yui-gd .first{text-align:center;}
+#menuitems_list div.even{background:#111;}
+#menuitems_list p{font-size:80%;}
+#menuitems_list .stars{margin-bottom:.5em;}
+.pagination li.page{margin-left:5px;text-align:center;width:20px;}
+.pagination li{background:#333;border:1px solid white;float:left;padding:0 3px;}
+.pagination li.current{background:#eee;}
+.pagination a{color:#fff;}
+.pagination .navigation{margin-left:5px;}
+.pagination li.current a{color:#000;}
+.title_container{overflow:auto;}
+.title_container h2{float:left;margin-right:1em;}
+#menu_page{margin-bottom:1em;overflow:auto;}
+#reviews{margin:1em 0;clear:both;border-bottom:solid 1px #fff;font-size:90%;}
+.review{border-top:solid 1px #fff;padding:1em 0;}
+#reviews .even{background:#222;}
+#reviews .first p{margin-left:1em;}
+#reviews_options{padding-top:1em;clear:both;}
+li.button{background:#333;border:1px solid white;float:left;padding:0 3px;}
 .yui-ac{position:relative;font-family:arial;font-size:100%;}
-
 .yui-ac-input{position:absolute;width:74%;}
 .yui-ac-container{position:absolute;top:1.6em;width:75%;}
 .yui-ac-content{position:absolute;width:100%;border:1px solid #808080;background:#fff;overflow:hidden;z-index:9050;color:#000;}
@@ -197,7 +41,5 @@ li.button
 .yui-ac-content li{margin:0;padding:2px 5px;cursor:default;white-space:nowrap;list-style:none;zoom:1;}
 .yui-ac-content li.yui-ac-prehighlight{background:#B3D4FF;}
 .yui-ac-content li.yui-ac-highlight{background:#426FD9;color:#FFF;}
-#tag_submit {
-    position:absolute;
-    right:0;
-}
+#tag_submit{position:absolute;right:0;}
+#restaurant_map{background:#333;width:100%;height:300px;color:#000;}
