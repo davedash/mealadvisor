@@ -90,7 +90,7 @@ MA.tagger = function() {
             MA.e.onDOMReady(this.setup, this, true)
         },
         setup: function() {
-            this.tagger = MA.d.get('restaurant_tag_input');
+            this.tagger = MA.d.get('tag_form_container');
             if (this.tagger) {
                 // add a node
                 // add a on click
@@ -112,15 +112,16 @@ MA.tagger = function() {
             form = MA.d.get('tag_form');
             MA.d.setStyle(form, 'display', 'block'); 
             MA.d.setStyle(ev.target, 'display', 'none'); 
+            tag_type = MA.d.get('tag_type_field').name;
             
-            var oDS = new YAHOO.util.XHRDataSource("/ajax/tag_ac");
+            var oDS = new YAHOO.util.XHRDataSource("/ajax/tag_ac?t="+tag_type);
             oDS.responseType = YAHOO.util.XHRDataSource.TYPE_TEXT;
             oDS.responseSchema = { recordDelim: "\n", fieldDelim: "\t" };
             oDS.maxCacheEntries = 5;
 
             var oAC = new YAHOO.widget.AutoComplete("tag_input", "tag_listing", oDS);
             oAC.generateRequest = function(sQuery) { 
-                return "?q=" + sQuery ; 
+                return "&q=" + sQuery ; 
             };
             
             // handle the form's submission
@@ -136,7 +137,7 @@ MA.tagger = function() {
                 success: handleSuccess,
             }
             YAHOO.util.Connect.setForm(ev.target); 
-            var sUrl = '/ajax/tag_add_restaurant';
+            var sUrl = ev.target.action;
             var request = YAHOO.util.Connect.asyncRequest('POST', sUrl, callback);
             MA.d.get('tag_input').value = '';
             MA.e.preventDefault(ev);
@@ -144,8 +145,9 @@ MA.tagger = function() {
         
         remove: function(id) {
             container = MA.d.get('tag_list');
+            tag_type = MA.d.get('tag_type_field').name;
             
-            var sUrl = '/ajax/tag_rm_restaurant';
+            var sUrl = '/ajax/tag_rm?t='+tag_type;
             handleSuccess = function(o) { container.innerHTML = o.responseText }
             
             callback = { 
