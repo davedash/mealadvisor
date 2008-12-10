@@ -10,18 +10,21 @@
 
 {% star menu_item.slug menu_item.current_rating menu_item.average_rating menu_item.get_rating_url %}
 
-
 </div>
 
 
-{{restaurant}}
+<p class="description">{{menu_item.description}}</p>
 
-{{menu_item}} go here...
+{% if menu_item.price %}
+<p class="price">Price: {{menu_item.price}}</p>
+{% endif %}
 
-Inherit from base_restaurant
+<pre>
+
 Show the photo
-Show the star rating
 Show the comments
 Show the tag-crud
 Show the comment form
+
+</pre>
 {% endblock body %}
