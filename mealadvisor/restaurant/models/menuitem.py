@@ -52,6 +52,10 @@ class MenuItem(models.Model):
     def __getattr__(self, name):
         if name == 'description':
             return self.version.description
+
+        if name == 'price':
+            return self.version.price
+
         
         models.Model.__getattr__(self, name)
     
