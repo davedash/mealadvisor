@@ -28,9 +28,13 @@ def restaurant(request, slug):
     page      = paginator.page(1)
     dishes    = page.object_list
     
-    # 17 with no reviews
-    # 26
     reviews = restaurant.restaurantnote_set.all().select_related(depth=2)
+
+    # tagbox data
+    tags_template = 'restaurant/tags.html'
+    tag_type = 'restaurant'
+    tagged_object_id = restaurant.slug()
+
     
     return render_to_response("restaurant/restaurant_detail.html", locals(), context_instance=RequestContext(request))
 
