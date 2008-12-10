@@ -13,23 +13,7 @@
 {% star 'restaurant' restaurant.current_rating restaurant.average_rating restaurant.get_rating_url %}
 </div>
 
-<div id="tag_box">
-  <div class="tags" id="tag_list"> 
-    {% include 'restaurant/tags.html' %}
-  </div>
-
-  {% if user.is_authenticated %}
-  <div id="restaurant_tag_input">
-    <form action="/ajax/tag_add_restaurant" method="POST" id="tag_form">
-      <input type="hidden" name="restaurant" value="{{restaurant.slug}}"/>
-      <input type="text" name="tag" id="tag_input"/>
-      <input type="submit" value="add" id="tag_submit" />
-      <div id="tag_listing"></div>
-    </form>
-  </div>
-  {% endif %}
-</div>
-	
+{% include 'includes/tagbox.html' %}	
 <div id="location_container" class="columns_n_400">
 
   <div class="column">

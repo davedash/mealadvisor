@@ -1,0 +1,16 @@
+<div id="tag_box">
+  <div class="tags" id="tag_list"> 
+    {% include tags_template %}
+  </div>
+
+  {% if user.is_authenticated %}
+  <div id="tag_form_container">
+    <form action="/ajax/tag_add_{{tag_type}}" method="POST" id="tag_form">
+      <input id="tag_type_field" type="hidden" name="{{tag_type}}" value="{{tagged_object_id}}"/>
+      <input type="text" name="tag" id="tag_input"/>
+      <input type="submit" value="add" id="tag_submit" />
+      <div id="tag_listing"></div>
+    </form>
+  </div>
+  {% endif %}
+</div>
