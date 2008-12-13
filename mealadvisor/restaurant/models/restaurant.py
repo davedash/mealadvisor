@@ -110,8 +110,6 @@ class Restaurant(models.Model):
         
     def get_popular_tags(self, max = 10):
         
-        cursor = connection.cursor()
-        
         query = """
         SELECT `normalized_tag` AS tag, COUNT(`normalized_tag`) AS count
         FROM `restaurant_tag`
