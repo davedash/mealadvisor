@@ -46,7 +46,9 @@ SELECT user_id, restaurant_id, created_at, tag, normalized_tag FROM restaurant_t
 DROP TABLE restaurant_tag
 ALTER TABLE restaurant_tag2 RENAME restaurant_tag
 
-alter table restaurant_search_index ADD id INT UNSIGNED NOT NULL AUTO_INCREMENT, add primary key (id);
+alter table restaurant_search_index ADD id INT UNSIGNED NOT NULL AUTO_INCREMENT FIRST, add primary key (id);
+alter table menuitem_tag change id id INT UNSIGNED NOT NULL AUTO_INCREMENT FIRST, add primary key (id);
+alter table menuitem_search_index ADD id INT UNSIGNED NOT NULL AUTO_INCREMENT FIRST, add primary key (id);
 
 
 SET foreign_key_checks = 1;
