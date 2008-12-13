@@ -31,8 +31,8 @@ def restaurant(request, slug):
     reviews = restaurant.restaurantnote_set.all().select_related(depth=2)
 
     # tagbox data
-    tags_template = 'restaurant/tags.html'
-    tag_type = 'restaurant'
+    tags_template    = 'restaurant/tags.html'
+    tag_type         = 'restaurant'
     tagged_object_id = restaurant.slug()
 
     
