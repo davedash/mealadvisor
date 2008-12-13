@@ -1,8 +1,12 @@
 from django.db import models, transaction, connection
+from django.conf import settings
 
 from mealadvisor.common.models import Profile 
+from mealadvisor.tools import *
+
 from restaurant import Restaurant, TagManager
 from location import Location
+from utils import *
 
 class MenuItemManager(models.Manager):
     def with_ratings(self, user=None):
@@ -95,10 +99,51 @@ class MenuItem(models.Model):
     
     def get_rating_url(self):
         return self.get_absolute_url()+"/rate/"
-    
+
+    def get_words(self):
+        """
+        Get stemmed words that make up this entry
+        """
+        raw_text      = ' '.join([self.description]*settings.SEARCH_WEIGHT_BODY)
+        name          = self.name.replace("'", '')
+        raw_text      += ' '.join([name]*settings.SEARCH_WEIGHT_TITLE)
+
+        raw_text = rePunctuation.sub(' ', raw_text)
+
+        stemmed_words = stem_phrase(raw_text) + extract_numbers(raw_text)
+        words         = list_count_values(stemmed_words)
+
+        max = 1
+        pop_tags = self.get_popular_tags(50)
+
+        for tag, count in pop_tags.iteritems():
+            if max < count:
+                max = count
+
+            stemmed_tag = stem(tag)
+
+            if not stemmed_tag in words:
+                words[stemmed_tag] = 0
+
+            words[stemmed_tag] += math.ceil(count/max) * settings.SEARCH_WEIGHT_TAG
+
+        return words
+    def reindex(self):
+        # Remove search_index entries for this restaurant:
+        MenuitemSearchIndex.objects.filter(menuitem=self).delete()
+
+        for word, weight in self.get_words().iteritems():
+            MenuitemSearchIndex(menuitem=self, word=word, weight=weight).save()        
+        
     class Meta:
         db_table = u'menu_item'
     
+class MenuitemSearchIndex(models.Model):
+    menuitem = models.ForeignKey(MenuItem, null=True, blank=True)
+    word = models.CharField(max_length=765, blank=True)
+    weight = models.IntegerField(null=True, blank=True)
+    class Meta:
+        db_table = u'menuitem_search_index'
 
 class MenuitemVersion(models.Model):
     description      = models.TextField(blank=True)
@@ -158,14 +203,14 @@ class MenuitemTag(models.Model):
     
     def delete(self):
         super(MenuitemTag, self).delete()
-        self.menuitem.reindex()
+        self.menu_item.reindex()
     
     def save(self, force_insert=False, force_update=False):
         if not self.normalized_tag:
             self.normalized_tag = normalize(tag)
     
         super(MenuitemTag, self).save(force_insert, force_update)
-        self.menuitem.reindex()
+        self.menu_item.reindex()
 
     class Meta:
         db_table = u'menuitem_tag'
