@@ -7,7 +7,7 @@ def restaurant_tags(user, restaurant):
     pop_tags = restaurant.get_popular_tags(10)
     
     user_tags = {}
-    if user.is_authenticated:
+    if user.is_authenticated():
         user_tags_list = restaurant.get_tags_from_user(user.get_profile())
 
         for tag in user_tags_list:
@@ -38,6 +38,43 @@ def restaurant_tags(user, restaurant):
         
     output = "\n".join(["<li>%s</li>"%tags[tag] for tag in sorted(tags.keys())])
 
+    return "<ul>\n%s\n</ul>" %output
+
+@register.simple_tag
+def menuitem_tags(user, item):
+    pop_tags = item.get_popular_tags(10)
+
+    user_tags = {}
+    if user.is_authenticated():
+        user_tags_list = item.get_tags_from_user(user.get_profile())
+        for tag in user_tags_list:
+            user_tags[tag.normalized_tag] = tag
+    
+            if not tag.normalized_tag in pop_tags:
+                pop_tags[tag.normalized_tag] = 1
+    
+    tags = {}
+    
+    # not a limit, but a query of what the max count we had
+    if pop_tags:
+        max_count = max(pop_tags.values())
+    
+    NUM_SIZES = 7
+    
+    for tag in pop_tags:
+        size = 1 if (max_count == 1) else pop_tags[tag] / max_count * NUM_SIZES
+    
+        class_ = 'tag_size_%d'%size
+        extras = ''
+    
+        if tag in user_tags:
+            class_ = 'my '+class_
+            extras = '<a href="#" class="action remove" onclick="MA.tagger.remove(%d)">x</a>'%user_tags[tag].id
+    
+        tags[tag] = link_to(tag, '/tag/%s'%tag, {'class': class_}) + extras
+    
+    output = "\n".join(["<li>%s</li>"%tags[tag] for tag in sorted(tags.keys())])
+    
     return "<ul>\n%s\n</ul>" %output
     
 @register.simple_tag
