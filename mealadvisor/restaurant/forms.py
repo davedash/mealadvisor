@@ -17,3 +17,7 @@ class ReviewForm(forms.Form):
 class TagAddForm(forms.Form):
     restaurant = forms.CharField(widget=forms.HiddenInput())
     tag        = forms.CharField()
+
+class MenuitemTagAddForm(forms.Form):
+    menu_item = forms.CharField(widget=forms.HiddenInput())
+    tag         = forms.CharField()
