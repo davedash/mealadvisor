@@ -1,7 +1,7 @@
 from django.db import models, transaction, connection
 
 from mealadvisor.common.models import Profile 
-from restaurant import Restaurant
+from restaurant import Restaurant, TagManager
 from location import Location
 
 class MenuItemManager(models.Manager):
@@ -47,8 +47,34 @@ class MenuItem(models.Model):
     created_at     = models.DateTimeField(auto_now_add=True)
     objects        = MenuItemManager()
     current_rating = None
+
+    def get_tags_from_user(self, profile):
+        # given a profile return all the tags that said profile has for this particular item
+        tags = MenuitemTag.objects.filter(menu_item = self, user = profile)
+        return tags
     
-    
+    def get_popular_tags(self, max = 10):
+        
+        query = """
+        SELECT `normalized_tag` AS tag, COUNT(`normalized_tag`) AS count
+        FROM `menuitem_tag`
+        WHERE `menu_item_id` = %s
+        GROUP BY `normalized_tag`
+        ORDER BY count DESC
+        LIMIT %s
+        """
+
+        cursor  = connection.cursor()
+        results = cursor.execute(query, [self.id, max])
+
+        tags   = {}
+        
+        for row in cursor.fetchall():
+            # tags[tag_name] = tag_count
+            tags[row[0]] = row[1] 
+
+        return tags
+        
     def __getattr__(self, name):
         if name == 'description':
             return self.version.description
@@ -57,7 +83,7 @@ class MenuItem(models.Model):
             return self.version.price
 
         
-        models.Model.__getattr__(self, name)
+        models.Model.__getattribute__(self, name)
     
     def __unicode__(self):
         return self.name
@@ -87,7 +113,7 @@ class MenuitemVersion(models.Model):
 
       
 class MenuitemRating(models.Model):
-    menu_item  = models.ForeignKey(MenuItem, null=True, blank=True)
+    menu_item  = models.ForeignKey(MenuItem)
     user       = models.ForeignKey(Profile, null=True, blank=True)
     value      = models.IntegerField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -101,15 +127,45 @@ class MenuitemRating(models.Model):
             cursor  = connection.cursor()
             query   = "SELECT count(value), avg(value) FROM menuitem_rating WHERE menu_item_id = %s"
             results = cursor.execute(query, (self.menu_item.id,))
-    
+
             for row in cursor.fetchall():
                 self.menu_item.num_ratings    = row[0]
                 self.menu_item.average_rating = row[1]
                 self.menu_item.save()
-    
+
         except:
-              transaction.rollback()
+            transaction.rollback()
         else:
-              transaction.commit()
+            transaction.commit()
+    
 
 
+class MenuitemTag(models.Model):
+    menu_item       = models.ForeignKey(MenuItem)
+    user            = models.ForeignKey(Profile)
+    tag             = models.CharField(max_length=300)
+    normalized_tag  = models.CharField(max_length=300)
+    created_at      = models.DateTimeField(auto_now_add=True)
+    unique_together = ("user", "menuitem", "normalized_tag")
+
+    objects        = TagManager()
+    
+    def __unicode__(self):
+        return self.normalized_tag
+    
+    class Meta:
+        db_table = u'restaurant_tag'
+    
+    def delete(self):
+        super(MenuitemTag, self).delete()
+        self.menuitem.reindex()
+    
+    def save(self, force_insert=False, force_update=False):
+        if not self.normalized_tag:
+            self.normalized_tag = normalize(tag)
+    
+        super(MenuitemTag, self).save(force_insert, force_update)
+        self.menuitem.reindex()
+
+    class Meta:
+        db_table = u'menuitem_tag'
