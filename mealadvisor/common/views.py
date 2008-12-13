@@ -41,9 +41,11 @@ def menuitem(request, slug, item_slug):
         except:
             pass
 
-    context    = {'restaurant':restaurant, 'menu_item':menu_item}
+    tags_template    = 'menuitem/tags.html'
+    tag_type         = 'menu_item'
+    tagged_object_id = menu_item.id
 
-    return render_to_response("common/menuitem.html", context, context_instance=RequestContext(request))
+    return render_to_response("common/menuitem.html", locals(), context_instance=RequestContext(request))
 
 
 def menuitem_image(request, md5):
