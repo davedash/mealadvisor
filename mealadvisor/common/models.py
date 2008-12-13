@@ -64,12 +64,6 @@ class State(models.Model):
 #         db_table = u'menuitem_note'
 # 
 # 
-# class MenuitemSearchIndex(models.Model):
-#     menuitem = models.ForeignKey(MenuItem, null=True, blank=True)
-#     word = models.CharField(max_length=765, blank=True)
-#     weight = models.IntegerField(null=True, blank=True)
-#     class Meta:
-#         db_table = u'menuitem_search_index'
 # 
 # class RestaurantRedirect(models.Model):
 #     old_stripped_title = models.CharField(max_length=765, primary_key=True)
