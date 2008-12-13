@@ -71,28 +71,6 @@ class State(models.Model):
 #     class Meta:
 #         db_table = u'menuitem_search_index'
 # 
-# class MenuitemTag(models.Model):
-#     menu_item = models.ForeignKey(MenuItem, null=True, blank=True)
-#     user = models.ForeignKey(Profile, null=True, blank=True)
-#     tag = models.CharField(max_length=300, blank=True)
-#     normalized_tag = models.CharField(max_length=300, blank=True)
-#     created_at = models.DateTimeField(null=True, blank=True)
-#     id = models.IntegerField()
-#     class Meta:
-#         db_table = u'menuitem_tag'
-# 
-# 
-# class FacebookProfileRel(models.Model):
-#     fbid = models.IntegerField(primary_key=True)
-#     profile = models.ForeignKey(Profile, null=True, blank=True)
-#     updated_at = models.DateTimeField(null=True, blank=True)
-#     created_at = models.DateTimeField(null=True, blank=True)
-#     class Meta:
-#         db_table = u'facebook_profile_rel'
-# 
-# 
-# 
-# 
 # class RestaurantRedirect(models.Model):
 #     old_stripped_title = models.CharField(max_length=765, primary_key=True)
 #     restaurant = models.ForeignKey(Restaurant, null=True, blank=True)
@@ -100,8 +78,6 @@ class State(models.Model):
 #     created_at = models.DateTimeField(null=True, blank=True)
 #     class Meta:
 #         db_table = u'restaurant_redirect'
-# 
-# 
 # 
 # class YahooLocalCategory(models.Model):
 #     yid = models.IntegerField(primary_key=True)
