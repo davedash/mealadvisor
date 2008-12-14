@@ -24,16 +24,17 @@
     <p class="price">Price: {{menu_item.price}}</p>
     {% endif %}
 
-    <pre>
-
-      Show the comments
-      Show the comment form
-
-    </pre>
     </div>
     <div class="column column_250">
       {% random_menuitem_image menu_item %}
     </div>
 </div>
+
+{% include 'includes/reviews.html' %}
+<pre>
+
+  Show the comment form
+
+</pre>
 
 {% endblock body %}

@@ -73,25 +73,7 @@
 
 {% endif %}
 
-{% if reviews %}
-<div id="reviews">
-<h3>Restaurant Reviews</h3>
-
-  {% for review in reviews %}
-  <div class="yui-gf review {% cycle 'odd' 'even' %}"> 
-    <div class="yui-u first">
-      <p class="author">{{review.author}}</p>
-      <p class="date">{{review.created_at|timesince}} ago</p>
-    </div>
-    <div class="yui-u note">
-      {{review.html_note|safe}}
-    </div>
-  </div>
-  {% endfor %}
-  
-</div>
-
-{% endif %}
+{% include 'includes/reviews.html' %}
 <div id="reviews_options">
   <ul>
     <li class = "button">
