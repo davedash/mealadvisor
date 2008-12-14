@@ -45,6 +45,9 @@ def menuitem(request, slug, item_slug):
     tag_type         = 'menu_item'
     tagged_object_id = menu_item.id
 
+    reviews      = menu_item.menuitemnote_set.all().select_related(depth=2)
+    review_title = 'Reviews'
+    
     return render_to_response("common/menuitem.html", locals(), context_instance=RequestContext(request))
 
 
