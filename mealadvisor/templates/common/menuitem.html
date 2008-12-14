@@ -1,5 +1,6 @@
 {% extends "base_restaurant.html" %}
 {% load tags %}
+{% load image_extras %}
 {% block title %}{{menu_item|lower}} &laquo; {{restaurant|lower}} &laquo; {% endblock title %}
 
 {% block body %}
@@ -12,21 +13,27 @@
 
 </div>
 
-{% include 'includes/tagbox.html' %}	
+<div id="photo_container" class="columns_n_250">
+  <div class="column">
 
+    {% include 'includes/tagbox.html' %}	
 
-<p class="description">{{menu_item.description}}</p>
+    <p class="description">{{menu_item.description}}</p>
 
-{% if menu_item.price %}
-<p class="price">Price: {{menu_item.price}}</p>
-{% endif %}
+    {% if menu_item.price %}
+    <p class="price">Price: {{menu_item.price}}</p>
+    {% endif %}
 
-<pre>
+    <pre>
 
-Show the photo
-Show the comments
-Show the tag-crud
-Show the comment form
+      Show the comments
+      Show the comment form
 
-</pre>
+    </pre>
+    </div>
+    <div class="column column_250">
+      {% random_menuitem_image menu_item %}
+    </div>
+</div>
+
 {% endblock body %}

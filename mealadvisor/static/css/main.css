@@ -58,9 +58,14 @@ form.cmxform fieldset fieldset label{margin-left:123px;/* Width plus 3 (html spa
 p{margin-bottom:1em;}
 strong{font-weight:bold;}
 em{font-style:italic;}
-.columns_n_400{overflow:hidden;}
+.columns_n_400, .columns_n_300{overflow:hidden;}
 .columns_n_400 .column{width:548px;float:left;}
 .columns_n_400 .column_400{width:400px;float:right;}
+
+.columns_n_250{overflow:hidden;}
+.columns_n_250 .column{width:698px;float:left;}
+.columns_n_250 .column_250{width:250px;float:right;}
+
 .tags ul,.tags li{display:inline;margin-right:.5em;}
 #tag_box{margin-bottom:1em;}
 .tags li a.remove{color:#eee;font:10px Helvetica;vertical-align:super;}
