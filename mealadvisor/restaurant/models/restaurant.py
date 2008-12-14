@@ -1,9 +1,13 @@
+from markdown import markdown
+
 from django.db import models, transaction, connection
-from mealadvisor.common.models import Profile
-from tags import TagManager
 from django.conf import settings
-from utils import *
+
+from mealadvisor.common.models import Profile
 from mealadvisor.tools import *
+
+from tags import TagManager
+from utils import *
 
 class RestaurantManager(models.Manager):
     
@@ -216,4 +220,26 @@ class RestaurantSearchIndex(models.Model):
 
     class Meta:
         db_table = u'restaurant_search_index'
+
+
+class RestaurantNote(models.Model):
+    profile    = models.ForeignKey(Profile, db_column='user_id')
+    note       = models.TextField(blank=True)
+    restaurant = models.ForeignKey(Restaurant)
+    location   = models.ForeignKey('Location')
+    updated_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    html_note  = models.TextField(blank=True)
+
+    def save(self, force_insert=False, force_update=False):
+        self.html_note = markdown(self.note)
+        super(RestaurantNote, self).save(force_insert, force_update) # Call the "real" save() method.
+
+
+    def author(self):
+        return self.profile.user
+        #return self.profile.user
+
+    class Meta:
+        db_table = u'restaurant_note'
 

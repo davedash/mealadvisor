@@ -7,6 +7,7 @@ from mealadvisor.tools import *
 from restaurant import Restaurant, TagManager
 from location import Location
 from utils import *
+from markdown import markdown
 
 class MenuItemManager(models.Manager):
     def with_ratings(self, user=None):
@@ -214,3 +215,24 @@ class MenuitemTag(models.Model):
 
     class Meta:
         db_table = u'menuitem_tag'
+
+
+class MenuitemNote(models.Model):
+    menu_item  = models.ForeignKey(MenuItem)
+    profile    = models.ForeignKey(Profile, db_column='user_id')
+    note       = models.TextField()
+    html_note  = models.TextField()
+    updated_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        db_table = u'menuitem_note'
+
+    def save(self, force_insert=False, force_update=False):
+        self.html_note = markdown(self.note)
+        super(MenuitemNote, self).save(force_insert, force_update)
+
+
+    def author(self):
+        return self.profile.user
+

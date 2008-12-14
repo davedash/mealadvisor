@@ -52,19 +52,6 @@ class State(models.Model):
         db_table = u'state'
 
 
-# class MenuitemNote(models.Model):
-#     id = models.IntegerField(primary_key=True)
-#     menu_item = models.ForeignKey(MenuItem, null=True, blank=True)
-#     user = models.ForeignKey(Profile, null=True, blank=True)
-#     note = models.TextField(blank=True)
-#     updated_at = models.DateTimeField(null=True, blank=True)
-#     created_at = models.DateTimeField(null=True, blank=True)
-#     html_note = models.TextField(blank=True)
-#     class Meta:
-#         db_table = u'menuitem_note'
-# 
-# 
-# 
 # class RestaurantRedirect(models.Model):
 #     old_stripped_title = models.CharField(max_length=765, primary_key=True)
 #     restaurant = models.ForeignKey(Restaurant, null=True, blank=True)

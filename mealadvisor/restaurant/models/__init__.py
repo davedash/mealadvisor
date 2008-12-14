@@ -91,24 +91,3 @@ class RestaurantRating(models.Model):
 
 
 
-class RestaurantNote(models.Model):
-    profile    = models.ForeignKey(Profile, db_column='user_id')
-    note       = models.TextField(blank=True)
-    restaurant = models.ForeignKey(Restaurant)
-    location   = models.ForeignKey(Location, null=True, blank=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    html_note  = models.TextField(blank=True)
-    
-    def save(self, force_insert=False, force_update=False):
-        self.html_note = markdown(self.note)
-        super(RestaurantNote, self).save(force_insert, force_update) # Call the "real" save() method.
-    
-    
-    def author(self):
-        return self.profile.user
-        #return self.profile.user
-        
-    class Meta:
-        db_table = u'restaurant_note'
-
