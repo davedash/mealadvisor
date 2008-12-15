@@ -21,7 +21,12 @@ DROP TABLE sf_guard_permission;
 DROP TABLE sf_guard_remember_key;
 DROP TABLE sf_guard_user_permission;
 DROP TABLE sf_guard_user_group;
-REPLACE INTO auth_user (id, username, password, is_active, last_login, date_joined) SELECT id, username, CONCAT(algorithm,'$', salt, '$', password), 1, last_login, created_at FROM sf_guard_user; DROP TABLE sf_guard_user;
+
+REPLACE INTO auth_user (id, username, password, is_active, last_login, date_joined) 
+SELECT id, replace(username, 'http://', ''), CONCAT(algorithm,'$', salt, '$', password), 1, last_login, created_at 
+FROM sf_guard_user; 
+DROP TABLE sf_guard_user;
+
 UPDATE auth_user SET is_staff = 1 WHERE id=8;
 UPDATE auth_user SET is_staff = 1, is_superuser=1 WHERE id=1;
 
@@ -78,6 +83,8 @@ update menu_item set name=replace(name, 'â€™', '\'') where name like '%â�
 update restaurant set name=replace(name, 'â€™', '\'') where name like '%â€™%';
 update restaurant set name=replace(name, 'Ã¼', 'ü') where name like '%Ã¼%';
 update restaurant set name=replace(name, 'TequilerÃ', 'Tequilerí')  where name LIKE '%TequilerÃ%';
+update restaurant set name=replace(name, 'TaquerÃ', 'Taquerí')  where name LIKE '%TaquerÃ%';
+
 
 update restaurant_version set description=replace(description,'â€', '\"'), html_description=replace(html_description,'â€œ', '\"') 
   where description like '%â€%';
