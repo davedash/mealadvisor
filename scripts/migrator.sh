@@ -51,6 +51,37 @@ alter table menuitem_tag change id id INT UNSIGNED NOT NULL AUTO_INCREMENT FIRST
 alter table menuitem_search_index ADD id INT UNSIGNED NOT NULL AUTO_INCREMENT FIRST, add primary key (id);
 
 
+
+SET NAMES latin1;
+ALTER TABLE restaurant MODIFY COLUMN name TEXT CHARACTER SET latin1;
+ALTER TABLE restaurant MODIFY COLUMN name BLOB;
+ALTER TABLE restaurant MODIFY COLUMN name TEXT CHARACTER SET utf8;
+ALTER TABLE menu_item MODIFY COLUMN name TEXT CHARACTER SET latin1;
+ALTER TABLE menu_item MODIFY COLUMN name BLOB;
+ALTER TABLE menu_item MODIFY COLUMN name TEXT CHARACTER SET utf8;
+ALTER TABLE restaurant_version MODIFY COLUMN description TEXT CHARACTER SET latin1;
+ALTER TABLE restaurant_version MODIFY COLUMN description BLOB;
+ALTER TABLE restaurant_version MODIFY COLUMN description TEXT CHARACTER SET utf8;
+ALTER TABLE restaurant_version MODIFY COLUMN html_description TEXT CHARACTER SET latin1;
+ALTER TABLE restaurant_version MODIFY COLUMN html_description BLOB;
+ALTER TABLE restaurant_version MODIFY COLUMN html_description TEXT CHARACTER SET utf8;
+
+
+SET NAMES utf8;
+
+update menu_item set name=replace(name,'Ã©','é') where name LIKE '%Ã©%';
+update restaurant set name=replace(name,'Ã©','é') where name LIKE '%Ã©%';
+update menu_item set name=replace(name, 'Ã¶', 'ö') where name LIKE '%Ã¶%';
+update restaurant set name=replace(name, 'Ã¶', 'ö') where name LIKE '%Ã¶%';
+update menu_item set name=replace(name, 'Ã±', 'ñ') where name LIKE '%Ã±%';
+update menu_item set name=replace(name, 'â€™', '\'') where name like '%â€™%';
+update restaurant set name=replace(name, 'â€™', '\'') where name like '%â€™%';
+update restaurant set name=replace(name, 'Ã¼', 'ü') where name like '%Ã¼%';
+update restaurant set name=replace(name, 'TequilerÃ', 'Tequilerí')  where name LIKE '%TequilerÃ%';
+
+update restaurant_version set description=replace(description,'â€', '\"'), html_description=replace(html_description,'â€œ', '\"') 
+  where description like '%â€%';
+
 SET foreign_key_checks = 1;
 " | mysql -u root rbu     
 
