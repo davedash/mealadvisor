@@ -28,13 +28,12 @@ def restaurant(request, slug):
     page      = paginator.page(1)
     dishes    = page.object_list
     
-    reviews = restaurant.restaurantnote_set.all().select_related(depth=2)
+    reviews = restaurant.restaurantnote_set.all().select_related('profile__user')
 
     # tagbox data
     tags_template    = 'restaurant/tags.html'
     tag_type         = 'restaurant'
     tagged_object_id = restaurant.slug()
-
     
     return render_to_response("restaurant/restaurant_detail.html", locals(), context_instance=RequestContext(request))
 
@@ -99,6 +98,7 @@ def review(request, slug):
     else:
         form = ReviewForm() # An unbound form
 
+    review_form = form
     return render_to_response('restaurant/review.html', locals(), context_instance=RequestContext(request))
     
     

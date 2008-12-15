@@ -3,9 +3,10 @@ from django.shortcuts import render_to_response, get_object_or_404, get_list_or_
 from django.contrib.auth import login
 from django.http import HttpResponse, HttpResponseRedirect
 
-from mealadvisor.restaurant.models import Restaurant, MenuItemImage, MenuItem, MenuitemRating
+from mealadvisor.restaurant.models import Restaurant, MenuItemImage, MenuItem, MenuitemRating, MenuitemNote
 from mealadvisor.common import profiles
 from mealadvisor.common.search import Search
+from mealadvisor.restaurant.forms import ReviewForm
 
 def home(request):
     # load n pictures   
@@ -28,7 +29,8 @@ def search(request):
         context['locations'] = results
             
     return render_to_response("common/search.html", context, context_instance=RequestContext(request))
-  
+
+
 def menuitem(request, slug, item_slug):
     # get results from model
     restaurant = get_object_or_404(Restaurant, stripped_title__exact=slug)
@@ -47,6 +49,22 @@ def menuitem(request, slug, item_slug):
 
     reviews      = menu_item.menuitemnote_set.all().select_related(depth=2)
     review_title = 'Reviews'
+    
+    if request.method == 'POST': # If the form has been submitted...
+        form = ReviewForm(request.POST) # A form bound to the POST data
+        if form.is_valid(): # All validation rules pass
+            note           = MenuitemNote()
+            note.profile   = request.user.get_profile()
+            note.note      = form.cleaned_data['note']
+            note.menu_item = menu_item
+            note.save()
+            
+            return HttpResponseRedirect(menu_item.get_absolute_url()) # Redirect after POST
+    else:
+        form = ReviewForm() # An unbound form
+
+
+    review_form   = form
     
     return render_to_response("common/menuitem.html", locals(), context_instance=RequestContext(request))
 
