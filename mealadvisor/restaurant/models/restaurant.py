@@ -14,12 +14,12 @@ class RestaurantManager(models.Manager):
     def search(self, phrase, offset=0, max=10):
         # we want to stem the words AND extract any numbers
         words = stem_phrase(phrase) + extract_numbers(phrase)
-    
+        
         num_words = len(words)
         if num_words == 0:
             return []
-    
-    
+        
+        
         # mysql specifc
         # e.g. longhorn steakhouse
         # produces
@@ -29,7 +29,7 @@ class RestaurantManager(models.Manager):
         # OR restaurant_search_index.WORD LIKE 'steakhous') GROUP BY
         # restaurant_search_index.RESTAURANT_ID ORDER BY nb DESC, total_weight DESC
         # LIMIT 10
-    
+        
         query = """
         SELECT DISTINCT 
             `restaurant_search_index`.`restaurant_id`, 
@@ -48,11 +48,11 @@ class RestaurantManager(models.Manager):
         OFFSET %%s
         """ \
         % " OR ".join(['`restaurant_search_index`.`word` LIKE ?'] * num_words)
-    
+        
         query   = query.replace('?', '%s')
         cursor  = connection.cursor()
         results = cursor.execute(query, words + [max, offset])
-    
+        
         restaurants = []
         for row in cursor.fetchall():
             restaurant        = self.get(pk=row[0])
@@ -61,9 +61,13 @@ class RestaurantManager(models.Manager):
             restaurants.append(restaurant)
         
         return restaurants
+    
 
-
-
+    def get_tagged(self, tag):
+        restaurants = []
+        tags = RestaurantTag.objects.select_related('restaurant').filter(tag=tag)
+        [restaurants.append(tag.restaurant) for tag in tags]
+        return restaurants
 
 class RestaurantVersion(models.Model):
     chain            = models.IntegerField(null=True, blank=True)

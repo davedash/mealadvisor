@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load tags %}
+{% load image_extras %}
+{% block title %}{{tag}} &laquo; tags &laquo; {% endblock title %}
+
+{% block body %}
+<h2>
+  Things tagged {{tag}}
+</h2>
+
+{% if restaurants %}
+  <div id="restaurant_list">
+    <h3>Restaurants:</h3>
+    <ul>
+    {% for restaurant in restaurants %}
+      <li>{% link_to restaurant restaurant.get_absolute_url %}</li>
+    {% endfor %}
+    </ul>
+  </div>
+
+{% endif %}
+
+{% if menuitems %}
+  <div id="menuitem_list">
+    <h3>Dishes:</h3>
+    <ul>
+    {% for menuitem in menuitems %}
+      <li>
+        {% link_to menuitem menuitem.get_absolute_url %} 
+        from {% link_to menuitem.restaurant menuitem.restaurant.get_absolute_url %}
+      </li>
+    {% endfor %}
+    </ul>
+  </div>
+{% endif %}
+
+{% endblock body %}

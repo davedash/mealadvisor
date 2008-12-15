@@ -71,3 +71,4 @@ em{font-style:italic;}
 .tags li a.remove{color:#eee;font:10px Helvetica;vertical-align:super;}
 #tag_form_container{width:15em;position:relative;}
 #tag_form_container form{height:2em;display:none;}
+#restaurant_list{margin-bottom:1em;}

@@ -46,4 +46,10 @@ class TagManager(models.Manager):
             
         return obj, created
     
+    def filter(self, *args, **kwargs):
+        if 'tag' in kwargs:
+            tag = kwargs.pop('tag')
+            kwargs['normalized_tag'] = normalize(tag)
+
+        return self.get_query_set().filter(*args, **kwargs)
 

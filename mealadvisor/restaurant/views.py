@@ -101,4 +101,10 @@ def review(request, slug):
     review_form = form
     return render_to_response('restaurant/review.html', locals(), context_instance=RequestContext(request))
     
+def tag(request, tag):
+    # get restaurants
+    restaurants = Restaurant.objects.get_tagged(tag)
+    # get menuitems
+    menuitems = MenuItem.objects.get_tagged(tag=tag)
+    return render_to_response('restaurant/tag.html', locals(), context_instance=RequestContext(request))
     

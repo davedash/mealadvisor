@@ -11,13 +11,13 @@ from markdown import markdown
 
 class MenuItemManager(models.Manager):
     def with_ratings(self, user=None):
-
+        
         items = self.all().select_related(depth=1)
-
+        
         if user != None and user.is_authenticated() and len(items) > 0:
-
+            
             r_id = items[0].restaurant_id
-
+            
             sql = """
             SELECT r.menu_item_id, r.value
             FROM menuitem_rating r, menu_item m
@@ -25,20 +25,28 @@ class MenuItemManager(models.Manager):
             AND restaurant_id = %s
             AND user_id = %s
             """
-
+            
             cursor = connection.cursor()
-
+            
             cursor.execute(sql, [r_id, user.get_profile().id])
             result_dict = {}
-
+            
             for row in cursor.fetchall():
                 result_dict[row[0]] = row[1]
-
+                
                 for item in items:
                     if item.id in result_dict:
                         item.current_rating = result_dict[item.id]
-
+                        
         return items
+    
+    
+    def get_tagged(self, tag):
+        items = []
+        tags = MenuitemTag.objects.select_related('menu_item').filter(tag=tag)
+        [items.append(tag.menu_item) for tag in tags]
+        return items
+
 
 class MenuItem(models.Model):
     name           = models.CharField(max_length=765, blank=True)

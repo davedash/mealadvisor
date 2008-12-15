@@ -77,6 +77,9 @@ urlpatterns += patterns('mealadvisor.restaurant.views',
     # Restaurant Review
     (r'^restaurant/(?P<slug>[^/]+)/review$', 'review'),
     
+    # Tag page
+    (r'^tag/(?P<tag>[^/]+)/?', 'tag'),
+    
 )
 
 # registration
@@ -99,9 +102,9 @@ urlpatterns += patterns('',
     ),
 )
 
-urlpatterns += patterns('',
-    (r'^ajax/tag_ac$', 'restaurant.ajax_views.tags'),
-    (r'^ajax/tag_add_restaurant$', 'restaurant.ajax_views.tag_add'),
-    (r'^ajax/tag_add_menu_item$', 'restaurant.ajax_views.tag_add_menuitem'),
-    (r'^ajax/tag_rm$', 'restaurant.ajax_views.tag_remove'),
+urlpatterns += patterns('restaurant.ajax_views',
+    (r'^ajax/tag_ac$', 'tags'),
+    (r'^ajax/tag_add_restaurant$', 'tag_add'),
+    (r'^ajax/tag_add_menu_item$', 'tag_add_menuitem'),
+    (r'^ajax/tag_rm$', 'tag_remove'),
 )
