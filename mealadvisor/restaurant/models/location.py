@@ -1,7 +1,8 @@
 from django.db import models, transaction, connection
 from restaurant import Restaurant
 from mealadvisor.common.models import Profile, Country, State
-
+from django.template.defaultfilters import slugify
+from mealadvisor.geocoder import geocode
 
 class LocationManager(models.Manager):
     def in_country(self, country):
@@ -197,15 +198,12 @@ class LocationManager(models.Manager):
         cursor  = connection.cursor()
         results = cursor.execute(query)
         return cursor.fetchall()
-        
+    
 
-
-
-        
 class Location(models.Model):
     restaurant      = models.ForeignKey(Restaurant)
-    data_source     = models.CharField(max_length=96, blank=True)
-    data_source_key = models.CharField(max_length=765, blank=True)
+    data_source     = models.CharField(max_length=96, blank=True, null=True)
+    data_source_key = models.CharField(max_length=765, blank=True, null=True)
     name            = models.CharField(max_length=765, blank=True)
     stripped_title  = models.CharField(max_length=765, blank=True)
     address         = models.CharField(max_length=765, blank=True)
@@ -217,8 +215,8 @@ class Location(models.Model):
     longitude       = models.FloatField(null=True, blank=True)
     phone           = models.CharField(max_length=48, blank=True)
     approved        = models.IntegerField(null=True, blank=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at      = models.DateTimeField(auto_now=True)
+    created_at      = models.DateTimeField(auto_now_add=True)
     objects         = LocationManager()
 
     def __unicode__(self):
@@ -233,6 +231,44 @@ class Location(models.Model):
         else:
             return '-'
         
+    def generate_slug(self):
+        if self.name:
+            return slugify(self.name)
+        else:
+            return slugify(" ".join([self.address, self.city, self.state]))
+        
+    def get_full_address(self, format = "%(address)s, %(city)s, %(state)s, %(zipcode)s"):
+        str = format % {'address': self.address, 'city': self.city, 'state': self.state, 'zipcode': self.zip }
+        return str.strip()
+    
+    def save(self, force_insert=False, force_update=False):
+        if not self.stripped_title:
+            self.stripped_title = self.generate_slug()
+
+        if not (self.latitude and self.longitude):
+            (place, self.latitude, self.longitude) = geocode(self.get_full_address())
+
+        super(Location, self).save(force_insert, force_update)
+
+
+        #   $geo = new YahooGeo($this->getFullAddress('%a, %c, %s'));
+        # 
+        #       $this->setCountryByName($country);
+        #       if ($state = $geo->getState());
+        #       {
+        #           $this->setState($state);
+        #       }
+        #       if ($city = $geo->getCity());
+        #       {
+        #           $this->setCity($city);
+        #       }
+        #       if ($zip = $geo->getZip());
+        #       {
+        #           $this->setZip($zip);
+        #       }
+        #       
+        #       $this->setLatitude($geo->getLatitude());
+        #       $this->setLongitude($geo->getLongitude());
     class Meta:
         db_table = u'location'
         unique_together = (("data_source", "data_source_key"),)

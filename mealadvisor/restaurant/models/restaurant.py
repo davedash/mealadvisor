@@ -2,6 +2,7 @@ from markdown import markdown
 
 from django.db import models, transaction, connection
 from django.conf import settings
+from django.template.defaultfilters import slugify
 
 from mealadvisor.common.models import Profile
 from mealadvisor.tools import *
@@ -73,13 +74,18 @@ class RestaurantVersion(models.Model):
     chain            = models.IntegerField(null=True, blank=True)
     description      = models.TextField(blank=True)
     url              = models.CharField(max_length=765, blank=True)
-    created_at       = models.DateTimeField(null=True, blank=True)
+    created_at       = models.DateTimeField(auto_now_add=True)
     restaurant       = models.ForeignKey('Restaurant', null=True, blank=True)
     user             = models.ForeignKey(Profile, null=True, blank=True)
     html_description = models.TextField(blank=True)
-
+    
+    def save(self, force_insert=False, force_update=False):
+        self.html_description = markdown(self.description)
+        super(RestaurantVersion, self).save(force_insert, force_update)
+        
     class Meta:
         db_table = u'restaurant_version'
+    
 
 
 class Restaurant(models.Model):
@@ -93,17 +99,56 @@ class Restaurant(models.Model):
     updated_at     = models.DateTimeField(auto_now=True)
     created_at     = models.DateTimeField(auto_now_add=True)
     objects        = RestaurantManager()
-    slug           = stripped_title
+    new_version    = None
     
-    def __getattr__(self, name):
+    def save(self, force_insert=False, force_update=False):
+        if not self.stripped_title:
+            self.stripped_title = slugify(self.name)
+        
+        super(Restaurant, self).save(force_insert, force_update)
+        if self.new_version:
+            self.new_version.restaurant = self
+            self.new_version.save()
+            self.version = self.new_version
+            super(Restaurant, self).save(force_insert, force_update)
+        
+        self.reindex()
+        
+        
+    def __setattr__(self, name, value):
         if name == 'description':
-            return self.version.description
-
+            self.get_new_version().description = value
+        
         elif name == 'url':
-            return self.version.url
+            self.get_new_version().url = value
+        
+        else:
+            object.__setattr__(self, name, value)
+
+    def __getattr__(self, name):
+        try:
+            if name == 'description':
+                return self.version.description
+
+            elif name == 'url':
+                return self.version.url
+        except RestaurantVersion.DoesNotExist:
+            return ''
             
         models.Model.__getattribute__(self, name)
+    
+    def get_new_version(self):
+        if self.new_version == None:
+            try:
+                rv    = self.version
+                rv.id = None
+            except RestaurantVersion.DoesNotExist:
+                rv = RestaurantVersion()
+            
+            self.new_version = rv
 
+        return self.new_version
+        
     def get_absolute_url(self):
         return "/restaurant/%s" % (self.stripped_title,)
 

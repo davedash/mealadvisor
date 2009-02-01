@@ -51,9 +51,16 @@ form.cmxform fieldset li{list-style:none;padding:5px;margin:0;}
 form.cmxform fieldset fieldset{border:none;margin:3px 0 0;}
 form.cmxform fieldset fieldset legend{padding:0 0 5px;font-weight:normal;}
 form.cmxform fieldset fieldset label{display:block;width:auto;}
-form.cmxform em{font-weight:bold;font-style:normal;color:#f00;}
+form.cmxform em{font-weight:bold;font-style:normal;}
 form.cmxform label{width:120px;/* Width of labels */}
 form.cmxform fieldset fieldset label{margin-left:123px;/* Width plus 3 (html space) */}
+form.cmxform li p.help { margin-left: 123px; font-size: 90%;}
+form.cmxform input.submit { margin-left: 123px;}
+form.cmxform fieldset { margin-bottom: 1em; border-top: dotted 1px white; }
+form.cmxform p.help { color: white; font-size: 90%; font-style: italic;}
+form.cmxform h3 {margin-top: 2em; margin-bottom:0;}
+form.cmxform h3 {margin-top: 2em; margin-bottom:0;}
+form.cmxform .errorlist {margin-left:123px;}
 .errorlist{color:red;font-style:italic;}
 p{margin-bottom:1em;}
 strong{font-weight:bold;}

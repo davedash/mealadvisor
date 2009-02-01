@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+{% block body %}
+<h2>Submit a new restaurant</h2>
+<p>Couldn't find a restaurant on our site?  Add it here and share what you know!</p>
+
+<form action="" method="POST" class="cmxform">
+  <h3>Restaurant Details</h3>
+  <fieldset>
+    <ul>
+      <li>
+        {% if form.restaurant_name.errors %}
+        <ul class="errorlist">
+        {% for error in form.restaurant_name.errors %}
+            <li>{{ error|safe }}</li>
+        {% endfor %}
+        </ul>
+        {% endif %}
+        <label for="id_restaurant_name">Restaurant Name</label>
+        {{ form.restaurant_name }}
+      </li>
+      <li>
+        {{ form.description.errors }}
+        <label for="id_description">Description</label>
+        {{ form.description }}
+        <p class="help">
+          {{form.description.help_text}}
+          {% include 'includes/markdown.html' %}
+        </p>
+        
+      </li>
+      <li>
+        {{ form.url.errors }}
+        <label for="id_url">Website</label>
+        {{ form.url }}
+      </li>
+    </ul>
+  </fieldset>
+  
+  <h3>Location</h3>
+  <fieldset>
+    <p class="help">
+      Enter any location specific information for this restaurant. If there are multiple locations you can add them later. All fields
+      other than location name are necessary in order for a location to be submitted.
+    </p>
+    <p class="help">
+      Currently we're only accepting US Locations.
+    </p>
+    <ul>
+      <li>
+        {{ form.location_name.errors }}
+        <label for="id_locaiton_name">Name</label>
+        {{ form.location_name }}
+        <p class="help">{{form.location_name.help_text|safe}}</p>
+        
+      </li>
+      <li>
+        {{ form.address.errors }}
+        <label for="id_address">Address</label>
+        {{ form.address }}
+      </li>
+      <li>
+        {{ form.city.errors }}
+        <label for="id_city">City</label>
+        {{ form.city }}
+      </li>
+      <li>
+        {{ form.state.errors }}
+        <label for="id_state">State</label>
+        {{ form.state }}
+      </li>
+      <li>
+        {{ form.zipcode.errors }}
+        <label for="id_zipcode">Zip Code</label>
+        {{ form.zipcode }}
+      </li>
+      <li>
+        {{ form.phone.errors }}
+        <label for="id_phone">Phone</label>
+        {{ form.phone }}
+      </li>
+    </ul>
+  </fieldset>
+  <h3>Review</h3>
+  <fieldset>
+    <p class="help">
+      Add your initial review of the restaurant. Tell us how great the place is, or if we should consider dining elsewhere.
+    </p>
+    <ul>    
+      <li>
+        {{ form.review.errors }}
+        <label for="id_review">Review</label>
+        {{ form.review }}
+        <p class="help">
+          {% include 'includes/markdown.html' %}
+        </p>
+      </li>
+    </ul>
+  </fieldset>
+  
+  <input type="submit" value="Submit" class="submit"/>
+</form>
+{% endblock body %}

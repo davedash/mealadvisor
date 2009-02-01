@@ -85,7 +85,8 @@ class Geocoder(geocoders.Google):
             return parse_place(places[0])
         else:
             return (parse_place(place) for place in places)
-# g = geocoders.Google('YOUR_API_KEY_HERE')  
-# >>> place, (lat, lng) = g.geocode("10900 Euclid Ave in Cleveland")  
-# >>> print "%s: %.5f, %.5f" % (place, lat, lng)  
-# 10900 Euclid Ave, Cleveland, OH 44106, USA: 41.50489, -81.61027
+            
+def geocode(place):
+    g = geocoders.Google(settings.GOOGLE_API_KEY)
+    place, (lat, lng) = g.geocode(place)
+    return [place, lat, lng]

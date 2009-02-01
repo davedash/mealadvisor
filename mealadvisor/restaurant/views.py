@@ -4,7 +4,7 @@ from django.http import HttpResponseRedirect
 from models import *
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, InvalidPage
-from forms import ReviewForm
+from forms import *
 
 
 def get_restaurant(slug):
@@ -21,7 +21,8 @@ def restaurant(request, slug):
             pass
     
     locations     = list(restaurant.location_set.all())
-    main_location = locations.pop(0)
+    if locations:
+        main_location = locations.pop(0)
     num_locations = len(locations)
 
     paginator = Paginator(restaurant.menuitem_set.with_ratings(request.user), 8)
@@ -108,3 +109,47 @@ def tag(request, tag):
     menuitems = MenuItem.objects.get_tagged(tag=tag)
     return render_to_response('restaurant/tag.html', locals(), context_instance=RequestContext(request))
     
+@login_required
+def add(request):
+    if request.method == 'POST': # If the form has been submitted...
+        form = NewRestaurantForm(request.POST) # A form bound to the POST data
+        if form.is_valid(): # All validation rules pass
+            # create the restaurant
+            
+            name        = form.cleaned_data['restaurant_name']
+            description = form.cleaned_data['description']
+            url         = form.cleaned_data['url']
+            
+            r             = Restaurant(name=name)
+            r.description = description
+            r.url         = url
+            r.save()
+            
+            address = form.cleaned_data['address']
+            city    = form.cleaned_data['city']
+            state   = form.cleaned_data['state'].usps
+            zipcode = form.cleaned_data['zipcode']
+            phone   = form.cleaned_data['phone']
+
+            if (address or phone):
+                location = Location(restaurant=r, address=address, city=city, state=state, zip=zipcode, phone=phone)
+                
+                name = form.cleaned_data['location_name']
+                if name:
+                    location.name = name
+                
+                location.save()
+
+            review = form.cleaned_data['review']
+            
+            if review:
+                note = RestaurantNote(restaurant=r, profile=request.user.get_profile(), note=review)
+                note.save()
+
+            return HttpResponseRedirect(r.get_absolute_url()) # Redirect after POST
+            
+            
+    else:
+        form = NewRestaurantForm()
+        
+    return render_to_response('restaurant/add.html', locals(), context_instance=RequestContext(request))

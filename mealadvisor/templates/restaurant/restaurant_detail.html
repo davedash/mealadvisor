@@ -17,6 +17,7 @@
 <div id="location_container" class="columns_n_400">
 
   <div class="column">
+	{% if main_location %}
     <div id="main_location">
       <div class="address">
         {{main_location.address}}<br />
@@ -26,6 +27,7 @@
         {{main_location.phone}}
       </div>
     </div>
+	{% endif %}
 
     <p class="description">{{restaurant.description}}</p>
 
@@ -50,10 +52,13 @@
     {% endif %}
   </div>
   <div class="column_400 column">
+	{% if main_location %}
     <div id="restaurant_map"></div>    
     <script type="text/javascript" charset="utf-8">
        MA.map.draw("{{main_location.address}}, {{main_location.city}}, {{main_location.state}} {{main_location.zip}}", "{{restaurant}}<br/>{{main_location}}");
     </script>
+	{% endif %}
+	<p class="address">{{main_location.get_full_address}}</p>
   </div>
 </div>
 

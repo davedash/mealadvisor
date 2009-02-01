@@ -6,11 +6,10 @@ from django.contrib.auth.models import User
 
 
 class CountryManager(models.Manager):
-    
-    def retrieve_magically(self, country):
-        
+    def retrieve_magically(self, country):        
         return self.get(Q(name = country) \
         | Q(iso = country) | Q(iso3 = country))
+
 
 class StateManager(models.Manager):
 

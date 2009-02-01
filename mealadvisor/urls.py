@@ -80,6 +80,9 @@ urlpatterns += patterns('mealadvisor.restaurant.views',
     # Tag page
     (r'^tag/(?P<tag>[^/]+)/?', 'tag'),
     
+    # Add Restaurant
+    (r'^add/restaurant/?$', 'add'),
+    
 )
 
 # registration
