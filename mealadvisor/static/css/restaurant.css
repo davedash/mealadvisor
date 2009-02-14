@@ -9,6 +9,7 @@ h2 .url{font-weight:normal;font-size:60%;}
 #extra_locations dl{font-family:Arial;}
 #extra_locations dt{float:left;margin-right:1em;}
 #extra_locations{margin-bottom:1em;}
+#menuitems_list {overflow: auto;}
 #menuitems_list img{border:solid 2px #fff}
 #menuitems_list li.dish{float:left;width:50%;}
 #menuitems_list .yui-gd{margin-bottom:1em;height:104px;border-bottom:solid 1px #555;padding-bottom:1em;}
@@ -16,15 +17,17 @@ h2 .url{font-weight:normal;font-size:60%;}
 #menuitems_list div.even{background:#111;}
 #menuitems_list p{font-size:80%;}
 #menuitems_list .stars{margin-bottom:.5em;}
+.pagination {height: 2em;}
 .pagination li.page{margin-left:5px;text-align:center;width:20px;}
 .pagination li{background:#333;border:1px solid white;float:left;padding:0 3px;}
 .pagination li.current{background:#eee;}
 .pagination a{color:#fff;}
 .pagination .navigation{margin-left:5px;}
 .pagination li.current a{color:#000;}
+#add_menu_item a {color:#fff; background:#333;border:1px solid white;padding:0 3px;}
 .title_container{overflow:auto;}
 .title_container h2{float:left;margin-right:1em;}
-#menu_page{margin-bottom:1em;overflow:auto;}
+#menu_page{margin-bottom:1em;}
 #reviews{margin:1em 0;clear:both;border-bottom:solid 1px #fff;font-size:90%;}
 .review{border-top:solid 1px #fff;padding:1em 0;}
 #reviews .even{background:#222;}

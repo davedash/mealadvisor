@@ -72,8 +72,15 @@
     <li>
       <a href="{{restaurant.get_absolute_url}}/menu">Full Menu</a>
     </li>
+
     {% include 'restaurant/include/menu_paginator.html' %}
+
   </ul>
+	<div id="add_menu_item">
+		<a href="{{restaurant.get_absolute_url}}/add/item">Add a new menu item</a>		
+	</div>
+
+	
 </div>
 
 {% endif %}
