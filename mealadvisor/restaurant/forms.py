@@ -1,7 +1,7 @@
 from django import forms
 from django.template.defaultfilters import slugify
 from django.db.models import Q
-from models.restaurant import Restaurant
+from models import Restaurant, MenuItem
 from mealadvisor.common.models import State
 from django.forms.util import ErrorList
 
@@ -35,6 +35,27 @@ class MenuitemTagAddForm(forms.Form):
     tag         = forms.CharField()
 
 
+class NewMealForm(forms.Form):
+    name        = forms.CharField(error_messages={'required': 'Please enter the name of your dish'})
+    description = forms.CharField(help_text="Note: This is not a review.", widget=forms.Textarea, required=False)
+    price       = forms.CharField(required=False)
+    restaurant  = None
+    
+    def clean_name(self):
+        # see if this dish exist or a dish with the same slug exists
+        name = self.cleaned_data.get('name', '')
+        
+        if name:
+            qset = (Q(name=name) | Q(slug=slugify(name))) & Q(restaurant=self.restaurant)
+            
+            results = MenuItem.objects.filter(qset)
+            
+            if results:
+                raise forms.ValidationError("""This dish <a href="%s">already exists</a>""" % results[0].get_absolute_url())
+                
+        return name
+            
+            
 class NewRestaurantForm(forms.Form):
 	
     restaurant_name = forms.CharField(error_messages={'required': 'Please enter the name of the restaurant'})
