@@ -64,6 +64,9 @@ urlpatterns += patterns('mealadvisor.restaurant.views',
     # Full Menu
     (r'^restaurant/(?P<slug>[^/]+)/menu$', 'menu'),
 
+    # Full Menu
+    (r'^restaurant/(?P<slug>[^/]+)/add/item$', 'menuitem_add'),
+
     # single menu page 
     (r'^restaurant/(?P<slug>[^/]+)/menu/page/(?P<page>\d+)$', 'menu_page'),
     

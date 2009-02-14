@@ -1,0 +1,43 @@
+{% extends 'base_restaurant.html' %}
+{% block body %}
+<h2>Submit a New Menu Item</h2>
+
+<p>
+	Are we missing a dish from {{restaurant}}? Well tell us what it is! Just remember that this isn't a review of the dish, just tell us
+	what it is, you can tell us how you really feel on the next page ;)
+</p>
+
+<form action="" method="POST" class="cmxform">
+  <fieldset>
+    <ul>
+      <li>
+        {% if form.name.errors %}
+        <ul class="errorlist">
+        {% for error in form.name.errors %}
+            <li>{{ error|safe }}</li>
+        {% endfor %}
+        </ul>
+        {% endif %}
+        <label for="id_name">Name of the Item</label>
+        {{ form.name }}
+      </li>
+      <li>
+        {{ form.description.errors }}
+        <label for="id_description">Description</label>
+        {{ form.description }}
+        <p class="help">
+          {{form.description.help_text}}
+          {% include 'includes/markdown.html' %}
+        </p>
+        
+      </li>
+      <li>
+        {{ form.price.errors }}
+        <label for="id_price">Price</label>
+        {{ form.price }}
+      </li>
+    </ul>
+  </fieldset>
+  <input type="submit" value="Submit" class="submit"/>
+</form>
+{% endblock body %}

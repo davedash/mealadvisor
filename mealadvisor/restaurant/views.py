@@ -110,6 +110,32 @@ def tag(request, tag):
     return render_to_response('restaurant/tag.html', locals(), context_instance=RequestContext(request))
     
 @login_required
+def menuitem_add(request, slug):
+    restaurant = get_restaurant(slug)
+    
+    if request.method == 'POST':
+        form            = NewMealForm(request.POST)
+        form.restaurant = restaurant
+        
+        if form.is_valid():
+            name = form.cleaned_data['name']
+            slug           = models.CharField(db_column='url', max_length=765, blank=True)
+            version        = models.ForeignKey('MenuitemVersion', related_name="the_menuitem")
+            restaurant     = models.ForeignKey(Restaurant)
+            approved       = models.IntegerField(null=True, blank=True)
+            average_rating = models.FloatField(null=True, blank=True)
+            num_ratings    = models.IntegerField(null=True, blank=True)
+            updated_at     = models.DateTimeField(auto_now=True)
+            created_at     = models.DateTimeField(auto_now_add=True)
+            objects        = MenuItemManager()
+            current_rating = None
+    else:
+        form = NewMealForm()
+    
+    return render_to_response('menuitem/add.html', locals(), context_instance=RequestContext(request))
+    
+    
+@login_required
 def add(request):
     if request.method == 'POST': # If the form has been submitted...
         form = NewRestaurantForm(request.POST) # A form bound to the POST data
@@ -130,7 +156,7 @@ def add(request):
             state   = form.cleaned_data['state'].usps
             zipcode = form.cleaned_data['zipcode']
             phone   = form.cleaned_data['phone']
-
+            
             if (address or phone):
                 location = Location(restaurant=r, address=address, city=city, state=state, zip=zipcode, phone=phone)
                 
@@ -139,15 +165,14 @@ def add(request):
                     location.name = name
                 
                 location.save()
-
+            
             review = form.cleaned_data['review']
             
             if review:
                 note = RestaurantNote(restaurant=r, profile=request.user.get_profile(), note=review)
                 note.save()
-
-            return HttpResponseRedirect(r.get_absolute_url()) # Redirect after POST
             
+            return HttpResponseRedirect(r.get_absolute_url()) # Redirect after POST
             
     else:
         form = NewRestaurantForm()
