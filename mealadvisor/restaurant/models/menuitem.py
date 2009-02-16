@@ -1,5 +1,8 @@
+from markdown import markdown
+
 from django.db import models, transaction, connection
 from django.conf import settings
+from django.template.defaultfilters import slugify
 
 from mealadvisor.common.models import Profile 
 from mealadvisor.tools import *
@@ -60,7 +63,57 @@ class MenuItem(models.Model):
     created_at     = models.DateTimeField(auto_now_add=True)
     objects        = MenuItemManager()
     current_rating = None
-
+    new_version    = None
+    
+    def save(self, force_insert=False, force_update=False):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        
+        super(MenuItem, self).save(force_insert, force_update)
+        
+        if self.new_version:
+            self.new_version.restaurant = self
+            self.new_version.save()
+            self.version = self.new_version
+            super(MenuItem, self).save(force_insert, force_update)
+        
+        self.reindex()
+    
+    
+    def __setattr__(self, name, value):
+        if name == 'description':
+            self.get_new_version().description = value
+        
+        elif name == 'price':
+            self.get_new_version().price = value
+        
+        else:
+            object.__setattr__(self, name, value)
+    
+    def __getattr__(self, name):
+        try:
+            if name == 'description':
+                return self.version.description
+            
+            elif name == 'price':
+                return self.version.price
+        except RestaurantVersion.DoesNotExist:
+            return ''
+            
+        models.Model.__getattribute__(self, name)
+    
+    def get_new_version(self):
+        if self.new_version == None:
+            try:
+                v    = self.version
+                v.id = None
+            except MenuitemVersion.DoesNotExist:
+                v = MenuitemVersion()
+            
+            self.new_version = v
+        
+        return self.new_version
+    
     def get_tags_from_user(self, profile):
         # given a profile return all the tags that said profile has for this particular item
         tags = MenuitemTag.objects.filter(menu_item = self, user = profile)
@@ -108,7 +161,7 @@ class MenuItem(models.Model):
     
     def get_rating_url(self):
         return self.get_absolute_url()+"/rate/"
-
+    
     def get_words(self):
         """
         Get stemmed words that make up this entry
@@ -116,37 +169,39 @@ class MenuItem(models.Model):
         raw_text      = ' '.join([self.description]*settings.SEARCH_WEIGHT_BODY)
         name          = self.name.replace("'", '')
         raw_text      += ' '.join([name]*settings.SEARCH_WEIGHT_TITLE)
-
+        
         raw_text = rePunctuation.sub(' ', raw_text)
-
+        
         stemmed_words = stem_phrase(raw_text) + extract_numbers(raw_text)
         words         = list_count_values(stemmed_words)
-
+        
         max = 1
         pop_tags = self.get_popular_tags(50)
-
+        
         for tag, count in pop_tags.iteritems():
             if max < count:
                 max = count
-
+            
             stemmed_tag = stem(tag)
-
+            
             if not stemmed_tag in words:
                 words[stemmed_tag] = 0
-
+            
             words[stemmed_tag] += math.ceil(count/max) * settings.SEARCH_WEIGHT_TAG
-
+            
         return words
+    
     def reindex(self):
         # Remove search_index entries for this restaurant:
         MenuitemSearchIndex.objects.filter(menuitem=self).delete()
-
+        
         for word, weight in self.get_words().iteritems():
             MenuitemSearchIndex(menuitem=self, word=word, weight=weight).save()        
-        
+    
     class Meta:
         db_table = u'menu_item'
     
+
 class MenuitemSearchIndex(models.Model):
     menuitem = models.ForeignKey(MenuItem, null=True, blank=True)
     word = models.CharField(max_length=765, blank=True)
@@ -162,6 +217,11 @@ class MenuitemVersion(models.Model):
     user             = models.ForeignKey(Profile, null=True, blank=True)
     price            = models.CharField(max_length=48, blank=True)
     created_at       = models.DateTimeField(auto_now_add=True)
+
+    def save(self, force_insert=False, force_update=False):
+        self.html_description = markdown(self.description)
+        super(MenuitemVersion, self).save(force_insert, force_update)
+        
     class Meta:
         db_table         = u'menuitem_version'
 

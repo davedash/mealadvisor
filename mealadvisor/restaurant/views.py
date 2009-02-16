@@ -118,17 +118,18 @@ def menuitem_add(request, slug):
         form.restaurant = restaurant
         
         if form.is_valid():
-            name = form.cleaned_data['name']
-            slug           = models.CharField(db_column='url', max_length=765, blank=True)
-            version        = models.ForeignKey('MenuitemVersion', related_name="the_menuitem")
-            restaurant     = models.ForeignKey(Restaurant)
-            approved       = models.IntegerField(null=True, blank=True)
-            average_rating = models.FloatField(null=True, blank=True)
-            num_ratings    = models.IntegerField(null=True, blank=True)
-            updated_at     = models.DateTimeField(auto_now=True)
-            created_at     = models.DateTimeField(auto_now_add=True)
-            objects        = MenuItemManager()
-            current_rating = None
+            name        = form.cleaned_data['name']
+            description = form.cleaned_data['description']
+            price       = form.cleaned_data['price']
+            
+            i             = MenuItem(name=name)
+            i.restaurant  = restaurant
+            i.description = description
+            i.price       = price
+            i.save()
+            
+            return HttpResponseRedirect(i.get_absolute_url()) # Redirect after POST
+        
     else:
         form = NewMealForm()
     
