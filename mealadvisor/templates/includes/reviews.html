@@ -1,11 +1,13 @@
 {% if reviews %}
+{% load tags %}
+
 <div id="reviews">
 <h3>{{review_title|default:"Restaurant Reviews"}}</h3>
 
   {% for review in reviews %}
   <div class="yui-gf review {% cycle 'odd' 'even' %}"> 
     <div class="yui-u first">
-      <p class="author">{{review.author}}</p>
+      <p class="author">{% link_to_profile review.author %}</p>
       <p class="date">{{review.created_at|timesince}} ago</p>
     </div>
     <div class="yui-u note">
