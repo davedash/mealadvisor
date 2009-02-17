@@ -12,6 +12,25 @@ from utils import *
 
 class RestaurantManager(models.Manager):
     
+    def rated_or_reviewed_by(self, profile):
+        
+        query = """
+        SELECT restaurant_id, created_at 
+        FROM restaurant_note 
+        WHERE user_id = %d
+        UNION
+        SELECT restaurant_id, created_at
+        FROM restaurant_rating
+        WHERE user_id = %d
+        ORDER BY created_at DESC
+        """ %  (profile.id,profile.id,)
+        
+        cursor = connection.cursor()
+        cursor.execute(query)
+        
+        restaurant_ids = [item[0] for item in cursor.fetchall()]
+        return self.filter(id__in = restaurant_ids)
+    
     def search(self, phrase, offset=0, max=10):
         # we want to stem the words AND extract any numbers
         words = stem_phrase(phrase) + extract_numbers(phrase)

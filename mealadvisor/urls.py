@@ -86,6 +86,7 @@ urlpatterns += patterns('mealadvisor.restaurant.views',
     # Add Restaurant
     (r'^add/restaurant/?$', 'add'),
     
+    (r'^profile/(?P<username>[^/]+)/?', 'profile'),
 )
 
 # registration

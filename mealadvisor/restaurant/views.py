@@ -3,6 +3,7 @@ from django.shortcuts import render_to_response, get_object_or_404, get_list_or_
 from django.http import HttpResponseRedirect
 from models import *
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.core.paginator import Paginator, InvalidPage
 from forms import *
 
@@ -179,3 +180,9 @@ def add(request):
         form = NewRestaurantForm()
         
     return render_to_response('restaurant/add.html', locals(), context_instance=RequestContext(request))
+
+def profile(request, username):
+    user        = User.objects.get(username=username)
+    profile     = user.profile_set.all()[0]
+    restaurants = Restaurant.objects.rated_or_reviewed_by(profile)
+    return render_to_response('profile.html', locals(), context_instance=RequestContext(request))
