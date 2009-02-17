@@ -91,9 +91,13 @@ class MenuItem(models.Model):
             object.__setattr__(self, name, value)
     
     def __getattr__(self, name):
+        
         try:
             if name == 'description':
                 return self.version.description
+            
+            elif name == 'html_description':
+                return self.version.html_description
             
             elif name == 'price':
                 return self.version.price
@@ -141,15 +145,6 @@ class MenuItem(models.Model):
 
         return tags
         
-    def __getattr__(self, name):
-        if name == 'description':
-            return self.version.description
-
-        if name == 'price':
-            return self.version.price
-
-        
-        models.Model.__getattribute__(self, name)
     
     def __unicode__(self):
         return self.name

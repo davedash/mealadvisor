@@ -129,7 +129,8 @@ class Restaurant(models.Model):
         try:
             if name == 'description':
                 return self.version.description
-
+            elif name == 'html_description':
+                return self.version.html_description
             elif name == 'url':
                 return self.version.url
         except RestaurantVersion.DoesNotExist:
