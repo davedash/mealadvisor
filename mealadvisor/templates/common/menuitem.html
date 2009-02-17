@@ -18,7 +18,7 @@
 
     {% include 'includes/tagbox.html' %}	
 
-    <p class="description">{{menu_item.description}}</p>
+    <p class="description">{{menu_item.html_description|safe}}</p>
 
     {% if menu_item.price %}
     <p class="price">Price: {{menu_item.price}}</p>
