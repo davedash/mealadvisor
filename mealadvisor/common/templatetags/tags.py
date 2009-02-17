@@ -76,6 +76,10 @@ def menuitem_tags(user, item):
     output = "\n".join(["<li>%s</li>"%tags[tag] for tag in sorted(tags.keys())])
     
     return "<ul>\n%s\n</ul>" %output
+
+@register.simple_tag
+def link_to_profile(user):
+    return link_to(user.username, '/profile/'+user.username)
     
 @register.simple_tag
 def link_to(text, url, args = {}):
