@@ -78,6 +78,10 @@ def menuitem_tags(user, item):
     return "<ul>\n%s\n</ul>" %output
 
 @register.simple_tag
+def link_to_object(obj):
+    return link_to(obj, obj.get_absolute_url())
+
+@register.simple_tag
 def link_to_profile(user):
     return link_to(user.username, '/profile/'+user.username)
     

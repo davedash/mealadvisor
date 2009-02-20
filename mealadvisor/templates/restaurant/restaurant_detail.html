@@ -20,6 +20,7 @@
 	{% if main_location %}
     <div id="main_location">
       <div class="address">
+		{% if main_location.name %}{{ main_location.name }}<br/>{%endif%}
         {{main_location.address}}<br />
         {{main_location.city}}, {{main_location.state}} {{main_location.zip}}
       </div>
@@ -29,7 +30,7 @@
     </div>
 	{% endif %}
 
-    <p class="description">{{restaurant.html_description}}</p>
+    <p class="description">{{restaurant.html_description|safe}}</p>
 
     {% if locations %}
 
@@ -40,7 +41,7 @@
 
       <dl id="locations_list">
         {% for location in locations %}
-        <dt>{{ location|safe }}:</dt>
+        <dt>{% link_to_object location %}:</dt>
         <dd>
           {{ location.address }} 
           (<abbr title="phone">p</abbr>: {{ location.phone }})
@@ -58,7 +59,7 @@
        MA.map.draw("{{main_location.address}}, {{main_location.city}}, {{main_location.state}} {{main_location.zip}}", "{{restaurant}}<br/>{{main_location}}");
     </script>
 	{% endif %}
-	<p class="address">{{main_location.get_full_address}}</p>
+	<p class="address">{% link_to_object main_location %}: {{main_location.get_full_address}}</p>
   </div>
 </div>
 

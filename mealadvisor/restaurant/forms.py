@@ -107,3 +107,7 @@ class NewRestaurantForm(forms.Form):
             self._errors["location_name"] = ErrorList([msg])
         
         return cleaned_data
+
+class NewMenuItemImageForm(forms.Form):
+    image = forms.ImageField()
+    

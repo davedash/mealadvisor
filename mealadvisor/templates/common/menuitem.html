@@ -26,7 +26,10 @@
 
     </div>
     <div class="column column_250">
-      {% random_menuitem_image menu_item %}
+		<p>{% random_menuitem_image menu_item %}</p>
+		<p>
+			<a href="{{menu_item.get_absolute_url}}/add/image">Upload your own photo</a>
+		</p>
     </div>
 </div>
 

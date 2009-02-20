@@ -69,11 +69,6 @@ def menuitem(request, slug, item_slug):
     return render_to_response("common/menuitem.html", locals(), context_instance=RequestContext(request))
 
 
-def menuitem_image(request, md5):
-    image = get_list_or_404(MenuItemImage, md5sum=md5)[0]
-    return HttpResponse(image.data, mimetype="image/jpeg")
-
-
 def openid_success(request, results):
     context = results
     

@@ -44,9 +44,6 @@ urlpatterns = patterns('',
 )
 
 urlpatterns += patterns('mealadvisor.common.views',
-    # Menu Item Image
-    (r'^menuitem_image/(?P<md5>[a-f0-9]{32})$', 'menuitem_image',),
-
     # Menu Item
     (r'^restaurant/(?P<slug>[^/]+)/menu/(?P<item_slug>[^/]+)$', 'menuitem'),
 
@@ -60,6 +57,9 @@ urlpatterns += patterns('mealadvisor.common.views',
 urlpatterns += patterns('mealadvisor.restaurant.views',
     # Restaurant    
     (r'^restaurant/(?P<slug>[^/]+)/?$', 'restaurant'),
+    
+    # Location
+    (r'^restaurant/(?P<slug>[^/]+)/location/(?P<location_slug>[^/]+)$', 'location'),
     
     # Full Menu
     (r'^restaurant/(?P<slug>[^/]+)/menu$', 'menu'),
@@ -87,6 +87,10 @@ urlpatterns += patterns('mealadvisor.restaurant.views',
     (r'^add/restaurant/?$', 'add'),
     
     (r'^profile/(?P<username>[^/]+)/?', 'profile'),
+
+    # add image
+    (r'^restaurant/(?P<slug>[^/]+)/menu/(?P<item_slug>[^/]+)/add/image$', 'menuitem_add_image'),
+    
 )
 
 # registration

@@ -49,8 +49,7 @@ class RandomManager(models.Manager):
 class MenuItemImage(models.Model):
     user      = models.ForeignKey(Profile, null=True, blank=True)
     menu_item = models.ForeignKey(MenuItem)
-    data      = models.TextField(blank=True)
-    md5sum    = models.CharField(max_length=96, blank=True)
+    image     = models.ImageField(upload_to='images/menuitems', height_field='height', width_field='width', max_length=240)
     height    = models.IntegerField(null=True, blank=True)
     width     = models.IntegerField(null=True, blank=True)
     objects   = RandomManager()

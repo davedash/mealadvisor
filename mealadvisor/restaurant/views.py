@@ -16,12 +16,12 @@ def restaurant(request, slug):
 
     if request.user.is_authenticated():
         try:
-            rating                    = RestaurantRating.objects.get(restaurant = restaurant.id, user = request.user.get_profile().id)
+            rating                    = RestaurantRating.objects.get(restaurant = restaurant, user = request.user.get_profile())
             restaurant.current_rating = rating.value
         except:
             pass
     
-    locations     = list(restaurant.location_set.all())
+    locations     = list(restaurant.location_set.all().order_by('state','city'))
     if locations:
         main_location = locations.pop(0)
     num_locations = len(locations)
@@ -186,3 +186,65 @@ def profile(request, username):
     profile     = user.profile_set.all()[0]
     restaurants = Restaurant.objects.rated_or_reviewed_by(profile)
     return render_to_response('profile.html', locals(), context_instance=RequestContext(request))
+
+def location(request, slug, location_slug):
+    location   = get_object_or_404(Location, restaurant__stripped_title__exact=slug, stripped_title__exact=location_slug)
+    restaurant = location.restaurant
+    
+    return render_to_response('restaurant/location.html', locals(), context_instance=RequestContext(request))
+
+@login_required
+def menuitem_add_image(request, slug, item_slug):
+    restaurant = get_restaurant(slug)
+    menu_item  = get_object_or_404(MenuItem, restaurant__stripped_title__exact=slug, slug__exact=item_slug)
+    
+    if request.method == 'POST':
+        form = NewMenuItemImageForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            handle_uploaded_image(request.FILES['image'], menu_item, request.user.get_profile())
+            return HttpResponseRedirect(menu_item.get_absolute_url())
+    else:
+        form       = NewMenuItemImageForm()
+        
+    return render_to_response('menuitem/add_image.html', locals(), context_instance=RequestContext(request))
+
+import Image, StringIO, md5, os, django.core.files
+def handle_uploaded_image(i, menu_item, user):
+    # resize image
+    imagefile  = StringIO.StringIO(i.read())
+    imageImage = Image.open(imagefile)
+
+    (width, height) = imageImage.size
+    (width, height) = scale_dimensions(width, height, longest_side=240)
+
+    resizedImage = imageImage.resize((width, height))
+
+    imagefile = StringIO.StringIO()
+    resizedImage.save(imagefile,'JPEG')
+    filename = md5.new(imagefile.getvalue()).hexdigest()+'.jpg'
+    
+    
+    # #save to disk
+    imagefile = open(os.path.join('/tmp',filename), 'w')
+    resizedImage.save(imagefile,'JPEG')
+    imagefile = open(os.path.join('/tmp',filename), 'r')
+    content = django.core.files.File(imagefile)
+
+    # create MII
+    mii = MenuItemImage(user=user, menu_item=menu_item)
+    mii.image.save(filename, content)
+    
+def scale_dimensions(width, height, **kwargs): 
+    
+    if 'longest_side' in kwargs and height and width:
+        longest_side = kwargs['longest_side']
+        
+        if width < height:
+            width  = int(float(width)/float(height) * longest_side)
+            height = longest_side
+        else:
+            height = int(float(height)/float(width) * longest_side)
+            width  = longest_side
+
+    return (width, height)

@@ -250,25 +250,10 @@ class Location(models.Model):
 
         super(Location, self).save(force_insert, force_update)
 
+    def get_absolute_url(self):
+        "http://prod.rbu.sf/frontend_dev.php/restaurant/hobees/menu/special-traditional-eggs-benedict"
+        return "%s/location/%s" % (self.restaurant.get_absolute_url(), self.stripped_title)
 
-        #   $geo = new YahooGeo($this->getFullAddress('%a, %c, %s'));
-        # 
-        #       $this->setCountryByName($country);
-        #       if ($state = $geo->getState());
-        #       {
-        #           $this->setState($state);
-        #       }
-        #       if ($city = $geo->getCity());
-        #       {
-        #           $this->setCity($city);
-        #       }
-        #       if ($zip = $geo->getZip());
-        #       {
-        #           $this->setZip($zip);
-        #       }
-        #       
-        #       $this->setLatitude($geo->getLatitude());
-        #       $this->setLongitude($geo->getLongitude());
     class Meta:
         db_table = u'location'
         unique_together = (("data_source", "data_source_key"),)
