@@ -1,0 +1,24 @@
+{% extends 'base_restaurant.html' %}
+{% block body %}
+<h2>Upload a new photo for {{menuitem}}</h2>
+
+<form action="" method="POST" class="cmxform" enctype="multipart/form-data">
+  <fieldset>
+    <ul>
+      <li>
+        {% if form.image.errors %}
+        <ul class="errorlist">
+        {% for error in form.image.errors %}
+            <li>{{ error|safe }}</li>
+        {% endfor %}
+        </ul>
+        {% endif %}
+        <label for="id_image">Photo</label>
+        {{ form.image }}
+      </li>
+    
+    </ul>
+  </fieldset>
+  <input type="submit" value="Submit" class="submit"/>
+</form>
+{% endblock body %}

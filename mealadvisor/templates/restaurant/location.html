@@ -1,0 +1,30 @@
+{% extends "base_restaurant.html" %}
+{% load tags %}
+
+{% block body %}
+<h2>{% link_to_object restaurant %} location: {{location|safe}}</h2>
+
+<div id="location_container" class="columns_n_400">
+
+  <div class="column">
+    <div id="location">
+      <div class="address">
+		{% if location.name %}{{ location.name }}<br/>{%endif%}
+        {{location.address}}<br />
+        {{location.city}}, {{location.state}} {{location.zip}}
+      </div>
+      <div class="phone">
+        {{location.phone}}
+      </div>
+    </div>
+  </div>
+  <div class="column_400 column">
+    <div id="restaurant_map"></div>    
+    <script type="text/javascript" charset="utf-8">
+       MA.map.draw("{{location.address}}, {{location.city}}, {{location.state}} {{location.zip}}", "{{restaurant}}<br/>{{location}}");
+    </script>
+  </div>
+</div>
+
+
+{% endblock body %}
