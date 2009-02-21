@@ -209,7 +209,7 @@ def menuitem_add_image(request, slug, item_slug):
         
     return render_to_response('menuitem/add_image.html', locals(), context_instance=RequestContext(request))
 
-import Image, StringIO, md5, os, django.core.files
+import Image, StringIO, hashlib, os, django.core.files
 def handle_uploaded_image(i, menu_item, user):
     # resize image
     imagefile  = StringIO.StringIO(i.read())
@@ -222,7 +222,7 @@ def handle_uploaded_image(i, menu_item, user):
 
     imagefile = StringIO.StringIO()
     resizedImage.save(imagefile,'JPEG')
-    filename = md5.new(imagefile.getvalue()).hexdigest()+'.jpg'
+    filename = hashlib.md5(imagefile.getvalue()).hexdigest()+'.jpg'
     
     
     # #save to disk
