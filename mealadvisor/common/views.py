@@ -2,11 +2,16 @@ from django.template import RequestContext
 from django.shortcuts import render_to_response, get_object_or_404, get_list_or_404
 from django.contrib.auth import login
 from django.http import HttpResponse, HttpResponseRedirect
+from django.core.mail import send_mail
 
 from mealadvisor.restaurant.models import Restaurant, MenuItemImage, MenuItem, MenuitemRating, MenuitemNote
 from mealadvisor.common import profiles
 from mealadvisor.common.search import Search
 from mealadvisor.restaurant.forms import ReviewForm
+
+from forms import *
+
+import settings 
 
 def home(request):
     # load n pictures   
@@ -88,3 +93,25 @@ def openid_success(request, results):
     login(request, profile.user)
 
     return HttpResponseRedirect("/")
+
+def feedback(request):
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+    
+        if form.is_valid():
+            topic   = form.cleaned_data['topic']
+            message = form.cleaned_data['message']
+            sender  = form.cleaned_data.get('email')
+
+            send_mail(
+                'Feedback from your site, topic: %s' % topic,
+                message, sender,
+                (settings.ADMINS[0][1],)
+            )
+            return HttpResponseRedirect('/contact/thanks/')
+    
+    else:
+        form = ContactForm()
+    
+    return render_to_response('contact.html', locals(), context_instance=RequestContext(request))
+    

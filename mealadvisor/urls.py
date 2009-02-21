@@ -52,6 +52,9 @@ urlpatterns += patterns('mealadvisor.common.views',
 
     # Home
     (r'^$', 'home'),
+    
+    # feedback
+    (r'^feedback/?', 'feedback'),
 )
 
 urlpatterns += patterns('mealadvisor.restaurant.views',
@@ -102,6 +105,8 @@ urlpatterns += patterns('',
 # static pages
 urlpatterns += patterns('django.views.generic.simple',
     (r'^about$', 'direct_to_template', {'template': 'common/about.html'}),
+    (r'^contact/thanks/$', 'direct_to_template', {'template': 'contact_thanks.html'}),
+
 )
 
 urlpatterns += patterns('',
