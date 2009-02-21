@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator, InvalidPage
 from forms import *
+import Image, StringIO, hashlib, os, django.core.files
 
 
 def get_restaurant(slug):
@@ -209,7 +210,6 @@ def menuitem_add_image(request, slug, item_slug):
         
     return render_to_response('menuitem/add_image.html', locals(), context_instance=RequestContext(request))
 
-import Image, StringIO, hashlib, os, django.core.files
 def handle_uploaded_image(i, menu_item, user):
     # resize image
     imagefile  = StringIO.StringIO(i.read())

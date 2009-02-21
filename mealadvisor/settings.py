@@ -4,15 +4,13 @@ import os
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'catchall@davedash.com'
+EMAIL_HOST          = 'smtp.gmail.com'
+EMAIL_HOST_USER     = 'catchall@davedash.com'
 EMAIL_HOST_PASSWORD = 'manipul8'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
+EMAIL_PORT          = 587
+EMAIL_USE_TLS       = True
 
 DEFAULT_FROM_MAIL = 'hungry.robot@mealadvsor.us'
-
-
 
 ADMINS = (
   ('Dave Dash', 'dave.dash@mealadvisor.us'),
