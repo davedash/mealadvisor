@@ -57,15 +57,15 @@ MA.paginator = function() {
                 MA.e.preventDefault(ev);
                 
                 // do the ajax call 
-                handleSuccess = function(o) { container.innerHTML = o.responseText }
+                handleSuccess = function(o) { container.innerHTML = o.responseText };
                 
-                callback = { 
-                    success:handleSuccess,
-                }
+                var callback = { 
+                    success:handleSuccess
+                };
                 
                 var request = MA.c.asyncRequest('GET', target.pathname, callback);
             }
-        },
+        }
 
     }
 }();
@@ -80,7 +80,7 @@ MA.map = function() {
             map.addOverlay(marker);
             map.disableKeyControls();
             map.addZoomLong();
-        },
+        }
     }
 }();
 
@@ -129,13 +129,14 @@ MA.tagger = function() {
         },
         
         handleSubmit: function(ev) {
-            container = MA.d.get('tag_list');
+            var container = MA.d.get('tag_list');
             // do the ajax call 
-            handleSuccess = function(o) { container.innerHTML = o.responseText }
+            handleSuccess = function(o) { container.innerHTML = o.responseText };
             
-            callback = { 
-                success: handleSuccess,
-            }
+            var callback = { 
+                success: handleSuccess
+            };
+            
             YAHOO.util.Connect.setForm(ev.target); 
             var sUrl = ev.target.action;
             var request = YAHOO.util.Connect.asyncRequest('POST', sUrl, callback);
@@ -151,10 +152,10 @@ MA.tagger = function() {
             handleSuccess = function(o) { container.innerHTML = o.responseText }
             
             callback = { 
-                success: handleSuccess,
+                success: handleSuccess
             }
             
-            var postData = 'id='+id
+            var postData = 'id='+id;
             var request = YAHOO.util.Connect.asyncRequest('POST', sUrl, callback, postData);
             return false;
         }
