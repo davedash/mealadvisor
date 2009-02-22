@@ -57,13 +57,13 @@ MA.paginator = function() {
                 MA.e.preventDefault(ev);
                 
                 // do the ajax call 
-                handleSuccess = function(o) { container.innerHTML = o.responseText };
+                var handleSuccess = function(o) { container.innerHTML = o.responseText };
                 
                 var callback = { 
                     success:handleSuccess
                 };
                 
-                var request = MA.c.asyncRequest('GET', target.pathname, callback);
+                var request = MA.c.asyncRequest('GET', target.href, callback);
             }
         }
 
