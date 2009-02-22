@@ -25,6 +25,7 @@ def restaurant(request, slug):
     locations     = list(restaurant.location_set.all().order_by('state','city'))
     if locations:
         main_location = locations.pop(0)
+        
     num_locations = len(locations)
 
     paginator = Paginator(restaurant.menuitem_set.with_ratings(request.user), 8)
