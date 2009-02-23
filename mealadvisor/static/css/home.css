@@ -1,4 +1,4 @@
-         #recent_dishes ul{overflow:none;height:200px}
+         #recent_dishes ul{overflow:hidden;min-height:200px}
       #recent_dishes ul li{float:left;width:125px;margin-right:3em}
  #recent_dishes ul li.last{margin-right:0}
         #recent_dishes img{border:solid 2px #fff}
