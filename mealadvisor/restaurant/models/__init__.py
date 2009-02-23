@@ -81,7 +81,7 @@ class RestaurantRating(models.Model):
             for row in cursor.fetchall():
                 self.restaurant.num_ratings    = row[0]
                 self.restaurant.average_rating = row[1]
-                self.restaurant.save()
+                self.restaurant.save(reindex=False)
                 
         except:
               transaction.rollback()

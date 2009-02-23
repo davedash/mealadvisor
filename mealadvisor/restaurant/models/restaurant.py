@@ -75,10 +75,13 @@ class RestaurantManager(models.Manager):
         
         restaurants = []
         for row in cursor.fetchall():
-            restaurant        = self.get(pk=row[0])
-            restaurant.count  = row[1]
-            restaurant.weight = row[2]
-            restaurants.append(restaurant)
+            try:
+                restaurant        = self.get(pk=row[0])
+                restaurant.count  = row[1]
+                restaurant.weight = row[2]
+                restaurants.append(restaurant)
+            except:
+                pass
         
         return restaurants
     
@@ -120,7 +123,7 @@ class Restaurant(models.Model):
     objects        = RestaurantManager()
     new_version    = None
     
-    def save(self, force_insert=False, force_update=False):
+    def save(self, force_insert=False, force_update=False, reindex=True):
         if not self.stripped_title:
             self.stripped_title = slugify(self.name)
         
@@ -131,7 +134,8 @@ class Restaurant(models.Model):
             self.version = self.new_version
             super(Restaurant, self).save(force_insert, force_update)
         
-        self.reindex()
+        if reindex:
+            self.reindex()
         
         
     def __setattr__(self, name, value):
@@ -207,14 +211,18 @@ class Restaurant(models.Model):
         # given a profile return all the tags that said profile has for this particular item
         tags = RestaurantTag.objects.filter(restaurant = self, user = profile)
         return tags
-
+    
     def get_words(self):
         """
         Get stemmed words that make up this entry
         """
-        raw_text      = ' '.join([self.description]*settings.SEARCH_WEIGHT_BODY)
-        name          = self.name.replace("'", '')
-        raw_text      += ' '.join([name]*settings.SEARCH_WEIGHT_TITLE)
+        raw_text = ''
+
+        if self.description:
+            raw_text += ' '.join([self.description]*settings.SEARCH_WEIGHT_BODY)
+
+        name     = self.name.replace("'", '')
+        raw_text += ' '.join([name]*settings.SEARCH_WEIGHT_TITLE)
         
         raw_text = rePunctuation.sub(' ', raw_text)
         
@@ -234,7 +242,7 @@ class Restaurant(models.Model):
                 words[stemmed_tag] = 0
             
             words[stemmed_tag] += math.ceil(count/max) * settings.SEARCH_WEIGHT_TAG
-
+        
         return words
         
     def reindex(self):
