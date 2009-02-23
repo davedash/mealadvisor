@@ -76,8 +76,12 @@ ALTER TABLE restaurant_version MODIFY COLUMN html_description TEXT CHARACTER SET
 
 SET NAMES utf8;
 
+update menu_item set name=replace(name,'Ã»','û') where name LIKE '%Ã»%';
+update restaurant set name=replace(name,'Ã»','û') where name LIKE '%Ã»%';
 update menu_item set name=replace(name,'Ã©','é') where name LIKE '%Ã©%';
 update restaurant set name=replace(name,'Ã©','é') where name LIKE '%Ã©%';
+update menu_item set name=replace(name,'Ã¨','è') where name LIKE '%Ã¨%';
+update restaurant set name=replace(name,'Ã¨','è') where name LIKE '%Ã¨%';
 update menu_item set name=replace(name, 'Ã¶', 'ö') where name LIKE '%Ã¶%';
 update restaurant set name=replace(name, 'Ã¶', 'ö') where name LIKE '%Ã¶%';
 update menu_item set name=replace(name, 'Ã±', 'ñ') where name LIKE '%Ã±%';
