@@ -41,7 +41,7 @@ def staging():
 
     # staging sym to new destination
     run('ln -s %(path)s %(releases_path)s/staging', fail='abort')
-    run('ln -s %(static_path)s/%(svn_version)s %(static_path)s/staging', fail='abort')
+    run('ln -s %(static_path)s/releases/%(svn_version)s %(static_path)s/staging', fail='abort')
     
     # server is hup'd
     invoke(hup)

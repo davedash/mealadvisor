@@ -15,8 +15,7 @@ server {
   #  }
 
   location ^~ /static/ {
-    alias /var/www/staging.mealadvisor.us/staging/static/;
-    access_log   off;
+    alias /var/www/static.mealadvisor.us/staging/static/;
     expires      30d;
   }
 
