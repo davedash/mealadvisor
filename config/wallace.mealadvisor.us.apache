@@ -1,4 +1,3 @@
-NameVirtualHost *
 <VirtualHost *>
   ServerName wallace.mealadvisor.us
   ErrorLog /var/log/apache2/wallace.mealadvisor.us/error.log
