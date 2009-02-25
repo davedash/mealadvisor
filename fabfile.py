@@ -21,10 +21,10 @@ def staging():
     run('mkdir %(path)s', fail='abort')
     
     # svn export mealadvisor to path 
-    run('%(svn_export)s %(svn_path)s/mealadvisor %(path)s/code', fail='abort')
+    run('%(svn_export)s %(svn_path)s/mealadvisor %(path)s/mealadvisor', fail='abort')
     
     # svn export site-packages to site-packages
-    run('%(svn_export)s %(svn_path)s/mealadvisor %(path)s/site-packages', fail='abort')
+    run('%(svn_export)s %(svn_path)s/site-packages %(path)s/site-packages', fail='abort')
 
     # svn export configs
     run('%(svn_export)s %(svn_path)s/config %(path)s/config', fail='abort')
