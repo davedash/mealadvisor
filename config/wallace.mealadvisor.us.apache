@@ -1,0 +1,22 @@
+NameVirtualHost *
+<VirtualHost *>
+  ServerName wallace.mealadvisor.us
+  ErrorLog /var/log/apache2/wallace.mealadvisor.us/error.log
+
+  LogLevel warn
+
+  CustomLog /var/log/apache2/wallace.mealadvisor.us/access.log combined
+  SetEnvIf X-Reverse-Proxy ^Nginx$ let_me_in
+  
+  <Location "/">
+    SetHandler python-program
+    PythonPath "['/var/www_apps/mealadvisor.us/staging/', '/var/www_apps/mealadvisor.us/staging/site-packages'] + sys.path"
+    PythonHandler django.core.handlers.modpython
+    SetEnv DJANGO_SETTINGS_MODULE mealadvisor.settings
+    PythonDebug On
+    Order Deny,Allow
+    Deny from all
+    Allow from env=let_me_in
+  </Location>
+  
+</VirtualHost>

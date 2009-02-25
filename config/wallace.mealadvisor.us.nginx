@@ -20,7 +20,7 @@ server {
   }
 
   location / {
-    proxy_pass	http://staging.mealadvisor.us:8080/;
+    proxy_pass	http://wallace.mealadvisor.us:8080/;
     proxy_redirect	off;
 
     proxy_set_header   Host             $host;
