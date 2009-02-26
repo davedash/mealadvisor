@@ -1,8 +1,6 @@
 #!/bin/bash
 
 # This requires a tunnel to be established as such:
-# 
-#     deveshistan:~ dash$ ssh root@reviewsby.us -L3307:localhost:3306
 
 
 # download and insert db

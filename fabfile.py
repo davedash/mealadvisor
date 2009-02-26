@@ -26,6 +26,9 @@ def staging():
     # svn export site-packages to site-packages
     run('%(svn_export)s %(svn_path)s/site-packages %(path)s/site-packages', fail='abort')
 
+    # svn export mealadvisor to path 
+    run('%(svn_export)s %(svn_path)s/scripts %(path)s/scripts', fail='warn')
+
     # svn export configs
     run('%(svn_export)s %(svn_path)s/config %(path)s/config', fail='abort')
 

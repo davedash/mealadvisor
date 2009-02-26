@@ -1,8 +1,27 @@
 # Django settings for mealadvisor project.
 import os
 
-DEBUG = True
-TEMPLATE_DEBUG = DEBUG
+ENVIRONMENT = os.environ.get('DJANGO_ENVIRONMENT','dev')
+
+if ENVIRONMENT == 'staging':
+    DATABASE_ENGINE   = 'mysql'       
+    DATABASE_NAME     = 'ma_staging'
+    DATABASE_USER     = 'ma_staging'   
+    DATABASE_PASSWORD = 'f3nne7'         
+    DATABASE_HOST     = 'localhost'
+    DATABASE_PORT     = ''
+
+else:
+    DEBUG = True
+    TEMPLATE_DEBUG = DEBUG
+
+    DATABASE_ENGINE   = 'mysql'           # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+    DATABASE_NAME     = 'rbu'             # Or path to database file if using sqlite3.
+    DATABASE_USER     = 'root'             # Not used with sqlite3.
+    DATABASE_PASSWORD = ''         # Not used with sqlite3.
+    DATABASE_HOST     = 'localhost'             # Set to empty string for localhost. Not used with sqlite3.
+    DATABASE_PORT     = ''             # Set to empty string for default. Not used with sqlite3.
+
 
 EMAIL_HOST          = 'smtp.gmail.com'
 EMAIL_HOST_USER     = 'catchall@davedash.com'
@@ -18,16 +37,6 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-# DATABASE_OPTIONS = {
-#    "init_command": "SET storage_engine=INNODB",
-# }
-
-DATABASE_ENGINE   = 'mysql'           # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-DATABASE_NAME     = 'rbu'             # Or path to database file if using sqlite3.
-DATABASE_USER     = 'root'             # Not used with sqlite3.
-DATABASE_PASSWORD = ''         # Not used with sqlite3.
-DATABASE_HOST     = 'localhost'             # Set to empty string for localhost. Not used with sqlite3.
-DATABASE_PORT     = ''             # Set to empty string for default. Not used with sqlite3.
 
 DEFAULT_ENCODING = 'utf-8'
 # Local time zone for this installation. Choices can be found here:
@@ -49,7 +58,7 @@ USE_I18N = True
 
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
-MEDIA_ROOT = os.path.join(os.path.dirname(__file__), "static")
+MEDIA_ROOT = os.path.realpath(os.path.join(os.path.dirname(__file__),os.path.pardir, "static"))
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash if there is a path component (optional in other cases).

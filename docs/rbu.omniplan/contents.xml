@@ -14,7 +14,7 @@
 			<key>GanttGroupShading</key>
 			<false/>
 			<key>GanttVisibleRect</key>
-			<string>{{-218, 0}, {643, 669}}</string>
+			<string>{{-347, 0}, {643, 669}}</string>
 			<key>OutlineVisibleRect</key>
 			<string>{{0, 0}, {688, 669}}</string>
 			<key>ScaleWidths</key>
@@ -39,7 +39,7 @@
 			<key>SelectedPlanView</key>
 			<integer>3</integer>
 			<key>SelectedScale</key>
-			<string>Week</string>
+			<string>Month</string>
 			<key>SelectedView</key>
 			<integer>0</integer>
 			<key>SheetSettings</key>
@@ -101,13 +101,13 @@
 				<real>264</real>
 			</dict>
 			<key>dayWidth</key>
-			<real>54</real>
+			<real>11.5</real>
 			<key>resourceSplit</key>
 			<real>0.71322435140609741</real>
 			<key>resourcesController</key>
 			<dict>
 				<key>DayWidth</key>
-				<real>86400</real>
+				<real>1.8203737735748291</real>
 				<key>OutlineVisibleRect</key>
 				<string>{{0, 0}, {371, 669}}</string>
 				<key>ScaleWidths</key>
@@ -146,7 +146,7 @@
 			<key>side</key>
 			<real>0.48885586857795715</real>
 			<key>window</key>
-			<string>{{56, 74}, {1355, 804}}</string>
+			<string>{{1961, 347}, {1355, 804}}</string>
 		</dict>
 	</array>
 	<key>displaySeconds</key>
@@ -164,7 +164,7 @@
 	<key>displayTimes</key>
 	<false/>
 	<key>endDate</key>
-	<string>20090612 21:00</string>
+	<string>20090509 21:00</string>
 	<key>flatNumbering</key>
 	<false/>
 	<key>objectId</key>
@@ -506,7 +506,7 @@
 	<key>taskDifferenceEngine</key>
 	<dict>
 		<key>nextId</key>
-		<integer>657</integer>
+		<integer>694</integer>
 	</dict>
 	<key>taskUserKeys</key>
 	<array/>
@@ -521,6 +521,7 @@
 				<integer>510</integer>
 				<integer>298</integer>
 				<integer>410</integer>
+				<integer>657</integer>
 			</array>
 			<key>endPlanDate</key>
 			<string>20090625210000</string>
@@ -534,7 +535,6 @@
 		<dict>
 			<key>children</key>
 			<array>
-				<integer>515</integer>
 				<integer>590</integer>
 				<integer>622</integer>
 				<integer>598</integer>
@@ -542,8 +542,6 @@
 			</array>
 			<key>endPlanDate</key>
 			<string>20090625210000</string>
-			<key>isExpanded</key>
-			<false/>
 			<key>objectId</key>
 			<integer>270</integer>
 			<key>prerequisites</key>
@@ -1068,6 +1066,8 @@
 			</array>
 			<key>endPlanDate</key>
 			<string>20090226210000</string>
+			<key>isExpanded</key>
+			<false/>
 			<key>objectId</key>
 			<integer>412</integer>
 			<key>startPlanDate</key>
@@ -1389,6 +1389,7 @@
 				<integer>646</integer>
 				<integer>647</integer>
 				<integer>450</integer>
+				<integer>675</integer>
 			</array>
 			<key>endPlanDate</key>
 			<string>20090328210000</string>
@@ -1399,7 +1400,7 @@
 			<key>startPlanDate</key>
 			<string>20090314190000</string>
 			<key>task</key>
-			<string>test in FF, IE, Safari</string>
+			<string>test in IE</string>
 		</dict>
 		<dict>
 			<key>assignments</key>
@@ -1412,28 +1413,23 @@
 				</dict>
 			</array>
 			<key>desiredStart</key>
-			<string>20090313190000</string>
+			<string>20090227190000</string>
+			<key>doneSeconds</key>
+			<real>10800</real>
 			<key>effort</key>
+			<real>10800</real>
+			<key>effortDone</key>
 			<real>10800</real>
 			<key>endPlanDate</key>
 			<string>20090328210000</string>
 			<key>objectId</key>
 			<integer>450</integer>
-			<key>prerequisites</key>
-			<array>
-				<dict>
-					<key>id</key>
-					<integer>647</integer>
-					<key>isResource</key>
-					<string>YES</string>
-					<key>kind</key>
-					<integer>2</integer>
-				</dict>
-			</array>
 			<key>startPlanDate</key>
 			<string>20090327190000</string>
 			<key>task</key>
 			<string>star rating</string>
+			<key>workDone</key>
+			<real>3</real>
 			<key>workSeconds</key>
 			<real>10800</real>
 			<key>workTime</key>
@@ -1482,8 +1478,6 @@
 			</array>
 			<key>endPlanDate</key>
 			<string>20090226210000</string>
-			<key>isExpanded</key>
-			<false/>
 			<key>objectId</key>
 			<integer>510</integer>
 			<key>startPlanDate</key>
@@ -1538,24 +1532,6 @@
 			<real>7200</real>
 			<key>workTime</key>
 			<real>2</real>
-		</dict>
-		<dict>
-			<key>children</key>
-			<array>
-				<integer>641</integer>
-				<integer>642</integer>
-				<integer>643</integer>
-			</array>
-			<key>endPlanDate</key>
-			<string>20090418210000</string>
-			<key>isExpanded</key>
-			<false/>
-			<key>objectId</key>
-			<integer>515</integer>
-			<key>startPlanDate</key>
-			<string>20090410190000</string>
-			<key>task</key>
-			<string>contact us form</string>
 		</dict>
 		<dict>
 			<key>effort</key>
@@ -1638,42 +1614,18 @@
 			<real>8</real>
 		</dict>
 		<dict>
-			<key>assignments</key>
+			<key>children</key>
 			<array>
-				<dict>
-					<key>id</key>
-					<integer>102</integer>
-					<key>units</key>
-					<real>1</real>
-				</dict>
+				<integer>685</integer>
 			</array>
-			<key>desiredStart</key>
-			<string>20090320190000</string>
-			<key>effort</key>
-			<real>28800</real>
 			<key>endPlanDate</key>
 			<string>20090409210000</string>
 			<key>objectId</key>
 			<integer>521</integer>
-			<key>prerequisites</key>
-			<array>
-				<dict>
-					<key>id</key>
-					<integer>450</integer>
-					<key>isResource</key>
-					<string>YES</string>
-					<key>kind</key>
-					<integer>2</integer>
-				</dict>
-			</array>
 			<key>startPlanDate</key>
 			<string>20090402190000</string>
 			<key>task</key>
 			<string>404 for restaurant</string>
-			<key>workSeconds</key>
-			<real>28800</real>
-			<key>workTime</key>
-			<real>8</real>
 		</dict>
 		<dict>
 			<key>children</key>
@@ -1682,6 +1634,8 @@
 			</array>
 			<key>endPlanDate</key>
 			<string>20090312210000</string>
+			<key>isExpanded</key>
+			<false/>
 			<key>objectId</key>
 			<integer>524</integer>
 			<key>startPlanDate</key>
@@ -1792,6 +1746,9 @@
 				<integer>621</integer>
 				<integer>524</integer>
 				<integer>655</integer>
+				<integer>449</integer>
+				<integer>677</integer>
+				<integer>521</integer>
 			</array>
 			<key>endPlanDate</key>
 			<string>20090313210000</string>
@@ -1881,25 +1838,12 @@
 					<real>1</real>
 				</dict>
 			</array>
-			<key>desiredStart</key>
-			<string>20090410190000</string>
 			<key>effort</key>
 			<real>28800</real>
 			<key>endPlanDate</key>
 			<string>20090430210000</string>
 			<key>objectId</key>
 			<integer>590</integer>
-			<key>prerequisites</key>
-			<array>
-				<dict>
-					<key>id</key>
-					<integer>643</integer>
-					<key>isResource</key>
-					<string>YES</string>
-					<key>kind</key>
-					<integer>2</integer>
-				</dict>
-			</array>
 			<key>startPlanDate</key>
 			<string>20090423190000</string>
 			<key>task</key>
@@ -1920,7 +1864,7 @@
 				</dict>
 			</array>
 			<key>desiredStart</key>
-			<string>20090508190000</string>
+			<string>20090404190000</string>
 			<key>effort</key>
 			<real>28800</real>
 			<key>endPlanDate</key>
@@ -1990,7 +1934,7 @@
 				</dict>
 			</array>
 			<key>desiredStart</key>
-			<string>20090516190000</string>
+			<string>20090416190000</string>
 			<key>effort</key>
 			<real>28800</real>
 			<key>endPlanDate</key>
@@ -2028,7 +1972,7 @@
 				</dict>
 			</array>
 			<key>desiredStart</key>
-			<string>20090528190000</string>
+			<string>20090424190000</string>
 			<key>effort</key>
 			<real>28800</real>
 			<key>endPlanDate</key>
@@ -2066,7 +2010,7 @@
 				</dict>
 			</array>
 			<key>desiredStart</key>
-			<string>20090605190000</string>
+			<string>20090502190000</string>
 			<key>effort</key>
 			<real>28800</real>
 			<key>endPlanDate</key>
@@ -2104,7 +2048,7 @@
 				</dict>
 			</array>
 			<key>desiredStart</key>
-			<string>20090430190000</string>
+			<string>20090327190000</string>
 			<key>effort</key>
 			<real>28800</real>
 			<key>endPlanDate</key>
@@ -2166,13 +2110,19 @@
 		<dict>
 			<key>children</key>
 			<array>
-				<integer>449</integer>
-				<integer>521</integer>
+				<integer>686</integer>
+				<integer>687</integer>
+				<integer>689</integer>
+				<integer>691</integer>
+				<integer>692</integer>
+				<integer>693</integer>
+				<integer>690</integer>
+				<integer>688</integer>
 			</array>
 			<key>endPlanDate</key>
 			<string>20090409210000</string>
-			<key>isExpanded</key>
-			<false/>
+			<key>forcedStart</key>
+			<string>20090305190000</string>
 			<key>objectId</key>
 			<integer>601</integer>
 			<key>prerequisites</key>
@@ -2229,6 +2179,8 @@
 			</array>
 			<key>endPlanDate</key>
 			<string>20090307210000</string>
+			<key>isExpanded</key>
+			<false/>
 			<key>objectId</key>
 			<integer>621</integer>
 			<key>startPlanDate</key>
@@ -2247,7 +2199,7 @@
 				</dict>
 			</array>
 			<key>desiredStart</key>
-			<string>20090418190000</string>
+			<string>20090314190000</string>
 			<key>effort</key>
 			<real>28800</real>
 			<key>endPlanDate</key>
@@ -2429,7 +2381,11 @@
 					<real>1</real>
 				</dict>
 			</array>
+			<key>doneSeconds</key>
+			<real>3600</real>
 			<key>effort</key>
+			<real>3600</real>
+			<key>effortDone</key>
 			<real>3600</real>
 			<key>endPlanDate</key>
 			<string>20090305210000</string>
@@ -2439,6 +2395,8 @@
 			<string>20090305190000</string>
 			<key>task</key>
 			<string>try openid not in db</string>
+			<key>workDone</key>
+			<real>1</real>
 			<key>workSeconds</key>
 			<real>3600</real>
 			<key>workTime</key>
@@ -2454,108 +2412,11 @@
 					<real>1</real>
 				</dict>
 			</array>
+			<key>doneSeconds</key>
+			<real>3600</real>
 			<key>effort</key>
 			<real>3600</real>
-			<key>endPlanDate</key>
-			<string>20090410210000</string>
-			<key>objectId</key>
-			<integer>641</integer>
-			<key>startPlanDate</key>
-			<string>20090410190000</string>
-			<key>task</key>
-			<string>build form</string>
-			<key>workSeconds</key>
-			<real>3600</real>
-			<key>workTime</key>
-			<real>1</real>
-		</dict>
-		<dict>
-			<key>assignments</key>
-			<array>
-				<dict>
-					<key>id</key>
-					<integer>102</integer>
-					<key>units</key>
-					<real>1</real>
-				</dict>
-			</array>
-			<key>desiredStart</key>
-			<string>20090402190000</string>
-			<key>effort</key>
-			<real>18000</real>
-			<key>endPlanDate</key>
-			<string>20090417210000</string>
-			<key>objectId</key>
-			<integer>642</integer>
-			<key>prerequisites</key>
-			<array>
-				<dict>
-					<key>id</key>
-					<integer>641</integer>
-					<key>isResource</key>
-					<string>YES</string>
-					<key>kind</key>
-					<integer>2</integer>
-				</dict>
-			</array>
-			<key>startPlanDate</key>
-			<string>20090411190000</string>
-			<key>task</key>
-			<string>get mailer library</string>
-			<key>workSeconds</key>
-			<real>18000</real>
-			<key>workTime</key>
-			<real>5</real>
-		</dict>
-		<dict>
-			<key>assignments</key>
-			<array>
-				<dict>
-					<key>id</key>
-					<integer>102</integer>
-					<key>units</key>
-					<real>1</real>
-				</dict>
-			</array>
-			<key>desiredStart</key>
-			<string>20090409190000</string>
-			<key>effort</key>
-			<real>3600</real>
-			<key>endPlanDate</key>
-			<string>20090418210000</string>
-			<key>objectId</key>
-			<integer>643</integer>
-			<key>prerequisites</key>
-			<array>
-				<dict>
-					<key>id</key>
-					<integer>642</integer>
-					<key>isResource</key>
-					<string>YES</string>
-					<key>kind</key>
-					<integer>2</integer>
-				</dict>
-			</array>
-			<key>startPlanDate</key>
-			<string>20090418190000</string>
-			<key>task</key>
-			<string>redirect</string>
-			<key>workSeconds</key>
-			<real>3600</real>
-			<key>workTime</key>
-			<real>1</real>
-		</dict>
-		<dict>
-			<key>assignments</key>
-			<array>
-				<dict>
-					<key>id</key>
-					<integer>102</integer>
-					<key>units</key>
-					<real>1</real>
-				</dict>
-			</array>
-			<key>effort</key>
+			<key>effortDone</key>
 			<real>3600</real>
 			<key>endPlanDate</key>
 			<string>20090314210000</string>
@@ -2565,6 +2426,8 @@
 			<string>20090314190000</string>
 			<key>task</key>
 			<string>main</string>
+			<key>workDone</key>
+			<real>1</real>
 			<key>workSeconds</key>
 			<real>3600</real>
 			<key>workTime</key>
@@ -2581,28 +2444,23 @@
 				</dict>
 			</array>
 			<key>desiredStart</key>
-			<string>20090306190000</string>
+			<string>20090220190000</string>
+			<key>doneSeconds</key>
+			<real>3600</real>
 			<key>effort</key>
+			<real>3600</real>
+			<key>effortDone</key>
 			<real>3600</real>
 			<key>endPlanDate</key>
 			<string>20090320210000</string>
 			<key>objectId</key>
 			<integer>645</integer>
-			<key>prerequisites</key>
-			<array>
-				<dict>
-					<key>id</key>
-					<integer>644</integer>
-					<key>isResource</key>
-					<string>YES</string>
-					<key>kind</key>
-					<integer>2</integer>
-				</dict>
-			</array>
 			<key>startPlanDate</key>
 			<string>20090320190000</string>
 			<key>task</key>
 			<string>restaurant</string>
+			<key>workDone</key>
+			<real>1</real>
 			<key>workSeconds</key>
 			<real>3600</real>
 			<key>workTime</key>
@@ -2619,66 +2477,23 @@
 				</dict>
 			</array>
 			<key>desiredStart</key>
-			<string>20090307190000</string>
+			<string>20090221190000</string>
+			<key>doneSeconds</key>
+			<real>3600</real>
 			<key>effort</key>
+			<real>3600</real>
+			<key>effortDone</key>
 			<real>3600</real>
 			<key>endPlanDate</key>
 			<string>20090321210000</string>
 			<key>objectId</key>
 			<integer>646</integer>
-			<key>prerequisites</key>
-			<array>
-				<dict>
-					<key>id</key>
-					<integer>645</integer>
-					<key>isResource</key>
-					<string>YES</string>
-					<key>kind</key>
-					<integer>2</integer>
-				</dict>
-			</array>
 			<key>startPlanDate</key>
 			<string>20090321190000</string>
 			<key>task</key>
 			<string>menu item</string>
-			<key>workSeconds</key>
-			<real>3600</real>
-			<key>workTime</key>
+			<key>workDone</key>
 			<real>1</real>
-		</dict>
-		<dict>
-			<key>assignments</key>
-			<array>
-				<dict>
-					<key>id</key>
-					<integer>102</integer>
-					<key>units</key>
-					<real>1</real>
-				</dict>
-			</array>
-			<key>desiredStart</key>
-			<string>20090312190000</string>
-			<key>effort</key>
-			<real>3600</real>
-			<key>endPlanDate</key>
-			<string>20090326210000</string>
-			<key>objectId</key>
-			<integer>647</integer>
-			<key>prerequisites</key>
-			<array>
-				<dict>
-					<key>id</key>
-					<integer>646</integer>
-					<key>isResource</key>
-					<string>YES</string>
-					<key>kind</key>
-					<integer>2</integer>
-				</dict>
-			</array>
-			<key>startPlanDate</key>
-			<string>20090326190000</string>
-			<key>task</key>
-			<string>locations</string>
 			<key>workSeconds</key>
 			<real>3600</real>
 			<key>workTime</key>
@@ -2696,27 +2511,55 @@
 			</array>
 			<key>desiredStart</key>
 			<string>20090226190000</string>
+			<key>doneSeconds</key>
+			<real>3600</real>
 			<key>effort</key>
+			<real>3600</real>
+			<key>effortDone</key>
+			<real>3600</real>
+			<key>endPlanDate</key>
+			<string>20090326210000</string>
+			<key>objectId</key>
+			<integer>647</integer>
+			<key>startPlanDate</key>
+			<string>20090326190000</string>
+			<key>task</key>
+			<string>locations</string>
+			<key>workDone</key>
+			<real>1</real>
+			<key>workSeconds</key>
+			<real>3600</real>
+			<key>workTime</key>
+			<real>1</real>
+		</dict>
+		<dict>
+			<key>assignments</key>
+			<array>
+				<dict>
+					<key>id</key>
+					<integer>102</integer>
+					<key>units</key>
+					<real>1</real>
+				</dict>
+			</array>
+			<key>desiredStart</key>
+			<string>20090226190000</string>
+			<key>doneSeconds</key>
+			<real>3600</real>
+			<key>effort</key>
+			<real>3600</real>
+			<key>effortDone</key>
 			<real>3600</real>
 			<key>endPlanDate</key>
 			<string>20090312210000</string>
 			<key>objectId</key>
 			<integer>648</integer>
-			<key>prerequisites</key>
-			<array>
-				<dict>
-					<key>id</key>
-					<integer>654</integer>
-					<key>isResource</key>
-					<string>YES</string>
-					<key>kind</key>
-					<integer>2</integer>
-				</dict>
-			</array>
 			<key>startPlanDate</key>
 			<string>20090312190000</string>
 			<key>task</key>
 			<string>add tag/search by tag</string>
+			<key>workDone</key>
+			<real>1</real>
 			<key>workSeconds</key>
 			<real>3600</real>
 			<key>workTime</key>
@@ -2747,33 +2590,20 @@
 					<real>1</real>
 				</dict>
 			</array>
+			<key>completionPercentage</key>
+			<real>1</real>
 			<key>desiredStart</key>
 			<string>20090220190000</string>
 			<key>effort</key>
-			<real>10800</real>
+			<real>0.0</real>
 			<key>endPlanDate</key>
 			<string>20090307210000</string>
 			<key>objectId</key>
 			<integer>654</integer>
-			<key>prerequisites</key>
-			<array>
-				<dict>
-					<key>id</key>
-					<integer>640</integer>
-					<key>isResource</key>
-					<string>YES</string>
-					<key>kind</key>
-					<integer>2</integer>
-				</dict>
-			</array>
 			<key>startPlanDate</key>
 			<string>20090306190000</string>
 			<key>task</key>
 			<string>if reg'd open id redirect to regflow</string>
-			<key>workSeconds</key>
-			<real>10800</real>
-			<key>workTime</key>
-			<real>3</real>
 		</dict>
 		<dict>
 			<key>assignments</key>
@@ -2787,31 +2617,599 @@
 			</array>
 			<key>desiredStart</key>
 			<string>20090227190000</string>
+			<key>doneSeconds</key>
+			<real>3600</real>
 			<key>effort</key>
+			<real>3600</real>
+			<key>effortDone</key>
 			<real>3600</real>
 			<key>endPlanDate</key>
 			<string>20090313210000</string>
 			<key>objectId</key>
 			<integer>655</integer>
-			<key>prerequisites</key>
-			<array>
-				<dict>
-					<key>id</key>
-					<integer>648</integer>
-					<key>isResource</key>
-					<string>YES</string>
-					<key>kind</key>
-					<integer>2</integer>
-				</dict>
-			</array>
 			<key>startPlanDate</key>
 			<string>20090313190000</string>
 			<key>task</key>
 			<string>build contact form</string>
+			<key>workDone</key>
+			<real>1</real>
 			<key>workSeconds</key>
 			<real>3600</real>
 			<key>workTime</key>
 			<real>1</real>
+		</dict>
+		<dict>
+			<key>children</key>
+			<array>
+				<integer>658</integer>
+				<integer>659</integer>
+				<integer>660</integer>
+				<integer>661</integer>
+				<integer>666</integer>
+				<integer>667</integer>
+				<integer>668</integer>
+				<integer>669</integer>
+				<integer>670</integer>
+				<integer>662</integer>
+			</array>
+			<key>objectId</key>
+			<integer>657</integer>
+			<key>task</key>
+			<string>Launch Info</string>
+		</dict>
+		<dict>
+			<key>effort</key>
+			<real>28800</real>
+			<key>objectId</key>
+			<integer>658</integer>
+			<key>task</key>
+			<string>Install PIL</string>
+			<key>workSeconds</key>
+			<real>28800</real>
+			<key>workTime</key>
+			<real>8</real>
+		</dict>
+		<dict>
+			<key>effort</key>
+			<real>28800</real>
+			<key>objectId</key>
+			<integer>659</integer>
+			<key>task</key>
+			<string>Verify PIL</string>
+			<key>workSeconds</key>
+			<real>28800</real>
+			<key>workTime</key>
+			<real>8</real>
+		</dict>
+		<dict>
+			<key>effort</key>
+			<real>28800</real>
+			<key>objectId</key>
+			<integer>660</integer>
+			<key>task</key>
+			<string>Install email server</string>
+			<key>workSeconds</key>
+			<real>28800</real>
+			<key>workTime</key>
+			<real>8</real>
+		</dict>
+		<dict>
+			<key>effort</key>
+			<real>28800</real>
+			<key>objectId</key>
+			<integer>661</integer>
+			<key>task</key>
+			<string>Verify email server</string>
+			<key>workSeconds</key>
+			<real>28800</real>
+			<key>workTime</key>
+			<real>8</real>
+		</dict>
+		<dict>
+			<key>children</key>
+			<array>
+				<integer>663</integer>
+				<integer>664</integer>
+				<integer>671</integer>
+				<integer>665</integer>
+				<integer>672</integer>
+				<integer>673</integer>
+				<integer>674</integer>
+			</array>
+			<key>isExpanded</key>
+			<false/>
+			<key>objectId</key>
+			<integer>662</integer>
+			<key>task</key>
+			<string>Write a deployment script</string>
+		</dict>
+		<dict>
+			<key>effort</key>
+			<real>28800</real>
+			<key>objectId</key>
+			<integer>663</integer>
+			<key>task</key>
+			<string>Pulls latest from SVN</string>
+			<key>workSeconds</key>
+			<real>28800</real>
+			<key>workTime</key>
+			<real>8</real>
+		</dict>
+		<dict>
+			<key>effort</key>
+			<real>28800</real>
+			<key>objectId</key>
+			<integer>664</integer>
+			<key>task</key>
+			<string>Moves it to a new location</string>
+			<key>workSeconds</key>
+			<real>28800</real>
+			<key>workTime</key>
+			<real>8</real>
+		</dict>
+		<dict>
+			<key>effort</key>
+			<real>28800</real>
+			<key>objectId</key>
+			<integer>665</integer>
+			<key>task</key>
+			<string>Run any migration scripts</string>
+			<key>workSeconds</key>
+			<real>28800</real>
+			<key>workTime</key>
+			<real>8</real>
+		</dict>
+		<dict>
+			<key>effort</key>
+			<real>28800</real>
+			<key>objectId</key>
+			<integer>666</integer>
+			<key>task</key>
+			<string>Manually take down rbu</string>
+			<key>workSeconds</key>
+			<real>28800</real>
+			<key>workTime</key>
+			<real>8</real>
+		</dict>
+		<dict>
+			<key>effort</key>
+			<real>28800</real>
+			<key>objectId</key>
+			<integer>667</integer>
+			<key>task</key>
+			<string>Setup migration scripts</string>
+			<key>workSeconds</key>
+			<real>28800</real>
+			<key>workTime</key>
+			<real>8</real>
+		</dict>
+		<dict>
+			<key>effort</key>
+			<real>28800</real>
+			<key>objectId</key>
+			<integer>668</integer>
+			<key>task</key>
+			<string>Test rbu-&gt;ma</string>
+			<key>workSeconds</key>
+			<real>28800</real>
+			<key>workTime</key>
+			<real>8</real>
+		</dict>
+		<dict>
+			<key>effort</key>
+			<real>28800</real>
+			<key>objectId</key>
+			<integer>669</integer>
+			<key>task</key>
+			<string>Setup nginx</string>
+			<key>workSeconds</key>
+			<real>28800</real>
+			<key>workTime</key>
+			<real>8</real>
+		</dict>
+		<dict>
+			<key>effort</key>
+			<real>28800</real>
+			<key>objectId</key>
+			<integer>670</integer>
+			<key>task</key>
+			<string>setup apache</string>
+			<key>workSeconds</key>
+			<real>28800</real>
+			<key>workTime</key>
+			<real>8</real>
+		</dict>
+		<dict>
+			<key>effort</key>
+			<real>28800</real>
+			<key>objectId</key>
+			<integer>671</integer>
+			<key>task</key>
+			<string>Suspends current site</string>
+			<key>workSeconds</key>
+			<real>28800</real>
+			<key>workTime</key>
+			<real>8</real>
+		</dict>
+		<dict>
+			<key>effort</key>
+			<real>28800</real>
+			<key>objectId</key>
+			<integer>672</integer>
+			<key>task</key>
+			<string>Run tests</string>
+			<key>workSeconds</key>
+			<real>28800</real>
+			<key>workTime</key>
+			<real>8</real>
+		</dict>
+		<dict>
+			<key>effort</key>
+			<real>28800</real>
+			<key>objectId</key>
+			<integer>673</integer>
+			<key>task</key>
+			<string>Flips switch</string>
+			<key>workSeconds</key>
+			<real>28800</real>
+			<key>workTime</key>
+			<real>8</real>
+		</dict>
+		<dict>
+			<key>effort</key>
+			<real>28800</real>
+			<key>objectId</key>
+			<integer>674</integer>
+			<key>task</key>
+			<string>Unsuspends site</string>
+			<key>workSeconds</key>
+			<real>28800</real>
+			<key>workTime</key>
+			<real>8</real>
+		</dict>
+		<dict>
+			<key>assignments</key>
+			<array>
+				<dict>
+					<key>id</key>
+					<integer>102</integer>
+					<key>units</key>
+					<real>1</real>
+				</dict>
+			</array>
+			<key>doneSeconds</key>
+			<real>3600</real>
+			<key>effort</key>
+			<real>3600</real>
+			<key>effortDone</key>
+			<real>3600</real>
+			<key>objectId</key>
+			<integer>675</integer>
+			<key>task</key>
+			<string>SRP</string>
+			<key>workDone</key>
+			<real>1</real>
+			<key>workSeconds</key>
+			<real>3600</real>
+			<key>workTime</key>
+			<real>1</real>
+		</dict>
+		<dict>
+			<key>children</key>
+			<array>
+				<integer>680</integer>
+				<integer>681</integer>
+				<integer>682</integer>
+				<integer>683</integer>
+				<integer>679</integer>
+				<integer>684</integer>
+			</array>
+			<key>isExpanded</key>
+			<false/>
+			<key>objectId</key>
+			<integer>677</integer>
+			<key>task</key>
+			<string>test in safari</string>
+		</dict>
+		<dict>
+			<key>assignments</key>
+			<array>
+				<dict>
+					<key>id</key>
+					<integer>102</integer>
+					<key>units</key>
+					<real>1</real>
+				</dict>
+			</array>
+			<key>desiredStart</key>
+			<string>20090227190000</string>
+			<key>doneSeconds</key>
+			<real>3600</real>
+			<key>effort</key>
+			<real>3600</real>
+			<key>effortDone</key>
+			<real>3600</real>
+			<key>endPlanDate</key>
+			<string>20090328210000</string>
+			<key>objectId</key>
+			<integer>679</integer>
+			<key>startPlanDate</key>
+			<string>20090327190000</string>
+			<key>task</key>
+			<string>star rating</string>
+			<key>workDone</key>
+			<real>1</real>
+			<key>workSeconds</key>
+			<real>3600</real>
+			<key>workTime</key>
+			<real>1</real>
+		</dict>
+		<dict>
+			<key>assignments</key>
+			<array>
+				<dict>
+					<key>id</key>
+					<integer>102</integer>
+					<key>units</key>
+					<real>1</real>
+				</dict>
+			</array>
+			<key>doneSeconds</key>
+			<real>3600</real>
+			<key>effort</key>
+			<real>3600</real>
+			<key>effortDone</key>
+			<real>3600</real>
+			<key>endPlanDate</key>
+			<string>20090314210000</string>
+			<key>objectId</key>
+			<integer>680</integer>
+			<key>startPlanDate</key>
+			<string>20090314190000</string>
+			<key>task</key>
+			<string>main</string>
+			<key>workDone</key>
+			<real>1</real>
+			<key>workSeconds</key>
+			<real>3600</real>
+			<key>workTime</key>
+			<real>1</real>
+		</dict>
+		<dict>
+			<key>assignments</key>
+			<array>
+				<dict>
+					<key>id</key>
+					<integer>102</integer>
+					<key>units</key>
+					<real>1</real>
+				</dict>
+			</array>
+			<key>desiredStart</key>
+			<string>20090220190000</string>
+			<key>doneSeconds</key>
+			<real>3600</real>
+			<key>effort</key>
+			<real>3600</real>
+			<key>effortDone</key>
+			<real>3600</real>
+			<key>endPlanDate</key>
+			<string>20090320210000</string>
+			<key>objectId</key>
+			<integer>681</integer>
+			<key>startPlanDate</key>
+			<string>20090320190000</string>
+			<key>task</key>
+			<string>restaurant</string>
+			<key>workDone</key>
+			<real>1</real>
+			<key>workSeconds</key>
+			<real>3600</real>
+			<key>workTime</key>
+			<real>1</real>
+		</dict>
+		<dict>
+			<key>assignments</key>
+			<array>
+				<dict>
+					<key>id</key>
+					<integer>102</integer>
+					<key>units</key>
+					<real>1</real>
+				</dict>
+			</array>
+			<key>desiredStart</key>
+			<string>20090221190000</string>
+			<key>doneSeconds</key>
+			<real>3600</real>
+			<key>effort</key>
+			<real>3600</real>
+			<key>effortDone</key>
+			<real>3600</real>
+			<key>endPlanDate</key>
+			<string>20090321210000</string>
+			<key>objectId</key>
+			<integer>682</integer>
+			<key>startPlanDate</key>
+			<string>20090321190000</string>
+			<key>task</key>
+			<string>menu item</string>
+			<key>workDone</key>
+			<real>1</real>
+			<key>workSeconds</key>
+			<real>3600</real>
+			<key>workTime</key>
+			<real>1</real>
+		</dict>
+		<dict>
+			<key>assignments</key>
+			<array>
+				<dict>
+					<key>id</key>
+					<integer>102</integer>
+					<key>units</key>
+					<real>1</real>
+				</dict>
+			</array>
+			<key>desiredStart</key>
+			<string>20090226190000</string>
+			<key>doneSeconds</key>
+			<real>3600</real>
+			<key>effort</key>
+			<real>3600</real>
+			<key>effortDone</key>
+			<real>3600</real>
+			<key>endPlanDate</key>
+			<string>20090326210000</string>
+			<key>objectId</key>
+			<integer>683</integer>
+			<key>startPlanDate</key>
+			<string>20090326190000</string>
+			<key>task</key>
+			<string>locations</string>
+			<key>workDone</key>
+			<real>1</real>
+			<key>workSeconds</key>
+			<real>3600</real>
+			<key>workTime</key>
+			<real>1</real>
+		</dict>
+		<dict>
+			<key>assignments</key>
+			<array>
+				<dict>
+					<key>id</key>
+					<integer>102</integer>
+					<key>units</key>
+					<real>1</real>
+				</dict>
+			</array>
+			<key>desiredStart</key>
+			<string>20090228190000</string>
+			<key>doneSeconds</key>
+			<real>3600</real>
+			<key>effort</key>
+			<real>3600</real>
+			<key>effortDone</key>
+			<real>3600</real>
+			<key>objectId</key>
+			<integer>684</integer>
+			<key>task</key>
+			<string>SRP</string>
+			<key>workDone</key>
+			<real>1</real>
+			<key>workSeconds</key>
+			<real>3600</real>
+			<key>workTime</key>
+			<real>1</real>
+		</dict>
+		<dict>
+			<key>effort</key>
+			<real>7200</real>
+			<key>objectId</key>
+			<integer>685</integer>
+			<key>task</key>
+			<string>figure out how to customize 404s</string>
+			<key>workSeconds</key>
+			<real>7200</real>
+			<key>workTime</key>
+			<real>2</real>
+		</dict>
+		<dict>
+			<key>effort</key>
+			<real>28800</real>
+			<key>objectId</key>
+			<integer>686</integer>
+			<key>task</key>
+			<string>learn capistrano</string>
+			<key>workSeconds</key>
+			<real>28800</real>
+			<key>workTime</key>
+			<real>8</real>
+		</dict>
+		<dict>
+			<key>effort</key>
+			<real>28800</real>
+			<key>objectId</key>
+			<integer>687</integer>
+			<key>task</key>
+			<string>install PIL on ma.prod</string>
+			<key>workSeconds</key>
+			<real>28800</real>
+			<key>workTime</key>
+			<real>8</real>
+		</dict>
+		<dict>
+			<key>effort</key>
+			<real>28800</real>
+			<key>objectId</key>
+			<integer>688</integer>
+			<key>task</key>
+			<string>verify that it works</string>
+			<key>workSeconds</key>
+			<real>28800</real>
+			<key>workTime</key>
+			<real>8</real>
+		</dict>
+		<dict>
+			<key>effort</key>
+			<real>28800</real>
+			<key>objectId</key>
+			<integer>689</integer>
+			<key>task</key>
+			<string>install email server</string>
+			<key>workSeconds</key>
+			<real>28800</real>
+			<key>workTime</key>
+			<real>8</real>
+		</dict>
+		<dict>
+			<key>effort</key>
+			<real>28800</real>
+			<key>objectId</key>
+			<integer>690</integer>
+			<key>task</key>
+			<string>verify email</string>
+			<key>workSeconds</key>
+			<real>28800</real>
+			<key>workTime</key>
+			<real>8</real>
+		</dict>
+		<dict>
+			<key>effort</key>
+			<real>28800</real>
+			<key>objectId</key>
+			<integer>691</integer>
+			<key>task</key>
+			<string>write a code migration script</string>
+			<key>workSeconds</key>
+			<real>28800</real>
+			<key>workTime</key>
+			<real>8</real>
+		</dict>
+		<dict>
+			<key>effort</key>
+			<real>28800</real>
+			<key>objectId</key>
+			<integer>692</integer>
+			<key>task</key>
+			<string>write some config files</string>
+			<key>workSeconds</key>
+			<real>28800</real>
+			<key>workTime</key>
+			<real>8</real>
+		</dict>
+		<dict>
+			<key>effort</key>
+			<real>28800</real>
+			<key>objectId</key>
+			<integer>693</integer>
+			<key>task</key>
+			<string>redo settings</string>
+			<key>workSeconds</key>
+			<real>28800</real>
+			<key>workTime</key>
+			<real>8</real>
 		</dict>
 	</array>
 	<key>topResources</key>
@@ -2823,7 +3221,7 @@
 		<integer>1</integer>
 	</array>
 	<key>uuid</key>
-	<string>4D04D793-3E5E-42E6-B84D-D509792B9168</string>
+	<string>A9423616-7A71-455E-B3BD-E06731DE4C45</string>
 	<key>version</key>
 	<integer>2</integer>
 </dict>

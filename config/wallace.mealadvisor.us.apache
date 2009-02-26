@@ -12,6 +12,7 @@
     PythonPath "['/var/www_apps/mealadvisor.us/staging/mealadvisor', '/var/www_apps/mealadvisor.us/staging/site-packages'] + sys.path"
     PythonHandler django.core.handlers.modpython
     SetEnv DJANGO_SETTINGS_MODULE settings
+    SetEnv DJANGO_ENVIRONMENT staging
     PythonDebug On
     Order Deny,Allow
     Deny from all

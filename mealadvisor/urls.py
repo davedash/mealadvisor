@@ -4,6 +4,7 @@ from mealadvisor.feeds import LatestRestaurants, MenuItems
 from mealadvisor.restaurant.models import Restaurant
 
 from os import path
+import settings
 
 feeds = {
     'latest'        : LatestRestaurants,
@@ -114,7 +115,7 @@ urlpatterns += patterns('',
     (
         r'^static/(?P<path>.*)$', 
         'django.views.static.serve', 
-        {'document_root': path.join(path.dirname(__file__), "static")}
+        {'document_root': settings.MEDIA_ROOT}
     ),
 )
 
