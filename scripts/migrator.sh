@@ -139,14 +139,14 @@ CREATE TABLE location_tmp (
   UNIQUE KEY (restaurant_id,address,city,state,zip,country_id),
   KEY  (restaurant_id),
   KEY  (country_id),
-  CONSTRAINT  FOREIGN KEY (restaurant_id) REFERENCES restaurant (id) ON DELETE CASCADE,
+  CONSTRAINT  FOREIGN KEY (restaurant_id) REFERENCES restaurant (id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT IGNORE location_tmp SELECT * FROM location;
 DROP TABLE location;
 RENAME TABLE location_tmp TO location;
 
-DELETE FROM location WHERE id IN (3715, 16480, 16232)
+DELETE FROM location WHERE id IN (3715, 16480, 16232);
 
 SET foreign_key_checks = 1;
 " | mysql -u root rbu     

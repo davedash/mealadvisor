@@ -7,8 +7,21 @@ import mealadvisor.settings
 
 setup_environ(mealadvisor.settings)
 
-from mealadvisor.restaurant.models import MenuItemImage
+class MenuItemImage(models.Model):
+    user      = models.ForeignKey(Profile, null=True, blank=True)
+    menu_item = models.ForeignKey(MenuItem)
+    data      = models.TextField(blank=True)
+    md5sum    = models.CharField(max_length=96, blank=True)
+    height    = models.IntegerField(null=True, blank=True)
+    width     = models.IntegerField(null=True, blank=True)
+    objects   = RandomManager()
 
+    class Meta:
+        db_table = u'menu_item_image'
+
+    def is_portrait(self):
+        return (self.height > self.width);
+        
 images = MenuItemImage.objects.all()
 
 counter = 1

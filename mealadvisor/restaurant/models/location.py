@@ -246,8 +246,11 @@ class Location(models.Model):
             self.stripped_title = self.generate_slug()
 
         if not (self.latitude and self.longitude):
-            (place, self.latitude, self.longitude) = geocode(self.get_full_address())
-
+            try:
+                (place, self.latitude, self.longitude) = geocode(self.get_full_address())
+            except:
+                pass
+                
         super(Location, self).save(force_insert, force_update)
 
     def get_absolute_url(self):
