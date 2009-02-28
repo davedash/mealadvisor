@@ -13,10 +13,10 @@ def staging():
         abort()
     
     config.releases_path = '/var/www_apps/mealadvisor.us'
-    config.path          = '%(releases_path)s/releases/%(svn_version)s'
     config.static_path   = '/var/www/static.mealadvisor.us'
+    config.path          = '%(releases_path)s/releases/%(svn_version)s'
     config.svn_path      = 'http://svn.reviewsby.us/trunk'
-    config.svn_export    = 'svn export -r %(svn_version)s --username davedash --password c3p0'
+    config.svn_export    = 'svn export -q -r %(svn_version)s --username davedash --password c3p0'
     
     run('mkdir %(path)s', fail='abort')
     
@@ -33,18 +33,16 @@ def staging():
     run('%(svn_export)s %(svn_path)s/config %(path)s/config', fail='abort')
 
     # export /var/www/static-staging.mealadvisor.us/releases/%(svn_version) 
-    run('%(svn_export)s %(svn_path)s/static %(static_path)s/releases/%(svn_version)s', fail='abort')
+    run('%(svn_export)s %(svn_path)s/static %(path)s/static', fail='abort')
     
     # copy images from /var/www/static-staging.mealadvisor/staging/images/menuitems/* new release dir
-    run("cp  %(static_path)s/staging/images/menuitems/* %(static_path)s/releases/%(svn_version)s/images/menuitems/", fail='warn')
+    run("cp  %(static_path)s/staging/images/menuitems/* %(svn_path)s/static/images/menuitems/", fail='warn')
 
     # rm "staging" symlinks
     run('rm %(releases_path)s/staging', fail='warn')
-    run('rm %(static_path)s/staging', fail='warn')
 
     # staging sym to new destination
     run('ln -s %(path)s %(releases_path)s/staging', fail='abort')
-    run('ln -s %(static_path)s/releases/%(svn_version)s %(static_path)s/staging', fail='abort')
     
     # server is hup'd
     invoke(hup)

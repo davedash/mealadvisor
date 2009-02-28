@@ -14,7 +14,7 @@
 			<key>GanttGroupShading</key>
 			<false/>
 			<key>GanttVisibleRect</key>
-			<string>{{-347, 0}, {643, 669}}</string>
+			<string>{{-260, 0}, {643, 669}}</string>
 			<key>OutlineVisibleRect</key>
 			<string>{{0, 0}, {688, 669}}</string>
 			<key>ScaleWidths</key>
@@ -45,7 +45,7 @@
 			<key>SheetSettings</key>
 			<dict>
 				<key>LevelConstrainsCompletionDate</key>
-				<false/>
+				<true/>
 				<key>LevelUpdatesSelectedTasks</key>
 				<false/>
 				<key>RescheduleUpdatesSelectedTasks</key>
@@ -146,7 +146,7 @@
 			<key>side</key>
 			<real>0.48885586857795715</real>
 			<key>window</key>
-			<string>{{1961, 347}, {1355, 804}}</string>
+			<string>{{58, 74}, {1355, 804}}</string>
 		</dict>
 	</array>
 	<key>displaySeconds</key>
@@ -164,7 +164,7 @@
 	<key>displayTimes</key>
 	<false/>
 	<key>endDate</key>
-	<string>20090509 21:00</string>
+	<string>20090716 21:00</string>
 	<key>flatNumbering</key>
 	<false/>
 	<key>objectId</key>
@@ -506,7 +506,7 @@
 	<key>taskDifferenceEngine</key>
 	<dict>
 		<key>nextId</key>
-		<integer>694</integer>
+		<integer>695</integer>
 	</dict>
 	<key>taskUserKeys</key>
 	<array/>
@@ -1620,6 +1620,8 @@
 			</array>
 			<key>endPlanDate</key>
 			<string>20090409210000</string>
+			<key>isExpanded</key>
+			<false/>
 			<key>objectId</key>
 			<integer>521</integer>
 			<key>startPlanDate</key>
@@ -1749,6 +1751,7 @@
 				<integer>449</integer>
 				<integer>677</integer>
 				<integer>521</integer>
+				<integer>691</integer>
 			</array>
 			<key>endPlanDate</key>
 			<string>20090313210000</string>
@@ -1864,7 +1867,7 @@
 				</dict>
 			</array>
 			<key>desiredStart</key>
-			<string>20090404190000</string>
+			<string>20090611190000</string>
 			<key>effort</key>
 			<real>28800</real>
 			<key>endPlanDate</key>
@@ -1934,7 +1937,7 @@
 				</dict>
 			</array>
 			<key>desiredStart</key>
-			<string>20090416190000</string>
+			<string>20090619190000</string>
 			<key>effort</key>
 			<real>28800</real>
 			<key>endPlanDate</key>
@@ -1972,7 +1975,7 @@
 				</dict>
 			</array>
 			<key>desiredStart</key>
-			<string>20090424190000</string>
+			<string>20090627190000</string>
 			<key>effort</key>
 			<real>28800</real>
 			<key>endPlanDate</key>
@@ -2010,7 +2013,7 @@
 				</dict>
 			</array>
 			<key>desiredStart</key>
-			<string>20090502190000</string>
+			<string>20090709190000</string>
 			<key>effort</key>
 			<real>28800</real>
 			<key>endPlanDate</key>
@@ -2048,7 +2051,7 @@
 				</dict>
 			</array>
 			<key>desiredStart</key>
-			<string>20090327190000</string>
+			<string>20090530190000</string>
 			<key>effort</key>
 			<real>28800</real>
 			<key>endPlanDate</key>
@@ -2110,10 +2113,10 @@
 		<dict>
 			<key>children</key>
 			<array>
+				<integer>694</integer>
 				<integer>686</integer>
 				<integer>687</integer>
 				<integer>689</integer>
-				<integer>691</integer>
 				<integer>692</integer>
 				<integer>693</integer>
 				<integer>690</integer>
@@ -2199,7 +2202,7 @@
 				</dict>
 			</array>
 			<key>desiredStart</key>
-			<string>20090314190000</string>
+			<string>20090522190000</string>
 			<key>effort</key>
 			<real>28800</real>
 			<key>endPlanDate</key>
@@ -3104,18 +3107,42 @@
 			<real>1</real>
 		</dict>
 		<dict>
+			<key>assignments</key>
+			<array>
+				<dict>
+					<key>id</key>
+					<integer>102</integer>
+					<key>units</key>
+					<real>1</real>
+				</dict>
+			</array>
+			<key>doneSeconds</key>
+			<real>7200</real>
 			<key>effort</key>
+			<real>7200</real>
+			<key>effortDone</key>
 			<real>7200</real>
 			<key>objectId</key>
 			<integer>685</integer>
 			<key>task</key>
 			<string>figure out how to customize 404s</string>
+			<key>workDone</key>
+			<real>2</real>
 			<key>workSeconds</key>
 			<real>7200</real>
 			<key>workTime</key>
 			<real>2</real>
 		</dict>
 		<dict>
+			<key>assignments</key>
+			<array>
+				<dict>
+					<key>id</key>
+					<integer>102</integer>
+					<key>units</key>
+					<real>1</real>
+				</dict>
+			</array>
 			<key>effort</key>
 			<real>28800</real>
 			<key>objectId</key>
@@ -3128,10 +3155,32 @@
 			<real>8</real>
 		</dict>
 		<dict>
+			<key>assignments</key>
+			<array>
+				<dict>
+					<key>id</key>
+					<integer>102</integer>
+					<key>units</key>
+					<real>1</real>
+				</dict>
+			</array>
+			<key>desiredStart</key>
+			<string>20090314190000</string>
 			<key>effort</key>
 			<real>28800</real>
 			<key>objectId</key>
 			<integer>687</integer>
+			<key>prerequisites</key>
+			<array>
+				<dict>
+					<key>id</key>
+					<integer>686</integer>
+					<key>isResource</key>
+					<string>YES</string>
+					<key>kind</key>
+					<integer>2</integer>
+				</dict>
+			</array>
 			<key>task</key>
 			<string>install PIL on ma.prod</string>
 			<key>workSeconds</key>
@@ -3140,10 +3189,32 @@
 			<real>8</real>
 		</dict>
 		<dict>
+			<key>assignments</key>
+			<array>
+				<dict>
+					<key>id</key>
+					<integer>102</integer>
+					<key>units</key>
+					<real>1</real>
+				</dict>
+			</array>
+			<key>desiredStart</key>
+			<string>20090502190000</string>
 			<key>effort</key>
 			<real>28800</real>
 			<key>objectId</key>
 			<integer>688</integer>
+			<key>prerequisites</key>
+			<array>
+				<dict>
+					<key>id</key>
+					<integer>690</integer>
+					<key>isResource</key>
+					<string>YES</string>
+					<key>kind</key>
+					<integer>2</integer>
+				</dict>
+			</array>
 			<key>task</key>
 			<string>verify that it works</string>
 			<key>workSeconds</key>
@@ -3152,10 +3223,32 @@
 			<real>8</real>
 		</dict>
 		<dict>
+			<key>assignments</key>
+			<array>
+				<dict>
+					<key>id</key>
+					<integer>102</integer>
+					<key>units</key>
+					<real>1</real>
+				</dict>
+			</array>
+			<key>desiredStart</key>
+			<string>20090327190000</string>
 			<key>effort</key>
 			<real>28800</real>
 			<key>objectId</key>
 			<integer>689</integer>
+			<key>prerequisites</key>
+			<array>
+				<dict>
+					<key>id</key>
+					<integer>687</integer>
+					<key>isResource</key>
+					<string>YES</string>
+					<key>kind</key>
+					<integer>2</integer>
+				</dict>
+			</array>
 			<key>task</key>
 			<string>install email server</string>
 			<key>workSeconds</key>
@@ -3164,10 +3257,32 @@
 			<real>8</real>
 		</dict>
 		<dict>
+			<key>assignments</key>
+			<array>
+				<dict>
+					<key>id</key>
+					<integer>102</integer>
+					<key>units</key>
+					<real>1</real>
+				</dict>
+			</array>
+			<key>desiredStart</key>
+			<string>20090424190000</string>
 			<key>effort</key>
 			<real>28800</real>
 			<key>objectId</key>
 			<integer>690</integer>
+			<key>prerequisites</key>
+			<array>
+				<dict>
+					<key>id</key>
+					<integer>693</integer>
+					<key>isResource</key>
+					<string>YES</string>
+					<key>kind</key>
+					<integer>2</integer>
+				</dict>
+			</array>
 			<key>task</key>
 			<string>verify email</string>
 			<key>workSeconds</key>
@@ -3176,22 +3291,59 @@
 			<real>8</real>
 		</dict>
 		<dict>
+			<key>assignments</key>
+			<array>
+				<dict>
+					<key>id</key>
+					<integer>102</integer>
+					<key>units</key>
+					<real>1</real>
+				</dict>
+			</array>
+			<key>doneSeconds</key>
+			<real>28800</real>
 			<key>effort</key>
+			<real>28800</real>
+			<key>effortDone</key>
 			<real>28800</real>
 			<key>objectId</key>
 			<integer>691</integer>
 			<key>task</key>
 			<string>write a code migration script</string>
+			<key>workDone</key>
+			<real>8</real>
 			<key>workSeconds</key>
 			<real>28800</real>
 			<key>workTime</key>
 			<real>8</real>
 		</dict>
 		<dict>
+			<key>assignments</key>
+			<array>
+				<dict>
+					<key>id</key>
+					<integer>102</integer>
+					<key>units</key>
+					<real>1</real>
+				</dict>
+			</array>
+			<key>desiredStart</key>
+			<string>20090404190000</string>
 			<key>effort</key>
 			<real>28800</real>
 			<key>objectId</key>
 			<integer>692</integer>
+			<key>prerequisites</key>
+			<array>
+				<dict>
+					<key>id</key>
+					<integer>689</integer>
+					<key>isResource</key>
+					<string>YES</string>
+					<key>kind</key>
+					<integer>2</integer>
+				</dict>
+			</array>
 			<key>task</key>
 			<string>write some config files</string>
 			<key>workSeconds</key>
@@ -3200,12 +3352,57 @@
 			<real>8</real>
 		</dict>
 		<dict>
+			<key>assignments</key>
+			<array>
+				<dict>
+					<key>id</key>
+					<integer>102</integer>
+					<key>units</key>
+					<real>1</real>
+				</dict>
+			</array>
+			<key>desiredStart</key>
+			<string>20090416190000</string>
 			<key>effort</key>
 			<real>28800</real>
 			<key>objectId</key>
 			<integer>693</integer>
+			<key>prerequisites</key>
+			<array>
+				<dict>
+					<key>id</key>
+					<integer>692</integer>
+					<key>isResource</key>
+					<string>YES</string>
+					<key>kind</key>
+					<integer>2</integer>
+				</dict>
+			</array>
 			<key>task</key>
 			<string>redo settings</string>
+			<key>workSeconds</key>
+			<real>28800</real>
+			<key>workTime</key>
+			<real>8</real>
+		</dict>
+		<dict>
+			<key>assignments</key>
+			<array>
+				<dict>
+					<key>id</key>
+					<integer>102</integer>
+					<key>units</key>
+					<real>1</real>
+				</dict>
+			</array>
+			<key>desiredStart</key>
+			<string>20090226190000</string>
+			<key>effort</key>
+			<real>28800</real>
+			<key>objectId</key>
+			<integer>694</integer>
+			<key>task</key>
+			<string>configure apache</string>
 			<key>workSeconds</key>
 			<real>28800</real>
 			<key>workTime</key>
@@ -3221,7 +3418,7 @@
 		<integer>1</integer>
 	</array>
 	<key>uuid</key>
-	<string>A9423616-7A71-455E-B3BD-E06731DE4C45</string>
+	<string>6E87B51A-C604-41C9-9B7E-F2667CF0442D</string>
 	<key>version</key>
 	<integer>2</integer>
 </dict>
