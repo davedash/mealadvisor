@@ -5,6 +5,7 @@ config.fab_user = 'builder'
 def staging():
     "Pushes current code to staging, hups Apache"
     # get the build number
+    local('svn up mealadvisor')
     config.svn_version   = svn_get_version()
 
     if not config.svn_version:
@@ -34,7 +35,7 @@ def staging():
     run('%(svn_export)s %(svn_path)s/static %(path)s/static', fail='abort')
     
     # symlink to images from /var/www/static-staging.mealadvisor/staging/images/menuitems/* new release dir
-    run("rm -f %(path)s/static/images/menuitems", fail=abort)
+    run("rm -r %(path)s/static/images/menuitems", fail=abort)
     run("ln -s %(static_path)s/menuitems_staging %(path)s/static/images/menuitems", fail=abort)
 
     # rotate "staging" symlinks
