@@ -9,10 +9,6 @@ import mealadvisor.settings
 setup_environ(mealadvisor.settings)
 
 from models import MenuItemImage
-
-
-
-
         
 images = MenuItemImage.objects.all()
 

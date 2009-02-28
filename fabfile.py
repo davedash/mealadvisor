@@ -35,11 +35,13 @@ def staging():
     # export /var/www/static-staging.mealadvisor.us/releases/%(svn_version) 
     run('%(svn_export)s %(svn_path)s/static %(path)s/static', fail='abort')
     
-    # copy images from /var/www/static-staging.mealadvisor/staging/images/menuitems/* new release dir
-    run("cp  %(static_path)s/staging/images/menuitems/* %(svn_path)s/static/images/menuitems/", fail='warn')
+    # symlink to images from /var/www/static-staging.mealadvisor/staging/images/menuitems/* new release dir
+    run("rm -f %(svn_path)s/static/images/menuitems", fail=abort)
+    run("ln -s %(static_path)s/menuitems_staging %(svn_path)s/static/images/menuitems", fail=abort)
 
-    # rm "staging" symlinks
-    run('rm %(releases_path)s/staging', fail='warn')
+    # rotate "staging" symlinks
+    run('rm %(releases_path)s/staging.rollback', fail='warn')
+    run('mv %(releases_path)s/staging  %(releases_path)s/rollback.staging', fail='warn')
 
     # staging sym to new destination
     run('ln -s %(path)s %(releases_path)s/staging', fail='abort')
