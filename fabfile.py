@@ -1,19 +1,15 @@
-from subprocess import Popen, PIPE
-config.fab_hosts = ['mealadvisor.us']
-config.fab_user = 'builder'
-
 def staging():
+    
     "Pushes current code to staging, hups Apache"
-    # get the build number
+    # get the build number    
     local('svn up mealadvisor')
+    
     config.svn_version   = svn_get_version()
-
+    
     if not config.svn_version:
         abort()
     
-    config.releases_path = '/var/www_apps/mealadvisor.us'
     config.static_path   = '/var/www/static.mealadvisor.us'
-    config.path          = '%(releases_path)s/releases/%(svn_version)s'
     config.svn_path      = 'http://svn.reviewsby.us/trunk'
     config.svn_export    = 'svn export -q -r %(svn_version)s --username davedash --password c3p0'
     
@@ -24,13 +20,13 @@ def staging():
     
     # svn export site-packages to site-packages
     run('%(svn_export)s %(svn_path)s/site-packages %(path)s/site-packages', fail='abort')
-
+    
     # svn export mealadvisor to path 
     run('%(svn_export)s %(svn_path)s/scripts %(path)s/scripts', fail='warn')
-
+    
     # svn export configs
     run('%(svn_export)s %(svn_path)s/config %(path)s/config', fail='abort')
-
+    
     # export /var/www/static-staging.mealadvisor.us/releases/%(svn_version) 
     run('%(svn_export)s %(svn_path)s/static %(path)s/static', fail='abort')
     
@@ -40,7 +36,7 @@ def staging():
 
     # rotate "staging" symlinks
     run('rm %(releases_path)s/staging.rollback', fail='warn')
-    run('mv %(releases_path)s/staging  %(releases_path)s/rollback.staging', fail='warn')
+    run('mv %(releases_path)s/staging  %(releases_path)s/staging.rollback', fail='warn')
 
     # staging sym to new destination
     run('ln -s %(path)s %(releases_path)s/staging', fail='abort')
@@ -48,11 +44,23 @@ def staging():
     # server is hup'd
     invoke(hup)
 
+def rm_cur_rev():
+    config.svn_version   = svn_get_version()
+    run('rm -rf %(path)s', fail='abort')
+
 def hup():
     sudo('/etc/init.d/apache2 restart')
     sudo('/etc/init.d/nginx restart')
     
     
 def svn_get_version():
+    from subprocess import Popen, PIPE
     output = Popen(["svn", "info", "mealadvisor"], stdout=PIPE).communicate()[0]
     return output.partition('Revision: ')[2].partition('\n')[0]
+
+
+
+config.fab_hosts = ['mealadvisor.us']
+config.fab_user = 'builder'
+config.releases_path = '/var/www_apps/mealadvisor.us'
+config.path          = '%(releases_path)s/releases/$(svn_version)'
