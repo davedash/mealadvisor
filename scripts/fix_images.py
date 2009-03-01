@@ -27,7 +27,7 @@ print "SAFE to do the following: '%s'" % """
 
 alter table menu_item_image drop data;
 alter table menu_item_image add column `image` varchar(240) NOT NULL;
-update menu_item_image set image = CONCAT('images/menuitems/',md5, '.jpg');
+update menu_item_image set image = CONCAT('images/menuitems/',md5sum, '.jpg');
 alter table menu_item_image drop md5sum;
 
 
