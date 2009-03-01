@@ -2,6 +2,9 @@
   ServerName wallace.mealadvisor.us
   ErrorLog /var/log/apache2/wallace.mealadvisor.us/error.log
 
+  User mealadvisor
+  Group mealadvisor
+  
   LogLevel warn
 
   CustomLog /var/log/apache2/wallace.mealadvisor.us/access.log combined
