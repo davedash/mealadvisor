@@ -10,7 +10,8 @@ if ENVIRONMENT == 'staging':
     DATABASE_PASSWORD = 'f3nne7'         
     DATABASE_HOST     = 'localhost'
     DATABASE_PORT     = ''
-
+    
+    LOGIN_HOST = 'http://wallace.mealadvisor.us'
 else:
     DEBUG          = True
     TEMPLATE_DEBUG = DEBUG
