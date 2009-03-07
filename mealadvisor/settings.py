@@ -86,6 +86,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.middleware.doc.XViewMiddleware',
     'django.middleware.transaction.TransactionMiddleware',
+    'django.contrib.redirects.middleware.RedirectFallbackMiddleware',
 )
 
 ROOT_URLCONF = 'mealadvisor.urls'
@@ -100,6 +101,7 @@ LOGIN_REDIRECT_URL = '/'
 OPENID_SUCCESS = "mealadvisor.common.views.openid_success"
 
 INSTALLED_APPS = (
+    'django.contrib.redirects',
     'django.contrib.auth',
     'django.contrib.sites',
     'django.contrib.contenttypes',

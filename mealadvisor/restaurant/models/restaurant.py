@@ -3,6 +3,7 @@ from markdown import markdown
 from django.db import models, transaction, connection
 from django.conf import settings
 from django.template.defaultfilters import slugify
+from django.contrib.redirects.models import Redirect
 
 from mealadvisor.common.models import Profile
 from mealadvisor.tools import *
@@ -124,6 +125,12 @@ class Restaurant(models.Model):
     new_version    = None
     
     def save(self, force_insert=False, force_update=False, reindex=True):
+        
+        if self.pk:
+            old_version = Restaurant.objects.get(pk=self.pk)
+            if old_version.stripped_title != self.stripped_title:
+                Redirect(site_id=1, old_path=old_version.get_absolute_url(), new_path=self.get_absolute_url()).save()
+                    
         if not self.stripped_title:
             self.stripped_title = slugify(self.name)
         
@@ -136,7 +143,7 @@ class Restaurant(models.Model):
         
         if reindex:
             self.reindex()
-        
+    
         
     def __setattr__(self, name, value):
         if name == 'description':
@@ -147,7 +154,7 @@ class Restaurant(models.Model):
         
         else:
             object.__setattr__(self, name, value)
-
+    
     def __getattr__(self, name):
         try:
             if name == 'description':
@@ -170,21 +177,21 @@ class Restaurant(models.Model):
                 rv = RestaurantVersion()
             
             self.new_version = rv
-
-        return self.new_version
         
+        return self.new_version
+    
     def get_absolute_url(self):
         return "/restaurant/%s" % (self.stripped_title,)
-
+    
     def get_rating_url(self):
         return self.get_absolute_url()+"/rate/"
-        
+    
     def slug(self):
         return self.stripped_title;
-
+    
     def __unicode__(self):
         return self.name
-        
+    
     def get_popular_tags(self, max = 10):
         
         query = """
@@ -244,7 +251,7 @@ class Restaurant(models.Model):
             words[stemmed_tag] += math.ceil(count/max) * settings.SEARCH_WEIGHT_TAG
         
         return words
-        
+    
     def reindex(self):
         # Remove search_index entries for this restaurant:
         RestaurantSearchIndex.objects.filter(restaurant=self).delete()
@@ -254,6 +261,7 @@ class Restaurant(models.Model):
     
     class Meta:
         db_table     = u'restaurant'
+    
 
 
 class RestaurantTag(models.Model):
