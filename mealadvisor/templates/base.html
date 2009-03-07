@@ -43,11 +43,17 @@
   {% endif %}
   
   {# JS #}
+  {% if debug %}
+  
   <script type="text/javascript" src="/static/js/main.js"></script> 
   {% block js %}
   <script type="text/javascript" src="/static/js/home.js"></script> 
   {% endblock js %}
-  
+  {% else %}
+  <script type="text/javascript" src="/static/js/ma-min.js"></script> 
+
+  {% endif %}
+
   {# Feeds/RSS #}
   {% block feeds %}
   <link href="/feed/latest" title="Latest restaurants" type="application/rss+xml" rel="alternate"/>  

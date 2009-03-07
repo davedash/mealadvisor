@@ -1,7 +1,7 @@
 MA.toggler = function()
 {
-    var e = YAHOO.util.Event; 
-    var d = YAHOO.util.Dom;
+    var e = YAHOO.util.Event, 
+    d = YAHOO.util.Dom;
     
     return {
         init: function() {
@@ -13,15 +13,16 @@ MA.toggler = function()
         },
         
         handleClick: function(ev) {
-            var target = e.getTarget(ev);
+            var target = e.getTarget(ev),
+                toggle;
+
             if (d.hasClass(target, 'toggle')) {
-                var toggle = target.parentNode.parentNode;
+                toggle = target.parentNode.parentNode;
                 this.toggle(toggle);
             }
         },
         toggle: function(element) {
-            var on  = "on";
-            var off = "off";
+            var on  = "on", off = "off";
             if (d.hasClass(element, on)){
                 d.removeClass(element, on);
                 d.addClass(element, off);
@@ -48,8 +49,9 @@ MA.paginator = function() {
         },
 
         handleClick: function(ev) {
-            var target = MA.e.getTarget(ev);
-            container = target.parentNode.parentNode.parentNode;
+            var target = MA.e.getTarget(ev),
+                container = target.parentNode.parentNode.parentNode,
+                handleSuccess, callback, request;
             
             if ((MA.d.hasClass(target.parentNode, 'page') || MA.d.hasClass(target.parentNode, 'navigation'))
             && (container.id == 'menu_page')) {
@@ -57,13 +59,13 @@ MA.paginator = function() {
                 MA.e.preventDefault(ev);
                 
                 // do the ajax call 
-                var handleSuccess = function(o) { container.innerHTML = o.responseText };
+                handleSuccess = function(o) { container.innerHTML = o.responseText };
                 
-                var callback = { 
+                callback = { 
                     success:handleSuccess
                 };
                 
-                var request = MA.c.asyncRequest('GET', target.href, callback);
+                request = MA.c.asyncRequest('GET', target.href, callback);
             }
         }
 
@@ -73,9 +75,10 @@ MA.paginator = function() {
 MA.map = function() {
     return {
         draw: function(address, title) {
-            var map = new YMap(document.getElementById('restaurant_map'));  
+            var map, marker;
+            map = new YMap(document.getElementById('restaurant_map'));  
             map.drawZoomAndCenter(address, 4);
-            var marker = new YMarker(address);
+            marker = new YMarker(address);
             marker.addAutoExpand(title);
             map.addOverlay(marker);
             map.disableKeyControls();
@@ -90,23 +93,23 @@ MA.tagger = function() {
             MA.e.onDOMReady(this.setup, this, true)
         },
         setup: function() {
+            var newdiv, link;
             this.tagger = MA.d.get('tag_form_container');
+            
             if (this.tagger) {
-                // add a node
-                // add a on click
-                // replace tagger with form
-                // set form to do an ajax submit
-       
-                var newdiv = document.createElement('div');
+                
+                newdiv = document.createElement('div');
                 newdiv.innerHTML = '<a href="#">Add a tag?</a>';
                 this.tagger.appendChild(newdiv);
-                var link = newdiv.firstChild;
+                link = newdiv.firstChild;
                 MA.e.on(link, 'click', this.handleClick, this, true);
             }
             
         },
         
         handleClick: function(ev) {
+            var oDS, oAC, form, tag_type;
+            
             MA.e.preventDefault(ev);
             
             form = MA.d.get('tag_form');
@@ -114,12 +117,12 @@ MA.tagger = function() {
             MA.d.setStyle(ev.target, 'display', 'none'); 
             tag_type = MA.d.get('tag_type_field').name;
             
-            var oDS = new YAHOO.util.XHRDataSource("/ajax/tag_ac?t="+tag_type);
+            oDS = new YAHOO.util.XHRDataSource("/ajax/tag_ac?t="+tag_type);
             oDS.responseType = YAHOO.util.XHRDataSource.TYPE_TEXT;
             oDS.responseSchema = { recordDelim: "\n", fieldDelim: "\t" };
             oDS.maxCacheEntries = 5;
 
-            var oAC = new YAHOO.widget.AutoComplete("tag_input", "tag_listing", oDS);
+            oAC = new YAHOO.widget.AutoComplete("tag_input", "tag_listing", oDS);
             oAC.generateRequest = function(sQuery) { 
                 return "&q=" + sQuery ; 
             };
@@ -129,34 +132,38 @@ MA.tagger = function() {
         },
         
         handleSubmit: function(ev) {
-            var container = MA.d.get('tag_list');
+            var container, handleSuccess, callback, sUrl, request;
+            
+            container = MA.d.get('tag_list');
             // do the ajax call 
             handleSuccess = function(o) { container.innerHTML = o.responseText };
             
-            var callback = { 
+            callback = { 
                 success: handleSuccess
             };
             
             YAHOO.util.Connect.setForm(ev.target); 
-            var sUrl = ev.target.action;
-            var request = YAHOO.util.Connect.asyncRequest('POST', sUrl, callback);
+            sUrl = ev.target.action;
+            request = YAHOO.util.Connect.asyncRequest('POST', sUrl, callback);
             MA.d.get('tag_input').value = '';
             MA.e.preventDefault(ev);
         },
         
         remove: function(id) {
+            var container, tag_type, sUrl, handleSuccess, callback, postData, request;
+            
             container = MA.d.get('tag_list');
             tag_type = MA.d.get('tag_type_field').name;
             
-            var sUrl = '/ajax/tag_rm?t='+tag_type;
+            sUrl = '/ajax/tag_rm?t='+tag_type;
             handleSuccess = function(o) { container.innerHTML = o.responseText }
             
             callback = { 
                 success: handleSuccess
             }
             
-            var postData = 'id='+id;
-            var request = YAHOO.util.Connect.asyncRequest('POST', sUrl, callback, postData);
+            postData = 'id='+id;
+            request = YAHOO.util.Connect.asyncRequest('POST', sUrl, callback, postData);
             return false;
         }
         

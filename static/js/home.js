@@ -1,7 +1,7 @@
 MA.autocomplete = function()
 {
-  var e = YAHOO.util.Event;
-  var w = YAHOO.widget;
+  var e = YAHOO.util.Event,
+      w = YAHOO.widget;
 
   return {
     init: function()
@@ -10,12 +10,13 @@ MA.autocomplete = function()
     },
     fnHandler: function()
     {
-      var rDS = new w.DS_XHR("/ajax/restaurant/list", ["ResultSet.Result","Title"]);
+      var rDS = new w.DS_XHR("/ajax/restaurant/list", ["ResultSet.Result","Title"]), 
+          rAC;
 
       rDS.maxCacheEntries    = 60; 
       rDS.queryMatchContains = true;
 
-      var rAC = new w.AutoComplete("restaurantInput","restaurantACContainer", rDS); 
+      rAC = new w.AutoComplete("restaurantInput","restaurantACContainer", rDS); 
 
       rAC.formatResult = function(item, query) 
       {
@@ -28,7 +29,6 @@ MA.autocomplete = function()
       rAC.itemSelectEvent.subscribe(
         function(sType, aArgs) 
         { 
-          var data = aArgs[2];
           document.getElementById("restaurant_id").value = aArgs[2][1]['Id'];
         }
       ); 
