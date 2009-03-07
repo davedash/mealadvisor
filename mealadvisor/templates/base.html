@@ -32,14 +32,16 @@
     {% endif %}
 
   {# CSS #}
-  <link rel="stylesheet" type="text/css" media="screen" href="/static/css/main.css" />
   
-  {% block css %}
-  <link rel="stylesheet" type="text/css" media="screen" href="/static/css/home.css" />
-  {% endblock css %}
   
   {% if debug %}
+  <link rel="stylesheet" type="text/css" media="screen" href="/static/css/main.css" />
+  {% block css %}
+    <link rel="stylesheet" type="text/css" media="screen" href="/static/css/home.css" />
+  {% endblock css %}
   <link rel="stylesheet" type="text/css" media="screen" href="/static/css/debug.css" />
+  {% else %}
+  <link rel="stylesheet" href="/static/css/ma-min.css" type="text/css" media="screen" charset="utf-8">
   {% endif %}
   
   {# JS #}
