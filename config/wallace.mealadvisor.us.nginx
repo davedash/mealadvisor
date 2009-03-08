@@ -8,11 +8,10 @@ server {
     empty_gif;
   }
 
-  #  location ^~ /media/ {
-  #    alias /var/www/django/media_admin/;
-  #    access_log off;
-  #    expires    30d;
-  #  }
+  gzip            on;
+  gzip_comp_level 1;
+  gzip_types      text/plain text/html text/css application/x-javascript image/jpeg image/png image/gif
+  gzip_disable "MSIE [1-6]\.";
 
   location ^~ /static/menuitems/ {
     keepalive_timeout  65;
@@ -25,10 +24,6 @@ server {
     keepalive_timeout  65;
     
     alias /var/www/static.mealadvisor.us/staging/;
-    gzip            on;
-    gzip_comp_level 1;
-    gzip_types      text/plain text/html text/css application/x-javascript image/jpeg image/png image/gif
-    gzip_disable "MSIE [1-6]\.";
     
     expires      30d;
   }
