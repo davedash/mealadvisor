@@ -72,7 +72,11 @@ def concat_minify_js():
     # run compressor
     # save output to ma-min.js
     local('java -jar bin/yuicompressor-2.4.2.jar -v static/js/ma-all.js -o static/js/ma-min.js', abort='fail')
-
+    # grab  google analytics js
+    local('curl http://www.google-analytics.com/ga.js >> static/js/ma-min.js', abort='fail')
+    # verify the code is there
+    local('grep -q _gat static/js/ma-min.js')
+    
 def concat_minify_css():
     # concat js
     local('cat static/css/main.css static/css/home.css static/css/restaurant.css static/css/search.css > static/css/ma-all.css', abort='fail')
