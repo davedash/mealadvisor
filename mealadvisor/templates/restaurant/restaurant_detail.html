@@ -54,10 +54,13 @@
   </div>
   <div class="column_400 column">
 	{% if main_location %}
-    <div id="restaurant_map"></div>    
+    <div id="restaurant_map"></div>
+
+    {% block mapjs %}
     <script type="text/javascript" charset="utf-8">
        MA.map.draw("{{main_location.address}}, {{main_location.city}}, {{main_location.state}} {{main_location.zip}}", "{{restaurant}}<br/>{{main_location}}");
     </script>
+    {% endblock mapjs %}
 
 	<p class="address">{% link_to_object main_location %}: {{main_location.get_full_address}}</p>
 	{% endif %}

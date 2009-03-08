@@ -39,7 +39,7 @@ def staging():
     put('static/js/ma-min.js', '%(path)s/static/js')
 
     # upload a compressed css file to the server
-    invoke(concat_minify_js)
+    invoke(concat_minify_css)
     put('static/css/ma-min.css', '%(path)s/static/css')
     
     # rotate "staging" symlinks
