@@ -260,7 +260,7 @@ def home(request):
     images = cache.get('home_images')
     if not images:
         images = MenuItemImage.objects.cheap_random(6).select_related(depth=2)
-        cache.set('home_images', images)
+        cache.set('home_images', images, settings.CACHE_TIMEOUTS.get('home_images'))
     
     return render_to_response("common/index.html", {"images": images}, context_instance=RequestContext(request))
 
