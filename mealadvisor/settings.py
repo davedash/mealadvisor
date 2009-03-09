@@ -10,8 +10,9 @@ CACHE_MIDDLEWARE_SECONDS        = 300
 CACHE_MIDDLEWARE_KEY_PREFIX     = 'ma'
 CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True
 
-LOGIN_HOST = 'http://127.0.0.1:8000'
+LOGIN_HOST     = 'http://127.0.0.1:8000'
 CACHE_TIMEOUTS = {'home_images': 43200}
+DEBUG          = False
 
 if ENVIRONMENT == 'staging':
     DATABASE_ENGINE   = 'mysql'       
