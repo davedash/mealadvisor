@@ -254,8 +254,14 @@ def scale_dimensions(width, height, **kwargs):
     return (width, height)
 
 def home(request):
-    # load n pictures   
-    images = MenuItemImage.objects.select_related(depth=2).order_by('?')[:6]
+    # load n pictures
+    from django.core.cache import cache
+    
+    images = cache.get('home_images')
+    if not images:
+        images = MenuItemImage.objects.cheap_random(6).select_related(depth=2)
+        cache.set('home_images', images)
+    
     return render_to_response("common/index.html", {"images": images}, context_instance=RequestContext(request))
 
 

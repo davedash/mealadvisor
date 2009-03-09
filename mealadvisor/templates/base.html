@@ -39,7 +39,6 @@
   {% block css %}
     <link rel="stylesheet" type="text/css" media="screen" href="/static/css/home.css" />
   {% endblock css %}
-  <link rel="stylesheet" type="text/css" media="screen" href="/static/css/debug.css" />
   {% else %}
   <link rel="stylesheet" href="/static/css/ma-min.css" type="text/css" media="screen" charset="utf-8">
   {% endif %}
@@ -164,9 +163,7 @@
     </div>  
   </div>
 
-  {% if debug %} 
-  {% include "debug.html" %} 
-  {% else %} 
+  {% if not debug %} 
   {% include "stats.html" %} 
   {% endif %} 
 

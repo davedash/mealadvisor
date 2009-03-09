@@ -39,6 +39,18 @@ from menuitem import *
 from location import *
     
 class RandomManager(models.Manager):
+    def cheap_random(self, num=1):
+        try:
+            # select the n max ids
+            nthmax = self.all().order_by('-id')[:num][num-1].id
+            # choose a random number from 1... nth max
+            import random
+            r = random.randint(1,nthmax)
+            # select n elements with ids > random
+            return self.filter(id__gte=r)[:num]
+        except:
+            return self.all()[:num]
+        
     def random(self):
         try:
             return self.all().order_by('?')[0]

@@ -3,6 +3,15 @@ import os
 
 ENVIRONMENT = os.environ.get('DJANGO_ENVIRONMENT','dev')
 
+# CACHE
+
+CACHE_BACKEND                   = 'memcached://127.0.0.1:11211/'
+CACHE_MIDDLEWARE_SECONDS        = 300
+CACHE_MIDDLEWARE_KEY_PREFIX     = 'ma'
+CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True
+
+LOGIN_HOST = 'http://127.0.0.1:8000'
+
 if ENVIRONMENT == 'staging':
     DATABASE_ENGINE   = 'mysql'       
     DATABASE_NAME     = 'ma_staging'
@@ -81,12 +90,14 @@ TEMPLATE_LOADERS = (
 )
 
 MIDDLEWARE_CLASSES = (
+    'django.middleware.cache.UpdateCacheMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.middleware.doc.XViewMiddleware',
     'django.middleware.transaction.TransactionMiddleware',
     'django.contrib.redirects.middleware.RedirectFallbackMiddleware',
+    'django.middleware.cache.FetchFromCacheMiddleware',
 )
 
 ROOT_URLCONF = 'mealadvisor.urls'
@@ -111,6 +122,13 @@ INSTALLED_APPS = (
     'mealadvisor.restaurant',
     'registration'
 )
+
+if DEBUG:
+    MIDDLEWARE_CLASSES += (
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
+    )
+    INSTALLED_APPS += ('debug_toolbar',)
+
 
 ACCOUNT_ACTIVATION_DAYS = 30
 
