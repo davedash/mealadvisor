@@ -50,15 +50,6 @@ class State(models.Model):
     class Meta:
         db_table = u'state'
 
-
-# class RestaurantRedirect(models.Model):
-#     old_stripped_title = models.CharField(max_length=765, primary_key=True)
-#     restaurant = models.ForeignKey(Restaurant, null=True, blank=True)
-#     updated_at = models.DateTimeField(null=True, blank=True)
-#     created_at = models.DateTimeField(null=True, blank=True)
-#     class Meta:
-#         db_table = u'restaurant_redirect'
-# 
 # class YahooLocalCategory(models.Model):
 #     yid = models.IntegerField(primary_key=True)
 #     description = models.CharField(max_length=192, blank=True)

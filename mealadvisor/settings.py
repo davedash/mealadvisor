@@ -122,7 +122,8 @@ INSTALLED_APPS = (
     'spindrop.django.openid.consumer',
     'mealadvisor.common',
     'mealadvisor.restaurant',
-    'registration'
+    'registration',
+    'django_cpserver',
 )
 
 if DEBUG:
