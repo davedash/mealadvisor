@@ -29,9 +29,11 @@
       </div>
     </div>
 	{% endif %}
-
+    
+    {% if restaurant.html_description %}
     <p class="description">{{restaurant.html_description|safe}}</p>
-
+    {% endif %}
+    
     {% if locations %}
 
     <div id="extra_locations" class="locations off">
