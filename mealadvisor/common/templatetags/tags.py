@@ -3,7 +3,7 @@ from django import template
 register = template.Library()
 
 @register.simple_tag
-def restaurant_tags(user, restaurant):
+def restaurant_tags(user, restaurant, prefix='Tags: '):
     pop_tags = restaurant.get_popular_tags(10)
     
     user_tags = {}
@@ -38,10 +38,13 @@ def restaurant_tags(user, restaurant):
         
     output = "\n".join(["<li>%s</li>"%tags[tag] for tag in sorted(tags.keys())])
 
-    return "<ul>\n%s\n</ul>" %output
+    if output:
+        return "%s<ul>\n%s\n</ul>" %(prefix, output)
+    else:
+        return ''
 
 @register.simple_tag
-def menuitem_tags(user, item):
+def menuitem_tags(user, item, prefix='Tags: '):
     pop_tags = item.get_popular_tags(10)
 
     user_tags = {}
@@ -75,7 +78,10 @@ def menuitem_tags(user, item):
     
     output = "\n".join(["<li>%s</li>"%tags[tag] for tag in sorted(tags.keys())])
     
-    return "<ul>\n%s\n</ul>" %output
+    if output:
+        return prefix+"<ul>\n%s\n</ul>" %output
+    else:
+        return ''
 
 @register.simple_tag
 def link_to_object(obj):
