@@ -37,4 +37,8 @@
 {% endfor %}
 </ul>
 {% endif %}
+
+{% if not locations and not restaurants %}
+<p>We couldn't find anything.</p>
+{% endif %}
 {% endblock body %}

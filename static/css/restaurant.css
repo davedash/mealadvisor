@@ -1,6 +1,6 @@
 p.description{font-style:italic;margin:0 0 1em 1em;}
 #main_location{font-size:80%;margin-bottom:1em;}
-.toggle{background:url(../images/icons/sprite.png) no-repeat 0px -18px;padding:0 0 0 18px;}
+.toggle{background:url(../images/icons/v.png) no-repeat 0px -18px;padding:0 0 0 18px;}
 .off #locations_list{display:none;}
 .on .toggle{background-position:0 6px;}
 .on #locations_list{display:block;}

@@ -1,3 +1,22 @@
+"""
+a
+|-mealadvisor.us
+  |-releases
+  | |-number
+  |-staging
+  | |-mealadvisor
+  | |-static
+  |   |- menutiems -> /a/static.mealadvisor.us/menutiems_static
+  | |-config
+  | |-scripts
+  |-prod
+  |-staging.rollback
+|-static.mealadvisor.us
+ |-staging -> /a/mealadvisor.us/staging/static
+ |-menuitems_static
+
+"""
+
 def staging():
     
     "Pushes current code to staging, hups Apache"
@@ -9,7 +28,7 @@ def staging():
     if not config.svn_version:
         abort()
     
-    config.static_path   = '/var/www/static.mealadvisor.us'
+    config.static_path   = '/a/static.mealadvisor.us'
     config.svn_path      = 'http://svn.reviewsby.us/trunk'
     config.svn_export    = 'svn export -q -r %(svn_version)s --username davedash --password c3p0'
     
@@ -19,7 +38,7 @@ def staging():
     run('%(svn_export)s %(svn_path)s/mealadvisor %(path)s/mealadvisor', fail='abort')
     
     # svn export site-packages to site-packages
-    run('%(svn_export)s %(svn_path)s/site-packages %(path)s/site-packages', fail='abort')
+    # run('%(svn_export)s %(svn_path)s/site-packages %(path)s/site-packages', fail='abort')
     
     # svn export mealadvisor to path 
     run('%(svn_export)s %(svn_path)s/scripts %(path)s/scripts', fail='warn')
@@ -72,10 +91,6 @@ def concat_minify_js():
     # run compressor
     # save output to ma-min.js
     local('java -jar bin/yuicompressor-2.4.2.jar -v static/js/ma-all.js -o static/js/ma-min.js', abort='fail')
-    # # grab  google analytics js
-    # local('curl http://www.google-analytics.com/ga.js >> static/js/ma-min.js', abort='fail')
-    # # verify the code is there
-    # local('grep -q _gat static/js/ma-min.js')
     
 def concat_minify_css():
     # concat js
@@ -84,7 +99,7 @@ def concat_minify_css():
     # save output to ma-min.js
     local('java -jar bin/yuicompressor-2.4.2.jar -v static/css/ma-all.css -o static/css/ma-min.css', abort='fail')
 
-config.fab_hosts = ['mealadvisor.us']
+config.fab_hosts = ['wallace.mealadvisor.us']
 config.fab_user = 'builder'
-config.releases_path = '/var/www_apps/mealadvisor.us'
+config.releases_path = '/a/mealadvisor.us'
 config.path          = '%(releases_path)s/releases/$(svn_version)'
