@@ -1,8 +1,8 @@
 server {
-  listen   80;
+  listen      80;
   server_name wallace.mealadvisor.us;	
   access_log  /var/log/nginx/wallace.mealadvisor.us/access.log;
-  error_log /var/log/nginx/wallace.mealadvisor.us/error.log;
+  error_log   /var/log/nginx/wallace.mealadvisor.us/error.log;
 
   location = /static/blank.gif {
     empty_gif;
@@ -16,7 +16,7 @@ server {
   location ^~ /static/menuitems/ {
     keepalive_timeout  65;
     
-    alias /var/www/static.mealadvisor.us/menuitems_staging/;
+    alias /a/static.mealadvisor.us/menuitems_staging/;
     expires      30d;
   }
 

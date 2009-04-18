@@ -77,8 +77,10 @@ def rm_cur_rev():
 
 def hup():
     sudo('/etc/init.d/apache2 restart')
-    sudo('/etc/init.d/nginx restart')
+    invoke(hup_nginx)
     
+def hup_nginx():
+    sudo('/etc/init.d/nginx restart')
     
 def svn_get_version():
     from subprocess import Popen, PIPE
@@ -99,6 +101,12 @@ def concat_minify_css():
     # save output to ma-min.js
     local('java -jar bin/yuicompressor-2.4.2.jar -v static/css/ma-all.css -o static/css/ma-min.css', abort='fail')
 
+def setup_nginx():
+    sudo("ln -s %(releases_path)s/staging/config/wallace.mealadvisor.us.nginx /etc/nginx/sites-enabled/wallace.mealadvisor.us")
+    sudo("mkdir -p /var/log/nginx/wallace.mealadvisor.us/")
+    invoke(hup_nginx)
+    
+    
 config.fab_hosts = ['wallace.mealadvisor.us']
 config.fab_user = 'builder'
 config.releases_path = '/a/mealadvisor.us'
