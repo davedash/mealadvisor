@@ -1,5 +1,7 @@
 User mealadvisor
 Group mealadvisor
+LoadModule wsgi_module /usr/lib/apache2/modules/mod_wsgi.so
+WSGIPythonHome /a/BASELINE
 
 <VirtualHost *>
   KeepAlive  off;
@@ -14,8 +16,6 @@ Group mealadvisor
   CustomLog /var/log/apache2/wallace.mealadvisor.us/access.log combined
   
   SetEnvIf X-Reverse-Proxy ^Nginx$ let_me_in
-  LoadModule wsgi_module /usr/lib/apache2/modules/mod_wsgi.so
-  WSGIPythonHome /a/BASELINE
   
   WSGIScriptAlias / /a/mealadvisor.us/staging/config/wsgi.py
   
