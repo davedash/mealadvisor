@@ -105,8 +105,17 @@ def setup_nginx():
     sudo("ln -s %(releases_path)s/staging/config/wallace.mealadvisor.us.nginx /etc/nginx/sites-enabled/wallace.mealadvisor.us")
     sudo("mkdir -p /var/log/nginx/wallace.mealadvisor.us/")
     invoke(hup_nginx)
-    
-    
+
+# install environment
+# django easy
+# cmemcache apt libmemcache-dev and download and setup
+# mysql    apt
+# geopy easy
+# markdown
+# registration
+# django-registration
+
+   
 config.fab_hosts = ['wallace.mealadvisor.us']
 config.fab_user = 'builder'
 config.releases_path = '/a/mealadvisor.us'

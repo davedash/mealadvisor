@@ -1,7 +1,5 @@
 User mealadvisor
 Group mealadvisor
-LoadModule wsgi_module /usr/lib/apache2/modules/mod_wsgi.so
-WSGIPythonHome /a/BASELINE
 
 <VirtualHost *>
   KeepAlive  off;

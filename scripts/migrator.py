@@ -20,6 +20,7 @@ parser = OptionParser(usage=usage)
 parser.add_option("-d", "--download", action="store_true", help="downloads database from production servers")
 parser.add_option("-T", "--notransform", action="store_false", help="does not do db import and transforms")
 parser.add_option("--db", default='rbu', help="destination database")
+parser.add_option("--dbpass", help="db password")
 
 
 
@@ -37,10 +38,13 @@ if options.download:
     f.close()
     
 # insert this into DB
-def  mysql(cmds, use=True):
+def mysql(cmds, use=True):
     if use:
         cmds = "use %s; " % options.db + cmds
     p_echo  = Popen(["echo", cmds], stdout=PIPE)
+    cmd = "mysql -u root"
+    if options.dbpass:
+        cmd = cmd + " -p%s"%options.dbpass
     p_mysql = Popen(["mysql -u root"], shell=True, stdin=p_echo.stdout, stdout=PIPE)
     return p_mysql.communicate()[0]
 

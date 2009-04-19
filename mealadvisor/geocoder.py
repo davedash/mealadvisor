@@ -1,4 +1,4 @@
-from geopy import geocoders_old as geocoders
+from geopy import geocoders
 from django.conf import settings
 
 from xml.dom import minidom

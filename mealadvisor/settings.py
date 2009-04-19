@@ -123,7 +123,6 @@ INSTALLED_APPS = (
     'mealadvisor.common',
     'mealadvisor.restaurant',
     'registration',
-    'django_cpserver',
 )
 
 if DEBUG:
