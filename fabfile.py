@@ -111,10 +111,19 @@ def setup_nginx():
 # cmemcache apt libmemcache-dev and download and setup
 # mysql    apt
 # geopy easy
-# markdown
-# registration
-# django-registration
+# markdown ei
+# registration ei
+# django-registration ei
+# install spindrop.* svn
+# django-debug-toolbar
+# pyton openid from apt-get
 
+# setup dbs
+# ma_staging user has access to ma_staging db via:
+# create user 'ma_staging' identified by 'f3nne7'ne7'
+# DATABASE_PASSWORD = 'f3nne7'         
+#   GRANT CREATE, ALTER, INDEX, SELECT, INSERT, UPDATE, DELETE, LOCK TABLES ON `ma_staging`.* TO 'ma_staging'@'%' 
+# create the static directory
    
 config.fab_hosts = ['wallace.mealadvisor.us']
 config.fab_user = 'builder'

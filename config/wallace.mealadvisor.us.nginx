@@ -23,7 +23,7 @@ server {
   location ^~ /static/ {
     keepalive_timeout  65;
     
-    alias /var/www/static.mealadvisor.us/staging/;
+    alias /a/static.mealadvisor.us/staging/;
     
     expires      30d;
   }

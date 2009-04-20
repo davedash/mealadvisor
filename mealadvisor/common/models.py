@@ -21,7 +21,7 @@ class StateManager(models.Manager):
 class Profile(models.Model):
     user        = models.ForeignKey(User, db_column="userid", unique=True)
     email       = models.CharField(max_length=384, blank=True)
-    openid      = models.BooleanField(null=True, blank=True)
+    openid      = models.NullBooleanField(null=True, blank=True)
     preferences = models.TextField(blank=True)
     about_text  = models.TextField(blank=True)
     updated_at = models.DateTimeField(auto_now=True)

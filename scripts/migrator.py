@@ -42,18 +42,18 @@ def mysql(cmds, use=True):
     if use:
         cmds = "use %s; " % options.db + cmds
     p_echo  = Popen(["echo", cmds], stdout=PIPE)
-    cmd = "mysql -u root"
+    mysql_cmd = "mysql -u root"
     if options.dbpass:
-        cmd = cmd + " -p%s"%options.dbpass
-    p_mysql = Popen(["mysql -u root"], shell=True, stdin=p_echo.stdout, stdout=PIPE)
+        mysql_cmd = mysql_cmd + " -p%s"%options.dbpass
+    p_mysql = Popen([mysql_cmd], shell=True, stdin=p_echo.stdout, stdout=PIPE)
     return p_mysql.communicate()[0]
 
 
 if not options.notransform:
     print "emptying database"
-    cmds = """DROP DATABASE rbu;"""
+    cmds = """DROP DATABASE %s;""" % options.db
     mysql(cmds, False)
-    cmds = "CREATE DATABASE rbu;"
+    cmds = "CREATE DATABASE %s;"%options.db
     mysql(cmds, False)
 
     print "priming DB with Django defaults"
