@@ -129,6 +129,8 @@ MA.tagger = function() {
             
             // handle the form's submission
             MA.e.on(form, 'submit', this.handleSubmit, this, true);
+            MA.d.get('tag_input').focus();
+            
         },
         
         handleSubmit: function(ev) {

@@ -4,13 +4,14 @@
 {% block body %}
 
 <div class="title_container">
-<h2>
-  {{restaurant}}
-  
-  <span class="url"> <a href="{{restaurant.url}}">[restaurant web site]</a></span>  
-</h2>
+    <h2>
+      {{restaurant}}
+      {% if restaurant.url %}
+      <span class="url"> <a href="{{restaurant.url}}">[restaurant web site]</a></span>  
+      {% endif %}
+    </h2>
 
-{% star 'restaurant' restaurant.current_rating restaurant.average_rating restaurant.get_rating_url %}
+    {% star 'restaurant' restaurant.current_rating restaurant.average_rating restaurant.get_rating_url %}
 </div>
 
 {% include 'includes/tagbox.html' %}	
@@ -62,8 +63,9 @@
   </div>
 </div>
 
-{% if dishes %}
 <h3>Menu Items</h3>
+
+{% if dishes %}
 
 <div id="menu_page">
   {% include 'restaurant/include/menu_item_list.html' %}
@@ -76,20 +78,21 @@
     {% include 'restaurant/include/menu_paginator.html' %}
 
   </ul>
-	<div id="add_menu_item">
-		<a href="{{restaurant.get_absolute_url}}/add/item">Add a new menu item</a>		
-	</div>
 
 	
 </div>
-
+{% else %}
+<p>There are no menu items for {{restaurant}}.  Perhaps they don't have any food?  Fill us in if we're wrong :)</p>
 {% endif %}
+<div id="add_menu_item">
+	<a href="{{restaurant.get_absolute_url}}/add/item">Add a new menu item</a>		
+</div>
 
 {% include 'includes/reviews.html' %}
 <div id="reviews_options">
   <ul>
     <li class = "button">
-      <a href="{{restaurant.get_absolute_url}}/review">Leave a review</a>
+      <a href="{{restaurant.get_absolute_url}}/review">Leave a review of the restaurant in general</a>
     </li>
   </ul>
 </div>
