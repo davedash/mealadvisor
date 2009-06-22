@@ -15,7 +15,7 @@ Group mealadvisor
   
   SetEnvIf X-Reverse-Proxy ^Nginx$ let_me_in
   
-  WSGIScriptAlias / /a/mealadvisor.us/staging/config/wsgi.py
+  WSGIScriptAlias / /a/mealadvisor.us/staging/config/wsgi-prod.py
   
   <Location "/">
       Order Deny,Allow
