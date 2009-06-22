@@ -1,0 +1,26 @@
+User mealadvisor
+Group mealadvisor
+
+<VirtualHost *>
+  KeepAlive  off;
+
+  ServerName mealadvisor.us
+  ErrorLog /var/log/apache2/mealadvisor.us/error.log
+  
+  LogLevel warn
+  # log nginx x-forwarded-for
+  LogFormat "%{X-Forwarded-For}i %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"" combined
+  
+  CustomLog /var/log/apache2/mealadvisor.us/access.log combined
+  
+  SetEnvIf X-Reverse-Proxy ^Nginx$ let_me_in
+  
+  WSGIScriptAlias / /a/mealadvisor.us/staging/config/wsgi.py
+  
+  <Location "/">
+      Order Deny,Allow
+      Deny from all
+      Allow from env=let_me_in
+  </Location>
+
+</VirtualHost>

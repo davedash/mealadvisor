@@ -1,0 +1,56 @@
+server {
+  listen      80;
+  server_name mealadvisor.us;	
+  access_log  /var/log/nginx/mealadvisor.us/access.log;
+  error_log   /var/log/nginx/mealadvisor.us/error.log;
+
+  location = /static/blank.gif {
+    empty_gif;
+  }
+
+  gzip            on;
+  gzip_comp_level 1;
+  gzip_types      text/plain text/html text/css application/x-javascript image/jpeg image/png image/gif
+  gzip_disable "MSIE [1-6]\.";
+
+  location ^~ /static/menuitems/ {
+    keepalive_timeout  65;
+    
+    alias /a/static.mealadvisor.us/menuitems_staging/;
+    expires      30d;
+  }
+
+  location ^~ /static/ {
+    keepalive_timeout  65;
+    
+    alias /a/static.mealadvisor.us/staging/;
+    
+    expires      30d;
+  }
+
+  location / {
+    proxy_pass	http://mealadvisor.us:8080/;
+    proxy_redirect	off;
+
+    keepalive_timeout  0;
+
+    proxy_set_header   Host             $host;
+    proxy_set_header   X-Real-IP        $remote_addr;
+    proxy_set_header   X-Forwarded-For  $proxy_add_x_forwarded_for;
+
+    proxy_set_header	X-Reverse-Proxy	"Nginx";
+    client_max_body_size       10m;
+    client_body_buffer_size    128k;
+
+    proxy_connect_timeout      90;
+    proxy_send_timeout         90;
+    proxy_read_timeout         90;
+
+    proxy_buffer_size          4k;
+    proxy_buffers              4 32k;
+    proxy_busy_buffers_size    64k;
+    proxy_temp_file_write_size 64k;
+
+  }
+
+}

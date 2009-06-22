@@ -135,7 +135,21 @@ ALTER TABLE restaurant_version MODIFY COLUMN html_description TEXT CHARACTER SET
 
 SET NAMES utf8;
 
+update menu_item set name = replace(name,unhex('C3A2E282ACE2809D'), '-') WHERE name REGEXP UNHEX('C3A2E282ACE2809D');
+update menu_item set name = replace(name,unhex('C3A2E282ACC593'), '"') WHERE name REGEXP UNHEX('C3A2E282ACC593');
+update menu_item set name = replace(name,unhex('C3A2E282ACC29D'), '"') WHERE name REGEXP UNHEX('C3A2E282ACC29D');
+
+update menuitem_version set html_description = replace(html_description,unhex('C3A2E282ACE2809D'), '-') WHERE html_description REGEXP UNHEX('C3A2E282ACE2809D');
+update menuitem_version set html_description = replace(html_description,unhex('C3A2E282ACC593'), '"') WHERE html_description REGEXP UNHEX('C3A2E282ACC593');
+update menuitem_version set html_description = replace(html_description,unhex('C3A2E282ACC29D'), '"') WHERE html_description REGEXP UNHEX('C3A2E282ACC29D');
+update menuitem_version set html_description = replace(html_description,unhex('C3A2E282ACE284A2'), "'") WHERE html_description REGEXP UNHEX('C3A2E282ACE284A2');
+
+
+
 update menu_item  set name=replace(name,'Ã»','û')   where name LIKE '%Ã»%';
+
+update menu_item  set name=replace(name,'â€”','-')   where name LIKE '%â€”%';
+
 update restaurant set name=replace(name,'Ã»','û')   where name LIKE '%Ã»%';
 update menu_item  set name=replace(name,'Ã©','é')   where name LIKE '%Ã©%';
 update restaurant set name=replace(name,'Ã©','é')   where name LIKE '%Ã©%';
