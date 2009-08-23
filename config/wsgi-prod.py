@@ -2,7 +2,7 @@ import os
 import site
 import sys
 
-site.addsitedir('/a/mealadvisor.us/lib/python2.5/site-packages/')
+site.addsitedir('/a/mealadvisor.us/lib/python2.6/site-packages/')
 site.addsitedir('/a/mealadvisor.us/staging/')
 site.addsitedir('/a/mealadvisor.us/staging/mealadvisor')
 

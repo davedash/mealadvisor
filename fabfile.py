@@ -75,10 +75,12 @@ def setup():
     if config.get('environment') == 'staging':
         sudo("ln -s /a/mealadvisor.us/staging/config/wallace.mealadvisor.us.apache /etc/apache2/sites-enabled/wallace.mealadvisor.us ")
         sudo("ln -s /a/mealadvisor.us/staging/config/wallace.mealadvisor.us.nginx /etc/nginx/sites-enabled/wallace.mealadvisor.us")
+        sudo("mkdir -p /var/log/apache2/wallace.mealadvisor.us")
     else:
         sudo("ln -s /a/mealadvisor.us/staging/config/mealadvisor.us.apache /etc/apache2/sites-enabled/mealadvisor.us ")
         sudo("ln -s /a/mealadvisor.us/staging/config/mealadvisor.us.nginx /etc/nginx/sites-enabled/mealadvisor.us")
-    invoke(hup)
+        sudo("mkdir -p /var/log/apache2/mealadvisor.us")
+    # /a/mealadvisor.us/bin/easy_install django
     
 def push():
     "Pushes current code to staging, hups Apache"
@@ -127,10 +129,7 @@ def push():
 
     # staging sym to new destination
     run('ln -s %(path)s %(releases_path)s/staging', fail='abort')
-    
-    # update libs
-    invoke(setup_staging)
-    
+        
     # server is hup'd
     invoke(hup)
 
@@ -170,8 +169,7 @@ def setup_nginx():
     invoke(hup_nginx)
 
 def setup_staging():
-    sudo("")
-    sudo("sudo chmod a+w menuitems_staging ")
+    sudo("sudo chmod a+w menuitems ")
     sudo("svn co http://django-tagging.googlecode.com/svn/trunk/tagging /a/mealadvisor.us/lib/python2.5/site-packages/tagging")
     
 # install environment
@@ -188,8 +186,14 @@ def setup_staging():
 
 # setup dbs
 # ma_staging user has access to ma_staging db via:
-# create user 'ma_staging' identified by 'f3nne7'ne7'
+# create user 'ma_staging' identified by 'f3nne7'
 # DATABASE_PASSWORD = 'f3nne7'         
 #   GRANT CREATE, ALTER, INDEX, SELECT, INSERT, UPDATE, DELETE, LOCK TABLES ON `ma_staging`.* TO 'ma_staging'@'%' 
 # create the static directory
+
+# ma_prod
+# create user 'ma_prod' identified by 'y@rmul3'
+# DATABASE_PASSWORD = 'y@rmul3'         
+#   GRANT CREATE, ALTER, INDEX, SELECT, INSERT, UPDATE, DELETE, LOCK TABLES ON `ma_prod`.* TO 'ma_prod'@'%' 
+
    
