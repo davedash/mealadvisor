@@ -39,7 +39,7 @@ def tag_add(request):
 
 @login_required
 def tag_add_menuitem(request):
-    form     = MenuitemTagAddForm(request.GET)
+    form     = MenuitemTagAddForm(request.POST)
     
     menuitem = MenuItem.objects.get(id=request.REQUEST['menu_item'])
 
@@ -49,6 +49,7 @@ def tag_add_menuitem(request):
         for t in tags:
             tag, created = MenuitemTag.objects.get_or_create(menu_item=menuitem, user=request.user.get_profile(), tag=t)
             tag.save()
+
 
     menu_item = menuitem
     return render_to_response("menuitem/tags.html", locals(), context_instance=RequestContext(request))

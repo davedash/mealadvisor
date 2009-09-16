@@ -196,4 +196,5 @@ def setup_staging():
 # DATABASE_PASSWORD = 'y@rmul3'         
 #   GRANT CREATE, ALTER, INDEX, SELECT, INSERT, UPDATE, DELETE, LOCK TABLES ON `ma_prod`.* TO 'ma_prod'@'%' 
 
-   
+def install_deps_local():
+    local("pip install django-tagging")
