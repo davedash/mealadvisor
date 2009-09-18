@@ -31,7 +31,7 @@ else:
     DATABASE_NAME     = 'rbu'        # Or path to database file if using sqlite3.
     DATABASE_USER     = 'root'       # Not used with sqlite3.
     DATABASE_PASSWORD = ''           # Not used with sqlite3.
-    DATABASE_HOST     = 'localhost'  # Set to empty string for localhost. Not used with sqlite3.
+    DATABASE_HOST     = '/tmp/mysql.sock'  # Set to empty string for localhost. Not used with sqlite3.
     DATABASE_PORT     = ''           # Set to empty string for default. Not used with sqlite3.
     
     EMAIL_HOST          = 'smtp.gmail.com'
@@ -152,3 +152,4 @@ SEARCH_DEFAULT_RADIUS = 25
 SEARCH_WEIGHT_BODY    = 1
 SEARCH_WEIGHT_TITLE   = 2
 SEARCH_WEIGHT_TAG     = 3
+
