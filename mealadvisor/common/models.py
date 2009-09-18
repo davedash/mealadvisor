@@ -20,10 +20,10 @@ class StateManager(models.Manager):
 
 class Profile(models.Model):
     user        = models.ForeignKey(User, db_column="userid", unique=True)
-    email       = models.CharField(max_length=384, blank=True)
+    email       = models.CharField(max_length=384, blank=True, null=True)
     openid      = models.NullBooleanField(null=True, blank=True)
-    preferences = models.TextField(blank=True)
-    about_text  = models.TextField(blank=True)
+    preferences = models.TextField(null=True)
+    about_text  = models.TextField(null=True)
     updated_at = models.DateTimeField(auto_now=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -35,7 +35,7 @@ class Country(models.Model):
     iso            = models.CharField(max_length=6, primary_key=True)
     name           = models.CharField(max_length=240)
     printable_name = models.CharField(max_length=240)
-    iso3           = models.CharField(max_length=9, blank=True)
+    iso3           = models.CharField(max_length=9, null=True)
     numcode        = models.IntegerField(null=True, blank=True)
     objects        = CountryManager()
     class Meta:
