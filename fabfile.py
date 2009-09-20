@@ -22,6 +22,8 @@ config.releases_path = '/a/mealadvisor.us'
 config.path          = '%(releases_path)s/release'
 config.static_path   = '/a/static.mealadvisor.us'
 
+cmd_pep8 = ''
+
 def staging():
     "Setup staging info"
     config.environment = 'staging'
@@ -179,3 +181,6 @@ def setup_staging():
 
 def install_deps_local():
     local("pip install django-tagging")
+
+def pep8():
+    local("pep8 --exclude *.txt,*.pyc,README --statistics mealadvisor mealadvisor_admin fabfile.py scripts")
