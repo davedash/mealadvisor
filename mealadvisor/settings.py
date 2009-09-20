@@ -23,6 +23,9 @@ if ENVIRONMENT == 'staging':
     DATABASE_PORT     = ''
     
     LOGIN_HOST = 'http://wallace.mealadvisor.us'
+    
+    MEDIA_URL = 'http://static.wallace.mealadvisor.us/static/'
+
 else:
     DEBUG          = True
     TEMPLATE_DEBUG = DEBUG
@@ -39,6 +42,9 @@ else:
     EMAIL_HOST_PASSWORD = 'manipul8'
     EMAIL_PORT          = 587
     EMAIL_USE_TLS       = True
+    
+    MEDIA_URL = '/static/'
+
 
 DEFAULT_FROM_MAIL = 'hungry.robot@mealadvsor.us'
 
@@ -71,10 +77,6 @@ USE_I18N = True
 # Example: "/home/media/media.lawrence.com/"
 MEDIA_ROOT = os.path.realpath(os.path.join(os.path.dirname(__file__),os.path.pardir, "static"))
 
-# URL that handles the media served from MEDIA_ROOT. Make sure to use a
-# trailing slash if there is a path component (optional in other cases).
-# Examples: "http://media.lawrence.com", "http://example.com/media/"
-MEDIA_URL = '/static/'
 
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
 # trailing slash.
