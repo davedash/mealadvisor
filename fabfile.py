@@ -101,7 +101,8 @@ def push():
     
     # git push $environment (latest code should be up to date)
     local('git push %s release'%config.environment)
-    
+    run('cd %(path)s;git checkout -f')
+
     # upload a compressed js file to the server
     invoke(concat_minify_js)
     put('static/js/ma-min.js', '%(path)s/static/js')
