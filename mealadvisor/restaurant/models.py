@@ -18,7 +18,7 @@ u'cafe'
 u'cafe'
 
 >>> normalize(u'cAFe')
-u'cafe'    
+u'cafe'
 >>> normalize(u'$sss$s')
 u'ssss'
 """
@@ -140,7 +140,7 @@ class Restaurant(models.Model):
 
         for row in cursor.fetchall():
             # tags[tag_name] = tag_count
-            tags[row[0]] = row[1] 
+            tags[row[0]] = row[1]
 
         return tags
 
@@ -201,11 +201,11 @@ class RestaurantVersion(models.Model):
     restaurant       = models.ForeignKey('Restaurant')
     user             = models.ForeignKey(Profile, null=True)
     html_description = models.TextField(null=True)
-    
+
     def save(self, force_insert=False, force_update=False):
         self.html_description = markdown(self.description)
         super(RestaurantVersion, self).save(force_insert, force_update)
-        
+
     class Meta:
         db_table = u'restaurant_version'
 
@@ -216,22 +216,22 @@ class RestaurantRating(models.Model):
     location   = models.ForeignKey('Location', null=True)
     user       = models.ForeignKey(Profile)
     created_at = models.DateTimeField(auto_now_add=True)
-    
+
     class Meta:
         db_table = u'restaurant_rating'
-    
+
     def save(self, force_insert=False, force_update=False):
         try:
             super(RestaurantRating, self).save(force_insert, force_update)
             cursor  = connection.cursor()
             query   = "SELECT count(value), avg(value) FROM restaurant_rating WHERE restaurant_id = %s"
             results = cursor.execute(query, (self.restaurant.id,))
-            
+
             for row in cursor.fetchall():
                 self.restaurant.num_ratings    = row[0]
                 self.restaurant.average_rating = row[1]
                 self.restaurant.save(reindex=False)
-                
+
         except:
               transaction.rollback()
         else:
@@ -242,34 +242,34 @@ class LocationManager(models.Manager):
     def in_country(self, country):
         c = Country.objects.retrieve_magically(country)
         return self.filter(country__exact=c)
-    
+
     def in_state(self, country, state):
         s = State.objects.retrieve_magically(state)
         return self.in_country(country).filter(Q(state__exact=s.usps)|Q(state__exact=s.name))
-    
+
     def in_city(self, country, state, city):
         return self.in_state(country, state).filter(city__exact=city)
-    
+
     def in_zip(self, zip):
         return self.filter(zip__startswith=zip)
-    
+
     def anyin(self, place = None, geocoder = None):
         # let's geocode this first...
         # then, let's break it down and understand how "zoomed in we are"
-        # using that we can get the appropriate sql query and get our propper 
+        # using that we can get the appropriate sql query and get our propper
         # set of objects
-        
+
         g = None
-        
+
         if place != None:
             g = Geocoder(place)
         elif geocoder != None:
             g = geocoder
         else:
             return []
-        
+
         accuracy = g.location.accuracy
-        
+
         if accuracy == g.COUNTRY:
             return self.in_country(g.location.country).select_related(depth=1)
         if accuracy == g.STATE:
@@ -278,7 +278,7 @@ class LocationManager(models.Manager):
             return self.in_city(g.location.country, g.location.state, g.location.city).select_related(depth=1)
         if accuracy >= g.ZIP:
             return self.in_zip(g.location.zip).select_related(depth=1)
-    
+
     def search_in(self, phrase, place = None, offset=0, max=10, geocoder = None):
         g = None
         if place != None:
@@ -287,12 +287,12 @@ class LocationManager(models.Manager):
             g = geocoder
         else:
             return []
-        
+
         accuracy = g.location.accuracy
-        
+
         where  = []
         inputs = []
-        
+
         if (accuracy != g.ZIP):
             if accuracy >= g.COUNTRY:
                 c = Country.objects.retrieve_magically(g.location.country)
@@ -307,28 +307,28 @@ class LocationManager(models.Manager):
             inputs.append(g.location.zip+"%")
         # we want to stem the words AND extract any numbers
         words = stem_phrase(phrase) + extract_numbers(phrase)
-        
+
         num_words = len(words)
         if num_words == 0:
             return []
-        
+
         query = """
-        SELECT DISTINCT 
-            l.`id`, 
+        SELECT DISTINCT
+            l.`id`,
             COUNT(*) AS nb,
             SUM(rsi.`weight`) AS total_weight
-        FROM 
+        FROM
             `restaurant_search_index` rsi,
             location l
         WHERE
             l.restaurant_id = rsi.restaurant_id AND
             (%s)
         """ \
-        % " OR ".join(["rsi.`word` LIKE '%s'" % k for k in words]) 
-        
+        % " OR ".join(["rsi.`word` LIKE '%s'" % k for k in words])
+
         if where != []:
             query = query + "AND (%s) " % " AND ".join(where)
-        
+
         query = query + """
         GROUP BY
             l.id
@@ -337,22 +337,22 @@ class LocationManager(models.Manager):
             total_weight DESC
         LIMIT %s
         OFFSET %s
-        """ 
-        
+        """
+
         cursor  = connection.cursor()
         results = cursor.execute(query, inputs + [max, offset])
-        
+
         locations = []
         for row in cursor.fetchall():
             location = self.get(pk=row[0])
             locations.append(location)
-            
+
         return locations
-    
+
     def near(self, place, phrase = None):
         g        = Geocoder(place)
         accuracy = g.location.accuracy
-        
+
         # we aren't interested in searching near countries, or states
         # just cities... so deflect everything to anyin
         if accuracy < g.CITY:
@@ -360,18 +360,18 @@ class LocationManager(models.Manager):
                 return self.search_in(phrase, geocoder = g)
             else:
                 return self.anyin(geocoder = g)
-      
+
         lat = g.location.latitude
         lng = g.location.longitude
-        
+
         distance = """
         (
             (
                 (
-                    acos(sin((%f*pi()/180)) * sin((latitude*pi()/180)) 
-                    + 
-                    cos((%f*pi()/180)) * cos((latitude*pi()/180)) 
-                    * 
+                    acos(sin((%f*pi()/180)) * sin((latitude*pi()/180))
+                    +
+                    cos((%f*pi()/180)) * cos((latitude*pi()/180))
+                    *
                     cos(((%f - longitude)*pi()/180)))
                 )
                 * 180/pi()
@@ -379,60 +379,60 @@ class LocationManager(models.Manager):
             *60*1.1515
         ) AS distance
         """ % (lat, lat, lng)
-        
+
         select   = [distance, 'location.latitude', 'location.longitude']
         group_by = ['location.latitude', 'location.longitude']
         having   = ['distance < %d' % settings.SEARCH_DEFAULT_RADIUS ]
         order_by = ['distance']
-        
+
         results   = self.raw_search_query(select=select, group_by=group_by, having=having, order_by=order_by, phrase=phrase)
         locations = []
-        
+
         for row in results:
             location = self.get(pk=row[0])
             locations.append(location)
-        
+
         return locations
-    
+
     def raw_search_query(self, select=[], where=[], group_by=[], having=[], order_by=[], phrase=None):
-        
+
         # we're getting locations
         select   = ['location.id'] + select
         tables   = ['location']
         group_by = ['location.id'] + group_by
-        
+
         if phrase:
             words     = stem_phrase(phrase) + extract_numbers(phrase)
             num_words = len(words)
             tables    = ['restaurant_search_index rsi'] + tables
             where     = [
-                'rsi.restaurant_id = location.restaurant_id', 
+                'rsi.restaurant_id = location.restaurant_id',
                 " OR ".join(["rsi.`word` LIKE '%s'" % k for k in words])
             ]
             group_by
-            
+
         max    = 10
         offset = 0
-        
+
         query = "SELECT DISTINCT " + ",".join(select)
         query = query + " FROM " + ",".join(tables)
-        
+
         if where != []:
             query = query + " WHERE " + " AND ".join(where)
-        
+
         if group_by != []:
             query = query + " GROUP BY " + ",".join(group_by)
-        
+
         if having != []:
             query = query + " HAVING " + " AND ".join(having)
-            
+
         if order_by != []:
             query = query + " ORDER BY " + ",".join(order_by)
-        
+
         cursor  = connection.cursor()
         results = cursor.execute(query)
         return cursor.fetchall()
-    
+
 
 class Location(models.Model):
     restaurant      = models.ForeignKey(Restaurant)
@@ -457,24 +457,24 @@ class Location(models.Model):
         loc     = [self.city, self.state]
         loc     = [elem for elem in loc if elem]
         loc_str = ', '.join(loc)
-        
+
         if self.name:
             return "%s <em>(%s)</em>" % (self.name, loc_str)
         elif loc_str:
             return loc_str
         else:
             return '-'
-        
+
     def generate_slug(self):
         if self.name:
             return slugify(self.name)
         else:
             return slugify(" ".join([self.address, self.city, self.state]))
-        
+
     def get_full_address(self, format = "%(address)s, %(city)s, %(state)s, %(zipcode)s"):
         str = format % {'address': self.address, 'city': self.city, 'state': self.state, 'zipcode': self.zip }
         return str.strip()
-    
+
     def save(self, force_insert=False, force_update=False):
         if not self.stripped_title:
             self.stripped_title = self.generate_slug()
@@ -484,7 +484,7 @@ class Location(models.Model):
                 (place, self.latitude, self.longitude) = geocode(self.get_full_address())
             except:
                 pass
-                
+
         super(Location, self).save(force_insert, force_update)
 
     def get_absolute_url(self):
@@ -498,36 +498,36 @@ class Location(models.Model):
 
 class MenuItemManager(models.Manager):
     def with_ratings(self, user=None):
-        
+
         items = self.all().select_related(depth=1)
-        
+
         if user != None and user.is_authenticated() and len(items) > 0:
-            
+
             r_id = items[0].restaurant_id
-            
+
             sql = """
             SELECT r.menu_item_id, r.value
             FROM menuitem_rating r, menu_item m
-            WHERE r.menu_item_id = m.id 
+            WHERE r.menu_item_id = m.id
             AND restaurant_id = %s
             AND user_id = %s
             """
-            
+
             cursor = connection.cursor()
-            
+
             cursor.execute(sql, [r_id, user.get_profile().id])
             result_dict = {}
-            
+
             for row in cursor.fetchall():
                 result_dict[row[0]] = row[1]
-                
+
                 for item in items:
                     if item.id in result_dict:
                         item.current_rating = result_dict[item.id]
-                        
+
         return items
-    
-    
+
+
     def get_tagged(self, tag):
         items = []
         tags = MenuitemTag.objects.select_related('menu_item').filter(tag=tag)
@@ -548,48 +548,48 @@ class MenuItem(models.Model):
     objects        = MenuItemManager()
     current_rating = None
     new_version    = None
-    
+
     def save(self, force_insert=False, force_update=False):
         if not self.slug:
             self.slug = slugify(self.name)
-        
+
         super(MenuItem, self).save(force_insert, force_update)
-        
+
         if self.new_version:
             self.new_version.restaurant = self
             self.new_version.save()
             self.version = self.new_version
             super(MenuItem, self).save(force_insert, force_update)
-        
+
         self.reindex()
-    
-    
+
+
     def __setattr__(self, name, value):
         if name == 'description':
             self.get_new_version().description = value
-        
+
         elif name == 'price':
             self.get_new_version().price = value
-        
+
         else:
             object.__setattr__(self, name, value)
-    
+
     def __getattr__(self, name):
-        
+
         try:
             if name == 'description':
                 return self.version.description
-            
+
             elif name == 'html_description':
                 return self.version.html_description
-            
+
             elif name == 'price':
                 return self.version.price
         except RestaurantVersion.DoesNotExist:
             return ''
-            
+
         models.Model.__getattribute__(self, name)
-    
+
     def get_new_version(self):
         if self.new_version == None:
             try:
@@ -597,18 +597,18 @@ class MenuItem(models.Model):
                 v.id = None
             except MenuitemVersion.DoesNotExist:
                 v = MenuitemVersion()
-            
+
             self.new_version = v
-        
+
         return self.new_version
-    
+
     def get_tags_from_user(self, profile):
         # given a profile return all the tags that said profile has for this particular item
         tags = MenuitemTag.objects.filter(menu_item = self, user = profile)
         return tags
-    
+
     def get_popular_tags(self, max = 10):
-        
+
         query = """
         SELECT `normalized_tag` AS tag, COUNT(`normalized_tag`) AS count
         FROM `menuitem_tag`
@@ -622,25 +622,25 @@ class MenuItem(models.Model):
         results = cursor.execute(query, [self.id, max])
 
         tags   = {}
-        
+
         for row in cursor.fetchall():
             # tags[tag_name] = tag_count
-            tags[row[0]] = row[1] 
+            tags[row[0]] = row[1]
 
         return tags
-        
-    
+
+
     def __unicode__(self):
         return self.name
-    
+
     def get_absolute_url(self):
         "http://prod.rbu.sf/frontend_dev.php/restaurant/hobees/menu/special-traditional-eggs-benedict"
         return "%s/menu/%s" % (self.restaurant.get_absolute_url(), self.slug)
-    
-    
+
+
     def get_rating_url(self):
         return self.get_absolute_url()+"/rate/"
-    
+
     def get_words(self):
         """
         Get stemmed words that make up this entry
@@ -648,38 +648,38 @@ class MenuItem(models.Model):
         raw_text      = ' '.join([self.description]*settings.SEARCH_WEIGHT_BODY)
         name          = self.name.replace("'", '')
         raw_text      += ' '.join([name]*settings.SEARCH_WEIGHT_TITLE)
-        
+
         raw_text = rePunctuation.sub(' ', raw_text)
-        
+
         stemmed_words = stem_phrase(raw_text) + extract_numbers(raw_text)
         words         = list_count_values(stemmed_words)
-        
+
         max = 1
         pop_tags = self.get_popular_tags(50)
-        
+
         for tag, count in pop_tags.iteritems():
             if max < count:
                 max = count
-            
+
             stemmed_tag = stem(tag)
-            
+
             if not stemmed_tag in words:
                 words[stemmed_tag] = 0
-            
+
             words[stemmed_tag] += math.ceil(count/max) * settings.SEARCH_WEIGHT_TAG
-            
+
         return words
-    
+
     def reindex(self):
         # Remove search_index entries for this restaurant:
         MenuitemSearchIndex.objects.filter(menuitem=self).delete()
-        
+
         for word, weight in self.get_words().iteritems():
-            MenuitemSearchIndex(menuitem=self, word=word, weight=weight).save()        
-    
+            MenuitemSearchIndex(menuitem=self, word=word, weight=weight).save()
+
     class Meta:
         db_table = u'menu_item'
-    
+
 
 class MenuitemSearchIndex(models.Model):
     menuitem = models.ForeignKey(MenuItem, null=True)
@@ -700,22 +700,22 @@ class MenuitemVersion(models.Model):
     def save(self, force_insert=False, force_update=False):
         self.html_description = markdown(self.description)
         super(MenuitemVersion, self).save(force_insert, force_update)
-        
+
     class Meta:
         db_table         = u'menuitem_version'
-        
 
-      
+
+
 class MenuitemRating(models.Model):
     menu_item  = models.ForeignKey(MenuItem)
     user       = models.ForeignKey(Profile, null=True)
     value      = models.IntegerField(null=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    
+
     class Meta:
         db_table = u'menuitem_rating'
-        
-    
+
+
     def save(self, force_insert=False, force_update=False):
         try:
             super(MenuitemRating, self).save(force_insert, force_update)
@@ -732,7 +732,7 @@ class MenuitemRating(models.Model):
             transaction.rollback()
         else:
             transaction.commit()
-    
+
 
 class MenuItemImage(models.Model):
     user      = models.ForeignKey(Profile, null=True)
@@ -747,7 +747,7 @@ class MenuItemImage(models.Model):
 
     def is_portrait(self):
         return (self.height > self.width)
-                    
+
 class MenuitemTag(models.Model):
     menu_item       = models.ForeignKey(MenuItem)
     user            = models.ForeignKey(Profile)
@@ -757,27 +757,27 @@ class MenuitemTag(models.Model):
     unique_together = ("user", "menuitem", "normalized_tag")
 
     objects        = TagManager()
-    
+
     def __unicode__(self):
         return self.normalized_tag
-    
+
     class Meta:
         db_table = u'restaurant_tag'
-    
+
     def delete(self):
         super(MenuitemTag, self).delete()
         self.menu_item.reindex()
-    
+
     def save(self, force_insert=False, force_update=False):
         if not self.normalized_tag:
             self.normalized_tag = normalize(tag)
-    
+
         super(MenuitemTag, self).save(force_insert, force_update)
         self.menu_item.reindex()
 
     class Meta:
         db_table = u'menuitem_tag'
-        
+
 
 
 class MenuitemNote(models.Model):
@@ -790,7 +790,7 @@ class MenuitemNote(models.Model):
 
     class Meta:
         db_table = u'menuitem_note'
-        
+
 
     def save(self, force_insert=False, force_update=False):
         self.html_note = markdown(self.note)
@@ -824,7 +824,7 @@ class RestaurantTag(models.Model):
     def delete(self):
         super(RestaurantTag, self).delete()
         self.restaurant.reindex()
-        
+
     def save(self, force_insert=False, force_update=False):
         if not self.normalized_tag:
             self.normalized_tag = normalize(tag)

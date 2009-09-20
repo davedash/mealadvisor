@@ -12,8 +12,8 @@ class Location:
     zip       = None
     country   = None
     location  = None
-    
-    
+
+
 class Geocoder(geocoders.Google):
     COUNTRY = 1
     STATE   = 2
@@ -52,40 +52,43 @@ class Geocoder(geocoders.Google):
             else:
                 latitude = longitude = None
                 _, (latitude, longitude) = self.geocode(location)
-            
+
             # we differ from the original here... we want country details
             l = Location()
-            
+
             address_details = place.getElementsByTagName('AddressDetails')[0]
             l.accuracy      = int(address_details.attributes['Accuracy'].value)
-            
+
             if l.accuracy >= self.COUNTRY:
                 country   = address_details.getElementsByTagName('Country')[0]
-                l.country = self._get_first_text(country, 'CountryNameCode') 
-                
+                l.country = self._get_first_text(country, 'CountryNameCode')
+
                 if l.accuracy >= self.STATE:
-                    state   = country.getElementsByTagName('AdministrativeArea')[0]
-                    l.state = self._get_first_text(state, 'AdministrativeAreaName')
-                    
+                    state   = \
+                    country.getElementsByTagName('AdministrativeArea')[0]
+                    l.state = \
+                    self._get_first_text(state, 'AdministrativeAreaName')
+
                     if l.accuracy >= self.CITY:
                         city   = state.getElementsByTagName('Locality')[0]
                         l.city = self._get_first_text(city, 'LocalityName')
-                        
+
                         if l.accuracy >= self.ZIP:
                             zip   = city.getElementsByTagName('PostalCode')[0]
-                            l.zip = self._get_first_text(zip, 'PostalCodeNumber')
-                
+                            l.zip = \
+                            self._get_first_text(zip, 'PostalCodeNumber')
+
             l.longitude     = longitude
             l.latitude      = latitude
             self.location   = l
-            
+
             return (location, (latitude, longitude))
 
         if exactly_one:
             return parse_place(places[0])
         else:
             return (parse_place(place) for place in places)
-            
+
 def geocode(place):
     g = geocoders.Google(settings.GOOGLE_API_KEY)
     place, (lat, lng) = g.geocode(place)

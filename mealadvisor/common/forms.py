@@ -10,4 +10,3 @@ class ContactForm(forms.Form):
     email   = forms.EmailField(required=True)
     topic   = forms.ChoiceField(choices=TOPIC_CHOICES)
     message = forms.CharField(widget=forms.Textarea())
-    

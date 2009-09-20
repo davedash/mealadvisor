@@ -19,16 +19,16 @@ def stem_phrase(phrase):
 
     # ignore stop words
     words = [ word for word in words if not word in STOP_WORDS ]
-    
+
     p = PorterStemmer()
-    
+
     return [p.stem(word,0,len(word)-1) for word in words]
-    
+
 def stem(word):
     p = PorterStemmer()
-    
+
     return p.stem(word,0,len(word)-1)
-    
+
 
 def extract_numbers(phrase):
     import re

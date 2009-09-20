@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 
 
 class CountryManager(models.Manager):
-    def retrieve_magically(self, country):        
+    def retrieve_magically(self, country):
         return self.get(Q(name = country) \
         | Q(iso = country) | Q(iso3 = country))
 
@@ -40,13 +40,13 @@ class Country(models.Model):
     objects        = CountryManager()
     class Meta:
         db_table = u'country'
-		
+
 
 class State(models.Model):
     usps    = models.CharField(max_length=6, primary_key=True)
     name    = models.CharField(max_length=240, blank=True)
     objects = StateManager()
-    
+
     class Meta:
         db_table = u'state'
 
@@ -55,4 +55,4 @@ class State(models.Model):
 #     description = models.CharField(max_length=192, blank=True)
 #     class Meta:
 #         db_table = u'yahoo_local_category'
-# 
+#

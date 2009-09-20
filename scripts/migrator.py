@@ -29,14 +29,14 @@ parser.add_option("--dbpass", help="db password")
 if options.download:
     print "Downloading database..."
     # ssh root@reviewsby.us mysqldump -u migrator -pnarnians rbu --skip-opt --create-options --add-drop-table --skip-add-locks  --skip-comments --extended-insert > /tmp/db.rbu
-    
+
     p = Popen("ssh root@reviewsby.us mysqldump -u migrator -pnarnians rbu --skip-opt --create-options --add-drop-table --skip-add-locks  --skip-comments --extended-insert ", shell=True, stdout=PIPE)
     dump = p.communicate()[0]
-    
+
     f = open('/tmp/db.rbu', 'w')
     f.write(dump)
     f.close()
-    
+
 # insert this into DB
 def mysql(cmds, use=True):
     if use:
@@ -78,9 +78,9 @@ DROP TABLE sf_guard_remember_key;
 DROP TABLE sf_guard_user_permission;
 DROP TABLE sf_guard_user_group;
 
-REPLACE INTO auth_user (id, username, password, is_active, last_login, date_joined) 
-SELECT id, replace(username, 'http://', ''), CONCAT(algorithm,'$', salt, '$', password), 1, last_login, created_at 
-FROM sf_guard_user; 
+REPLACE INTO auth_user (id, username, password, is_active, last_login, date_joined)
+SELECT id, replace(username, 'http://', ''), CONCAT(algorithm,'$', salt, '$', password), 1, last_login, created_at
+FROM sf_guard_user;
 DROP TABLE sf_guard_user;
 
 UPDATE auth_user SET is_staff = 1 WHERE id=8;
@@ -104,7 +104,7 @@ CREATE TABLE restaurant_tag2 (
   FOREIGN KEY (user_id) REFERENCES profile (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO restaurant_tag2 (user_id, restaurant_id, created_at, tag, normalized_tag) 
+INSERT INTO restaurant_tag2 (user_id, restaurant_id, created_at, tag, normalized_tag)
 SELECT user_id, restaurant_id, created_at, tag, normalized_tag FROM restaurant_tag ORDER BY created_at;
 
 DROP TABLE restaurant_tag;
@@ -185,7 +185,7 @@ INSERT IGNORE restaurant_tmp SELECT * FROM restaurant;
 DROP TABLE restaurant;
 RENAME TABLE restaurant_tmp TO restaurant;
 
-update restaurant_version set description=replace(description,'â€', '"'), html_description=replace(html_description,'â€œ', '"') 
+update restaurant_version set description=replace(description,'â€', '"'), html_description=replace(html_description,'â€œ', '"')
   where description like '%â€%';
 
 DELETE l FROM location l LEFT JOIN restaurant r ON l.restaurant_id=r.id WHERE r.id IS NULL;
@@ -246,15 +246,15 @@ SET foreign_key_checks = 1;
         counter += 1
 
     print "SAFE to do the following: '%s'" % "ALTER TABLE location ADD constraint unique (restaurant_id, stripped_title)"
-    
+
     mysql("""
     DELETE FROM location where id IN (857, 22314,22315);
     ALTER TABLE location ADD constraint unique (restaurant_id, stripped_title)
     """)
     print "done"
-    
+
     print "exporting images"
-    
+
 
     images = MenuItemImage.objects.all()
 

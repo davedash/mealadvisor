@@ -24,5 +24,5 @@ for location in locations:
         location.stripped_title = new_slug
         location.save()
     counter += 1
-    
+
 print "SAFE to do the following: '%s'" % "ALTER TABLE location ADD constraint unique (restaurant_id, stripped_title)"

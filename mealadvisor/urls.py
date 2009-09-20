@@ -15,19 +15,19 @@ urlpatterns = patterns('',
 
     # authentication
     (
-        r'^login$', 
+        r'^login$',
         'django.contrib.auth.views.login'
     ),
-    
+
     (
-        r'^logout$', 
+        r'^logout$',
         'django.contrib.auth.views.logout',
         { 'next_page' : '/' }
     ),
-    
-    # OpenID    
+
+    # OpenID
     (r'^openid/', include('spindrop.django.openid.consumer.urls')),
-    
+
 
     # feed urls
     (
@@ -35,7 +35,7 @@ urlpatterns = patterns('',
         'django.contrib.syndication.views.feed',
         {'feed_dict': feeds}
     ),
-    
+
     # restaurant feed
     (
         r'^(?P<url>restaurant.*)/feed',
@@ -58,44 +58,44 @@ urlpatterns += patterns('mealadvisor.restaurant.views',
 
     # Search
     (r'^search$', 'search'),
-    
 
-    # Restaurant    
+
+    # Restaurant
     (r'^restaurant/(?P<slug>[^/]+)/?$', 'restaurant'),
-    
+
     # Location
     (r'^restaurant/(?P<slug>[^/]+)/location/(?P<location_slug>[^/]+)$', 'location'),
-    
+
     # Full Menu
     (r'^restaurant/(?P<slug>[^/]+)/menu$', 'menu'),
 
     # Full Menu
     (r'^restaurant/(?P<slug>[^/]+)/add/item$', 'menuitem_add'),
 
-    # single menu page 
+    # single menu page
     (r'^restaurant/(?P<slug>[^/]+)/menu/page/(?P<page>\d+)$', 'menu_page'),
-    
+
     # Restaurant/rating
     (r'^restaurant/(?P<slug>[^/]+)/rate/$', 'rate'),
-    
+
     # Menu Item rating
     # Restaurant/rating
     (r'^restaurant/(?P<slug>[^/]+)/menu/(?P<item_slug>[^/]+)/rate/$', 'menuitem_rate'),
 
     # Restaurant Review
     (r'^restaurant/(?P<slug>[^/]+)/review$', 'review'),
-    
+
     # Tag page
     (r'^tag/(?P<tag>[^/]+)/?', 'tag'),
-    
+
     # Add Restaurant
     (r'^add/restaurant/?$', 'add'),
-    
+
     (r'^profile/(?P<username>[^/]+)/?', 'profile'),
 
     # add image
     (r'^restaurant/(?P<slug>[^/]+)/menu/(?P<item_slug>[^/]+)/add/image$', 'menuitem_add_image'),
-    
+
 )
 
 # registration
@@ -114,8 +114,8 @@ urlpatterns += patterns('django.views.generic.simple',
 urlpatterns += patterns('',
     # static content... leave this out on production
     (
-        r'^static/(?P<path>.*)$', 
-        'django.views.static.serve', 
+        r'^static/(?P<path>.*)$',
+        'django.views.static.serve',
         {'document_root': settings.MEDIA_ROOT}
     ),
 )

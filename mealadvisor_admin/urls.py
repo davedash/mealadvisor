@@ -6,5 +6,5 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
                        (r'^(.*)', admin.site.root),
-                       
+
                        )

@@ -8,26 +8,26 @@ from mealadvisor.common import profiles
 
 from forms import *
 
-import settings 
+import settings
 
 
 
 def openid_success(request, results):
     context = results
-    
+
     # results["url"] contains the validated URL
     profile = None
-    
+
     # let's 1 determine if a user exists
     try:
         profile = profiles.get_by_openid(results["url"])
     # if they don't autocreate a user for them
     except:
         profile = profiles.create_by_openid(results["url"])
-    
+
     # if they do automatically log them in
     # ### TODO: we need to write a propper backend for OpenID
-    profile.user.backend='django.contrib.auth.backends.ModelBackend' 
+    profile.user.backend='django.contrib.auth.backends.ModelBackend'
     login(request, profile.user)
 
     return HttpResponseRedirect("/")
@@ -35,7 +35,7 @@ def openid_success(request, results):
 def feedback(request):
     if request.method == 'POST':
         form = ContactForm(request.POST)
-    
+
         if form.is_valid():
             topic   = form.cleaned_data['topic']
             sender  = form.cleaned_data.get('email')
@@ -49,9 +49,9 @@ def feedback(request):
             )
             email.send()
             return HttpResponseRedirect('/contact/thanks/')
-    
+
     else:
         form = ContactForm()
-    
+
     return render_to_response('contact.html', locals(), context_instance=RequestContext(request))
-    
+

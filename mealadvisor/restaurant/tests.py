@@ -19,11 +19,11 @@ class AjaxTest(TransactionTestCase):
         # '_headers', '_is_string', '_set_content', 'client', 'close', 'content', 'context', 'cookies',
         # 'delete_cookie', 'flush', 'get', 'has_header', 'items', 'next', 'request', 'set_cookie',
         # 'status_code', 'tell', 'template', 'write']
-        
+
     def test_menuitem_tagging(self):
         """
         http://127.0.0.1:8000/ajax/tag_add_menu_item?menu_item=1869&tag=foo
         """
         response = self.client.post('/ajax/tag_add_menu_item', {'menu_item':1869, 'tag':'blerg'})
         self.assertContains(response, 'blerg')
-        
+

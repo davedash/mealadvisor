@@ -1,7 +1,7 @@
 # Django settings for mealadvisor project.
 import os
 
-ENVIRONMENT = os.environ.get('DJANGO_ENVIRONMENT','dev')
+ENVIRONMENT = os.environ.get('DJANGO_ENVIRONMENT', 'dev')
 
 # CACHE
 
@@ -15,15 +15,15 @@ CACHE_TIMEOUTS = {'home_images': 43200}
 DEBUG          = False
 
 if ENVIRONMENT == 'staging':
-    DATABASE_ENGINE   = 'mysql'       
+    DATABASE_ENGINE   = 'mysql'
     DATABASE_NAME     = 'ma_staging'
-    DATABASE_USER     = 'ma_staging'   
-    DATABASE_PASSWORD = 'f3nne7'         
+    DATABASE_USER     = 'ma_staging'
+    DATABASE_PASSWORD = 'f3nne7'
     DATABASE_HOST     = 'localhost'
     DATABASE_PORT     = ''
-    
+
     LOGIN_HOST = 'http://wallace.mealadvisor.us'
-    
+
     MEDIA_URL = 'http://static.wallace.mealadvisor.us/static/'
 
 else:
@@ -36,13 +36,13 @@ else:
     DATABASE_PASSWORD = ''           # Not used with sqlite3.
     DATABASE_HOST     = '/tmp/mysql.sock'  # Set to empty string for localhost. Not used with sqlite3.
     DATABASE_PORT     = ''           # Set to empty string for default. Not used with sqlite3.
-    
+
     EMAIL_HOST          = 'smtp.gmail.com'
     EMAIL_HOST_USER     = 'catchall@davedash.com'
     EMAIL_HOST_PASSWORD = 'manipul8'
     EMAIL_PORT          = 587
     EMAIL_USE_TLS       = True
-    
+
     MEDIA_URL = '/static/'
 
 
@@ -75,7 +75,9 @@ USE_I18N = True
 
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
-MEDIA_ROOT = os.path.realpath(os.path.join(os.path.dirname(__file__),os.path.pardir, "static"))
+MEDIA_ROOT = os.path.realpath(
+os.path.join(os.path.dirname(__file__), os.path.pardir, "static")
+)
 
 
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a

@@ -20,9 +20,9 @@ DROP TABLE sf_guard_remember_key;
 DROP TABLE sf_guard_user_permission;
 DROP TABLE sf_guard_user_group;
 
-REPLACE INTO auth_user (id, username, password, is_active, last_login, date_joined) 
-SELECT id, replace(username, 'http://', ''), CONCAT(algorithm,'$', salt, '$', password), 1, last_login, created_at 
-FROM sf_guard_user; 
+REPLACE INTO auth_user (id, username, password, is_active, last_login, date_joined)
+SELECT id, replace(username, 'http://', ''), CONCAT(algorithm,'$', salt, '$', password), 1, last_login, created_at
+FROM sf_guard_user;
 DROP TABLE sf_guard_user;
 
 UPDATE auth_user SET is_staff = 1 WHERE id=8;
@@ -43,7 +43,7 @@ CREATE TABLE restaurant_tag2 (
   FOREIGN KEY (user_id) REFERENCES profile (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO restaurant_tag2 (user_id, restaurant_id, created_at, tag, normalized_tag) 
+INSERT INTO restaurant_tag2 (user_id, restaurant_id, created_at, tag, normalized_tag)
 SELECT user_id, restaurant_id, created_at, tag, normalized_tag FROM restaurant_tag ORDER BY created_at;
 
 DROP TABLE restaurant_tag;
@@ -110,7 +110,7 @@ INSERT IGNORE restaurant_tmp SELECT * FROM restaurant;
 DROP TABLE restaurant;
 RENAME TABLE restaurant_tmp TO restaurant;
 
-update restaurant_version set description=replace(description,'â€', '\"'), html_description=replace(html_description,'â€œ', '\"') 
+update restaurant_version set description=replace(description,'â€', '\"'), html_description=replace(html_description,'â€œ', '\"')
   where description like '%â€%';
 
 DELETE l FROM location l LEFT JOIN restaurant r ON l.restaurant_id=r.id WHERE r.id IS NULL;
@@ -149,6 +149,6 @@ RENAME TABLE location_tmp TO location;
 DELETE FROM location WHERE id IN (3715, 16480, 16232);
 
 SET foreign_key_checks = 1;
-" | mysql -u root rbu     
+" | mysql -u root rbu
 
 
