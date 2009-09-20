@@ -41,7 +41,6 @@ from mealadvisor.tools import *
 from managers import RestaurantManager, TagManager, RandomManager
 from utils import *
 
-
 class Restaurant(models.Model):
     name           = models.CharField(max_length=765)
     stripped_title = models.CharField(max_length=384)

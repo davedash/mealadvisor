@@ -1,5 +1,6 @@
 from django.db import models, transaction, connection
 from utils import normalize
+from tools import stem_phrase, extract_numbers
 
 class TagManager(models.Manager):
     def get_tags_for_user(self, profile, match='', limit = None):
