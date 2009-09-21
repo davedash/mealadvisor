@@ -9,12 +9,9 @@ ADMIN_MEDIA_PREFIX = '/media/'
 
 ROOT_URLCONF = 'mealadvisor_admin.urls'
 
-
-
 TEMPLATE_DIRS = (
     os.path.join(os.path.dirname(__file__), "templates"),
 )
-
 
 INSTALLED_APPS = (
     'django.contrib.redirects',
@@ -26,6 +23,5 @@ INSTALLED_APPS = (
     'spindrop.django.openid.consumer',
     'mealadvisor.common',
     'mealadvisor.restaurant',
-    'registration'
+    'registration',
 )
-

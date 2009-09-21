@@ -10,6 +10,7 @@ class LatestRestaurants(Feed):
     def items(self):
         return Restaurant.objects.order_by('-created_at')[:10]
 
+
 class MenuItems(Feed):
     """
     e.g. /restaurant/hobees/feed

@@ -1,5 +1,6 @@
 from django.core.management import setup_environ
-import sys,os
+import sys
+import os
 
 sys.path.append('../mealadvisor')
 sys.path.append('..')
@@ -29,6 +30,5 @@ alter table menu_item_image drop data;
 alter table menu_item_image add column `image` varchar(240) NOT NULL;
 update menu_item_image set image = CONCAT('images/menuitems/',md5sum, '.jpg');
 alter table menu_item_image drop md5sum;
-
 
 """

@@ -1,6 +1,6 @@
 from stemmer import PorterStemmer
 
-STOP_WORDS = ( 'i', 'me', 'my', 'myself', 'we', 'our', 'ours', 'ourselves',
+STOP_WORDS = ('i', 'me', 'my', 'myself', 'we', 'our', 'ours', 'ourselves',
 'you', 'your', 'yours', 'yourself', 'yourselves', 'he', 'him', 'his',
 'himself', 'she', 'her', 'hers', 'herself', 'it', 'its', 'itself', 'they',
 'them', 'their', 'theirs', 'themselves', 'what', 'which', 'who', 'whom',
@@ -14,20 +14,22 @@ STOP_WORDS = ( 'i', 'me', 'my', 'myself', 'we', 'our', 'ours', 'ourselves',
 'each', 'few', 'more', 'most', 'other', 'some', 'such', 'no', 'nor', 'not',
 'only', 'own', 'same', 'so', 'than', 'too', 'very')
 
+
 def stem_phrase(phrase):
-    words = phrase.lower().replace('.','').replace("'",'').split()
+    words = phrase.lower().replace('.', '').replace("'", '').split()
 
     # ignore stop words
-    words = [ word for word in words if not word in STOP_WORDS ]
+    words = [word for word in words if not word in STOP_WORDS]
 
     p = PorterStemmer()
 
-    return [p.stem(word,0,len(word)-1) for word in words]
+    return [p.stem(word, 0, len(word)-1) for word in words]
+
 
 def stem(word):
     p = PorterStemmer()
 
-    return p.stem(word,0,len(word)-1)
+    return p.stem(word, 0, len(word)-1)
 
 
 def extract_numbers(phrase):

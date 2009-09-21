@@ -5,6 +5,7 @@ import settings
 
 register = template.Library()
 
+
 @register.simple_tag
 def menuitem_image(image, longest_side = None, alt=None, menu_item=None):
 
@@ -32,13 +33,18 @@ def menuitem_image(image, longest_side = None, alt=None, menu_item=None):
         menu_item = image.menu_item
 
     if alt == None:
-        alt = u"%s from %s" % (unicode(menu_item), unicode(menu_item.restaurant))
+        alt = u"%s from %s" % (
+        unicode(menu_item), unicode(menu_item.restaurant))
 
-    return image_link(menu_item.get_absolute_url(), image_url, alt, height, width)
+    return image_link(menu_item.get_absolute_url(),
+    image_url, alt, height, width)
+
 
 def image_link(url, image_url, alt, height, width):
-    return """<a href="%s"><img alt="%s" height="%d" width="%d" src="%s" /></a>""" \
-        % ( url, alt, height, width, image_url );
+    return """<a href="%s">
+    <img alt="%s" height="%d" width="%d" src="%s" /></a>""" \
+        % (url, alt, height, width, image_url)
+
 
 @register.simple_tag
 def random_menuitem_image(item, longest_side=None):

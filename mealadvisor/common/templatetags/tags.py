@@ -2,6 +2,7 @@ from django import template
 
 register = template.Library()
 
+
 @register.simple_tag
 def restaurant_tags(user, restaurant, prefix='Tags: '):
     pop_tags = restaurant.get_popular_tags(10)
@@ -32,16 +33,19 @@ def restaurant_tags(user, restaurant, prefix='Tags: '):
 
         if tag in user_tags:
             class_ = 'my '+class_
-            extras = '<a href="#" class="action remove" onclick="MA.tagger.remove(%d)">x</a>'%user_tags[tag].id
+            extras = '<a href="#" class="action remove" '\
+            +'onclick="MA.tagger.remove(%d)">x</a>' % user_tags[tag].id
 
         tags[tag] = link_to(tag, '/tag/%s'%tag, {'class': class_}) + extras
 
-    output = "\n".join(["<li>%s</li>"%tags[tag] for tag in sorted(tags.keys())])
+    output = "\n".join(
+    ["<li>%s</li>"%tags[tag] for tag in sorted(tags.keys())])
 
     if output:
         return "%s<ul>\n%s\n</ul>" %(prefix, output)
     else:
         return ''
+
 
 @register.simple_tag
 def menuitem_tags(user, item, prefix='Tags: '):
@@ -72,28 +76,33 @@ def menuitem_tags(user, item, prefix='Tags: '):
 
         if tag in user_tags:
             class_ = 'my '+class_
-            extras = '<a href="#" class="action remove" onclick="MA.tagger.remove(%d)">x</a>'%user_tags[tag].id
+            extras = '<a href="#" class="action remove" '\
+            + 'onclick="MA.tagger.remove(%d)">x</a>' % user_tags[tag].id
 
         tags[tag] = link_to(tag, '/tag/%s'%tag, {'class': class_}) + extras
 
-    output = "\n".join(["<li>%s</li>"%tags[tag] for tag in sorted(tags.keys())])
+    output = "\n".join(
+    ["<li>%s</li>"%tags[tag] for tag in sorted(tags.keys())])
 
     if output:
         return prefix+"<ul>\n%s\n</ul>" %output
     else:
         return ''
 
+
 @register.simple_tag
 def link_to_object(obj):
     return link_to(obj, obj.get_absolute_url())
+
 
 @register.simple_tag
 def link_to_profile(user):
     return link_to(user.username, '/profile/'+user.username)
 
+
 @register.simple_tag
 def link_to(text, url, args = {}):
-    extras = ' '.join(['%s="%s"'%(key,args[key]) for key in args.keys()])
+    extras = ' '.join(['%s="%s"'%(key, args[key]) for key in args.keys()])
     output = """<a href="%s"%s>%s</a> """ % (url, extras.strip(), text)
     return output
 
@@ -108,7 +117,8 @@ def post_to_delicious(request, title=None, text=None):
         title = 'meal advisor'
 
     url = request.build_absolute_uri()
-    del_url = 'http://del.icio.us/post?%s' % urlencode({'url': url,'title': title}).replace('&', '&amp;')
+    del_url = 'http://del.icio.us/post?%s' % urlencode(
+    {'url': url, 'title': title}).replace('&', '&amp;')
 
     return '<a href="%s">%s</a>' % (del_url, text)
 
@@ -118,35 +128,38 @@ def star(id_string, current, average, path, spanfree=False):
     meta = ""
     if current != None:
         meta = """
-        <li class="current meta" title="%d" style="width:%dpx">Current Rating: %d</li>
+        <li class="current meta" title="%d" """\
+        + """style="width:%dpx">Current Rating: %d</li>
         """ % (int(current), int(current)*20, int(current))
     elif average != None:
         meta = """
-        <li class="average meta" title="%.1f" style="width:%dpx">Average Rating: %.1f</li>
+        <li class="average meta" title="%.1f" style="width:%dpx">
+            Average Rating: %.1f
+        </li>
         """ % (float(average), float(average)*20, float(average))
 
     stars   = ''
     ratings = ['Poor', 'Fair', 'Good', 'Very Good', 'Excellent']
 
-    for i in range(1,6):
+    for i in range(1, 6):
         stars = stars + """
-		<li class="star_%d star" title="%s">
-			<label for="%s_rating_%d">%s</label>
-			<input id="%s_rating_%d" type="radio" value="%d" name="rating"/>
-		</li>
-        """ % (i, ratings[i-1],id_string, i, ratings[i-1], id_string, i, i)
+        <li class="star_%d star" title="%s">
+            <label for="%s_rating_%d">%s</label>
+            <input id="%s_rating_%d" type="radio" value="%d" name="rating"/>
+        </li>
+        """ % (i, ratings[i-1], id_string, i, ratings[i-1], id_string, i, i)
     html = """
-	<form action="%s" method="post" id="rater_%s">
-		<fieldset>
-			<legend>Rating</legend>
-			<ul>
-			%s
-			%s
-			</ul>
-    		<input type="submit" class="submit" value="rate it" name="rate"/>
-		</fieldset>
-	</form>
-    """ % (path, id_string, meta,stars)
+    <form action="%s" method="post" id="rater_%s">
+        <fieldset>
+            <legend>Rating</legend>
+            <ul>
+            %s
+            %s
+            </ul>
+            <input type="submit" class="submit" value="rate it" name="rate"/>
+        </fieldset>
+    </form>
+    """ % (path, id_string, meta, stars)
     if spanfree:
         return html
     else:

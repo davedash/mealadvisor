@@ -6,23 +6,20 @@ from mealadvisor.restaurant.models import Restaurant
 from os import path
 import settings
 
-feeds = {
-    'latest'        : LatestRestaurants,
-    'restaurant'    : MenuItems,
-}
+feeds = {'latest': LatestRestaurants, 'restaurant': MenuItems, }
 
 urlpatterns = patterns('',
 
     # authentication
     (
         r'^login$',
-        'django.contrib.auth.views.login'
+        'django.contrib.auth.views.login',
     ),
 
     (
         r'^logout$',
         'django.contrib.auth.views.logout',
-        { 'next_page' : '/' }
+        {'next_page': '/'}
     ),
 
     # OpenID
@@ -64,7 +61,8 @@ urlpatterns += patterns('mealadvisor.restaurant.views',
     (r'^restaurant/(?P<slug>[^/]+)/?$', 'restaurant'),
 
     # Location
-    (r'^restaurant/(?P<slug>[^/]+)/location/(?P<location_slug>[^/]+)$', 'location'),
+    (r'^restaurant/(?P<slug>[^/]+)/location/(?P<location_slug>[^/]+)$',
+    'location'),
 
     # Full Menu
     (r'^restaurant/(?P<slug>[^/]+)/menu$', 'menu'),
@@ -80,7 +78,8 @@ urlpatterns += patterns('mealadvisor.restaurant.views',
 
     # Menu Item rating
     # Restaurant/rating
-    (r'^restaurant/(?P<slug>[^/]+)/menu/(?P<item_slug>[^/]+)/rate/$', 'menuitem_rate'),
+    (r'^restaurant/(?P<slug>[^/]+)/menu/(?P<item_slug>[^/]+)/rate/$',
+    'menuitem_rate'),
 
     # Restaurant Review
     (r'^restaurant/(?P<slug>[^/]+)/review$', 'review'),
@@ -94,7 +93,8 @@ urlpatterns += patterns('mealadvisor.restaurant.views',
     (r'^profile/(?P<username>[^/]+)/?', 'profile'),
 
     # add image
-    (r'^restaurant/(?P<slug>[^/]+)/menu/(?P<item_slug>[^/]+)/add/image$', 'menuitem_add_image'),
+    (r'^restaurant/(?P<slug>[^/]+)/menu/(?P<item_slug>[^/]+)/add/image$',
+    'menuitem_add_image'),
 
 )
 
@@ -107,7 +107,8 @@ urlpatterns += patterns('',
 # static pages
 urlpatterns += patterns('django.views.generic.simple',
     (r'^about$', 'direct_to_template', {'template': 'common/about.html'}),
-    (r'^contact/thanks/$', 'direct_to_template', {'template': 'contact_thanks.html'}),
+    (r'^contact/thanks/$', 'direct_to_template',
+    {'template': 'contact_thanks.html'}),
 
 )
 
@@ -116,7 +117,7 @@ urlpatterns += patterns('',
     (
         r'^static/(?P<path>.*)$',
         'django.views.static.serve',
-        {'document_root': settings.MEDIA_ROOT}
+        {'document_root': settings.MEDIA_ROOT},
     ),
 )
 

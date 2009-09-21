@@ -6,6 +6,7 @@ TOPIC_CHOICES = (
     ('suggestion', 'Suggestion'),
 )
 
+
 class ContactForm(forms.Form):
     email   = forms.EmailField(required=True)
     topic   = forms.ChoiceField(choices=TOPIC_CHOICES)

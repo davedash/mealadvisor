@@ -4,15 +4,15 @@ from models import *
 
 
 class RestaurantVersionInline(admin.StackedInline):
-    model = RestaurantVersion
+    model   = RestaurantVersion
     max_num = 1
-    fields=('description', 'url', 'user')
+    fields  = ('description', 'url', 'user')
+
 
 class RestaurantAdmin(admin.ModelAdmin):
-    fields = ('name','stripped_title')
-    inlines = ( RestaurantVersionInline, )
+    fields        = ('name', 'stripped_title')
+    inlines       = (RestaurantVersionInline, )
     raw_id_fields = ('version', )
 
 
 admin.site.register(Restaurant, RestaurantAdmin)
-

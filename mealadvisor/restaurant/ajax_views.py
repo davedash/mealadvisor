@@ -17,7 +17,8 @@ def tags(request):
         q = request.REQUEST['q']
 
     # RestaurantTag gets for both menu_item and restaurant
-    tags = RestaurantTag.objects.get_tags_for_user(request.user.get_profile(), q)
+    tags = RestaurantTag.objects.get_tags_for_user(request.user.get_profile(),
+    q)
 
     return HttpResponse("\n".join(tags), mimetype="text/plain")
 
@@ -31,11 +32,14 @@ def tag_add(request):
         tags = utils.parse_tag_input(request.REQUEST['tag'])
 
         for t in tags:
-            tag, created = RestaurantTag.objects.get_or_create(restaurant=restaurant, user=request.user.get_profile(), tag=t)
+            tag, created = RestaurantTag.objects.get_or_create(
+            restaurant=restaurant, user=request.user.get_profile(), tag=t)
             tag.save()
 
 
-    return render_to_response("restaurant/tags.html", locals(), context_instance=RequestContext(request))
+    return render_to_response("restaurant/tags.html", locals(),
+    context_instance=RequestContext(request))
+
 
 @login_required
 def tag_add_menuitem(request):
@@ -47,12 +51,15 @@ def tag_add_menuitem(request):
         tags = utils.parse_tag_input(request.REQUEST['tag'])
 
         for t in tags:
-            tag, created = MenuitemTag.objects.get_or_create(menu_item=menuitem, user=request.user.get_profile(), tag=t)
+            tag, created = MenuitemTag.objects.get_or_create(
+            menu_item=menuitem,
+            user=request.user.get_profile(), tag=t)
             tag.save()
 
 
     menu_item = menuitem
-    return render_to_response("menuitem/tags.html", locals(), context_instance=RequestContext(request))
+    return render_to_response("menuitem/tags.html", locals(),
+    context_instance=RequestContext(request))
 
 
 @login_required
@@ -63,12 +70,13 @@ def tag_remove(request):
         tag       = MenuitemTag.objects.get(id=id)
         menu_item = tag.menu_item
         tag.delete()
-        return render_to_response("menuitem/tags.html", locals(), context_instance=RequestContext(request))
+        return render_to_response("menuitem/tags.html", locals(),
+        context_instance=RequestContext(request))
 
 
     tag        = RestaurantTag.objects.get(id=id)
     restaurant = tag.restaurant
     tag.delete()
 
-    return render_to_response("restaurant/tags.html", locals(), context_instance=RequestContext(request))
-
+    return render_to_response("restaurant/tags.html", locals(),
+    context_instance=RequestContext(request))

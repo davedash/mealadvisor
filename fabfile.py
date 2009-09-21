@@ -232,5 +232,6 @@ def install_deps_local():
 
 def pep8():
     local("pep8 --repeat --ignore E221"
-    + " --exclude *.sh,*.html,*.json,*.txt,*.pyc,.DS_Store,README,stemmer.py"
+    + " --exclude *.sh,*.html,*.json,*.txt,*.pyc,"
+    + ".DS_Store,README,stemmer.py,manage.py"
     + " mealadvisor mealadvisor_admin fabfile.py scripts")

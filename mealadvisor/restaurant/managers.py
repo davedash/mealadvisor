@@ -2,7 +2,9 @@ from django.db import models, transaction, connection
 from utils import normalize
 from tools import stem_phrase, extract_numbers
 
+
 class TagManager(models.Manager):
+
     def get_tags_for_user(self, profile, match='', limit = None):
 
         query = """
@@ -31,7 +33,6 @@ class TagManager(models.Manager):
             tags.append(row[0])
 
         return tags
-
 
     def get_or_create(self, **kwargs):
         tag = None
@@ -68,7 +69,7 @@ class RestaurantManager(models.Manager):
         FROM restaurant_rating
         WHERE user_id = %d
         ORDER BY created_at DESC
-        """ %  (profile.id,profile.id,)
+        """ % (profile.id, profile.id, )
 
         cursor = connection.cursor()
         cursor.execute(query)
@@ -84,17 +85,18 @@ class RestaurantManager(models.Manager):
         if num_words == 0:
             return []
 
-
         # mysql specifc
         # e.g. longhorn steakhouse
         # produces
-        # SELECT DISTINCT restaurant_search_index.RESTAURANT_ID, COUNT(*) AS nb,
+        # SELECT
+        #    DISTINCT restaurant_search_index.RESTAURANT_ID, COUNT(*) AS nb,
         # SUM(restaurant_search_index.WEIGHT) AS total_weight FROM
-        # restaurant_search_index WHERE (restaurant_search_index.WORD LIKE 'longhorn'
+        # restaurant_search_index
+        # WHERE (restaurant_search_index.WORD LIKE 'longhorn'
         # OR restaurant_search_index.WORD LIKE 'steakhous') GROUP BY
-        # restaurant_search_index.RESTAURANT_ID ORDER BY nb DESC, total_weight DESC
+        # restaurant_search_index.RESTAURANT_ID ORDER BY nb DESC,
+        # total_weight DESC
         # LIMIT 10
-
         query = """
         SELECT DISTINCT
             `restaurant_search_index`.`restaurant_id`,
@@ -130,10 +132,10 @@ class RestaurantManager(models.Manager):
 
         return restaurants
 
-
     def get_tagged(self, tag):
         restaurants = []
-        tags = RestaurantTag.objects.select_related('restaurant').filter(tag=tag)
+        tags = RestaurantTag.objects.select_related('restaurant').filter(
+        tag=tag)
         [restaurants.append(tag.restaurant) for tag in tags]
         return restaurants
 
@@ -142,12 +144,13 @@ class RestaurantManager(models.Manager):
 
 
 class RandomManager(models.Manager):
+
     def cheap_random(self, num=1):
         try:
             # select the n max ids
             nthmax = self.all().order_by('-id')[:num][num-1].id
             # choose a random number from 1... nth max
-            r = random.randint(1,nthmax)
+            r = random.randint(1, nthmax)
             # select n elements with ids > random
             return self.filter(id__gte=r)[:num]
         except:

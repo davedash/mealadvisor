@@ -30,12 +30,12 @@ else:
     DEBUG          = True
     TEMPLATE_DEBUG = DEBUG
 
-    DATABASE_ENGINE   = 'mysql'      # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-    DATABASE_NAME     = 'rbu'        # Or path to database file if using sqlite3.
+    DATABASE_ENGINE   = 'mysql'
+    DATABASE_NAME     = 'rbu'
     DATABASE_USER     = 'root'       # Not used with sqlite3.
     DATABASE_PASSWORD = ''           # Not used with sqlite3.
-    DATABASE_HOST     = '/tmp/mysql.sock'  # Set to empty string for localhost. Not used with sqlite3.
-    DATABASE_PORT     = ''           # Set to empty string for default. Not used with sqlite3.
+    DATABASE_HOST     = '/tmp/mysql.sock'
+    DATABASE_PORT     = ''
 
     EMAIL_HOST          = 'smtp.gmail.com'
     EMAIL_HOST_USER     = 'catchall@davedash.com'
@@ -76,8 +76,7 @@ USE_I18N = True
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
 MEDIA_ROOT = os.path.realpath(
-os.path.join(os.path.dirname(__file__), os.path.pardir, "static")
-)
+os.path.join(os.path.dirname(__file__), os.path.pardir, "static"))
 
 
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
@@ -133,7 +132,7 @@ if DEBUG:
     MIDDLEWARE_CLASSES += (
     'debug_toolbar.middleware.DebugToolbarMiddleware',
     )
-    INSTALLED_APPS += ('debug_toolbar',)
+    INSTALLED_APPS += ('debug_toolbar', )
 
 
 ACCOUNT_ACTIVATION_DAYS = 30
@@ -143,17 +142,16 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.auth",
     "django.core.context_processors.debug",
     "django.core.context_processors.i18n",
-    "django.core.context_processors.media"
-)
+    "django.core.context_processors.media")
 
 AUTH_PROFILE_MODULE = 'common.profile'
 
-INTERNAL_IPS = ('127.0.0.1',)
+INTERNAL_IPS = ('127.0.0.1', )
 
-GOOGLE_API_KEY = 'ABQIAAAAyAAmLPzn6NjNWlSghNqTKxTTEM7e85ZdOLxclOTP3CThLJ0yaxTCLs4phoI67W6KqIr1j4bqwaMTUQ'
+GOOGLE_API_KEY = 'ABQIAAAAyAAmLPzn6NjNWlSghNqTKxTTEM7e85ZdOLxclOTP3CThLJ0yax'\
++ 'TCLs4phoI67W6KqIr1j4bqwaMTUQ'
 
 SEARCH_DEFAULT_RADIUS = 25
 SEARCH_WEIGHT_BODY    = 1
 SEARCH_WEIGHT_TITLE   = 2
 SEARCH_WEIGHT_TAG     = 3
-

@@ -1,5 +1,7 @@
 from django.template import RequestContext
-from django.shortcuts import render_to_response, get_object_or_404, get_list_or_404
+from django.shortcuts import render_to_response, get_object_or_404,\
+get_list_or_404
+
 from django.contrib.auth import login
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.mail import EmailMessage
@@ -9,7 +11,6 @@ from mealadvisor.common import profiles
 from forms import *
 
 import settings
-
 
 
 def openid_success(request, results):
@@ -32,6 +33,7 @@ def openid_success(request, results):
 
     return HttpResponseRedirect("/")
 
+
 def feedback(request):
     if request.method == 'POST':
         form = ContactForm(request.POST)
@@ -45,7 +47,7 @@ def feedback(request):
             email = EmailMessage(
                 'Feedback from your site, topic: %s' % topic,
                 message, sender,
-                (settings.ADMINS[0][1],)
+                (settings.ADMINS[0][1], ),
             )
             email.send()
             return HttpResponseRedirect('/contact/thanks/')
@@ -53,5 +55,5 @@ def feedback(request):
     else:
         form = ContactForm()
 
-    return render_to_response('contact.html', locals(), context_instance=RequestContext(request))
-
+    return render_to_response('contact.html', locals(),
+    context_instance=RequestContext(request))

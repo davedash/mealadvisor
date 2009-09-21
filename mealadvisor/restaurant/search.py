@@ -1,5 +1,6 @@
 from mealadvisor.restaurant.models import Restaurant, Location
 
+
 class Search:
     RESTAURANT_BY_NAME            = 1
     LOCATION_IN_PLACE             = 2
@@ -48,4 +49,5 @@ class Search:
         elif self.search_type == self.LOCATION_NEAR_PLACE:
             return Location.objects.near(place = self.place)
         elif self.search_type == self.RESTAURANT_BY_NAME_NEAR_PLACE:
-            return Location.objects.near(place = self.place, phrase = self.name)
+            return Location.objects.near(place = self.place,
+            phrase = self.name)

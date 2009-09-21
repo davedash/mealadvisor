@@ -2,6 +2,7 @@ from django.contrib.auth.models import User
 from spindrop.django.openid.util import normalize_openid
 from mealadvisor.common.models import Profile
 
+
 def get_by_openid(openid):
     openid = normalize_openid(openid)
     return Profile.objects.get(user__username__exact=openid)

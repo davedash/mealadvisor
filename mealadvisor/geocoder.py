@@ -3,6 +3,7 @@ from django.conf import settings
 
 from xml.dom import minidom
 
+
 class Location:
     accuracy  = None
     latitude  = None
@@ -88,6 +89,7 @@ class Geocoder(geocoders.Google):
             return parse_place(places[0])
         else:
             return (parse_place(place) for place in places)
+
 
 def geocode(place):
     g = geocoders.Google(settings.GOOGLE_API_KEY)

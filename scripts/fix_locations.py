@@ -1,5 +1,6 @@
 from django.core.management import setup_environ
-import sys,os
+import sys
+import os
 
 sys.path.append('../mealadvisor')
 
@@ -13,11 +14,12 @@ locations = Location.objects.all()
 
 counter = 1
 
-for location in locations:
+for location in lofcations:
     print counter, "of", len(locations)
     print location.restaurant_id, location.stripped_title
     print "Checking for dupes"
-    matches = Location.objects.filter(restaurant = location.restaurant, stripped_title = location.stripped_title)
+    matches = Location.objects.filter(restaurant = location.restaurant,
+    stripped_title = location.stripped_title)
     if len(matches) > 1:
         new_slug = location.generate_slug()
         print "Setting slug to: %s" %new_slug
@@ -25,4 +27,5 @@ for location in locations:
         location.save()
     counter += 1
 
-print "SAFE to do the following: '%s'" % "ALTER TABLE location ADD constraint unique (restaurant_id, stripped_title)"
+print "SAFE to do the following: '%s'" \
+% "ALTER TABLE location ADD constraint unique (restaurant_id, stripped_title)"
