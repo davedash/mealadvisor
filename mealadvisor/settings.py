@@ -155,3 +155,5 @@ SEARCH_DEFAULT_RADIUS = 25
 SEARCH_WEIGHT_BODY    = 1
 SEARCH_WEIGHT_TITLE   = 2
 SEARCH_WEIGHT_TAG     = 3
+
+TEST_RUNNER = 'django-test-coverage.runner.run_tests'

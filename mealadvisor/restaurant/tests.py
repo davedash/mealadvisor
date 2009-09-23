@@ -29,5 +29,5 @@ class AjaxTest(TransactionTestCase):
         http://127.0.0.1:8000/ajax/tag_add_menu_item?menu_item=1869&tag=foo
         """
         response = self.client.post('/ajax/tag_add_menu_item',
-        {'menu_item': 1869, 'tag': 'blerg'})
+        {'menu_item': 294, 'tag': 'blerg'})
         self.assertContains(response, 'blerg')
