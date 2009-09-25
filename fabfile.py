@@ -107,7 +107,8 @@ def setup():
         + "/etc/nginx/sites-enabled/mealadvisor.us")
         sudo("mkdir -p /var/log/apache2/mealadvisor.us")
 
-    sudo("chown -R builder:mealadvisor %(path)s")
+    sudo("chown -R davedash:mealadvisor %(path)s")
+    sudo("sudo chmod -R g+w %(path)s")
     # /a/mealadvisor.us/bin/easy_install django
 
 
@@ -131,7 +132,7 @@ def push():
 
     # git push $environment (latest code should be up to date)
     local('git push %s release'%config.environment)
-    run('cd %(path)s;git checkout -f')
+    run('cd %(path)s;git checkout -f release')
 
     # upload a compressed js file to the server
     invoke(concat_minify_js)
