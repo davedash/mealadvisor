@@ -3,8 +3,8 @@ import site
 import sys
 
 site.addsitedir('/a/mealadvisor.us/lib/python2.6/site-packages/')
-site.addsitedir('/a/mealadvisor.us/staging/')
-site.addsitedir('/a/mealadvisor.us/staging/mealadvisor')
+site.addsitedir('/a/mealadvisor.us/release/')
+site.addsitedir('/a/mealadvisor.us/release/mealadvisor')
 
 os.environ['DJANGO_SETTINGS_MODULE'] = 'mealadvisor.settings'
 os.environ['DJANGO_ENVIRONMENT']     = 'prod'
