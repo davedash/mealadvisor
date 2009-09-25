@@ -26,6 +26,19 @@ if ENVIRONMENT == 'staging':
 
     MEDIA_URL = 'http://static.wallace.mealadvisor.us/static/'
 
+elif ENVIRONMENT == 'prod':
+    DATABASE_ENGINE   = 'mysql'
+    DATABASE_NAME     = 'ma'
+    DATABASE_USER     = 'ma'
+    DATABASE_PASSWORD = '9das1k'
+    DATABASE_HOST     = 'localhost'
+    DATABASE_PORT     = ''
+
+    LOGIN_HOST = 'http://mealadvisor.us'
+
+    MEDIA_URL = 'http://static.mealadvisor.us/static/'
+
+
 else:
     DEBUG          = True
     TEMPLATE_DEBUG = DEBUG
