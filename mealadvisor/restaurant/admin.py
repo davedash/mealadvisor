@@ -1,6 +1,6 @@
-from django.contrib import admin
-from django.forms import models
-from models import *
+from django.contrib import admin # pragma: no cover
+from django.forms import models # pragma: no cover
+from models import * # pragma: no cover
 
 
 class RestaurantVersionInline(admin.StackedInline):

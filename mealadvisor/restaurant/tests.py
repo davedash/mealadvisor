@@ -1,6 +1,11 @@
 from django.test import TransactionTestCase
 from django.test.client import Client
 
+import coverage
+
+coverage.exclude("class RestaurantVersionInline")
+coverage.exclude("class RestaurantAdmin")
+coverage.exclude("admin.site.register")
 
 class AjaxTest(TransactionTestCase):
     fixtures = ['production.json']

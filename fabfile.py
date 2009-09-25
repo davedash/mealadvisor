@@ -22,8 +22,6 @@ config.releases_path = '/a/mealadvisor.us'
 config.path          = '%(releases_path)s/release'
 config.static_path   = '/a/static.mealadvisor.us'
 
-cmd_pep8 = ''
-
 
 def staging():
     "Setup staging info"
@@ -34,6 +32,7 @@ def staging():
 
 def prod():
     "setup production info"
+    config.environment = 'prod'
     config.fab_hosts = ['67.23.9.127']
     config.fab_user  = 'builder'
 
@@ -91,23 +90,24 @@ def setup_ubuntu():
 def setup():
     sudo("mkdir -p %(static_path)s/menuitems")
     sudo("chmod a+w %(static_path)s/menuitems")
-    sudo("mkdir -p %(releases_path)s/releases")
-    path = '/a/mealadvisor.us/staging/config'
+    sudo("mkdir -p %(path)s")
+    sudo("cd %(path)s;git init")
 
     if config.get('environment') == 'staging':
-        sudo("ln -s %s/wallace.mealadvisor.us.apache " % path
+        sudo("ln -s %(path)s/config/wallace.mealadvisor.us.apache "
         + "/etc/apache2/sites-enabled/wallace.mealadvisor.us")
-        sudo("ln -s %s/wallace.mealadvisor.us.nginx " % path
+        sudo("ln -s %(path)s/wallace.mealadvisor.us.nginx "
         +"/etc/nginx/sites-enabled/wallace.mealadvisor.us")
         sudo("mkdir -p /var/log/apache2/wallace.mealadvisor.us")
 
     else:
-        sudo("ln -s %s/mealadvisor.us.apache " % path
+        sudo("ln -s %(path)s/config/mealadvisor.us.apache "
         + "/etc/apache2/sites-enabled/mealadvisor.us ")
-        sudo("ln -s %s/mealadvisor.us.nginx " % path
+        sudo("ln -s %(path)s/config/mealadvisor.us.nginx "
         + "/etc/nginx/sites-enabled/mealadvisor.us")
         sudo("mkdir -p /var/log/apache2/mealadvisor.us")
 
+    sudo("chown -R builder:mealadvisor %(path)s")
     # /a/mealadvisor.us/bin/easy_install django
 
 
