@@ -34,12 +34,7 @@ if options.download:
 
     p = Popen("ssh root@reviewsby.us mysqldump -u migrator -pnarnians rbu "
     + "--skip-opt --create-options --add-drop-table --skip-add-locks "
-    + "--skip-comments --extended-insert ", shell=True, stdout=PIPE)
-    dump = p.communicate()[0]
-
-    f = open('/tmp/db.rbu', 'w')
-    f.write(dump)
-    f.close()
+    + "--skip-comments --extended-insert > /tmp/db.rbu", shell=True, stdout=PIPE)
 
 
 def mysql(cmds, use=True):

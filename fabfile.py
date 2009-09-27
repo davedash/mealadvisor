@@ -227,7 +227,10 @@ def setup_staging():
 #   LOCK TABLES ON `ma_prod`.* TO 'ma_prod'@'%'
 
 def install_deps_remote():
+    config.pip = '/a/mealadvisor.us/bin/pip'
     sudo("apt-get install -y python-imaging")
+    sudo("/a/mealadvisor.us/bin/pip install BeautifulSoup")
+    sudo("$(pip)s install django-debug-toolbar")
 
 def install_deps_local():
     local("pip install django-tagging")

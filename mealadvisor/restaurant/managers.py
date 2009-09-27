@@ -1,6 +1,6 @@
 from django.db import models, transaction, connection
 from utils import normalize
-from tools import stem_phrase, extract_numbers
+from mealadvisor.tools import stem_phrase, extract_numbers
 
 
 class TagManager(models.Manager):
