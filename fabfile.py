@@ -226,6 +226,8 @@ def setup_staging():
 #   GRANT CREATE, ALTER, INDEX, SELECT, INSERT, UPDATE, DELETE,
 #   LOCK TABLES ON `ma_prod`.* TO 'ma_prod'@'%'
 
+def install_deps_remote():
+    sudo("apt-get install -y python-imaging")
 
 def install_deps_local():
     local("pip install django-tagging")

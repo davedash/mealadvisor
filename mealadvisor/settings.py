@@ -28,8 +28,8 @@ if ENVIRONMENT == 'staging':
 
 elif ENVIRONMENT == 'prod':
     DATABASE_ENGINE   = 'mysql'
-    DATABASE_NAME     = 'ma'
-    DATABASE_USER     = 'ma'
+    DATABASE_NAME     = 'ma_prod'
+    DATABASE_USER     = 'ma_prod'
     DATABASE_PASSWORD = '9das1k'
     DATABASE_HOST     = 'localhost'
     DATABASE_PORT     = ''
