@@ -301,12 +301,10 @@ SET foreign_key_checks = 1;
             location.save()
         counter += 1
 
-    print "SAFE to do the following: '%s'" \
-    % "ALTER TABLE location "
-    + "ADD constraint unique (restaurant_id, stripped_title)"
+    print "Adding constraints to location"
 
     mysql("""
-    DELETE FROM location where id IN (857, 22314,22315);
+    DELETE FROM location where id IN (857, 22314, 22315);
     ALTER TABLE location
         ADD constraint unique (restaurant_id, stripped_title)
     """)
