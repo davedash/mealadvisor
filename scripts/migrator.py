@@ -122,7 +122,7 @@ ALTER TABLE restaurant_tag2 RENAME restaurant_tag;
 ALTER TABLE restaurant_search_index
     ADD id INT UNSIGNED NOT NULL AUTO_INCREMENT FIRST, add primary key (id);
 
-ALTER TABLE menuitem_tag ¨
+ALTER TABLE menuitem_tag
     CHANGE id id INT UNSIGNED NOT NULL AUTO_INCREMENT FIRST,
     ADD primary key (id);
 ALTER TABLE menuitem_search_index

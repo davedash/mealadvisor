@@ -54,3 +54,8 @@ server {
   }
 
 }
+
+server {
+  server_name www.mealadvisor.us reviewsby.us www.reviewsby.us;
+  rewrite ^/(.*) http://mealadvisor.us/$1 permanent;
+}
