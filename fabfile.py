@@ -229,8 +229,12 @@ def setup_staging():
 def install_deps_remote():
     config.pip = '/a/mealadvisor.us/bin/pip'
     sudo("apt-get install -y python-imaging")
-    sudo("/a/mealadvisor.us/bin/pip install BeautifulSoup")
+    sudo("$(pip)s install BeautifulSoup")
     sudo("$(pip)s install django-debug-toolbar")
+    sudo("$(pip)s install -e "
+    + "git://github.com/simonw/django-openid.git#egg=django-openid")
+    sudo("$(pip)s install django-tagging")
+
 
 def install_deps_local():
     local("pip install django-tagging")

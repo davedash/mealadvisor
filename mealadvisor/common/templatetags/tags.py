@@ -127,10 +127,10 @@ def post_to_delicious(request, title=None, text=None):
 def star(id_string, current, average, path, spanfree=False):
     meta = ""
     if current != None:
-        meta = """
-        <li class="current meta" title="%d" """\
+        meta = ("""
+        <li class="current meta" title="%d" """
         + """style="width:%dpx">Current Rating: %d</li>
-        """ % (int(current), int(current)*20, int(current))
+        """) % (int(current), int(current)*20, int(current))
     elif average != None:
         meta = """
         <li class="average meta" title="%.1f" style="width:%dpx">
