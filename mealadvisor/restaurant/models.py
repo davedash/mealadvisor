@@ -38,8 +38,95 @@ from mealadvisor.common.models import Profile, Country, State
 from mealadvisor.geocoder import geocode, Geocoder
 from mealadvisor.tools import *
 
-from managers import RestaurantManager, TagManager, RandomManager
+from managers import TagManager, RandomManager
 from utils import *
+
+
+class RestaurantManager(models.Manager):
+
+    def rated_or_reviewed_by(self, profile):
+
+        query = """
+        SELECT restaurant_id, created_at
+        FROM restaurant_note
+        WHERE user_id = %d
+        UNION
+        SELECT restaurant_id, created_at
+        FROM restaurant_rating
+        WHERE user_id = %d
+        ORDER BY created_at DESC
+        """ % (profile.id, profile.id, )
+
+        cursor = connection.cursor()
+        cursor.execute(query)
+
+        restaurant_ids = [item[0] for item in cursor.fetchall()]
+        return self.filter(id__in = restaurant_ids)
+
+    def search(self, phrase, offset=0, max=10):
+        # we want to stem the words AND extract any numbers
+        words = stem_phrase(phrase) + extract_numbers(phrase)
+
+        num_words = len(words)
+        if num_words == 0:
+            return []
+
+        # mysql specifc
+        # e.g. longhorn steakhouse
+        # produces
+        # SELECT
+        #    DISTINCT restaurant_search_index.RESTAURANT_ID, COUNT(*) AS nb,
+        # SUM(restaurant_search_index.WEIGHT) AS total_weight FROM
+        # restaurant_search_index
+        # WHERE (restaurant_search_index.WORD LIKE 'longhorn'
+        # OR restaurant_search_index.WORD LIKE 'steakhous') GROUP BY
+        # restaurant_search_index.RESTAURANT_ID ORDER BY nb DESC,
+        # total_weight DESC
+        # LIMIT 10
+        query = """
+        SELECT DISTINCT
+            `restaurant_search_index`.`restaurant_id`,
+            COUNT(*) AS nb,
+            SUM(`restaurant_search_index`.`weight`) AS total_weight
+        FROM
+            `restaurant_search_index`
+        WHERE
+            (%s)
+        GROUP BY
+            `restaurant_search_index`.`restaurant_id`
+        ORDER BY
+            nb DESC,
+            total_weight DESC
+        LIMIT %%s
+        OFFSET %%s
+        """ \
+        % " OR ".join(['`restaurant_search_index`.`word` LIKE ?'] * num_words)
+
+        query   = query.replace('?', '%s')
+        cursor  = connection.cursor()
+        results = cursor.execute(query, words + [max, offset])
+
+        restaurants = []
+        for row in cursor.fetchall():
+            try:
+                restaurant        = self.get(pk=row[0])
+                restaurant.count  = row[1]
+                restaurant.weight = row[2]
+                restaurants.append(restaurant)
+            except:
+                pass
+
+        return restaurants
+
+    def get_tagged(self, tag):
+        restaurants = []
+        tags = RestaurantTag.objects.select_related('restaurant').filter(
+        tag=tag)
+        [restaurants.append(tag.restaurant) for tag in tags]
+        return restaurants
+
+    def reindex(self):
+        [r.reindex() for r in self.all()]
 
 
 class Restaurant(models.Model):

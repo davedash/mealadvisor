@@ -7,14 +7,14 @@ coverage.exclude("class RestaurantVersionInline")
 coverage.exclude("class RestaurantAdmin")
 coverage.exclude("admin.site.register")
 
-class AjaxTest(TransactionTestCase):
+class RestaurantTest(TransactionTestCase):
     fixtures = ['production.json']
 
     def setUp(self):
         """
         We need to be logged in before we start anything.
         """
-        super(AjaxTest, self).setUp()
+        super(RestaurantTest, self).setUp()
         qsa      = {'username': 'davedash.livejournal.com',
         'password': 'sexy'}
         response = self.client.post('/login', qsa, follow=True)
@@ -36,3 +36,11 @@ class AjaxTest(TransactionTestCase):
         response = self.client.post('/ajax/tag_add_menu_item',
         {'menu_item': 294, 'tag': 'blerg'})
         self.assertContains(response, 'blerg')
+
+    def test_restaurant_tag_view(self):
+        """
+        http://127.0.0.1:8000/tag/pizza
+        """
+        response = self.client.get('/tag/pizza')
+        self.failUnlessEqual(response.status_code, 200)
+        
