@@ -326,7 +326,7 @@ SET foreign_key_checks = 1;
         f.close()
         counter += 1
 
-    print "SAFE to do the following: '%s'" % """
+    print "Doing the following: '%s'" % """
 
     alter table menu_item_image drop data;
     alter table menu_item_image add column `image` varchar(240) NOT NULL;

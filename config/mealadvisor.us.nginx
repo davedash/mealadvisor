@@ -16,14 +16,14 @@ server {
   location ^~ /static/menuitems/ {
     keepalive_timeout  65;
     
-    alias /a/static.mealadvisor.us/menuitems_staging/;
+    alias /a/static.mealadvisor.us/menuitems/;
     expires      30d;
   }
 
   location ^~ /static/ {
     keepalive_timeout  65;
     
-    alias /a/static.mealadvisor.us/staging/;
+    alias /a/static.mealadvisor.us/static/;
     
     expires      30d;
   }
