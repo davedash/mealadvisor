@@ -1,3 +1,4 @@
+{% if user.is_authenticated %}
 <form action="{{review_action}}" method="POST" id="review_form" class="cmxform">
 <ol>
   {{review_form.as_ul}}
@@ -5,3 +6,4 @@
 <p class="instructions">{% include 'includes/markdown.html' %}</p>
 <input type="submit" value="Post" />
 </form>
+{% endif %}

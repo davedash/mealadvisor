@@ -358,7 +358,8 @@ def menuitem(request, slug, item_slug):
     reviews      = menu_item.menuitemnote_set.all().select_related(depth=2)
     review_title = 'Reviews'
 
-    if request.method == 'POST': # If the form has been submitted...
+    if request.method == 'POST' and request.user.is_authenticated(): 
+        # If the form has been submitted...
         form = ReviewForm(request.POST) # A form bound to the POST data
         if form.is_valid(): # All validation rules pass
             note           = MenuitemNote()
