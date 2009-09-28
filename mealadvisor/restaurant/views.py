@@ -272,7 +272,8 @@ def handle_uploaded_image(i, menu_item, user):
     try:
         resizedImage.save(imagefile, 'JPEG')
     except:
-        resizedImage.convert('RGB').save(imagefile, 'JPEG')
+        resizedImage = resizedImage.convert('RGB')
+        resizedImage.save(imagefile, 'JPEG')
 
     filename = hashlib.md5(imagefile.getvalue()).hexdigest()+'.jpg'
 
