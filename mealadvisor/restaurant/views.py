@@ -268,7 +268,12 @@ def handle_uploaded_image(i, menu_item, user):
     resizedImage = imageImage.resize((width, height))
 
     imagefile = StringIO.StringIO()
-    resizedImage.save(imagefile, 'JPEG')
+
+    try:
+        resizedImage.save(imagefile, 'JPEG')
+    except:
+        resizedImage.convert('RGB').save(imagefile, 'JPEG')
+
     filename = hashlib.md5(imagefile.getvalue()).hexdigest()+'.jpg'
 
 
