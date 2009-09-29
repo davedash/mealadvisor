@@ -1,12 +1,23 @@
+from os import path
+
 from django.conf.urls.defaults import *
 from django.views.generic import list_detail
-from mealadvisor.feeds import LatestRestaurants, MenuItems
-from mealadvisor.restaurant.models import Restaurant
 
-from os import path
 import settings
 
+from mealadvisor.feeds import LatestRestaurants, MenuItems
+from mealadvisor.restaurant.models import Restaurant
+from mealadvisor.restaurant.sitemaps import RestaurantSitemap, DishSitemap,\
+LocationSitemap
+
 feeds = {'latest': LatestRestaurants, 'restaurant': MenuItems, }
+sitemaps = {
+    'restaurants': RestaurantSitemap,
+    'dishes': DishSitemap,
+    'locations': LocationSitemap
+}
+
+
 
 urlpatterns = patterns('',
 
@@ -126,4 +137,14 @@ urlpatterns += patterns('restaurant.ajax_views',
     (r'^ajax/tag_add_restaurant$', 'tag_add'),
     (r'^ajax/tag_add_menu_item$', 'tag_add_menuitem'),
     (r'^ajax/tag_rm$', 'tag_remove'),
+)
+
+# sitemaps
+urlpatterns += patterns('',
+    (
+        r'^sitemap.xml$', 
+        'django.contrib.sitemaps.views.index', {'sitemaps': sitemaps}),
+    (   r'^sitemap-(?P<section>.+)\.xml$', 
+        'django.contrib.sitemaps.views.sitemap', {'sitemaps': sitemaps}),
+
 )

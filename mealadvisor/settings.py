@@ -104,7 +104,6 @@ SECRET_KEY = '$*th1o)%73c$o#!4f0cjg=*968tao8@(*5+y9^_-ru!_hx#a)y'
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.load_template_source',
     'django.template.loaders.app_directories.load_template_source',
-#     'django.template.loaders.eggs.load_template_source',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -135,6 +134,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
+    'django.contrib.sitemaps',
     'spindrop.django.openid.consumer',
     'mealadvisor.common',
     'mealadvisor.restaurant',
