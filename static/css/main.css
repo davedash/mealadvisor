@@ -28,18 +28,7 @@ body{font-family:Futura,Centry Gothic,Verdana,sans-serif;}
 #hd #search_box input.text{width:190px;background:#ccc;border:solid 1px #666;padding:.4em .5em;font:90% Arial;letter-spacing:.1em;}
 #hd #search_box input.text:hover{background:#eee;}
 #hd form .info{display:block;font-style:italic;font-size:90%;line-height:2em;}
-#hd #top_menu {
-  position: relative;
-  top: -2px;
-  margin-left: 30%;
-  border: 2px solid #09c;
-  border-top: none;
-  padding: .2em;
-  text-align: center;
-  overflow: auto;
-  background: #444;
-  width: 40%;
-}
+#hd #top_menu{position:relative;top:-2px;margin-left:30%;border:2px solid #09c;border-top:none;padding:.2em;text-align:center;overflow:auto;background:#444;width:40%;}
 #hd #top_menu ul li{float:left;width:25%;font-size:86%;}
 #hd #top_menu ul li a{color:white;text-decoration:none;}
 #bd{padding:1em;}
@@ -90,3 +79,5 @@ em{font-style:italic;}
 #tag_form_container{width:15em;position:relative;}
 #tag_form_container form{height:2em;display:none;}
 #restaurant_list{margin-bottom:1em;}
+
+.flushright{float:right;}
