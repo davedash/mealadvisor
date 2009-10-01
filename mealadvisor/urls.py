@@ -5,18 +5,25 @@ from django.views.generic import list_detail
 
 import settings
 
-from mealadvisor.feeds import LatestRestaurants, MenuItems
+from mealadvisor.feeds import LatestRestaurants, MenuItems, LatestDishReviews,\
+LatestRestaurantReviews
+
 from mealadvisor.restaurant.models import Restaurant
 from mealadvisor.restaurant.sitemaps import RestaurantSitemap, DishSitemap,\
 LocationSitemap
 
-feeds = {'latest': LatestRestaurants, 'restaurant': MenuItems, }
+feeds = {
+    'latest': LatestRestaurants,
+    'restaurant': MenuItems,
+    'reviews': LatestRestaurantReviews,
+    'dish_reviews': LatestDishReviews
+}
+
 sitemaps = {
     'restaurants': RestaurantSitemap,
     'dishes': DishSitemap,
     'locations': LocationSitemap
 }
-
 
 
 urlpatterns = patterns('',

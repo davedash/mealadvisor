@@ -894,12 +894,19 @@ class MenuitemNote(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
+    def get_restaurant(self):
+        return self.menu_item.restaurant
+
     class Meta:
         db_table = u'menuitem_note'
 
     def save(self, force_insert=False, force_update=False):
         self.html_note = markdown(self.note)
         super(MenuitemNote, self).save(force_insert, force_update)
+
+    def get_absolute_url(self):
+        return "%s/menu/%s#%d" % (self.get_restaurant().get_absolute_url(),\
+        self.menu_item.slug, self.id)
 
     def author(self):
         return self.profile.user
@@ -966,6 +973,10 @@ class RestaurantNote(models.Model):
     def author(self):
         return self.profile.user
         #return self.profile.user
+
+    def get_absolute_url(self):
+        return "/restaurant/%s#%s" % (
+        self.restaurant.stripped_title, self.id)
 
     class Meta:
         db_table = u'restaurant_note'

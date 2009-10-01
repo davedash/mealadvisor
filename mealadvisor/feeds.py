@@ -1,7 +1,33 @@
 from django.contrib.syndication.feeds import FeedDoesNotExist, Feed
-from mealadvisor.restaurant.models import Restaurant, MenuItem
+from mealadvisor.restaurant.models import Restaurant, MenuItem,\
+RestaurantNote, MenuitemNote
 
 
+class LatestRestaurantReviews(Feed):
+    title       = "Latest Restaurants Reviews"
+    link        = "/"
+    description = "A list of the latest restaurant reviews posted to Meal Advisor"
+
+    def items(self):
+        return RestaurantNote.objects.order_by('-created_at')[:10]
+
+    def item_pubdate(self, item):
+        return item.created_at
+
+class LatestDishReviews(Feed):
+    title       = "Latest Dish Reviews"
+    link        = "/"
+    description = "A list of the latest meal reviews posted to Meal Advisor"
+
+    def items(self):
+        return MenuitemNote.objects.order_by('-created_at')[:10]
+
+    def item_author_name(self, item):
+        return item.profile.user.username
+
+    def item_pubdate(self, item):
+        return item.created_at
+    
 class LatestRestaurants(Feed):
     title       = "Freshest Restaurants"
     link        = "/"
