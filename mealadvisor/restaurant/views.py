@@ -220,7 +220,7 @@ def add(request):
 
 
 def profile(request, username):
-    user        = User.objects.get(username=username)
+    user        = get_object_or_404(User, username=username)
     profile     = user.profile_set.all()[0]
     restaurants = Restaurant.objects.rated_or_reviewed_by(profile)
     return render_to_response('profile.html', locals(),
