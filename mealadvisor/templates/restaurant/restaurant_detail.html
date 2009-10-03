@@ -3,15 +3,15 @@
 
 {% block body %}
 
-<div class="title_container">
+<div class="title_container hreview-aggregate">
     <h2>
-      {{restaurant}}
+      <span class="item"><span class="fn">{{restaurant}}</span></span>
       {% if restaurant.url %}
       <span class="url"> <a href="{{restaurant.url}}">[restaurant web site]</a></span>  
       {% endif %}
     </h2>
 
-    {% star 'restaurant' restaurant.current_rating restaurant.average_rating restaurant.get_rating_url %}
+    {% star 'restaurant' restaurant %}
 </div>
 
 {% include 'includes/tagbox.html' %}	

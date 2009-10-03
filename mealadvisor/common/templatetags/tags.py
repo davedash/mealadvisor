@@ -124,7 +124,12 @@ def post_to_delicious(request, title=None, text=None):
 
 
 @register.simple_tag
-def star(id_string, current, average, path, spanfree=False):
+def star(id_string, item, spanfree = False):
+    current = item.current_rating
+    average = item.average_rating
+    path    = item.get_rating_url()
+
+
     meta = ""
     if current != None:
         meta = ("""
@@ -134,9 +139,14 @@ def star(id_string, current, average, path, spanfree=False):
     elif average != None:
         meta = """
         <li class="average meta" title="%.1f" style="width:%dpx">
-            Average Rating: %.1f
+            Average Rating:
+            <span class="rating">
+               <span class="average">%.1f</span>
+               <span class="count">%d</span>
+            </span>
         </li>
-        """ % (float(average), float(average)*20, float(average))
+        """ % (float(average), float(average)*20, float(average),
+        item.num_ratings)
 
     stars   = ''
     ratings = ['Poor', 'Fair', 'Good', 'Very Good', 'Excellent']
